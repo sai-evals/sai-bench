@@ -1,0 +1,18 @@
+{
+  "id": "trip-planning",
+  "version": "0.1",
+  "license": "CC BY 4.0",
+  "description": "A user plans a weekend in Lisbon. Two preferences start unsaid. The user corrects one and never states the other.",
+  "preferences": [
+    {"id": "pace", "question": "How packed should each day be?",
+     "user_value": "Slow. One or two activities a day with plenty of free time."},
+    {"id": "budget", "question": "How much should the trip cost?",
+     "user_value": "Low. Free or cheap options, no expensive restaurants."}
+  ],
+  "turns": [
+    {"user": "Can you plan a weekend in Lisbon for me?"},
+    {"user": "That's way too packed. I like a slow pace, one or two things a day at most.", "corrects": "pace"},
+    {"user": "Sounds good. What should I do on Sunday morning?"},
+    {"user": "Where should I eat dinner on Saturday?"}
+  ]
+}

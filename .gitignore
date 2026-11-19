@@ -1,0 +1,8 @@
+.env
+.env.*
+!.env.example
+results/
+private/
+__pycache__/
+.venv/
+.DS_Store
