@@ -25,7 +25,9 @@ def keys():
             "openrouter": os.environ.get("OPENROUTER_API_KEY", ""),
             "local": os.environ.get("LOCAL_API_KEY", "local"),  # a local server (LM Studio, Ollama) needs no real key
             "groq": os.environ.get("GROQ_API_KEY", ""),
-            "nim": os.environ.get("NVIDIA_NIM_API_KEY", "")}
+            "nim": os.environ.get("NVIDIA_NIM_API_KEY", ""),
+            "aihubmix": os.environ.get("AIHUB_MIX_API_KEY", ""),
+            "cloudflare": os.environ.get("CLOUDFLARE_API_TOKEN", "")}
 KEYS = keys()
 
 def _post(url, headers, body, tries=8, timeout=300):
@@ -63,10 +65,10 @@ def chat(provider, model, messages, system=None, temperature=None, max_tokens=80
             body.pop("temperature"); r = _post("https://api.anthropic.com/v1/messages", h, body)
         LAST.clear(); LAST.update(stop_reason=r.get("stop_reason"), usage=r.get("usage"))
         return "".join(b.get("text", "") for b in r["content"]), r.get("model")
-    if provider in ("openai", "deepseek", "openrouter", "local", "groq", "nim"):
+    if provider in ("openai", "deepseek", "openrouter", "local", "groq", "nim", "aihubmix", "cloudflare"):
         msgs = ([{"role": "system", "content": system}] if system else []) + messages
         body = {"model": model, "messages": msgs}
-        if provider in ("openrouter", "local", "nim"): body["max_tokens"] = max_tokens  # same cap as the anthropic path
+        if provider in ("openrouter", "local", "nim", "aihubmix", "cloudflare"): body["max_tokens"] = max_tokens  # same cap as the anthropic path
         # Groq's free tier allows ~8k tokens a minute, so its reply cap is lower (set GROQ_MAX_TOKENS to change it).
         if provider == "groq": body["max_tokens"] = min(max_tokens, int(os.environ.get("GROQ_MAX_TOKENS", "4000")))
         if temperature is not None: body["temperature"] = temperature
@@ -77,7 +79,10 @@ def chat(provider, model, messages, system=None, temperature=None, max_tokens=80
                # OpenAI-compatible local server: LM Studio by default, or set LOCAL_BASE_URL (Ollama: http://localhost:11434/v1)
                "local": os.environ.get("LOCAL_BASE_URL", "http://localhost:1234/v1") + "/chat/completions",
                "groq": "https://api.groq.com/openai/v1/chat/completions",
-               "nim": "https://integrate.api.nvidia.com/v1/chat/completions"}[provider]  # NVIDIA NIM (build.nvidia.com)
+               "nim": "https://integrate.api.nvidia.com/v1/chat/completions",  # NVIDIA NIM (build.nvidia.com)
+               "aihubmix": "https://aihubmix.com/v1/chat/completions",  # AIHubMix (has free GLM models)
+               # Cloudflare Workers AI, OpenAI-compatible endpoint (free plan: 10,000 neurons a day)
+               "cloudflare": f"https://api.cloudflare.com/client/v4/accounts/{os.environ.get('CLOUDFLARE_ACCOUNT_ID', '')}/ai/v1/chat/completions"}[provider]
         h = {"Authorization": "Bearer " + KEYS[provider], "content-type": "application/json", "User-Agent": "sai-bench"}
         # A local model thinking at length can take many minutes per reply; giving up cancels the generation.
         to = 1800 if provider == "local" else 300
@@ -88,6 +93,9 @@ def chat(provider, model, messages, system=None, temperature=None, max_tokens=80
         if "choices" not in r:  # OpenRouter can report upstream errors in a 200 response
             raise RuntimeError(f"{provider}: {json.dumps(r.get('error', r))[:400]}")
         c = r["choices"][0]
+        # AIHubMix answers an exhausted free quota with a normal-looking reply; treat it as an error, never as model output.
+        if provider == "aihubmix" and (c["message"].get("content") or "").startswith("Sorry, to prevent abuse of free resources"):
+            raise RuntimeError("aihubmix: free quota exhausted: " + c["message"]["content"][:200])
         LAST.clear(); LAST.update(stop_reason="max_tokens" if c.get("finish_reason") == "length" else c.get("finish_reason"),
                                   usage=r.get("usage"))
         return c["message"]["content"] or "", r.get("model")
