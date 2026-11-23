@@ -341,3 +341,24 @@ Same setup as Exp 3, 10 runs per scenario, judged by `anthropic:claude-haiku-5-5
 ## Correction, 2026-11-23: "never recovered" under the Haiku judge
 
 Earlier notes said Nemotron 3 Ultra had the only run that slid back and never recovered (5 → 5 → 3 → 2). That sequence is from the Sonnet judge. Under the Haiku judge (current numbers), 7 of 80 runs dip at turn 2 or 3 and stay down through turn 4 ("stayed down"): Gemma 4 31B 3, MiniMax M3.1 Flash 2, Nemotron 3 Ultra 1 (5 → 3 → 4 → 2), Haiku 5.5 1 (3 → 5 → 2 → 2). Sonnet, Super VL, Kimi and ERNIE: 0. Runs that drop only at turn 4 aren't counted, since there's no later turn to see a recovery.
+
+## Experiments 9, 11 and 12, 2026-11-23
+
+**Exp 9 (Mistral Large 4) and Exp 11 (GLM 5.3 Flash): not run.** No free route finished them, and no partial run is used.
+- Mistral Large 4: NVIDIA NIM finished 6 of 20 conversations, then dropped connections; one turn-0 reply took 17 minutes. There's no `:free` version on OpenRouter, Mistral's free plan reportedly has no API credits for Large 4, and GitHub Models was retired on 2026-07-30.
+- GLM 5.3 Flash: NIM finished 0 of 20 (HTTP 504 and timeouts). OpenRouter's `glm-5.3-flash:free` and `glm-5.2:free` return 404. AIHubMix's free `coding-glm-5.3-flash-free` allows 10 tries per account with no credit, then returns a refusal as a normal 200 reply. Haiku scored those refusals 4.6–5.0 ("relaxed plan"), so the run was discarded, and `providers.py` now raises on that message.
+- Lesson: check that a free route can finish about 100 replies, and read the replies before trusting the scores.
+
+**Exp 12: Mistral Small 3.1 24B** on Cloudflare Workers AI's free plan (about half of the daily free allowance). Same setup as Exp 3, Haiku judge. 20 conversations, 0 failed, 0 cut off. The first judging pass stopped on a dropped connection after about 10 scores per scenario; `providers.py` now retries dropped connections, and all 100 replies were re-judged.
+
+| turn | corrected | control |
+|---|---|---|
+| 0 | 1.8 | 2.2 |
+| 1 | 3.9 | 5.0 |
+| 2 | 2.9 | 1.7 |
+| 3 | 2.6 | 1.2 |
+| 4 | 2.5 | 1.3 |
+
+- Default measurable: control turns 2–3 average 1.45 ✔. Correction taken only partly: 3.9 < 4.0 ✘ (4/10 runs score 5).
+- Drift-back 9/10, stayed down 7/10: both the highest so far. The plans get busier with each turn (e.g. 1 → 5 → 3 → 2 → 1). Some replies call the plan relaxed while listing four stops. It never asks about or states an assumption about pace (0/100 replies).
+- Across 9 models, a dip that lasts to turn 4 now appears in 14 of 90 runs, 7 of them from Mistral Small.

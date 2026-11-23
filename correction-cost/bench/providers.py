@@ -1,6 +1,6 @@
 """Model callers shared by the runner and the judge.
 Keys come from environment variables (or a local .env file at the repo root). Never commit keys."""
-import json, os, re, ssl, time, urllib.request, urllib.error
+import http.client, json, os, re, ssl, time, urllib.request, urllib.error
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 def _ctx():
@@ -44,7 +44,7 @@ def _post(url, headers, body, tries=8, timeout=300):
                 except ValueError: wait = 0
                 time.sleep(min(max(wait, 6 * (i + 1)), 90)); continue
             raise RuntimeError(f"HTTP {e.code}: {msg}")
-        except (urllib.error.URLError, TimeoutError) as e:
+        except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.HTTPException) as e:  # incl. RemoteDisconnected
             if i < tries - 1: time.sleep(6 * (i + 1)); continue
             raise RuntimeError(str(e))
 
