@@ -24,14 +24,15 @@ def keys():
             "google": os.environ.get("GOOGLE_API_KEY", ""), "deepseek": os.environ.get("DEEPSEEK_API_KEY", ""),
             "openrouter": os.environ.get("OPENROUTER_API_KEY", ""),
             "local": os.environ.get("LOCAL_API_KEY", "local"),  # a local server (LM Studio, Ollama) needs no real key
-            "groq": os.environ.get("GROQ_API_KEY", "")}
+            "groq": os.environ.get("GROQ_API_KEY", ""),
+            "nim": os.environ.get("NVIDIA_NIM_API_KEY", "")}
 KEYS = keys()
 
-def _post(url, headers, body, tries=8):
+def _post(url, headers, body, tries=8, timeout=300):
     for i in range(tries):
         try:
             req = urllib.request.Request(url, data=json.dumps(body).encode(), headers=headers, method="POST")
-            with urllib.request.urlopen(req, timeout=300, context=CTX) as r:
+            with urllib.request.urlopen(req, timeout=timeout, context=CTX) as r:
                 return json.loads(r.read())
         except urllib.error.HTTPError as e:
             msg = e.read().decode()[:400]
@@ -62,10 +63,10 @@ def chat(provider, model, messages, system=None, temperature=None, max_tokens=80
             body.pop("temperature"); r = _post("https://api.anthropic.com/v1/messages", h, body)
         LAST.clear(); LAST.update(stop_reason=r.get("stop_reason"), usage=r.get("usage"))
         return "".join(b.get("text", "") for b in r["content"]), r.get("model")
-    if provider in ("openai", "deepseek", "openrouter", "local", "groq"):
+    if provider in ("openai", "deepseek", "openrouter", "local", "groq", "nim"):
         msgs = ([{"role": "system", "content": system}] if system else []) + messages
         body = {"model": model, "messages": msgs}
-        if provider in ("openrouter", "local"): body["max_tokens"] = max_tokens  # same cap as the anthropic path
+        if provider in ("openrouter", "local", "nim"): body["max_tokens"] = max_tokens  # same cap as the anthropic path
         # Groq's free tier allows ~8k tokens a minute, so its reply cap is lower (set GROQ_MAX_TOKENS to change it).
         if provider == "groq": body["max_tokens"] = min(max_tokens, int(os.environ.get("GROQ_MAX_TOKENS", "4000")))
         if temperature is not None: body["temperature"] = temperature
@@ -75,12 +76,15 @@ def chat(provider, model, messages, system=None, temperature=None, max_tokens=80
                "openrouter": "https://openrouter.ai/api/v1/chat/completions",
                # OpenAI-compatible local server: LM Studio by default, or set LOCAL_BASE_URL (Ollama: http://localhost:11434/v1)
                "local": os.environ.get("LOCAL_BASE_URL", "http://localhost:1234/v1") + "/chat/completions",
-               "groq": "https://api.groq.com/openai/v1/chat/completions"}[provider]
+               "groq": "https://api.groq.com/openai/v1/chat/completions",
+               "nim": "https://integrate.api.nvidia.com/v1/chat/completions"}[provider]  # NVIDIA NIM (build.nvidia.com)
         h = {"Authorization": "Bearer " + KEYS[provider], "content-type": "application/json", "User-Agent": "sai-bench"}
-        try: r = _post(url, h, body)
+        # A local model thinking at length can take many minutes per reply; giving up cancels the generation.
+        to = 1800 if provider == "local" else 300
+        try: r = _post(url, h, body, timeout=to)
         except RuntimeError as e:
             if "temperature" not in str(e): raise
-            body.pop("temperature"); r = _post(url, h, body)
+            body.pop("temperature"); r = _post(url, h, body, timeout=to)
         if "choices" not in r:  # OpenRouter can report upstream errors in a 200 response
             raise RuntimeError(f"{provider}: {json.dumps(r.get('error', r))[:400]}")
         c = r["choices"][0]
