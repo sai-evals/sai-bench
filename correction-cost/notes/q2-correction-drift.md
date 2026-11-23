@@ -284,8 +284,42 @@ Target: `local:qwen3.6-27b` (Qwen 3.6 27B as packaged by LM Studio, run locally 
 Same setup and the same H7 decision rules as Exp 4: measurable default (control turns 2–3 ≤ 2.5), correction
 taken (turn 1 ≥ 4.0), drift-back ≤ 4/10 like Claude, ≥ 6/10 more, 5/10 inconclusive (Sonnet judge).
 
-## Experiment 6 (open models, Groq free tier): written before running, 2026-11-22
+## Groq attempt (abandoned, not counted as an experiment): written before running, 2026-11-22
 
 Targets: `groq:openai/gpt-oss-120b` and `groq:qwen/qwen3.8-27b` (open weights, Groq free tier: 1,000 requests/day,
 8,000 tokens/minute). Same setup and H7 decision rules as Exp 4, except the reply cap is 4,000 tokens (not 8,000)
 to fit Groq's per-minute limit; replies that hit the cap are flagged by the runner.
+
+**Groq outcome:** both smoke tests failed and can't be retried around. The free tier caps a single request at
+8,000 tokens (gpt-oss-120b: "Requested 10620"), and Qwen 3.8 27B may only write 1,000 output tokens a minute.
+Five-turn conversations with long replies don't fit, so no Groq results are used.
+
+## Experiments 6 and 7 (open models, OpenRouter free tier): written before running, 2026-11-22
+
+- Exp 6: `nvidia/nemotron-3.5-super-vl:free` (open weights, 120B mixture-of-experts with 12B active; newer and
+  smaller than Nemotron 3 Ultra, so it shows the effect of size within one family).
+- Exp 7: `baidu/ernie-5.5-flash-preview:free` (open weights, Baidu; a fourth lab).
+
+Same setup as Exp 4 (`trip-pace-plain` pair, rubric v0.2, 10 runs per scenario, max_tokens 8000), judged by Sonnet 5.5
+only, without the Haiku cross-check, to save cost. Same H7 decision rules: measurable default (control turns 2–3 ≤ 2.5),
+correction taken (turn 1 ≥ 4.0), drift-back ≤ 4/10 like Claude, ≥ 6/10 more, 5/10 inconclusive.
+
+## Experiments 8–12 (open models, NVIDIA NIM free endpoints): written before running, 2026-11-22
+
+- Exp 8: `nim:google/gemma-4-31b-it` (Google, 31B dense)
+- Exp 9: `nim:moonshotai/kimi-k3.1-pro` (Moonshot)
+- Exp 10: `nim:mistralai/mistral-large-4-1t-a52b` (Mistral, 1T mixture-of-experts with 52B active)
+- Exp 11: `nim:minimaxai/minimax-m3.1-flash` (MiniMax)
+- Exp 12: `nim:z-ai/glm-5.3-flash` (Z.ai)
+
+Same setup as Exp 6/7 (`trip-pace-plain` pair, rubric v0.2, 10 runs per scenario, max_tokens 8000). From here on the judge is
+Sonnet 5.5 called directly with the Anthropic API key (`anthropic:claude-sonnet-5-5`), not through OpenRouter. Same H7
+decision rules: measurable default (control turns 2–3 ≤ 2.5), correction taken (turn 1 ≥ 4.0), drift-back ≤ 4/10 like
+Claude, ≥ 6/10 more, 5/10 inconclusive.
+
+## Numbering change, 2026-11-22
+
+The local Qwen 3.6 27B run (pre-registered above as Exp 5) was stopped before any conversation finished. A too-short
+request timeout cancelled replies and restarted conversations, and the user then dropped it. It is not counted and is
+left out of the summary. The summary renumbers the later experiments: Nemotron 3.5 Super VL = Exp 5 (above: Exp 6),
+ERNIE 5.5 Flash = Exp 6 (above: Exp 7), the NVIDIA NIM models = Exp 7–11 (above: Exp 8–12).
