@@ -181,7 +181,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
   <section id="s1">
     <div class="shead"><span class="snum">1</span><h2>The question and the goal</h2></div>
     <div class="callout">
-      <p><b>Problem.</b> sai-bench measures how much effort it takes a user to get a model to do what they want. Users often correct a model by giving their preference (e.g. "too packed, I like a slow pace"). We want to know whether the model <b>sticks to the stated preference</b>, or whether the user has to state it again because the model <b>drifts back to its own default a few turns later</b>.</p>
+      <p><b>Problem:</b> sai-bench measures how much effort it takes a user to get a model to do what they want / prefer (e.g. giving the model the correction "too packed, I like a slow pace" for a busy itinerary it recommended). We want to know whether the model <b>sticks to the stated preference</b>, or whether the user has to state it again because the model <b>drifts back to its own default a few turns later</b>.</p>
       <p><b>Question (from <a href="https://github.com/sai-evals/sai-bench/issues/1">#1</a>, Q2).</b> After one explicit correction of a preference, on later turns where that preference applies but isn't specifically mentioned, how often and how far does the model fall back toward the default it shows when never corrected explicitly?</p>
       <p><b>Done when</b> (from #7): we report a drift-back rate per model and per preference over at least 10 runs.</p>
     </div>
