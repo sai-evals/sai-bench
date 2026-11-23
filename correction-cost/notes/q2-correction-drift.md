@@ -262,3 +262,30 @@ That's the same picture as before: a weaker first correction that gets better as
 3. If the two judges then agree, read the drift numbers. Then harden (question 8) or widen to more
    preferences and models (issue #7 plan). Add a non-Anthropic judge before the final table.
 4. Draft PR with these notes and the format lessons for #3.
+
+
+## Experiment 4 (open model): written before running, 2026-11-22
+
+Target: `nvidia/nemotron-3-ultra-550b-a55b:free` (open weights, NVIDIA-hosted free endpoint on OpenRouter).
+Setup identical to Exp 3: `trip-pace-plain` pair, rubric v0.2, Sonnet 5.5 judge (Haiku 5.5 cross-check),
+10 runs per scenario, max_tokens 8000. Smoke test of 1 run per scenario first.
+
+**H7: an open model behaves like the Claude models on a single correction.** Decision rules, fixed now:
+
+- Measurable default: the control's mean on turns 2–3 is ≤ 2.5. If it's higher, the model is already slow by
+  default and drift can't be measured on this scenario. Report that and stop.
+- Correction taken (as T2): the turn-1 mean on the corrected runs is ≥ 4.0 (Sonnet 5.0, Haiku 4.1 in Exp 3).
+- Drift vs Claude (Sonnet judge, same dip rule): drift-back ≤ 4/10 means "like Claude" (Exp 3: Sonnet 3/10,
+  Haiku 3/10); ≥ 6/10 means "drifts more"; 5/10 is inconclusive at 10 runs.
+
+## Experiment 5 (open model, local): written before running, 2026-11-22
+
+Target: `local:qwen3.6-27b` (Qwen 3.6 27B as packaged by LM Studio, run locally on an M5 Max, 32k context).
+Same setup and the same H7 decision rules as Exp 4: measurable default (control turns 2–3 ≤ 2.5), correction
+taken (turn 1 ≥ 4.0), drift-back ≤ 4/10 like Claude, ≥ 6/10 more, 5/10 inconclusive (Sonnet judge).
+
+## Experiment 6 (open models, Groq free tier): written before running, 2026-11-22
+
+Targets: `groq:openai/gpt-oss-120b` and `groq:qwen/qwen3.8-27b` (open weights, Groq free tier: 1,000 requests/day,
+8,000 tokens/minute). Same setup and H7 decision rules as Exp 4, except the reply cap is 4,000 tokens (not 8,000)
+to fit Groq's per-minute limit; replies that hit the cap are flagged by the runner.
