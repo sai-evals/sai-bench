@@ -7,7 +7,7 @@ Usage:
 Reads results/<scenario>/convos__<target>.jsonl, writes judged__<target>__by__<judge>.jsonl
 next to it, and prints the mean score per turn and preference."""
 import argparse, json, os, re, statistics
-from providers import chat
+from providers import chat, LAST
 from runner import TOPIC, REPO, load_scenario, safe
 
 SYSTEM = "You grade one assistant reply against one user preference. Reply with JSON only."
@@ -44,13 +44,17 @@ def history(turns, upto):
 
 
 def parse(text):
-    m = re.search(r"\{.*\}", text, re.S)
-    try:
-        d = json.loads(m.group(0))
-        d["score"] = int(d["score"])
-        return d
-    except Exception:
-        return None
+    """The last JSON object in the reply that has a score. Judges sometimes write one, then a corrected one."""
+    found, dec = None, json.JSONDecoder()
+    for i, ch in enumerate(text):
+        if ch == "{":
+            try:
+                d, _ = dec.raw_decode(text, i)
+                if isinstance(d, dict) and "score" in d:
+                    d["score"] = int(d["score"]); found = d
+            except Exception:
+                pass
+    return found
 
 
 def main():
@@ -75,10 +79,12 @@ def main():
                 for p in scen["preferences"]:
                     prompt = PROMPT.format(question=p["question"], value=p["user_value"], rubric=rub[p["id"]],
                                            history=history(convo["turns"], t["turn"]), reply=t["assistant"])
+                    LAST.clear()
                     text, _ = chat(provider, model, [{"role": "user", "content": prompt}], system=SYSTEM)
                     r = parse(text)
                     g.write(json.dumps({"run": convo.get("run"), "turn": t["turn"], "preference": p["id"],
-                                        "judge": a.judge, "result": r, "raw": None if r else text},
+                                        "judge": a.judge, "result": r, "raw": None if r else text,
+                                        "usage": LAST.get("usage")},
                                        ensure_ascii=False) + "\n")
                     if r:
                         scores.setdefault((t["turn"], p["id"]), []).append(r["score"])

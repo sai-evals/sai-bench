@@ -12,7 +12,7 @@ def _ctx():
     return ssl.create_default_context()
 CTX = _ctx()
 
-ROOT = os.path.dirname(HERE)
+ROOT = os.path.dirname(os.path.dirname(HERE))  # repo root, where README says .env lives
 
 def keys():
     env = os.path.join(ROOT, ".env")
@@ -21,7 +21,8 @@ def keys():
             if "=" in line and not line.lstrip().startswith("#"):
                 k, v = line.strip().split("=", 1); os.environ.setdefault(k.strip(), v.strip().strip('"'))
     return {"openai": os.environ.get("OPENAI_API_KEY", ""), "anthropic": os.environ.get("ANTHROPIC_API_KEY", ""),
-            "google": os.environ.get("GOOGLE_API_KEY", ""), "deepseek": os.environ.get("DEEPSEEK_API_KEY", "")}
+            "google": os.environ.get("GOOGLE_API_KEY", ""), "deepseek": os.environ.get("DEEPSEEK_API_KEY", ""),
+            "openrouter": os.environ.get("OPENROUTER_API_KEY", "")}
 KEYS = keys()
 
 def _post(url, headers, body, tries=5):
@@ -39,9 +40,11 @@ def _post(url, headers, body, tries=5):
             if i < tries - 1: time.sleep(6 * (i + 1)); continue
             raise RuntimeError(str(e))
 
+LAST = {}  # stop_reason and token usage of the last call, where the provider reports them
+
 PROVIDER = {"gpt": "openai", "claude": "anthropic", "gemini": "google", "deepseek": "deepseek"}
 
-def chat(provider, model, messages, system=None, temperature=None, max_tokens=3000, json_mode=False):
+def chat(provider, model, messages, system=None, temperature=None, max_tokens=8000, json_mode=False):
     """messages: [{'role':'user'|'assistant','content':str}]. Returns (text, model_used)."""
     if provider == "anthropic":
         body = {"model": model, "max_tokens": max_tokens, "messages": messages}
@@ -52,19 +55,28 @@ def chat(provider, model, messages, system=None, temperature=None, max_tokens=30
         except RuntimeError as e:
             if "temperature" not in str(e): raise
             body.pop("temperature"); r = _post("https://api.anthropic.com/v1/messages", h, body)
+        LAST.clear(); LAST.update(stop_reason=r.get("stop_reason"), usage=r.get("usage"))
         return "".join(b.get("text", "") for b in r["content"]), r.get("model")
-    if provider in ("openai", "deepseek"):
+    if provider in ("openai", "deepseek", "openrouter"):
         msgs = ([{"role": "system", "content": system}] if system else []) + messages
         body = {"model": model, "messages": msgs}
+        if provider == "openrouter": body["max_tokens"] = max_tokens  # same cap as the anthropic path
         if temperature is not None: body["temperature"] = temperature
         if json_mode: body["response_format"] = {"type": "json_object"}
-        url = "https://api.openai.com/v1/chat/completions" if provider == "openai" else "https://api.deepseek.com/chat/completions"
+        url = {"openai": "https://api.openai.com/v1/chat/completions",
+               "deepseek": "https://api.deepseek.com/chat/completions",
+               "openrouter": "https://openrouter.ai/api/v1/chat/completions"}[provider]
         h = {"Authorization": "Bearer " + KEYS[provider], "content-type": "application/json"}
         try: r = _post(url, h, body)
         except RuntimeError as e:
             if "temperature" not in str(e): raise
             body.pop("temperature"); r = _post(url, h, body)
-        return r["choices"][0]["message"]["content"] or "", r.get("model")
+        if "choices" not in r:  # OpenRouter can report upstream errors in a 200 response
+            raise RuntimeError(f"{provider}: {json.dumps(r.get('error', r))[:400]}")
+        c = r["choices"][0]
+        LAST.clear(); LAST.update(stop_reason="max_tokens" if c.get("finish_reason") == "length" else c.get("finish_reason"),
+                                  usage=r.get("usage"))
+        return c["message"]["content"] or "", r.get("model")
     if provider == "google":
         contents = [{"role": "model" if m["role"] == "assistant" else "user", "parts": [{"text": m["content"]}]} for m in messages]
         body = {"contents": contents}
