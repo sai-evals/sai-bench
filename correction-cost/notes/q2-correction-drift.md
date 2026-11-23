@@ -337,3 +337,7 @@ Same setup as Exp 3, 10 runs per scenario, judged by `anthropic:claude-haiku-5-5
 - Kimi: every corrected turn from turn 2 on scored 5. Its control scores 4.3 at turn 4 ("plan Monday"), so the pooled default (2.8) overstates its default; turns 2–3 give 2.0.
 - MiniMax swings between 3 and 5 rather than sliding back; longest replies so far (about 2.5× Sonnet); asks questions in 13/100 replies.
 - Exp 9 (Mistral Large 4) and Exp 11 (GLM 5.3 Flash) are still running.
+
+## Correction, 2026-11-23: "never recovered" under the Haiku judge
+
+Earlier notes said Nemotron 3 Ultra had the only run that slid back and never recovered (5 → 5 → 3 → 2). That sequence is from the Sonnet judge. Under the Haiku judge (current numbers), 7 of 80 runs dip at turn 2 or 3 and stay down through turn 4 ("stayed down"): Gemma 4 31B 3, MiniMax M3.1 Flash 2, Nemotron 3 Ultra 1 (5 → 3 → 4 → 2), Haiku 5.5 1 (3 → 5 → 2 → 2). Sonnet, Super VL, Kimi and ERNIE: 0. Runs that drop only at turn 4 aren't counted, since there's no later turn to see a recovery.
