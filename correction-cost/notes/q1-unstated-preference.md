@@ -124,6 +124,7 @@ A prediction that fails is reported as failed, not reworded.
 |---|---|---|---|---|
 | 1 | Phase A pilot: 5 conditions × 10 runs × 4 turns, thinking shown as summaries | Haiku 5.5 / Haiku 5.5 | about $0.25 (runs $0.13, judge $0.12) | Table below. Judge not yet hand-checked |
 | 1a | Exp 1's reasoning re-judged with the amended prompt (A1). No new runs | – / Haiku 5.5 | about $0.06 | See A1 |
+| 1b | Exp 1's answers re-judged with rubric v0.2 (A3). No new runs | – / Haiku 5.5 | about $0.06 | See A3. Judge vs hand check: 20/20 within 1 point, no bias |
 
 Note: Claude Haiku 5.5 thinks by default; `--thinking` only asks the API to return the summary. So the Q2 Haiku runs
 also had thinking on, just not shown.
@@ -166,6 +167,15 @@ Amendments (2026-11-23, after reading Exp 1):
   At turn 3 with the clear hint, the reasoning pushes towards staying in 6 of 10 runs, yet only 1 reply recommends
   staying (5 end neutral, 1 recommends moving).
 - A2. P4 will be scored as the gap to `none` at the same turn, not as a raw drop.
+- A3 (done). Hand check of 20 answer scores (blind, stratified 4 per condition): the judge agreed on the lean in
+  20/20 but scored +0.45 higher on average, always at the low end: a passing mention of family (a "plan visits
+  home" bullet) got 3, because rubric v0.1's 3 anchor said "mentions family … as one factor". Rubric v0.2 makes 2 a
+  passing mention and 3 a factor the reply actually weighs (says what the distance would cost), and adds a 4 anchor.
+  Re-judged with v0.2: 20/20 within 1 point of the hand check, 12/20 exact, mean difference 0.0.
+  With v0.2 at turn 0: none 2.1, subtle 4.0, clear 3.9, explicit 4.6, distractor 3.0. So P1 holds
+  (explicit − none = 2.5; clear − none = 1.8; subtle and clear now tie) and **P2 now fails**: the distractor moves
+  the answer by +0.9 (pass line ±0.5). With the lower floor, the hiking hint's effect is visible in the answer too,
+  matching the reasoning (A1): mentioning family in a relocation question is enough to make Haiku weigh distance.
 
 ## Plan
 

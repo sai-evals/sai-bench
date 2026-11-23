@@ -101,7 +101,7 @@ def boot_ci(xs, n=2000, seed=0):
     return means[int(.025 * n)], means[int(.975 * n) - 1]
 
 
-def judge_condition(cond, target, judge, reasoning_only=False):
+def judge_condition(cond, target, judge, reasoning_only=False, answer_only=False):
     scen_id = f"job-offer-family-{cond}"
     scen, rub = load_scenario(scen_id), rubric_sections(scen_id)
     pref = scen["preferences"][0]
@@ -112,21 +112,26 @@ def judge_condition(cond, target, judge, reasoning_only=False):
         return []
     out = os.path.join(d, f"q1judged__{safe(target)}__by__{safe(judge)}.jsonl")
     # --reasoning-only keeps the answer labels already in `out` and re-judges only the reasoning.
-    old = {(r["run"], r["turn"]): r for r in map(json.loads, open(out))} if reasoning_only else {}
+    # --answer-only keeps the reasoning labels and re-judges only the answer.
+    old = {(r["run"], r["turn"]): r for r in map(json.loads, open(out))} if (reasoning_only or answer_only) else {}
     rows = []
     with open(src) as f, open(out, "w") as g:
         for line in f:
             convo = json.loads(line)
             for t in convo["turns"]:
                 prev = old.get((convo.get("run"), t["turn"]))
-                if prev:
+                if prev and reasoning_only:
                     ans, raw_a, use_a = {"score": prev["score"], "lean": prev["lean"], "reason": prev["answer_reason"]}, None, prev["usage"]["answer"]
                 else:
                     ans, raw_a, use_a = ask(judge, ANSWER_PROMPT.format(
                     question=pref["question"], value=pref["user_value"], rubric=rub[pref["id"]],
                     history=history(convo["turns"], t["turn"]), reply=t["assistant"]), "score")
                 think = t.get("thinking")
-                rea, raw_r, use_r = (ask(judge, REASONING_PROMPT.format(hint=scen.get("hint") or "(nothing)", thinking=think),
+                if prev and answer_only:
+                    rea, raw_r, use_r = ({k: prev[k] for k in ("mentions", "relies", "direction")} | {"reason": prev["reasoning_reason"]}
+                                         if prev["mentions"] is not None else None), None, prev["usage"]["reasoning"]
+                else:
+                  rea, raw_r, use_r = (ask(judge, REASONING_PROMPT.format(hint=scen.get("hint") or "(nothing)", thinking=think),
                                          "mentions") if think else (None, None, None))
                 row = {"condition": cond, "run": convo.get("run"), "turn": t["turn"], "judge": judge,
                        "score": int(ans["score"]) if ans and "score" in ans else None,
@@ -154,8 +159,9 @@ def main():
     ap.add_argument("--judge", required=True)
     ap.add_argument("--conditions", nargs="+", default=CONDITIONS)
     ap.add_argument("--reasoning-only", action="store_true", help="keep the existing answer labels; re-judge only the reasoning")
+    ap.add_argument("--answer-only", action="store_true", help="keep the existing reasoning labels; re-judge only the answer")
     a = ap.parse_args()
-    rows = [r for c in a.conditions for r in judge_condition(c, a.target, a.judge, a.reasoning_only)]
+    rows = [r for c in a.conditions for r in judge_condition(c, a.target, a.judge, a.reasoning_only, a.answer_only)]
     print(f"\n{a.target}, judged by {a.judge}")
     print("cond        turn  n   answer  [95% CI]      stay  move  neith   kw   ment  relies")
     for c in a.conditions:
