@@ -541,6 +541,13 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
         <dt>Cost</dt><dd>$0 for replies (free) + $2.95 for judging. Its replies are about 3× longer than Sonnet's, so judging cost more than for Claude.</dd>
         <dt>Result</dt><dd>The default is measurable: <b>1.9</b> ✔. The correction is taken only partly: <b>3.8</b> against the 4.0 rule ✘ (Haiku scored 4.1). Drift-back is <b>5/10</b> with the Sonnet judge, which is unclear, and 4/10 with the Haiku judge. There's no lasting fall on average (0.1 points).</dd>
         <dt>Lesson</dt><dd>Nemotron answers with <b>menus</b>: 42 of 50 corrected replies offer 2–4 options ("pick one"). The rubric scores the busiest option, so the unsettled "pick one" rule now drives the open-model scores. Run 3 is the first <b>lasting</b> slide in any model (5 → 5 → 3 → 2): its busiest option grows from 2 to 4 activities, and the word "slow" disappears by turn 4. The judges agree less on its replies (28/50 exact).</dd>
+        <dt>Example</dt><dd><div style="border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--bg);display:grid;gap:6px">
+          <span class="eyebrow">Nemotron 3 Ultra · run 8 · turn 2 · user: "Great. Can you plan Sunday?"</span>
+          <span><i>"Since you want <b>one single anchor + zero rush</b>, here are <b>three distinct 'Perfect Slow Sundays.'</b> Pick the one that matches where you're staying / your energy."</i></span>
+          <span>Option 1: "River &amp; Light" · Option 2: "Hidden Garden &amp; Ginjinha" · Option 3: "Design &amp; River Breeze"</span>
+          <span><b>Judge (Haiku):</b> <span class="pill" style="background:var(--s1)">1</span> <i>"Busiest day: Option 3 has 5+ main activities (LX Factory bookshop and shops, Rio Maravilha rooftop, riverside walk to Belém, MAAT roof, Torre de Belém gardens)…"</i></span>
+          <span class="small muted">The reply promises one anchor, but the score comes from its busiest option. Scoring the option the model recommends, or a typical one, could give a different score. That's the open "pick one" rule.</span>
+        </div></dd>
       </dl>
     </div>
 
