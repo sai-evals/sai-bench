@@ -613,6 +613,8 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
  *   until it's reverted. Enter adds a line break inside the passage (shown as ↵ when added or removed).
  * Comments: select text, press "Comment", type. The text gets a yellow highlight; click it to edit or resolve.
  *   A selection is clipped to the passage it starts in.
+ * Export PDF: opens the print dialog (choose "Save as PDF"). The PDF leaves out the review controls, prints in the
+ *   light theme with sections expanded, and ends with a "Review notes" appendix of the edits and comments.
  */
 function rvReview(opt) {
   "use strict";
@@ -668,6 +670,20 @@ body.rv-editing .rv-banner { display: block; }
 .rv-chg-sec { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.7; }
 .rv-chg-body { cursor: pointer; }
 .rv-chg button { justify-self: start; }
+.rv-print-notes { display: none; }
+@media print {
+  .rv-bar, .rv-drawer, .rv-pop, .rv-cbtn, .rv-banner, .rv-sgbtn, .theme-toggle, .topbar { display: none !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body.rv-editing [data-sg]:hover, [data-sg]:focus { background: none !important; outline: none !important; }
+  .rv-print-notes { display: block; break-before: page; margin-top: 24px; font-size: 12px; }
+  .rv-print-notes h2 { font-size: 18px; margin: 0 0 8px; }
+  .rv-print-notes h3 { font-size: 14px; margin: 14px 0 6px; }
+  .rv-print-notes ol { padding-left: 1.2em; }
+  .rv-print-notes li { margin-bottom: 8px; break-inside: avoid; }
+  .rv-print-notes .rv-sec { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.7; }
+  tr, figure, img, svg, .rv-chg { break-inside: avoid; }
+  h1, h2, h3 { break-after: avoid; }
+}
 /* Hidden means hidden: page styles that set display on these (display: grid, inline-flex) must not override it. */
 .rv-pop[hidden], .rv-cbtn[hidden], .rv-drawer[hidden], .rv-sgbtn[hidden], .rv-banner[hidden] { display: none !important; }
 `;
@@ -868,8 +884,9 @@ body.rv-editing .rv-banner { display: block; }
   const bUndo = btn("↶", "Undo (Cmd/Ctrl+Z)"), bRedo = btn("↷", "Redo (Cmd/Ctrl+Shift+Z)");
   const bHide = btn("Hide deletions", "Show only the new text");
   const bList = btn("Edits & comments", "List every suggested edit and comment");
+  const bPdf = btn("Export PDF", "Print or save as PDF, with a Review notes appendix");
   bEdit.setAttribute("aria-pressed", "false");
-  [bEdit, bUndo, bRedo, bHide, bList].forEach((b) => bar.appendChild(b));
+  [bEdit, bUndo, bRedo, bHide, bList, bPdf].forEach((b) => bar.appendChild(b));
   const banner = document.createElement("div");
   banner.className = "rv-banner"; banner.setAttribute("role", "status");
   banner.innerHTML = "<b>Suggesting.</b> Click any passage and type: deletions show in red, additions in green. " +
@@ -1018,6 +1035,39 @@ body.rv-editing .rv-banner { display: block; }
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, () => window.prompt("Copy:", text));
     else window.prompt("Copy:", text);
   };
+  // ---- PDF: print in the light theme with everything expanded, plus an appendix of the review notes
+  let printState = null;
+  function beforePrint() {
+    if (printState) return;
+    const ae = document.activeElement; if (ae && ae.dataset && ae.dataset.sg) ae.blur();
+    const rootEl = document.documentElement, closed = [...document.querySelectorAll("details:not([open])")];
+    printState = { theme: rootEl.getAttribute("data-theme"), closed: closed };
+    rootEl.setAttribute("data-theme", "light");
+    closed.forEach((d) => (d.open = true));
+    pop.hidden = true; cbtn.hidden = true; drawer.hidden = true;
+    const e = edits(), c = commentList();
+    if (e.length || c.length) {
+      const box = document.createElement("section");
+      box.className = "rv-print-notes";
+      let h = "<h2>Review notes</h2>";
+      if (e.length) h += "<h3>Suggested edits</h3><ol>" + e.map((x) => '<li><div class="rv-sec">' + esc(x.section) + "</div>" + diff(x.before, x.after === "(deleted)" ? "" : x.after) + "</li>").join("") + "</ol>";
+      if (c.length) h += "<h3>Comments</h3><ol>" + c.map((x) => '<li><div class="rv-sec">' + esc(x.section) + '</div><i>“' + esc(x.quote) + "”</i><br>" + esc(x.text) + "</li>").join("") + "</ol>";
+      box.innerHTML = h;
+      root.appendChild(box);
+      printState.box = box;
+    }
+  }
+  function afterPrint() {
+    if (!printState) return;
+    const rootEl = document.documentElement;
+    if (printState.theme == null) rootEl.removeAttribute("data-theme"); else rootEl.setAttribute("data-theme", printState.theme);
+    printState.closed.forEach((d) => (d.open = false));
+    if (printState.box) printState.box.remove();
+    printState = null;
+  }
+  window.addEventListener("beforeprint", beforePrint);
+  window.addEventListener("afterprint", afterPrint);
+  bPdf.onclick = () => { beforePrint(); window.print(); setTimeout(afterPrint, 500); };
   refresh();
   return { edits: edits, comments: commentList, markdown: markdown };
 }
