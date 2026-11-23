@@ -22,10 +22,12 @@ def keys():
                 k, v = line.strip().split("=", 1); os.environ.setdefault(k.strip(), v.strip().strip('"'))
     return {"openai": os.environ.get("OPENAI_API_KEY", ""), "anthropic": os.environ.get("ANTHROPIC_API_KEY", ""),
             "google": os.environ.get("GOOGLE_API_KEY", ""), "deepseek": os.environ.get("DEEPSEEK_API_KEY", ""),
-            "openrouter": os.environ.get("OPENROUTER_API_KEY", "")}
+            "openrouter": os.environ.get("OPENROUTER_API_KEY", ""),
+            "local": os.environ.get("LOCAL_API_KEY", "local"),  # a local server (LM Studio, Ollama) needs no real key
+            "groq": os.environ.get("GROQ_API_KEY", "")}
 KEYS = keys()
 
-def _post(url, headers, body, tries=5):
+def _post(url, headers, body, tries=8):
     for i in range(tries):
         try:
             req = urllib.request.Request(url, data=json.dumps(body).encode(), headers=headers, method="POST")
@@ -34,7 +36,10 @@ def _post(url, headers, body, tries=5):
         except urllib.error.HTTPError as e:
             msg = e.read().decode()[:400]
             if e.code in (408, 429, 500, 502, 503, 529) and i < tries - 1:
-                time.sleep(6 * (i + 1)); continue
+                # Free tiers rate-limit per minute: wait as long as the provider asks (Retry-After), else back off.
+                try: wait = float(e.headers.get("retry-after") or 0)
+                except ValueError: wait = 0
+                time.sleep(min(max(wait, 6 * (i + 1)), 90)); continue
             raise RuntimeError(f"HTTP {e.code}: {msg}")
         except (urllib.error.URLError, TimeoutError) as e:
             if i < tries - 1: time.sleep(6 * (i + 1)); continue
@@ -57,16 +62,21 @@ def chat(provider, model, messages, system=None, temperature=None, max_tokens=80
             body.pop("temperature"); r = _post("https://api.anthropic.com/v1/messages", h, body)
         LAST.clear(); LAST.update(stop_reason=r.get("stop_reason"), usage=r.get("usage"))
         return "".join(b.get("text", "") for b in r["content"]), r.get("model")
-    if provider in ("openai", "deepseek", "openrouter"):
+    if provider in ("openai", "deepseek", "openrouter", "local", "groq"):
         msgs = ([{"role": "system", "content": system}] if system else []) + messages
         body = {"model": model, "messages": msgs}
-        if provider == "openrouter": body["max_tokens"] = max_tokens  # same cap as the anthropic path
+        if provider in ("openrouter", "local"): body["max_tokens"] = max_tokens  # same cap as the anthropic path
+        # Groq's free tier allows ~8k tokens a minute, so its reply cap is lower (set GROQ_MAX_TOKENS to change it).
+        if provider == "groq": body["max_tokens"] = min(max_tokens, int(os.environ.get("GROQ_MAX_TOKENS", "4000")))
         if temperature is not None: body["temperature"] = temperature
         if json_mode: body["response_format"] = {"type": "json_object"}
         url = {"openai": "https://api.openai.com/v1/chat/completions",
                "deepseek": "https://api.deepseek.com/chat/completions",
-               "openrouter": "https://openrouter.ai/api/v1/chat/completions"}[provider]
-        h = {"Authorization": "Bearer " + KEYS[provider], "content-type": "application/json"}
+               "openrouter": "https://openrouter.ai/api/v1/chat/completions",
+               # OpenAI-compatible local server: LM Studio by default, or set LOCAL_BASE_URL (Ollama: http://localhost:11434/v1)
+               "local": os.environ.get("LOCAL_BASE_URL", "http://localhost:1234/v1") + "/chat/completions",
+               "groq": "https://api.groq.com/openai/v1/chat/completions"}[provider]
+        h = {"Authorization": "Bearer " + KEYS[provider], "content-type": "application/json", "User-Agent": "sai-bench"}
         try: r = _post(url, h, body)
         except RuntimeError as e:
             if "temperature" not in str(e): raise
