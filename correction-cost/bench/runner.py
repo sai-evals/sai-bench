@@ -23,16 +23,17 @@ def safe(target):
     return target.replace(":", "_").replace("/", "_")
 
 
-def run_once(scen, target):
+def run_once(scen, target, thinking=False):
     provider, model = target.split(":", 1)
     messages, turns, used = [], [], None
     for i, t in enumerate(scen["turns"]):
         messages.append({"role": "user", "content": t["user"]})
         LAST.clear()
-        text, used = chat(provider, model, messages, system=scen.get("system"))
+        text, used = chat(provider, model, messages, system=scen.get("system"), thinking=thinking)
         messages.append({"role": "assistant", "content": text})
         turns.append({"turn": i, "user": t["user"], "assistant": text, "corrects": t.get("corrects"),
-                      "stop_reason": LAST.get("stop_reason"), "usage": LAST.get("usage")})
+                      "stop_reason": LAST.get("stop_reason"), "usage": LAST.get("usage"),
+                      "thinking": LAST.get("thinking")})
         if LAST.get("stop_reason") == "max_tokens":
             print(f"  warning: turn {i} hit max_tokens, the reply is cut off")
     return {"scenario": scen["id"], "scenario_version": scen.get("version"), "target": target,
@@ -44,6 +45,7 @@ def main():
     ap.add_argument("--scenario", required=True)
     ap.add_argument("--target", required=True)
     ap.add_argument("--n", type=int, default=1)
+    ap.add_argument("--thinking", action="store_true", help="turn on Claude's adaptive thinking (summarized) and keep each turn's reasoning")
     ap.add_argument("--fresh", action="store_true", help="replace earlier transcripts for this scenario and target instead of appending")
     a = ap.parse_args()
     scen = load_scenario(a.scenario)
@@ -52,7 +54,7 @@ def main():
     out = os.path.join(out_dir, f"convos__{safe(a.target)}.jsonl")
     with open(out, "w" if a.fresh else "a") as f:
         for k in range(a.n):
-            rec = run_once(scen, a.target)
+            rec = run_once(scen, a.target, thinking=a.thinking)
             rec["run"] = k
             f.write(json.dumps(rec, ensure_ascii=False) + "\n")
             f.flush()  # so a long run can be watched while it goes
