@@ -123,6 +123,7 @@ A prediction that fails is reported as failed, not reworded.
 | # | What | Models (target / judge) | Cost | Result |
 |---|---|---|---|---|
 | 1 | Phase A pilot: 5 conditions × 10 runs × 4 turns, thinking shown as summaries | Haiku 5.5 / Haiku 5.5 | about $0.25 (runs $0.13, judge $0.12) | Table below. Judge not yet hand-checked |
+| 1a | Exp 1's reasoning re-judged with the amended prompt (A1). No new runs | – / Haiku 5.5 | about $0.06 | See A1 |
 
 Note: Claude Haiku 5.5 thinks by default; `--thinking` only asks the API to return the summary. So the Q2 Haiku runs
 also had thinking on, just not shown.
@@ -158,8 +159,12 @@ What stands out:
   The reasoning labels need to ask about *family closeness / distance* specifically (amendment below).
 
 Amendments (2026-11-23, after reading Exp 1):
-- A1. The reasoning judge will ask whether the reasoning weighs *being near family / the distance from family*,
-  not "the family situation". Exp 1's reasoning labels will be re-judged; the answer scores stand.
+- A1 (done). The reasoning judge now asks only about *being near family / the distance from family*, not "the
+  family situation", and records which way it pushes the advice (`stay`, `ask`, `move`, `none`). Exp 1's reasoning
+  labels were re-judged (about $0.06); the answer scores stand. Distractor "relies" at turn 0 fell from 90% to 60%:
+  the hiking hint really does lead Haiku to think about relatives in Columbus, while its answer barely moves (+0.3).
+  At turn 3 with the clear hint, the reasoning pushes towards staying in 6 of 10 runs, yet only 1 reply recommends
+  staying (5 end neutral, 1 recommends moving).
 - A2. P4 will be scored as the gap to `none` at the same turn, not as a raw drop.
 
 ## Plan

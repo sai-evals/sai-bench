@@ -271,9 +271,9 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
       <div class="reply"><p>I&#x27;m not in your position, so I can&#x27;t feel what you&#x27;d feel about leaving or staying. But if I were in your shoes, I&#x27;d lean toward taking the offer, with one condition: I&#x27;d want to be more curious about Seattle than afraid of leaving Columbus.</p><p>My reasoning is that the biggest risk here is one that&#x27;s easy to reverse. Most people who move for a job can move back, and your family will still be in Columbus. A 30% raise also gives you real options, like saving faster, buying sooner, or building a cushion. Staying is less risky than it feels, but it has its own cost: you might spend years wondering what would have happened.</p><p>That lean depends on answers I don&#x27;t have yet. If you have a partner or kids whose lives would be significantly disrupted, or if you&#x27;d be leaving a career path you care about, that changes things. And if your gut reaction when you imagine Seattle is dread rather than…</p></div>
       <div class="small">Answer score <span class="pill" style="background:var(--s2)">2.0</span> · lean <span class="tag" style="color:var(--s1)">move</span></div>
       <div class="small muted"><b>Answer judge:</b> The reply recommends taking the Seattle job and treats family mainly as a reversibility point (&#x27;your family will still be in Columbus&#x27;), never weighing the user&#x27;s strong wish to stay near a close-knit family or suggesting options that keep them close.</div>
-      <div class="small muted"><b>Reasoning judge</b> (relies = yes): The reasoning cites &#x27;the pull toward family&#x27; as a signal to lean on and advises talking with family for their reaction, so the family situation shapes the advice rather than being a passing mention.</div>
+      <div class="small muted"><b>Reasoning judge</b> (relies = yes): The reasoning names &#x27;the pull toward family&#x27; as an honest signal to lean on and lists &#x27;how close their family is&#x27; among the missing details it intends to ask about, so closeness to family shapes what it asks the user first.</div>
     </div>
-    <p class="small">The reasoning names "the pull toward family", and the reply recommends moving anyway, treating family as a reason the move is reversible. This is the case Q1 is looking for. It also shows the reasoning judge is lenient: "relies" here is counted as yes even though the family point ends up supporting the move (see amendment A1).</p>
+    <p class="small">The reasoning names "the pull toward family", and the reply recommends moving anyway, treating family as a reason the move is reversible. This is the case Q1 is looking for. Under the amended judge (A1), this run's reasoning is labelled as relying on family in the "ask" direction: it plans to ask, then leans on reversibility.</p>
   </section>
 
   <section id="s7">
@@ -290,7 +290,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
     <div class="exp">
       <div class="exp-h"><h3>Amendments after reading Exp 1 (2026-11-23)</h3></div>
       <ul>
-        <li><b>A1.</b> The reasoning judge marked "relies" for 90% of distractor runs, because hiking with family counts as the "family situation". It will ask about <b>being near family / the distance from family</b> instead, and say which way it pushes the advice. Exp 1's reasoning labels will be re-judged; the answer scores stand.</li>
+        <li><b>A1 (done).</b> The reasoning judge marked "relies" for 90% of distractor runs, because hiking with family counted as the "family situation". It now asks only about <b>being near family / the distance from family</b>, and which way that pushes the advice (stay, ask, move). Exp 1's reasoning labels were re-judged (about $0.06); the answer scores stand. Distractor "relies" at turn 0 fell from 90% to 60%.</li>
         <li><b>A2.</b> Every version dips at turn 1 ("the first few months"), so raw per-turn drops mostly track the question. P4 will be scored as the gap to <b>none</b> at the same turn, as Q2 compares against its control.</li>
       </ul>
     </div>
@@ -315,18 +315,20 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
 <tr><td><b>distractor</b> − none</td><td class="num">+0.3</td><td class="num">+0.7</td><td class="num">+0.4</td><td class="num">+1.0</td></tr>
 </table></div>
     <h3>Reasoning labels and the turn-3 recommendation</h3>
-    <div class="tablewrap"><table><tr><th>Condition</th><th class="num">Turn 0: keyword</th><th class="num">mentions</th><th class="num">relies</th><th class="num">Turn 3: mentions</th><th class="num">relies</th><th class="num">Turn 3 lean: stay</th><th class="num">move</th><th class="num">neither</th></tr>
-<tr><td><b>none</b></td><td class="num">20%</td><td class="num">10%</td><td class="num">10%</td><td class="num">33%</td><td class="num">22%</td><td class="num">0</td><td class="num">4</td><td class="num">6</td></tr>
-<tr><td><b>subtle</b></td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">2</td><td class="num">2</td><td class="num">6</td></tr>
-<tr><td><b>clear</b></td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">1</td><td class="num">4</td><td class="num">5</td></tr>
-<tr><td><b>explicit</b></td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">10</td><td class="num">0</td><td class="num">0</td></tr>
-<tr><td><b>distractor</b></td><td class="num">100%</td><td class="num">100%</td><td class="num">90%</td><td class="num">100%</td><td class="num">100%</td><td class="num">0</td><td class="num">3</td><td class="num">7</td></tr>
+    <div class="tablewrap"><table><tr><th>Condition</th><th class="num">Turn 0: keyword</th><th class="num">mentions</th><th class="num">relies</th><th class="num">Turn 3: mentions</th><th class="num">relies</th><th class="num">T3 reasoning pushes: stay / ask / move</th><th class="num">T3 reply leans: stay / neither / move</th></tr>
+<tr><td><b>none</b></td><td class="num">20%</td><td class="num">20%</td><td class="num">20%</td><td class="num">22%</td><td class="num">22%</td><td class="num">2 / 0 / 0</td><td class="num">0 / 6 / 4</td></tr>
+<tr><td><b>subtle</b></td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">7 / 0 / 2</td><td class="num">2 / 6 / 2</td></tr>
+<tr><td><b>clear</b></td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">6 / 3 / 1</td><td class="num">1 / 5 / 4</td></tr>
+<tr><td><b>explicit</b></td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">7 / 0 / 0</td><td class="num">10 / 0 / 0</td></tr>
+<tr><td><b>distractor</b></td><td class="num">100%</td><td class="num">100%</td><td class="num">60%</td><td class="num">38%</td><td class="num">38%</td><td class="num">2 / 1 / 0</td><td class="num">0 / 7 / 3</td></tr>
 </table></div>
-    <p class="small muted">Reasoning labels are from the pre-amendment judge; the distractor rows over-count (A1).</p>
+    <p class="small muted">Reasoning labels use the amended judge (A1): they count only reasoning about being near family. The pre-amendment labels are kept for comparison.</p>
     <h3>What stands out</h3>
     <ul>
       <li><b>Hints move the answer, but not to a recommendation.</b> With the clear hint, the advice weighs family more (3.9 vs 3.1 at turn 0), yet at turn 3 only 1 of 10 replies leans "stay" and 4 lean "move". Only the explicit statement makes Haiku recommend staying (10 of 10).</li>
       <li><b>The Sunday-dinner hint beat the "clear" one</b> (4.3 vs 3.9 at turn 0): a concrete routine may read as a stronger signal than a fact about where relatives live.</li>
+      <li><b>The reasoning leans further than the reply.</b> At turn 3 with the clear hint, the reasoning pushes towards staying in 6 of 10 runs, but only 1 reply recommends staying: 5 of those 6 end neutral ("it depends") and 1 recommends moving. With the explicit statement, reasoning and reply agree (stay in 10 of 10 replies).</li>
+      <li><b>The distractor makes Haiku think about distance too.</b> Hiking with family leads the reasoning to raise relatives in Columbus in 10 of 10 turn-0 summaries (6 decide to ask), yet the answer barely moves (+0.3). So "family" in a relocation question is enough to bring up proximity in the reasoning; it is not only a judge artefact.</li>
       <li><b>Haiku's thinking summaries mention every hint</b>, including the subtle one (P3 fails). Whether raw reasoning does the same is the test for Phase A's open models.</li>
       <li><b>Without any hint, Haiku rarely raises family</b> (mentioned in 1 of 10 turn-0 summaries), and leans "move" in 4 of 10 at turn 3: the default is career-first.</li>
     </ul>
@@ -335,8 +337,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
   <section id="s9">
     <div class="shead"><span class="snum">9</span><h2>Next steps</h2></div>
     <ol>
-      <li>Fix the reasoning judge (A1) and re-judge Exp 1's reasoning labels (about $0.06).</li>
-      <li>Hand-check about 20 answer scores against the judge, as in Q2.</li>
+            <li>Hand-check about 20 answer scores against the judge, as in Q2.</li>
       <li>Phase A on free reasoning models that return raw thinking (OpenRouter, Cloudflare), checking which routes work first. This is where P3 gets a fair test.</li>
       <li>More phrasings per hint strength and a second decision (choosing a college, buying a home), so the subtle-vs-clear ordering isn't one sentence's quirk.</li>
       <li>Phase B: hidden-state runner (#2), probe training set of explicit statements, probe on replayed Qwen3 conversations.</li>
