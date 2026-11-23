@@ -323,3 +323,17 @@ The local Qwen 3.6 27B run (pre-registered above as Exp 5) was stopped before an
 request timeout cancelled replies and restarted conversations, and the user then dropped it. It is not counted and is
 left out of the summary. The summary renumbers the later experiments: Nemotron 3.5 Super VL = Exp 5 (above: Exp 6),
 ERNIE 5.5 Flash = Exp 6 (above: Exp 7), the NVIDIA NIM models = Exp 7–11 (above: Exp 8–12).
+
+## Experiments 7, 8 and 10 results (NVIDIA NIM, Haiku judge), 2026-11-23
+
+Same setup as Exp 3, 10 runs per scenario, judged by `anthropic:claude-haiku-5-5`. No failed runs, no cut-off replies, every judge answer readable. Judging cost about $0.23 for the three models.
+
+| Exp | Model | Control t2–3 | Turn 1 | Turn 1 scored 5 | Drift-back | Pre-registered reading |
+|---|---|---|---|---|---|---|
+| 7 | Gemma 4 31B | 1.7 ✔ | 4.7 ✔ | 7/10 | 6/10 | more than Claude (≥ 6/10); same as Haiku 5.5 under this judge |
+| 8 | Kimi K3.1 Pro | 2.0 ✔ | 4.8 ✔ | 9/10 | 0/10 | like Claude |
+| 10 | MiniMax M3.1 Flash | 1.1 ✔ | 3.8 ✘ | 4/10 | 7/10 | correction not fully taken, so drift isn't read cleanly |
+
+- Kimi: every corrected turn from turn 2 on scored 5. Its control scores 4.3 at turn 4 ("plan Monday"), so the pooled default (2.8) overstates its default; turns 2–3 give 2.0.
+- MiniMax swings between 3 and 5 rather than sliding back; longest replies so far (about 2.5× Sonnet); asks questions in 13/100 replies.
+- Exp 9 (Mistral Large 4) and Exp 11 (GLM 5.3 Flash) are still running.
