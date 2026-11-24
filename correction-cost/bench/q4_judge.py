@@ -23,13 +23,16 @@ TURNS = (1, 2, 3)
 SYSTEM = "You score one assistant reply. Reply with JSON only."
 
 
+PREFIX = "lisbon4"  # tokyo4 = Exp 3 (second city); set by --prefix
+
+
 def rubric():
-    text = open(os.path.join(TOPIC, "scenarios", "lisbon4-u-control", "rubric.md")).read()
+    text = open(os.path.join(TOPIC, "scenarios", f"{PREFIX}-u-control", "rubric.md")).read()
     head, *parts = re.split(r"^## +", text, flags=re.M)
     return head.split("\n", 2)[-1].strip(), {p.split("\n", 1)[0].strip(): p.split("\n", 1)[1].strip() for p in parts}
 
 
-INTRO, SECTIONS = rubric()
+INTRO, SECTIONS = None, None
 ONE = """A user is planning a trip with an assistant. User messages so far:
 {users}
 
@@ -97,7 +100,7 @@ def tag(s):
 
 
 def path(arm, target, judge=None):
-    d = os.path.join(REPO, "results", f"lisbon4-{arm}")
+    d = os.path.join(REPO, "results", f"{PREFIX}-{arm}")
     return os.path.join(d, f"convos__{tag(target)}.jsonl") if judge is None else \
         os.path.join(d, f"q4judged__{tag(target)}__by__{tag(judge)}.jsonl")
 
@@ -168,7 +171,8 @@ def report(target, judge):
         p = "pace" if a == "pace-up" else a
         d, lo, hi = boot(vals(f"u-{a}", p, "separate", (1,)), vals("u-control", p, "separate", (1,)))
         print(f"  {a:<8} {p}: " + ("-" if d is None else f"{d:+.2f} [{lo:+.2f}, {hi:+.2f}]"))
-    json.dump(res, open(os.path.join(REPO, "results", f"q4_spillover__{tag(target)}__by__{tag(judge)}.json"), "w"), indent=1)
+    pre = "" if PREFIX == "lisbon4" else PREFIX + "_"
+    json.dump(res, open(os.path.join(REPO, "results", f"q4_spillover__{pre}{tag(target)}__by__{tag(judge)}.json"), "w"), indent=1)
 
 
 def main():
@@ -176,7 +180,11 @@ def main():
     ap.add_argument("--target", required=True)
     ap.add_argument("--judge", default="anthropic:claude-haiku-5-5")
     ap.add_argument("--report", action="store_true")
+    ap.add_argument("--prefix", default="lisbon4", choices=["lisbon4", "tokyo4"])
     a = ap.parse_args()
+    global PREFIX, INTRO, SECTIONS
+    PREFIX = a.prefix
+    INTRO, SECTIONS = rubric()
     if a.judge.startswith("openrouter"):
         sys.exit("The judge runs through the Anthropic API, never OpenRouter.")
     if not a.report:

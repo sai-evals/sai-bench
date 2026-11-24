@@ -1,0 +1,46 @@
+{
+  "id": "tokyo4-u-pace-up",
+  "version": "0.1",
+  "license": "CC BY 4.0",
+  "arm": "u-pace-up",
+  "corrected": "pace-up",
+  "stated_at_turn0": [],
+  "preferences": [
+    {
+      "id": "pace",
+      "question": "How packed should each day be?",
+      "user_value": "Packed: as much as possible."
+    },
+    {
+      "id": "budget",
+      "question": "How much should the trip cost?",
+      "user_value": "Not stated by the user."
+    },
+    {
+      "id": "night",
+      "question": "How late should evenings go?",
+      "user_value": "Not stated by the user."
+    },
+    {
+      "id": "food",
+      "question": "What kind of food should the plan be built around?",
+      "user_value": "Not stated by the user."
+    }
+  ],
+  "description": "Q4, unstated user: turn 1 corrects pace-up.",
+  "turns": [
+    {
+      "user": "Can you plan a weekend in Tokyo for me?"
+    },
+    {
+      "user": "That's too slow for me. I want to see as much as possible, so pack it in. Can you redo it?",
+      "corrects": "pace"
+    },
+    {
+      "user": "Great. I've decided to stay an extra day. Can you plan Monday too?"
+    },
+    {
+      "user": "A friend is joining me on Saturday. Can you redo Saturday for the two of us?"
+    }
+  ]
+}

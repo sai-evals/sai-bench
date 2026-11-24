@@ -76,6 +76,7 @@ point in at least 18 of 20.
 | # | What | Model | Cost | Result |
 |---|---|---|---|---|
 | 1 | 14 arms × 10 runs, separate + joint scoring | Haiku 5.5 (target and judge) | about $1 | 140 conversations, 0 failed, 0 cut off; 2,100 judge calls, 0 unparsed. Results below |
+| 3 | Tokyo: the same 14 arms × 10 runs | Haiku 5.5 (target and judge) | about $1 | 140 conversations, 0 failed. Results at the end |
 
 ## Results (Exp 1, Haiku 5.5, 2026-11-24)
 
@@ -135,3 +136,66 @@ Joint scoring (all four in one call) gives nearly the same tables (in `results/q
 
 Caveats: one model, one scenario, Haiku judging Haiku. Budget's default was already low, so its correction was small.
 
+
+## Experiment 3: a second city (Tokyo), written before running (2026-11-24)
+
+Why: Exp 1 is one scenario. "Slow means quiet" could be about Lisbon plans (fado evenings, Bairro Alto bars) rather than
+about what "slow pace" means to the model.
+
+`tokyo4-<arm>` (`bench/q4_scenarios.py --city tokyo`): the same 14 arms and the same turns, with "Can you plan a weekend in
+Tokyo for me?". Pace and night rubrics unchanged (the fado example swapped for a jazz bar); budget and food anchors in
+Tokyo terms (¥1,500 meals, ramen counters vs omakase; ramen and tonkatsu vs natto, offal yakitori, a yokocho crawl).
+Haiku 5.5 target and judge, 10 runs per arm, about $1. `q4_judge.py --prefix tokyo4`.
+
+Predictions:
+- **T1, slow → earlier nights replicates.** Pace → night spillover ≤ −0.3 with a CI below 0, for the unstated user and for the
+  mixed user.
+- **T2, cheaper → earlier nights replicates.** Budget → night < 0 for the mixed user, CI below 0.
+- **T3, same pattern.** At least 8 of the 12 unstated pairs have the same sign as in Lisbon (pairs within ±0.1 in either city
+  count as matching).
+- **T4, the corrections work.** At turn 1, pace, night and food move at least 1.5 points down (unstated user), as in Lisbon.
+
+### Experiment 3 results (Tokyo, Haiku 5.5, 2026-11-24)
+
+140 conversations, 0 failed. Hand check (Claude, blind, 8 scores on the new budget and food anchors): **8/8 within 1 point**,
+2 exact. The misses lean one way: the judge scores food one point higher (yakitori and Tsukiji street food read as
+"traditional", 4, where the hand score is "approachable classics", 3) and splurge plans one point lower. A constant
+offset cancels in spillover (a difference between arms), but Tokyo's food default (3.7) should not be compared with Lisbon's (3.1).
+
+**Defaults** (unstated control, turns 1–3): pace 4.6, budget 2.2, night 2.6, food 3.7 (Lisbon: 4.3, 2.2, 2.9, 3.1).
+
+**Spillover, separate scoring** (corrected minus control, turns 1–3, [95% CI]; Lisbon in brackets after the arrow):
+
+Unstated user:
+
+| Corrected → | pace | budget | night | food |
+|---|---|---|---|---|
+| pace (slower) | **−2.93** | −0.40 [−0.7, −0.1] (Lisbon −0.30) | **−0.67 [−1.1, −0.3]** (−0.60) | **−0.80 [−1.2, −0.4]** (−0.50) |
+| budget (cheaper) | −0.10 (+0.40) | **−1.17** | −0.30 [−0.7, +0.1] (−0.43) | −0.20 (−0.20) |
+| night (earlier) | −0.13 (−0.03) | +0.07 (+0.07) | **−1.63** | −0.10 (−0.03) |
+| food (more familiar) | +0.00 (−0.30) | +0.10 (+0.27) | **−0.50 [−0.8, −0.2]** (−0.53) | **−2.17** |
+| pace-up | **+0.40** | +0.13 (+0.17) | **+0.87 [+0.4, +1.3]** (+0.63) | +0.10 (+0.00) |
+
+Mixed-values user:
+
+| Corrected → | pace | budget | night | food |
+|---|---|---|---|---|
+| pace (slower) | **−2.33** | −0.30 [−0.7, +0.1] (+0.00) | **−0.63 [−0.9, −0.3]** (−0.73) | +0.07 (+0.00) |
+| budget (cheaper) | +0.57 [+0.2, +0.9] (−0.27) | **−1.30** | +0.03 (−0.43) | −0.10 (−0.40) |
+| night (earlier) | −0.30 [−0.6, +0.0] (−0.37) | +0.10 (−0.10) | **−2.33** | −0.03 (+0.07) |
+| food (more familiar) | −0.27 (+0.13) | −0.27 [−0.5, +0.0] (−0.17) | +0.20 (−0.07) | **−2.23** |
+
+Joint scoring again gives nearly the same tables.
+
+Predictions, checked as written:
+- **T1 holds.** Pace → night −0.67 [−1.1, −0.3] (unstated) and −0.63 [−0.9, −0.3] (mixed), the same size as in Lisbon.
+- **T2 fails.** Budget → night for the mixed user is +0.03 (Lisbon −0.43). "Cheaper" doesn't cut the nights short in Tokyo,
+  where cheap late nights (izakaya, nomihodai, 2 am ramen) are the default budget plan.
+- **T3 holds.** 12 of 12 unstated pairs match: 9 have the same sign, and 3 are within ±0.1 in one city (budget → pace, night → pace,
+  food → pace), which the pass line counts as matching.
+- **T4 holds.** At turn 1: pace −3.4, night −2.2, food −2.1.
+
+**What it adds.** "Slow pace means quiet evenings" is not about Lisbon: it replicates in Tokyo at the same size, for both
+users, and so does "familiar food means earlier nights" (unstated user) and "pack it in means later nights". The budget
+couplings are city-specific: in Lisbon "cheaper" also meant earlier nights and simpler food; in Tokyo it doesn't, and it
+makes the mixed user's days busier (+0.57 pace: free walks replace paid sights, as in Lisbon's unstated user).
