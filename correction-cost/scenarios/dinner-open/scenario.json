@@ -1,0 +1,40 @@
+{
+  "id": "dinner-open",
+  "version": "0.1",
+  "license": "CC BY 4.0",
+  "preferences": [
+    {
+      "id": "diet",
+      "question": "What can the guests eat?",
+      "user_value": "Not stated by the user."
+    },
+    {
+      "id": "guests",
+      "question": "How many people is it for?",
+      "user_value": "Not stated by the user."
+    },
+    {
+      "id": "effort",
+      "question": "How much cooking effort and time does the host want to put in?",
+      "user_value": "Not stated by the user."
+    }
+  ],
+  "description": "Q3 (#11) Exp 3, second domain: the user asks for help with a dinner party and never states dietary needs, the number of guests or how much effort to put in. Records whether the model asks, states an assumption, hedges or fills silently, per preference.",
+  "turns": [
+    {
+      "user": "Can you help me plan a dinner party?"
+    },
+    {
+      "user": "What should I make for the main course?"
+    },
+    {
+      "user": "Can you put together the full menu, starter to dessert?"
+    },
+    {
+      "user": "Can you give me a shopping list?"
+    },
+    {
+      "user": "How should I schedule the cooking on the day?"
+    }
+  ]
+}

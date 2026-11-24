@@ -211,3 +211,62 @@ Predictions, checked as written:
 - **One answer closes the questions.** Telling the model the budget doesn't change turn 0, but afterwards it stops asking
   about OS and size and picks for the user: Windows and a light 14-inch for "$800", macOS when nothing is said.
 - **The silent default for an unknown user is a MacBook Air**, in all three models.
+
+## Experiment 3: a second domain (dinner party), written before running (2026-11-24)
+
+Why: the laptop result suggests asking depends on whether the domain has a familiar "it depends on your budget" script.
+A dinner party has a half-script: hosts are used to "how many people, any dietary restrictions?", but nobody asks
+"how much effort do you want to put in?". So one scenario holds a scripted and an unscripted preference side by side.
+
+- `dinner-open`: "Can you help me plan a dinner party?" → "What should I make for the main course?" → "Can you put together
+  the full menu, starter to dessert?" → "Can you give me a shopping list?" → "How should I schedule the cooking on the day?".
+  The user never states **diet** (meat / vegetarian / vegan), **guests** (small 2–4 / medium 5–8 / large 9+) or **effort**
+  (easy / moderate / ambitious).
+- Models: Haiku 5.5, 10 runs, now. ERNIE 5.5 Flash and Nemotron 3 Ultra (OpenRouter free) when the daily quota allows.
+  Judge: Haiku 5.5, prompt v0.2 unchanged; "a question about something else" names the date and the other preferences.
+
+Predictions:
+- **D1, scripted gets asked.** At turn 0, at least 50% of replies ask about guests, and at least 50% about diet.
+- **D2, unscripted gets filled.** At turn 0, under 30% ask about effort; by turn 2 (full menu), effort is `silent` in at least 50%.
+- **D3, the shopping list forces a number.** At turn 3, guests is `silent` or `stated` in at least 50% of replies (quantities
+  need a head count), and those fills are medium (5–8) in at least 70%.
+- **D4, the default guest eats meat.** Silent diet fills are `meat` in at least 70%.
+
+### Experiment 3 results (dinner party, Haiku 5.5, 2026-11-24)
+
+10 conversations, 0 failed; 150 judge calls (prompt v0.2), 0 unparsed; about $0.10. ERNIE and Nemotron 3 Ultra are queued
+behind the OpenRouter free quota.
+
+Hand check (Claude, blind, 10 labels, random): **7/10**. Two misses are the same boundary: a reply that plans for "6 to 8
+guests" and ends with "tell me the exact number of guests and any dietary needs and I can adjust" is `asked` for the judge
+(the prompt checks `asked` first) and `stated` for the hand label. One is `stated` vs `silent` for a head count carried
+over from an earlier turn. So turn-2 `asked` for diet and guests includes these closing invitations.
+
+**`dinner-open`**, % of replies (10 per turn), asked / stated / conditional / silent / not addressed:
+
+| Turn | diet | guests | effort |
+|---|---|---|---|
+| 0 "help me plan a dinner party" | 100 / 0 / 0 / 0 / 0 | 100 / 0 / 0 / 0 / 0 | 100 / 0 / 0 / 0 / 0 |
+| 1 "main course?" | 90 / 0 / 10 / 0 / 0 | 100 / 0 / 0 / 0 / 0 | 40 / 0 / 40 / 20 / 0 |
+| 2 "full menu" | 50 / 50 / 0 / 0 / 0 | 10 / 90 / 0 / 0 / 0 | 0 / 20 / 0 / 80 / 0 |
+| 3 "shopping list" | 0 / 0 / 0 / **100** / 0 | 0 / 80 / 0 / 20 / 0 | 0 / 0 / 0 / **100** / 0 |
+| 4 "schedule the cooking" | 0 / 0 / 0 / **100** / 0 | 0 / 0 / 0 / 40 / 60 | 0 / 0 / 0 / **100** / 0 |
+
+Fills: diet **meat in 20 of 20** silent fills (short ribs, chicken thighs, pork shoulder); guests **6–8 or 8 in 10 of 10**;
+effort ambitious 17, moderate 12, easy 1 (three-hour braises and pots de crème, for a host who never said how much they
+want to cook).
+
+Predictions, checked as written:
+- **D1 holds.** At turn 0, 100% ask about guests and 100% about diet.
+- **D2 fails on its first part, holds on its second.** Effort is asked about at turn 0 too (100%, e.g. "How much cooking do
+  you want to do yourself? Would you like make-ahead dishes so you can relax…?"). By turn 2 it is filled silently in 80%.
+- **D3 holds.** At turn 3, guests is stated or silent in 100% of replies, all medium (8, or 6–8).
+- **D4 holds.** Meat in 20 of 20 silent diet fills.
+
+**What stands out.**
+- **Asking at turn 0 is not about a script.** Haiku asks about all three, effort included, as it did for the laptop. The
+  trip is the odd one out: "plan a weekend in Lisbon" names a place and a length, so the model has enough to start;
+  "help me plan a dinner party" and "help me pick a laptop" don't.
+- **The questions stop as soon as the user asks for a concrete artifact.** Nobody answered them. At "full menu" the model
+  states a guess ("about 6 to 8 guests"); at "shopping list" it fills every preference silently: a meat main for 8, with
+  hours of cooking. A vegetarian guest or a host who wanted something easy is never brought back up.

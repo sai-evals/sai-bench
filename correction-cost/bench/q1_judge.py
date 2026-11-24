@@ -23,7 +23,8 @@ CONDITIONS = ["none", "subtle", "clear", "explicit", "distractor"]
 # Words that show the thinking refers to the user's family situation. Deliberately broad; the judge's
 # "mentions" label is the main one, and this keyword column is the check that needs no model.
 KEYWORDS = re.compile(r"\b(family|families|parents?|mom|mum|dad|mother|father|sister|brother|siblings?|"
-                      r"relatives|sunday dinners?|close to home|nearby|20 minutes|hiking|colorado)\b", re.I)
+                      r"relatives|sunday dinners?|close to home|nearby|20 minutes|hiking|colorado|"
+                      r"grandma|grandmother|grandparents?|nieces?|nephews?|church|ohio|catan|board games?|baking|bread)\b", re.I)
 
 SYSTEM = "You grade one assistant reply. Reply with JSON only."
 
@@ -101,8 +102,12 @@ def boot_ci(xs, n=2000, seed=0):
     return means[int(.025 * n)], means[int(.975 * n) - 1]
 
 
-def judge_condition(cond, target, judge, reasoning_only=False, answer_only=False):
-    scen_id = f"job-offer-family-{cond}"
+V2 = [f"{c}-p{k}" for c in ("none", "subtle", "clear", "explicit", "distractor", "neutral") for k in (1, 2, 3)
+      if c != "none" or k == 1]  # scenario v0.2 (A7): job2-<condition>-p<phrasing>
+
+
+def judge_condition(cond, target, judge, reasoning_only=False, answer_only=False, prefix="job-offer-family"):
+    scen_id = f"{prefix}-{cond}"
     scen, rub = load_scenario(scen_id), rubric_sections(scen_id)
     pref = scen["preferences"][0]
     d = os.path.join(REPO, "results", scen_id)
@@ -157,11 +162,16 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--target", required=True)
     ap.add_argument("--judge", required=True)
-    ap.add_argument("--conditions", nargs="+", default=CONDITIONS)
+    ap.add_argument("--conditions", nargs="+", default=None)
+    ap.add_argument("--prefix", default="job-offer-family", help="job2 = scenario v0.2 (A7); conditions are then <cond>-p<k>, pooled per condition in the table")
     ap.add_argument("--reasoning-only", action="store_true", help="keep the existing answer labels; re-judge only the reasoning")
     ap.add_argument("--answer-only", action="store_true", help="keep the existing reasoning labels; re-judge only the answer")
     a = ap.parse_args()
-    rows = [r for c in a.conditions for r in judge_condition(c, a.target, a.judge, a.reasoning_only, a.answer_only)]
+    a.conditions = a.conditions or (V2 if a.prefix == "job2" else CONDITIONS)
+    rows = [r for c in a.conditions for r in judge_condition(c, a.target, a.judge, a.reasoning_only, a.answer_only, a.prefix)]
+    for r in rows:
+        r["condition"] = r["condition"].split("-p")[0]
+    a.conditions = list(dict.fromkeys(c.split("-p")[0] for c in a.conditions))
     print(f"\n{a.target}, judged by {a.judge}")
     print("cond        turn  n   answer  [95% CI]      stay  move  neith   kw   ment  relies")
     for c in a.conditions:
