@@ -75,4 +75,63 @@ point in at least 18 of 20.
 
 | # | What | Model | Cost | Result |
 |---|---|---|---|---|
-| 1 | 14 arms × 10 runs, separate + joint scoring | Haiku 5.5 (target and judge) | estimated about $1 | (pending) |
+| 1 | 14 arms × 10 runs, separate + joint scoring | Haiku 5.5 (target and judge) | about $1 | 140 conversations, 0 failed, 0 cut off; 2,100 judge calls, 0 unparsed. Results below |
+
+## Results (Exp 1, Haiku 5.5, 2026-11-24)
+
+**Judge check.** Claude hand-scored 20 (reply, preference) pairs blind, 5 per preference, before any judge score existed:
+**20/20 within 1 point** (13 exact). Passes. One miss seen outside the sample: a plan ending at a Bairro Alto bar got night 2
+(should be 4), so single night scores can be off by reading the wrong evening.
+
+**Defaults** (control, unstated user, turns 1–3): pace 4.3 (packed), budget **2.2** (already cheap-ish), night 2.9, food 3.1.
+Budget's default is on the low side, so the budget correction is not "away from the default" (flagged, as pre-registered).
+
+**Spillover, separate scoring** (corrected minus control, turns 1–3 pooled, 30 replies per arm; [95% CI]; diagonal = the
+corrected preference itself; negative = towards slow / cheap / early / familiar):
+
+Unstated user:
+
+| Corrected → | pace | budget | night | food |
+|---|---|---|---|---|
+| pace (slower) | **−1.83** | −0.30 [−0.5, −0.1] | **−0.60 [−1.0, −0.2]** | −0.50 [−0.9, −0.0] |
+| budget (cheaper) | +0.40 [+0.0, +0.8] | **−1.17** | −0.43 [−0.8, −0.1] | −0.20 [−0.5, +0.1] |
+| night (earlier) | −0.03 | +0.07 | **−1.93** | −0.03 |
+| food (more familiar) | −0.30 [−0.9, +0.3] | +0.27 [+0.0, +0.5] | **−0.53 [−0.9, −0.1]** | **−1.63** |
+| pace-up (more packed) | **+0.67** | +0.17 [−0.0, +0.4] | +0.63 [+0.2, +1.0] | +0.00 |
+
+Mixed-values user (said at turn 0 that they love late nights, are happy to splurge, eat anything, pack it in; the
+preference in the row header was then corrected, the others stayed as stated):
+
+| Corrected → | pace | budget | night | food |
+|---|---|---|---|---|
+| pace (slower) | **−2.07** | +0.00 | **−0.73 [−1.1, −0.3]** | +0.00 |
+| budget (cheaper) | −0.27 [−0.6, +0.1] | **−1.50** | −0.43 [−0.8, −0.1] | −0.40 [−0.6, −0.2] |
+| night (earlier) | −0.37 [−0.9, +0.2] | −0.10 | **−2.87** | +0.07 |
+| food (more familiar) | +0.13 | −0.17 | −0.07 | **−2.03** |
+
+Joint scoring (all four in one call) gives nearly the same tables (in `results/q4_spillover__*.json`).
+
+**What stands out.**
+- **"Slow pace" drags the nights earlier, even for a user who said they love late nights.** Mixed user, turn 3: in the
+  control, 9 of 10 Saturday plans run past midnight (night 5); after correcting only the pace, 1 of 10 do. Mean −0.73
+  [−1.1, −0.3]. The unstated user shows the same pull (−0.60). "Slow" is read as "quiet", not just "fewer sights".
+- **"Cheaper" drags nights and food down too**, for the mixed user who said they splurge and eat anything: night −0.43,
+  food −0.40. And it makes days a little busier (+0.40 pace, unstated): free walks replace paid sights.
+- **"Earlier nights" and "more familiar food" mostly stay contained.** Correcting night moves nothing else; correcting food
+  pulls the nights a bit earlier for the unstated user (−0.53) but not for the mixed user (−0.07).
+- **The reverse correction mirrors it.** "Pack it in" also pushes nights later (+0.63).
+- **No judge halo.** Scoring all four preferences in one call changes the spillover by 0.04 on average.
+
+### Predictions, checked as written
+
+- **P0 partly holds.** At turn 1 pace −2.2, night −2.2, food −1.7 (all past −1.5). Budget −1.1 fails, at a floor (default
+  2.2). Pace-up +0.1 at turn 1 fails, at a ceiling (default 4.3); over turns 1–3 it is +0.67.
+- **P1 holds.** Pace → night −0.60 [−1.0, −0.2]; food → night −0.53 [−0.9, −0.1].
+- **P2 holds.** 9 of 12 unstated pairs are negative (several near zero); pace-up moves budget and night up (2 of 3).
+- **P3 fails on its first part, holds on its second.** A stated B is not more stable overall: |spillover| is smaller for the
+  mixed user in only 6 of 12 pairs. And wrong spillovers exist: pace → night −0.73, budget → night −0.43, budget → food −0.40,
+  all against what the user said.
+- **P4 fails.** Joint scoring exceeds separate by 0.04 on average (line 0.1).
+
+Caveats: one model, one scenario, Haiku judging Haiku. Budget's default was already low, so its correction was small.
+
