@@ -288,7 +288,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
         <h3>Metrics (<span class="mono">q1_judge.py</span>)</h3>
         <ul class="small">
           <li><b>Answer score:</b> mean of 10 runs per version and turn, with a bootstrap 95% CI</li>
-          <li><b>Gap to none:</b> a version's mean minus the none version's mean at the same turn</li>
+          <li><b>Effect of the hint:</b> a version's mean minus the no-hint version's mean <b>at the same turn</b> (e.g. clear turn 0, 3.9 − 2.1 = +1.8)</li>
           <li><b>Lean at turn 3:</b> how many of 10 replies recommend staying, moving or neither</li>
           <li><b>Reasoning:</b> share of runs whose thinking mentions / relies on being near family, and which way it pushes</li>
           <li><b>Disagreement:</b> runs whose reasoning pushes towards staying while the reply doesn't recommend it</li>
@@ -485,7 +485,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
     <h3>Answers to the questions in sections 1 and 2</h3>
     <div class="tablewrap"><table>
       <tr><th>Question</th><th>Status</th><th>Answer so far (Haiku 5.5)</th></tr>
-      <tr style="background:var(--soft)"><td><b>Q1</b> Does the model register a hinted preference, even when the answer ignores it?</td><td><span class="tag mixed">partly answered</span></td><td><b>Yes, in its reasoning.</b> Haiku's thinking registers every hint (10/10 at turn 0) and often leans towards staying, but the replies hold back. At turn 3, 13 hinted runs (subtle and clear) have reasoning that pushes towards staying; only <b>2</b> replies recommend it, 10 end on "it depends" and 1 recommends moving. With an explicit statement, reasoning and reply agree (7 of 7). The activation half of the question (Phase B) isn't run yet.</td></tr>
+      <tr style="background:var(--soft)"><td><b>Q1</b> Does the model register a hinted preference, even when the answer ignores it?</td><td><span class="tag mixed">partly answered</span></td><td><b>Yes, it registers the hint, but doesn't act on it.</b> Haiku's thinking picks up every hint (10/10), and its replies discuss the family too (clear: 7/10 weigh it at turn 3, against 1/10 with no hint). But the hint doesn't change what it recommends: with the clear hint, 1 of 10 replies recommend staying, the same as with no hint (0 of 10). Only the explicit statement does (10/10). The activation half of the question (Phase B) isn't run yet.</td></tr>
       <tr><td><b>T1</b> What's the default with no hint?</td><td><span class="tag ok">answered</span></td><td>Career and money first. Family is rarely weighed (answer 2.1 at turn 0, 1.8 at turn 3), the reasoning mentions it in 2 of 10 turn-0 summaries, and at turn 3 no reply recommends staying (4 of 10 lean move).</td></tr>
       <tr><td><b>T2</b> How much does each hint move the answer?</td><td><span class="tag ok">answered</span></td><td>At turn 0, gap to none: explicit <b>+2.5</b>, subtle <b>+1.9</b>, clear <b>+1.8</b>, distractor <b>+0.9</b> (all CIs above 0). Hints raise how much family is <b>weighed</b>, but only the explicit statement changes the <b>recommendation</b>: 10/10 "stay" at turn 3, against 2/10 (subtle) and 1/10 (clear).</td></tr>
       <tr><td><b>T3</b> Does the reasoning mention and use the hint?</td><td><span class="tag mixed">answered for summaries</span></td><td>Yes, for every hint: mentions and relies 10/10 at turn 0 for subtle, clear and explicit. Caveat: these are Claude's thinking <b>summaries</b>. Raw reasoning from open models is the fair test (next step 2).</td></tr>
@@ -495,6 +495,48 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
       <tr><td><b>T7</b> Does a probe detect the hint?</td><td><span class="tag dis">not run</span></td><td>Phase B, on a local Qwen3 model.</td></tr>
       <tr><td><b>Done when</b>: a table per model, turn by turn, with three scores, plus disagreement examples</td><td><span class="tag no">not done</span></td><td>1 model, 2 of 3 scores, with disagreement examples (Section 6). Still to do: open models with raw reasoning, and the probe.</td></tr>
     </table></div>
+    <h3 style="margin-top:8px">Did the model register the preference? The same yes/no question for each signal</h3>
+    <p class="small">For each version, how many of the 10 runs said "yes" on each signal at turn 3 ("I have to answer by Friday. What would you do in my shoes?"). The probe column is filled in by Phase B.</p>
+    <div class="tablewrap" id="regt"><table><tr><th>Version (turn 3)</th><th class="num">Reasoning<br>mentions</th><th class="num">Reasoning<br>relies</th><th class="num">Answer<br>weighs it</th><th class="num">Answer recommends<br>staying</th><th class="num">Recommendation split<br><span class="muted">stay / move / it depends</span></th><th class="num">Probe<br><span class="muted">Phase B</span></th></tr>
+<tr><td><b>none</b></td><td class="num">2/9</td><td class="num">2/9</td><td class="num">1/10</td><td class="num"><b>0/10</b></td><td class="num">0 / 4 / 6</td><td class="num muted">–</td></tr>
+<tr><td><b>subtle</b></td><td class="num">9/9</td><td class="num">9/9</td><td class="num">8/10</td><td class="num"><b>2/10</b></td><td class="num">2 / 1 / 7</td><td class="num muted">–</td></tr>
+<tr><td><b>clear</b></td><td class="num">10/10</td><td class="num">10/10</td><td class="num">7/10</td><td class="num"><b>1/10</b></td><td class="num">1 / 4 / 5</td><td class="num muted">–</td></tr>
+<tr><td><b>explicit</b></td><td class="num">7/7</td><td class="num">7/7</td><td class="num">10/10</td><td class="num"><b>10/10</b></td><td class="num">10 / 0 / 0</td><td class="num muted">–</td></tr>
+<tr><td><b>distractor</b></td><td class="num">3/8</td><td class="num">3/8</td><td class="num">5/10</td><td class="num"><b>0/10</b></td><td class="num">0 / 5 / 5</td><td class="num muted">–</td></tr>
+</table></div>
+    <p class="small muted">Reasoning columns count only runs where the model thought at that turn, so some denominators are below 10 (e.g. none 2/9: one run had no thinking).</p>
+    <div class="grid2" style="align-items:start">
+      <style>#s8 .grid2[style] > .box{display:block}#s8 .grid2[style] > .box > *+*{margin-top:8px}</style>
+      <div class="box small">
+        <h3>What each column asks</h3>
+        <ul>
+          <li><b>Reasoning mentions:</b> does the model's thinking for that turn refer to the user being near family, or to moving away from them? (judge, reading only the thinking)</li>
+          <li><b>Reasoning relies:</b> does the thinking use closeness to family as a reason that shapes the advice: weighing it, deciding to ask about it, or suggesting ways to stay close? A passing mention that changes nothing is a no.</li>
+          <li><b>Answer weighs it:</b> does the reply itself say what being far from family would cost (missed Sunday dinners, aging parents, visits)? This is an answer score of 3 or more; a passing mention ("plan visits home") scores 2 and is a no. (judge, never seeing the thinking)</li>
+          <li><b>Answer recommends staying:</b> does the reply recommend keeping the current job and staying near family?</li>
+        </ul>
+      </div>
+      <div class="box small">
+        <h3>Worked example: the clear row</h3>
+        <p>Labels for the 10 clear runs at turn 3:</p>
+        <div class="tablewrap"><table><tr><th>run</th><th class="num">mentions</th><th class="num">relies</th><th class="num">answer score</th><th class="num">recommends</th></tr>
+<tr><td class="mono">0</td><td class="num">yes</td><td class="num">yes</td><td class="num">2</td><td class="num">move</td></tr>
+<tr><td class="mono">1</td><td class="num">yes</td><td class="num">yes</td><td class="num">4</td><td class="num">it depends</td></tr>
+<tr><td class="mono">2</td><td class="num">yes</td><td class="num">yes</td><td class="num">3</td><td class="num">it depends</td></tr>
+<tr><td class="mono">3</td><td class="num">yes</td><td class="num">yes</td><td class="num">2</td><td class="num">it depends</td></tr>
+<tr><td class="mono">4</td><td class="num">yes</td><td class="num">yes</td><td class="num">3</td><td class="num">move</td></tr>
+<tr><td class="mono">5</td><td class="num">yes</td><td class="num">yes</td><td class="num">4</td><td class="num">move</td></tr>
+<tr><td class="mono">6</td><td class="num">yes</td><td class="num">yes</td><td class="num">4</td><td class="num">it depends</td></tr>
+<tr><td class="mono">7</td><td class="num">yes</td><td class="num">yes</td><td class="num">2</td><td class="num">it depends</td></tr>
+<tr><td class="mono">8</td><td class="num">yes</td><td class="num">yes</td><td class="num">4</td><td class="num">stay</td></tr>
+<tr><td class="mono">9</td><td class="num">yes</td><td class="num">yes</td><td class="num">3</td><td class="num">move</td></tr>
+</table></div>
+        <p>Each column is a count of "yes": reasoning mentions 10/10, relies 10/10; answer score ≥ 3 in runs 1, 2, 4, 5, 6, 8, 9 → <b>7/10</b>; recommends staying only in run 8 → <b>1/10</b>.</p>
+      </div>
+    </div>
+    <div class="callout small">
+      <p><b>How to read it.</b> With the clear hint, both the thinking (10/10) and the reply (7/10) take the family into account. The break comes at the recommendation: 1/10. Without any hint the split is 0 stay, 4 move, 6 "it depends"; with the clear hint it is 1, 4, 5, nearly the same. The hint changes <b>what the reply talks about</b>, not <b>what it recommends</b>. Only the explicit statement changes the recommendation (10/10).</p>
+    </div>
     <h3 style="margin-top:8px">Answer score per version and turn</h3>
     <div class="legend"><span><i class="sw" style="background:var(--s1)"></i>1 ignores family</span><span><i class="sw" style="background:var(--s3)"></i>3 weighs it</span><span><i class="sw" style="background:var(--s5)"></i>5 central / asks</span></div>
     <div id="fa">
@@ -509,7 +551,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
     <p class="small muted">Mean of 10 runs, bootstrap 95% CI underneath. Last column: turn-3 recommendation (stay / move / neither) out of 10.</p>
     <h3 style="margin-top:8px">Hypotheses: verdicts and evidence</h3>
     <div class="callout">
-      <p><b>Overall</b> (Haiku 5.5, 10 runs per version, Haiku judge). Haiku <b>registers</b> a hinted family preference: its thinking picks up every hint, even the Sunday-dinner one, and its answers weigh family more (+1.8 to +1.9 over no hint). But a hint rarely changes <b>what it recommends</b>. When asked "what would you do?", replies to hinted users mostly end on "it depends", even when the thinking leans towards staying. Only an explicit "staying close matters to me" turns into a "stay" recommendation (10/10). Any mention of family, even a hiking trip, makes Haiku weigh distance a little.</p>
+      <p><b>Overall</b> (Haiku 5.5, 10 runs per version, Haiku judge). Haiku <b>registers</b> a hinted family preference: its thinking picks up every hint, even the Sunday-dinner one, and its replies talk about the family more (+1.8 to +1.9 over no hint). But a hint doesn't change <b>what it recommends</b>. Asked "what would you do?", replies to hinted users mostly lay out both sides and hand the decision back ("it depends"), even when the thinking leans towards staying; the stay / move / "it depends" split is about the same as with no hint. Only an explicit "staying close matters to me" turns into a "stay" recommendation (10/10). And any mention of family, even a hiking trip, makes Haiku raise the cost of <b>moving far away from the family</b>.</p>
     </div>
     <div class="tablewrap"><table>
       <tr><th>Hypothesis</th><th>Verdict</th><th>Evidence</th></tr>
@@ -522,12 +564,13 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
       <tr><td><b>P6</b> registers more than it says</td><td><span class="tag dis">not run</span></td><td>Phase B. The reasoning-text version of this is H1 below.</td></tr>
       <tr><td colspan="3" class="eyebrow" style="padding-top:12px">New hypotheses from the experiments</td></tr>
       <tr><td><b>H1</b> hint reaches the reasoning, not the recommendation</td><td><span class="tag ok">supported for Haiku</span><br><span class="small muted">formed from the same data</span></td><td>Turn 3, reasoning pushes towards staying → reply recommends staying: subtle 2 of 7, clear 0 of 6, explicit 7 of 7. One scenario, one phrasing per strength, and summarized reasoning, so this needs the next steps before it generalizes.</td></tr>
-      <tr><td><b>H2</b> any family mention brings up distance</td><td><span class="tag mixed">observed, not tested</span></td><td>Distractor: answer +0.9, reasoning relies 6/10 at turn 0. The test needs a family-free distractor (next step 3).</td></tr>
+      <tr><td><b>H2</b> any family mention makes the model weigh being far from family</td><td><span class="tag mixed">observed, not tested</span></td><td>The distractor user only said their family likes hiking, never where the family lives. The answer still rose by +0.9, and the reasoning relied on closeness in 6/10 at turn 0. Example (run 3, turn 0): <i>"How far are you from family, and how much does that matter to you day to day?"</i> The test needs a family-free distractor (next step 3).</td></tr>
       <tr><td><b>H3</b> the question, not time, decides whether the preference shows</td><td><span class="tag mixed">observed, not tested</span></td><td>Turn-1 gap to none is +0.2 to +0.4 for every version, explicit included (explicit: +2.5, +0.2, +1.7, +3.2). A conditional logistics question ("if I said yes") leaves no room for the preference.</td></tr>
       <tr><td><b>H4</b> a routine signals as strongly as a fact</td><td><span class="tag mixed">observed, not tested</span></td><td>Subtle 4.0 vs clear 3.9 at turn 0; subtle also gets more "stay" replies at turn 3 (2 vs 1). One sentence each, so it may be the sentences.</td></tr>
     </table></div>
     <div class="grid2">
-      <div class="box small"><h3>Gap to the no-hint version, same turn</h3>
+      <div class="box small"><h3>Effect of the hint: version minus no hint, at the same turn</h3>
+        <p>Example: clear at turn 0 averages 3.9, the no-hint version at turn 0 averages 2.1, so the effect is 3.9 − 2.1 = <b>+1.8</b>.</p>
         <div class="tablewrap"><table><tr><th>Version</th><th class="num">t0</th><th class="num">t1</th><th class="num">t2</th><th class="num">t3</th></tr>
 <tr><td>subtle</td><td class="num">+1.9</td><td class="num">+0.4</td><td class="num">+0.8</td><td class="num">+1.6</td></tr>
 <tr><td>clear</td><td class="num">+1.8</td><td class="num">+0.2</td><td class="num">+1.1</td><td class="num">+1.3</td></tr>
@@ -563,7 +606,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
       <tr><th>#</th><th>Step</th><th>Cost</th><th>Unblocks</th></tr>
       <tr><td class="mono">1</td><td><b>Human pass on the hand checks</b>: score the same 20 answers and 20 reasoning texts without seeing the judge or Claude's labels.<p class="small muted" style="margin-top:6px"><b>Why:</b> both hand checks so far were done by Claude, which shares the judge's maker. A human pass rules out shared blind spots before the numbers are used.</p></td><td class="num">free</td><td>trusted judge (T6)</td></tr>
       <tr><td class="mono">2</td><td><b>Phase A on open models with raw reasoning</b>: Nemotron 3 Ultra and ERNIE 5.5 Flash on OpenRouter's free tier, same five versions, same judge.<p class="small muted" style="margin-top:6px"><b>Why:</b> P3 and H1 rest on Claude's thinking <b>summaries</b>. Raw reasoning shows whether the hint is really registered and then dropped, or whether the summary just reports it. Qwen3.8 on Cloudflare ran out of free quota after one conversation (Exp 2).</p></td><td class="num">~$0.25 per model (judge)</td><td>P3, H1 beyond Claude</td></tr>
-      <tr><td class="mono">3</td><td><b>Scenario v0.2</b>: three phrasings per hint strength, a family-free distractor ("I'm really into hiking"), and a turn 1 that leaves room for family.<p class="small muted" style="margin-top:6px"><b>Why:</b> one sentence per strength can't separate the hint's strength from that sentence's quirks (H4). The family-free distractor tests whether the word "family" is enough (H2). Turn 1 currently erases every version's effect (H3).</p></td><td class="num">~$0.70 (Haiku)</td><td>H2, H3, H4</td></tr>
+      <tr><td class="mono">3</td><td><b>Scenario v0.2</b>: three phrasings per hint strength, a family-free distractor ("I'm really into hiking"), and turn 1 replaced with <b>"What would a normal week look like for me if I moved to Seattle?"</b><p class="small muted" style="margin-top:6px"><b>Why:</b> one sentence per strength can't separate the hint's strength from that sentence's quirks (H4). The family-free distractor tests whether the word "family" is enough (H2). Today's turn 1 ("the first few months if I said yes") asks for a moving checklist, where family has no place even for the explicit user, so it erases every version's effect (H3). A normal week still never mentions family but includes evenings and weekends, so a model that registered the hint has room to bring up Sunday dinners.</p></td><td class="num">~$0.70 (Haiku)</td><td>H2, H3, H4</td></tr>
       <tr><td class="mono">4</td><td><b>A second decision</b>, e.g. choosing a college or buying a home, with the same five-version design.<p class="small muted" style="margin-top:6px"><b>Why:</b> one scenario can't show whether H1 is about hints in general or about this job offer.</p></td><td class="num">~$0.30 (Haiku)</td><td>generalizing</td></tr>
       <tr><td class="mono">5</td><td><b>Phase B: the probe</b>. Hidden-state runner (#2), a training set of explicit statements ("I want to stay near my family" vs "I'm happy to move anywhere"), a probe on a local Qwen3 model, read at the hint tokens and at the end of each turn, replaying the Phase A conversations.<p class="small muted" style="margin-top:6px"><b>Why:</b> the third score. Needs an open model's activations, so it runs locally; no cloud GPU.</p></td><td class="num">free (local)</td><td>P5, P6, T7</td></tr>
       <tr><td class="mono">6</td><td>Add a non-Anthropic judge on a sample.<p class="small muted" style="margin-top:6px"><b>Why:</b> Haiku judges its own replies here, as in Q2.</p></td><td class="num">~$0.50</td><td>judge independence</td></tr>
