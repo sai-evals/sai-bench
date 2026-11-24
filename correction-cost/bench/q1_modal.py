@@ -10,6 +10,7 @@ Two steps, both on one L40S at a time:
 Usage (Modal credentials from the environment, MODAL_TOKEN_ID / MODAL_TOKEN_SECRET):
   modal run correction-cost/bench/q1_modal.py --step generate
   modal run correction-cost/bench/q1_modal.py --step acts
+  add --version v2 for amendment A5 (varied hint/question wording, v2 training set; files under results/q1_probe/)
 """
 import json, os
 import modal
@@ -36,20 +37,22 @@ def split_think(text):
 
 
 @app.function(gpu="L40S", image=image, volumes={"/cache": cache}, timeout=3 * 3600)
-def generate(user_turns: dict, n_runs: int, max_tokens: int) -> list:
+def generate(user_turns: dict, n_runs: int, max_tokens: int, per_run: dict = None) -> list:
+    """user_turns: condition -> turns (same for every run); per_run (A5): condition -> one turn list per run."""
     from vllm import LLM, SamplingParams
     llm = LLM(MODEL, dtype="bfloat16", max_model_len=40960, gpu_memory_utilization=0.92)
     sp = SamplingParams(temperature=0.6, top_p=0.95, top_k=20, max_tokens=max_tokens)
+    text = (lambda c, r, t: per_run[c][r][t]) if per_run else (lambda c, r, t: user_turns[c][t])
     convs = [{"condition": c, "run": r, "messages": [], "turns": []} for c in user_turns for r in range(n_runs)]
     for t in range(len(next(iter(user_turns.values())))):
         for cv in convs:
-            cv["messages"].append({"role": "user", "content": user_turns[cv["condition"]][t]})
+            cv["messages"].append({"role": "user", "content": text(cv["condition"], cv["run"], t)})
         outs = llm.chat([cv["messages"] for cv in convs], sp, chat_template_kwargs={"enable_thinking": True}, use_tqdm=False)
         for cv, o in zip(convs, outs):
             out = o.outputs[0]
             ans, think = split_think(out.text)
             cv["messages"].append({"role": "assistant", "content": ans})
-            cv["turns"].append({"turn": t, "user": user_turns[cv["condition"]][t], "assistant": ans, "corrects": None,
+            cv["turns"].append({"turn": t, "user": text(cv["condition"], cv["run"], t), "assistant": ans, "corrects": None,
                                 "stop_reason": "max_tokens" if out.finish_reason == "length" else out.finish_reason,
                                 "usage": {"input_tokens": len(o.prompt_token_ids), "output_tokens": len(out.token_ids)},
                                 "thinking": think})
@@ -57,13 +60,21 @@ def generate(user_turns: dict, n_runs: int, max_tokens: int) -> list:
     return [{k: cv[k] for k in ("condition", "run", "turns")} for cv in convs]
 
 
-@app.function(gpu="L40S", image=image, volumes={"/cache": cache}, timeout=3600, max_containers=2)
-def activations(items: list) -> list:
+@app.cls(gpu="L40S", image=image, volumes={"/cache": cache}, timeout=3600, max_containers=2)
+class Acts:
+  @modal.enter()
+  def load(self):
+    """Load the model once per container (loading it per call kept old copies alive and ran out of GPU memory)."""
+    import torch
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+    self.tok = AutoTokenizer.from_pretrained(MODEL)
+    self.model = AutoModelForCausalLM.from_pretrained(MODEL, torch_dtype=torch.bfloat16).to("cuda").eval()
+
+  @modal.method()
+  def run(self, items: list) -> list:
     """items: {"id", "messages", "hint" (or None)}. Returns {"id", "last": [L+1, d] f16, "hint": [L+1, d] f16 | None}."""
     import numpy as np, torch
-    from transformers import AutoModelForCausalLM, AutoTokenizer
-    tok = AutoTokenizer.from_pretrained(MODEL)
-    model = AutoModelForCausalLM.from_pretrained(MODEL, torch_dtype=torch.bfloat16, device_map="cuda").eval()
+    tok, model = self.tok, self.model
     out = []
     for it in items:
         prompt = tok.apply_chat_template(it["messages"], tokenize=False, add_generation_prompt=True, enable_thinking=True)
@@ -84,23 +95,32 @@ def activations(items: list) -> list:
 
 
 @app.local_entrypoint()
-def main(step: str = "generate", n_runs: int = 10, max_tokens: int = 6000):
+def main(step: str = "generate", n_runs: int = 10, max_tokens: int = 6000, version: str = "v1"):
     import numpy as np
     here = os.path.dirname(os.path.abspath(__file__))
     repo = os.path.dirname(os.path.dirname(here))
     scen = {c: json.load(open(f"{repo}/correction-cost/scenarios/job-offer-family-{c}/scenario.json")) for c in CONDITIONS}
     safe = TARGET.replace(":", "_").replace("/", "_")
+    v2 = version == "v2"  # A5: per-run hint and question wording, separate files
+    spec = json.load(open(f"{repo}/correction-cost/probes/q1_test_prompts_v2.json")) if v2 else None
+    convo_path = (lambda c: f"{repo}/results/q1_probe/v2/convos__{safe}__{c}.jsonl") if v2 else \
+                 (lambda c: f"{repo}/results/job-offer-family-{c}/convos__{safe}.jsonl")
 
     if step == "generate":
         user_turns = {c: [t["user"] for t in scen[c]["turns"]] for c in CONDITIONS}
-        convs = generate.remote(user_turns, n_runs, max_tokens)
+        if v2:
+            n_runs = len(spec["none"])
+            convs = generate.remote(user_turns, n_runs, max_tokens, {c: [r["turns"] for r in spec[c]] for c in CONDITIONS})
+        else:
+            convs = generate.remote(user_turns, n_runs, max_tokens)
         for c in CONDITIONS:
-            path = f"{repo}/results/job-offer-family-{c}/convos__{safe}.jsonl"
+            path = convo_path(c)
             os.makedirs(os.path.dirname(path), exist_ok=True)
             with open(path, "w") as f:
                 for cv in (x for x in convs if x["condition"] == c):
                     f.write(json.dumps({"scenario": scen[c]["id"], "scenario_version": scen[c].get("version"), "target": TARGET,
-                                        "model_used": MODEL, "time": "", "run": cv["run"], "turns": cv["turns"]},
+                                        "model_used": MODEL, "time": "", "run": cv["run"], "turns": cv["turns"],
+                                        **({k: spec[c][cv["run"]][k] for k in ("hint", "hint_phrasing", "question_wording")} if v2 else {})},
                                        ensure_ascii=False) + "\n")
             print("saved", os.path.relpath(path, repo))
         cut = sum(t["stop_reason"] == "max_tokens" for cv in convs for t in cv["turns"])
@@ -109,23 +129,25 @@ def main(step: str = "generate", n_runs: int = 10, max_tokens: int = 6000):
     elif step == "acts":
         items, index = [], []
         for c in CONDITIONS:
-            for line in open(f"{repo}/results/job-offer-family-{c}/convos__{safe}.jsonl"):
+            for line in open(convo_path(c)):
                 cv = json.loads(line)
+                hint_text = cv.get("hint") if v2 else scen[c].get("hint")
                 msgs = []
                 for t in cv["turns"]:
                     msgs = msgs + [{"role": "user", "content": t["user"]}]
                     iid = f"test|{c}|{cv['run']}|{t['turn']}"
-                    items.append({"id": iid, "messages": msgs, "hint": scen[c].get("hint") if t["turn"] == 0 else None})
+                    items.append({"id": iid, "messages": msgs, "hint": hint_text if t["turn"] == 0 else None})
                     index.append({"id": iid, "kind": "test", "condition": c, "run": cv["run"], "turn": t["turn"],
+                                  "hint_phrasing": cv.get("hint_phrasing"), "question_wording": cv.get("question_wording"),
                                   "user_so_far": " ".join(m["content"] for m in msgs if m["role"] == "user")})
                     msgs = msgs + [{"role": "assistant", "content": t["assistant"]}]
-        for k, r in enumerate(json.load(open(f"{repo}/correction-cost/probes/q1_explicit_statements.json"))):
+        for k, r in enumerate(json.load(open(f"{repo}/correction-cost/probes/q1_explicit_statements{'_v2' if v2 else ''}.json"))):
             iid = f"probe|{k}"
             items.append({"id": iid, "messages": [{"role": "user", "content": r["user"]}], "hint": r["statement"]})
             index.append({"id": iid, "kind": "probe", "split": r["split"], "label": r["label"], "phrasing": r["phrasing"],
                           "context": r["context"]})
         batches = [items[i:i + 50] for i in range(0, len(items), 50)]
-        recs = {r["id"]: r for batch in activations.map(batches) for r in batch}
+        recs = {r["id"]: r for batch in Acts().run.map(batches) for r in batch}
         last = np.stack([recs[x["id"]]["last"] for x in index])
         has_hint = np.array([recs[x["id"]]["hint"] is not None for x in index])
         hint = np.stack([recs[x["id"]]["hint"] if recs[x["id"]]["hint"] is not None else np.zeros_like(last[0]) for x in index])
@@ -133,6 +155,7 @@ def main(step: str = "generate", n_runs: int = 10, max_tokens: int = 6000):
             x["n_tokens"] = recs[x["id"]]["n_tokens"]
         out = f"{repo}/results/q1_probe"
         os.makedirs(out, exist_ok=True)
-        np.savez_compressed(f"{out}/acts_qwen3-8b.npz", last=last, hint=hint, has_hint=has_hint)
-        json.dump(index, open(f"{out}/acts_qwen3-8b.json", "w"))
+        tag = "acts_qwen3-8b_v2" if v2 else "acts_qwen3-8b"
+        np.savez_compressed(f"{out}/{tag}.npz", last=last, hint=hint, has_hint=has_hint)
+        json.dump(index, open(f"{out}/{tag}.json", "w"))
         print(f"saved {len(index)} items, last {last.shape}, hints {int(has_hint.sum())}")

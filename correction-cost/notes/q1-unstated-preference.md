@@ -127,6 +127,8 @@ A prediction that fails is reported as failed, not reworded.
 | 1b | Exp 1's answers re-judged with rubric v0.2 (A3). No new runs | – / Haiku 5.5 | about $0.06 | See A3. Judge vs hand check: 20/20 within 1 point, no bias |
 | 1c | Hand check of the reasoning judge: 20 thinking summaries labelled blind | – | free | mentions 19/20, relies 17/20, direction 15/20 (see below) |
 | 2 | Phase A, Qwen3.8 27B on Cloudflare Workers AI (free) | Qwen3.8 27B / – | free | Stopped: 1 of 50 conversations; the daily free allowance ran out on one long-reasoning conversation. Not used |
+| 3 | Phase B: Qwen3-8B on Modal (L40S): 50 transcripts with raw thinking, activations, probe (A4) | Qwen3-8B / Haiku 5.5 | Modal GPU, under 1 h; judge about $0.25 | Probe fails its positive control (explicit vs none); P5 fails; see below |
+| 4 | Phase A, OpenRouter free: Nemotron 3 Ultra, ERNIE 5.5 Flash, Nemotron 3.5 Super VL | each / Haiku 5.5 | free; judge about $0.25 each | running |
 
 Note: Claude Haiku 5.5 thinks by default; `--thinking` only asks the API to return the summary. So the Q2 Haiku runs
 also had thinking on, just not shown.
@@ -265,3 +267,58 @@ the best validation AUROC (ties: the earliest). Nothing is fitted on the job-off
   score is ≤ 2, P6 passes if at least half are flagged.
 
 Cost: about one GPU-hour on Modal (L40S), plus about $0.25 of Haiku judging.
+
+### Exp 3, Phase B result (2026-11-23), read against A4
+
+Data: Qwen3-8B, 50 transcripts (0 turns cut off), residual stream at the end of every user turn and over the hint span,
+plus the 400 explicit statements. Analysis: `q1_probe.py`, exactly as fixed in A4.
+
+- **Probe on its own data works.** Layer 36 (the last; chosen by the A4 rule) separates held-out stay-near-family vs
+  independence statements with validation AUROC 0.948.
+- **P5 fails, and the turn-0 test was degenerate.** At the end of turn 0 the model has not replied yet, so all 10 runs of a
+  version have the identical prompt and identical activations: each version is one point repeated 10 times. AUROC between two
+  single points is 0 or 1, and the random-direction control is 1.00 for the same reason. A4 should have tested turns with
+  sampled history, or varied the hint phrasing. Read as single values, the probe gives `none` 0.87 and `explicit` 0.86 at
+  turn 0 (clear 0.84, subtle 0.84, distractor 0.53): it does not separate even the explicit statement from no hint.
+- **Turns 1–3 (which do vary across runs):** AUROC vs `none` is 0.10–0.68 for every version, explicit included, and `none`
+  has the highest mean probability (0.85–0.92).
+- **Exploratory, not pre-registered:** the same probe trained at every third layer (0–36) never separates explicit from
+  `none` in the job-offer conversation either (turns 1–3 AUROC 0.3–0.7 at every layer; turn-0 values swing with no
+  consistent direction).
+
+**Reading.** The probe learned the explicit statements but does not transfer to the job-offer conversation; it fails the
+positive control. So this says nothing about whether Qwen registers the hint in its activations. It is an instrument
+failure, not evidence of "no registration". P6 is not interpretable with this probe.
+
+Fixes for a next probe (to be pre-registered as A5 before running): train on statements embedded in advice requests about
+life decisions (still not job offers), so the training distribution is closer; vary the hint phrasing (3+ per version)
+so turn 0 has real variance; and report the explicit-vs-none AUROC as a gate: if the probe can't find the explicit
+statement, its hint results aren't read.
+
+### Amendment A5 (2026-11-23, before any A5 run): second probe, fixing A4's problems
+
+The user approved a second probe after Exp 3. Fixed before running:
+
+**Training set v2** (`correction-cost/probes/q1_explicit_statements_v2.json`, from `q1_probe_data.py --v2`): the same 12
+stay-near-family and 12 independence phrasings, now placed inside **advice requests about life decisions** (30 contexts:
+grad school, renting vs buying, adopting a dog, …; none about jobs, cities or moving for work), half with the statement
+before the question and half after. Split as before: phrasings 0–7 × contexts 0–19 train, 8–11 × 20–29 validate.
+
+**Test conversations v2** (`correction-cost/probes/q1_test_prompts_v2.json`): turn 0 uses one of **4 wordings of the
+job-offer question** and, for the hinted versions, one of **3 hint phrasings** per version (`none` has no hint). 12 runs per
+version: run r uses hint phrasing r % 3 and question wording r // 3, so every hinted run has a distinct turn-0 prompt and
+`none` has 4 distinct ones. Turns 1–3 are unchanged. Qwen3-8B generates the replies as in A4 (same sampling).
+
+**Probe.** Same as A4: logistic regression (L2, C = 1.0) on standardized activations at the last prompt token, layer =
+best validation AUROC (ties: earliest). Secondary, reported alongside: the difference-of-means direction (stay mean −
+independence mean on the training statements) at the same layer.
+
+**Gate.** First, explicit vs `none` at the end of turn 0. If that AUROC is below 0.8, the probe failed its positive
+control: hint results are reported but not interpreted.
+
+**Pass lines (only read if the gate passes).** P5: clear vs `none` at turn 0 ≥ 0.8; distractor vs `none` at turn 0 ≤ 0.65.
+Also reported for turns 1–3 and every version. Controls as in A4 (keyword count; random directions, now meaningful at turn 0;
+hint-span read vs distractor). P6: Haiku answer scores for the 12 v2 `clear` runs (same rubric v0.2); flagged = probability
+> 0.5; passes if at least half of the `clear` turns with answer score ≤ 2 are flagged.
+
+Cost: under one GPU-hour on Modal, about $0.05 of Haiku judging.

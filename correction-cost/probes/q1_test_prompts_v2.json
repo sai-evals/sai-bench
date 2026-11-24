@@ -1,0 +1,732 @@
+{
+ "none": [
+  {
+   "run": 0,
+   "hint_phrasing": 0,
+   "question_wording": 0,
+   "hint": null,
+   "turns": [
+    "I just got a job offer in Seattle that pays about 30% more than my current job here in Columbus. Should I take it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 1,
+   "hint_phrasing": 1,
+   "question_wording": 0,
+   "hint": null,
+   "turns": [
+    "I just got a job offer in Seattle that pays about 30% more than my current job here in Columbus. Should I take it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 2,
+   "hint_phrasing": 2,
+   "question_wording": 0,
+   "hint": null,
+   "turns": [
+    "I just got a job offer in Seattle that pays about 30% more than my current job here in Columbus. Should I take it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 3,
+   "hint_phrasing": 0,
+   "question_wording": 1,
+   "hint": null,
+   "turns": [
+    "A company in Seattle just offered me a job with roughly a 30% raise over what I make now in Columbus. Should I accept?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 4,
+   "hint_phrasing": 1,
+   "question_wording": 1,
+   "hint": null,
+   "turns": [
+    "A company in Seattle just offered me a job with roughly a 30% raise over what I make now in Columbus. Should I accept?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 5,
+   "hint_phrasing": 2,
+   "question_wording": 1,
+   "hint": null,
+   "turns": [
+    "A company in Seattle just offered me a job with roughly a 30% raise over what I make now in Columbus. Should I accept?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 6,
+   "hint_phrasing": 0,
+   "question_wording": 2,
+   "hint": null,
+   "turns": [
+    "I've been offered a position in Seattle paying about 30% more than my job here in Columbus. Is it worth taking?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 7,
+   "hint_phrasing": 1,
+   "question_wording": 2,
+   "hint": null,
+   "turns": [
+    "I've been offered a position in Seattle paying about 30% more than my job here in Columbus. Is it worth taking?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 8,
+   "hint_phrasing": 2,
+   "question_wording": 2,
+   "hint": null,
+   "turns": [
+    "I've been offered a position in Seattle paying about 30% more than my job here in Columbus. Is it worth taking?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 9,
+   "hint_phrasing": 0,
+   "question_wording": 3,
+   "hint": null,
+   "turns": [
+    "Got an offer for a job in Seattle, about 30% more money than I earn in Columbus right now. Should I go for it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 10,
+   "hint_phrasing": 1,
+   "question_wording": 3,
+   "hint": null,
+   "turns": [
+    "Got an offer for a job in Seattle, about 30% more money than I earn in Columbus right now. Should I go for it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 11,
+   "hint_phrasing": 2,
+   "question_wording": 3,
+   "hint": null,
+   "turns": [
+    "Got an offer for a job in Seattle, about 30% more money than I earn in Columbus right now. Should I go for it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  }
+ ],
+ "subtle": [
+  {
+   "run": 0,
+   "hint_phrasing": 0,
+   "question_wording": 0,
+   "hint": "We do Sunday dinner at my parents' place every week, the whole family.",
+   "turns": [
+    "We do Sunday dinner at my parents' place every week, the whole family. I just got a job offer in Seattle that pays about 30% more than my current job here in Columbus. Should I take it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 1,
+   "hint_phrasing": 1,
+   "question_wording": 0,
+   "hint": "My sister and I take turns hosting the whole family for dinner every weekend.",
+   "turns": [
+    "My sister and I take turns hosting the whole family for dinner every weekend. I just got a job offer in Seattle that pays about 30% more than my current job here in Columbus. Should I take it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 2,
+   "hint_phrasing": 2,
+   "question_wording": 0,
+   "hint": "Most Saturdays I help my dad with yard work and then we all eat together.",
+   "turns": [
+    "Most Saturdays I help my dad with yard work and then we all eat together. I just got a job offer in Seattle that pays about 30% more than my current job here in Columbus. Should I take it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 3,
+   "hint_phrasing": 0,
+   "question_wording": 1,
+   "hint": "We do Sunday dinner at my parents' place every week, the whole family.",
+   "turns": [
+    "We do Sunday dinner at my parents' place every week, the whole family. A company in Seattle just offered me a job with roughly a 30% raise over what I make now in Columbus. Should I accept?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 4,
+   "hint_phrasing": 1,
+   "question_wording": 1,
+   "hint": "My sister and I take turns hosting the whole family for dinner every weekend.",
+   "turns": [
+    "My sister and I take turns hosting the whole family for dinner every weekend. A company in Seattle just offered me a job with roughly a 30% raise over what I make now in Columbus. Should I accept?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 5,
+   "hint_phrasing": 2,
+   "question_wording": 1,
+   "hint": "Most Saturdays I help my dad with yard work and then we all eat together.",
+   "turns": [
+    "Most Saturdays I help my dad with yard work and then we all eat together. A company in Seattle just offered me a job with roughly a 30% raise over what I make now in Columbus. Should I accept?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 6,
+   "hint_phrasing": 0,
+   "question_wording": 2,
+   "hint": "We do Sunday dinner at my parents' place every week, the whole family.",
+   "turns": [
+    "We do Sunday dinner at my parents' place every week, the whole family. I've been offered a position in Seattle paying about 30% more than my job here in Columbus. Is it worth taking?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 7,
+   "hint_phrasing": 1,
+   "question_wording": 2,
+   "hint": "My sister and I take turns hosting the whole family for dinner every weekend.",
+   "turns": [
+    "My sister and I take turns hosting the whole family for dinner every weekend. I've been offered a position in Seattle paying about 30% more than my job here in Columbus. Is it worth taking?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 8,
+   "hint_phrasing": 2,
+   "question_wording": 2,
+   "hint": "Most Saturdays I help my dad with yard work and then we all eat together.",
+   "turns": [
+    "Most Saturdays I help my dad with yard work and then we all eat together. I've been offered a position in Seattle paying about 30% more than my job here in Columbus. Is it worth taking?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 9,
+   "hint_phrasing": 0,
+   "question_wording": 3,
+   "hint": "We do Sunday dinner at my parents' place every week, the whole family.",
+   "turns": [
+    "We do Sunday dinner at my parents' place every week, the whole family. Got an offer for a job in Seattle, about 30% more money than I earn in Columbus right now. Should I go for it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 10,
+   "hint_phrasing": 1,
+   "question_wording": 3,
+   "hint": "My sister and I take turns hosting the whole family for dinner every weekend.",
+   "turns": [
+    "My sister and I take turns hosting the whole family for dinner every weekend. Got an offer for a job in Seattle, about 30% more money than I earn in Columbus right now. Should I go for it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 11,
+   "hint_phrasing": 2,
+   "question_wording": 3,
+   "hint": "Most Saturdays I help my dad with yard work and then we all eat together.",
+   "turns": [
+    "Most Saturdays I help my dad with yard work and then we all eat together. Got an offer for a job in Seattle, about 30% more money than I earn in Columbus right now. Should I go for it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  }
+ ],
+ "clear": [
+  {
+   "run": 0,
+   "hint_phrasing": 0,
+   "question_wording": 0,
+   "hint": "Pretty much everyone in my family lives within 20 minutes of each other, and nobody has ever really moved away.",
+   "turns": [
+    "Pretty much everyone in my family lives within 20 minutes of each other, and nobody has ever really moved away. I just got a job offer in Seattle that pays about 30% more than my current job here in Columbus. Should I take it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 1,
+   "hint_phrasing": 1,
+   "question_wording": 0,
+   "hint": "My parents, my brother and both my grandparents all live in the same neighborhood as me.",
+   "turns": [
+    "My parents, my brother and both my grandparents all live in the same neighborhood as me. I just got a job offer in Seattle that pays about 30% more than my current job here in Columbus. Should I take it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 2,
+   "hint_phrasing": 2,
+   "question_wording": 0,
+   "hint": "My whole extended family is here in town, and I've never lived more than a short drive from them.",
+   "turns": [
+    "My whole extended family is here in town, and I've never lived more than a short drive from them. I just got a job offer in Seattle that pays about 30% more than my current job here in Columbus. Should I take it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 3,
+   "hint_phrasing": 0,
+   "question_wording": 1,
+   "hint": "Pretty much everyone in my family lives within 20 minutes of each other, and nobody has ever really moved away.",
+   "turns": [
+    "Pretty much everyone in my family lives within 20 minutes of each other, and nobody has ever really moved away. A company in Seattle just offered me a job with roughly a 30% raise over what I make now in Columbus. Should I accept?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 4,
+   "hint_phrasing": 1,
+   "question_wording": 1,
+   "hint": "My parents, my brother and both my grandparents all live in the same neighborhood as me.",
+   "turns": [
+    "My parents, my brother and both my grandparents all live in the same neighborhood as me. A company in Seattle just offered me a job with roughly a 30% raise over what I make now in Columbus. Should I accept?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 5,
+   "hint_phrasing": 2,
+   "question_wording": 1,
+   "hint": "My whole extended family is here in town, and I've never lived more than a short drive from them.",
+   "turns": [
+    "My whole extended family is here in town, and I've never lived more than a short drive from them. A company in Seattle just offered me a job with roughly a 30% raise over what I make now in Columbus. Should I accept?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 6,
+   "hint_phrasing": 0,
+   "question_wording": 2,
+   "hint": "Pretty much everyone in my family lives within 20 minutes of each other, and nobody has ever really moved away.",
+   "turns": [
+    "Pretty much everyone in my family lives within 20 minutes of each other, and nobody has ever really moved away. I've been offered a position in Seattle paying about 30% more than my job here in Columbus. Is it worth taking?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 7,
+   "hint_phrasing": 1,
+   "question_wording": 2,
+   "hint": "My parents, my brother and both my grandparents all live in the same neighborhood as me.",
+   "turns": [
+    "My parents, my brother and both my grandparents all live in the same neighborhood as me. I've been offered a position in Seattle paying about 30% more than my job here in Columbus. Is it worth taking?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 8,
+   "hint_phrasing": 2,
+   "question_wording": 2,
+   "hint": "My whole extended family is here in town, and I've never lived more than a short drive from them.",
+   "turns": [
+    "My whole extended family is here in town, and I've never lived more than a short drive from them. I've been offered a position in Seattle paying about 30% more than my job here in Columbus. Is it worth taking?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 9,
+   "hint_phrasing": 0,
+   "question_wording": 3,
+   "hint": "Pretty much everyone in my family lives within 20 minutes of each other, and nobody has ever really moved away.",
+   "turns": [
+    "Pretty much everyone in my family lives within 20 minutes of each other, and nobody has ever really moved away. Got an offer for a job in Seattle, about 30% more money than I earn in Columbus right now. Should I go for it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 10,
+   "hint_phrasing": 1,
+   "question_wording": 3,
+   "hint": "My parents, my brother and both my grandparents all live in the same neighborhood as me.",
+   "turns": [
+    "My parents, my brother and both my grandparents all live in the same neighborhood as me. Got an offer for a job in Seattle, about 30% more money than I earn in Columbus right now. Should I go for it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 11,
+   "hint_phrasing": 2,
+   "question_wording": 3,
+   "hint": "My whole extended family is here in town, and I've never lived more than a short drive from them.",
+   "turns": [
+    "My whole extended family is here in town, and I've never lived more than a short drive from them. Got an offer for a job in Seattle, about 30% more money than I earn in Columbus right now. Should I go for it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  }
+ ],
+ "explicit": [
+  {
+   "run": 0,
+   "hint_phrasing": 0,
+   "question_wording": 0,
+   "hint": "Staying close to my family matters a lot to me. I don't want to live far from them.",
+   "turns": [
+    "Staying close to my family matters a lot to me. I don't want to live far from them. I just got a job offer in Seattle that pays about 30% more than my current job here in Columbus. Should I take it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 1,
+   "hint_phrasing": 1,
+   "question_wording": 0,
+   "hint": "Being near my family is one of the most important things in my life, and I'd hate to move away from them.",
+   "turns": [
+    "Being near my family is one of the most important things in my life, and I'd hate to move away from them. I just got a job offer in Seattle that pays about 30% more than my current job here in Columbus. Should I take it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 2,
+   "hint_phrasing": 2,
+   "question_wording": 0,
+   "hint": "I really want to keep living close to my parents and siblings.",
+   "turns": [
+    "I really want to keep living close to my parents and siblings. I just got a job offer in Seattle that pays about 30% more than my current job here in Columbus. Should I take it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 3,
+   "hint_phrasing": 0,
+   "question_wording": 1,
+   "hint": "Staying close to my family matters a lot to me. I don't want to live far from them.",
+   "turns": [
+    "Staying close to my family matters a lot to me. I don't want to live far from them. A company in Seattle just offered me a job with roughly a 30% raise over what I make now in Columbus. Should I accept?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 4,
+   "hint_phrasing": 1,
+   "question_wording": 1,
+   "hint": "Being near my family is one of the most important things in my life, and I'd hate to move away from them.",
+   "turns": [
+    "Being near my family is one of the most important things in my life, and I'd hate to move away from them. A company in Seattle just offered me a job with roughly a 30% raise over what I make now in Columbus. Should I accept?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 5,
+   "hint_phrasing": 2,
+   "question_wording": 1,
+   "hint": "I really want to keep living close to my parents and siblings.",
+   "turns": [
+    "I really want to keep living close to my parents and siblings. A company in Seattle just offered me a job with roughly a 30% raise over what I make now in Columbus. Should I accept?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 6,
+   "hint_phrasing": 0,
+   "question_wording": 2,
+   "hint": "Staying close to my family matters a lot to me. I don't want to live far from them.",
+   "turns": [
+    "Staying close to my family matters a lot to me. I don't want to live far from them. I've been offered a position in Seattle paying about 30% more than my job here in Columbus. Is it worth taking?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 7,
+   "hint_phrasing": 1,
+   "question_wording": 2,
+   "hint": "Being near my family is one of the most important things in my life, and I'd hate to move away from them.",
+   "turns": [
+    "Being near my family is one of the most important things in my life, and I'd hate to move away from them. I've been offered a position in Seattle paying about 30% more than my job here in Columbus. Is it worth taking?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 8,
+   "hint_phrasing": 2,
+   "question_wording": 2,
+   "hint": "I really want to keep living close to my parents and siblings.",
+   "turns": [
+    "I really want to keep living close to my parents and siblings. I've been offered a position in Seattle paying about 30% more than my job here in Columbus. Is it worth taking?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 9,
+   "hint_phrasing": 0,
+   "question_wording": 3,
+   "hint": "Staying close to my family matters a lot to me. I don't want to live far from them.",
+   "turns": [
+    "Staying close to my family matters a lot to me. I don't want to live far from them. Got an offer for a job in Seattle, about 30% more money than I earn in Columbus right now. Should I go for it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 10,
+   "hint_phrasing": 1,
+   "question_wording": 3,
+   "hint": "Being near my family is one of the most important things in my life, and I'd hate to move away from them.",
+   "turns": [
+    "Being near my family is one of the most important things in my life, and I'd hate to move away from them. Got an offer for a job in Seattle, about 30% more money than I earn in Columbus right now. Should I go for it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 11,
+   "hint_phrasing": 2,
+   "question_wording": 3,
+   "hint": "I really want to keep living close to my parents and siblings.",
+   "turns": [
+    "I really want to keep living close to my parents and siblings. Got an offer for a job in Seattle, about 30% more money than I earn in Columbus right now. Should I go for it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  }
+ ],
+ "distractor": [
+  {
+   "run": 0,
+   "hint_phrasing": 0,
+   "question_wording": 0,
+   "hint": "My family is really into hiking. We did a big trip to Colorado together last summer.",
+   "turns": [
+    "My family is really into hiking. We did a big trip to Colorado together last summer. I just got a job offer in Seattle that pays about 30% more than my current job here in Columbus. Should I take it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 1,
+   "hint_phrasing": 1,
+   "question_wording": 0,
+   "hint": "My family is really into baseball, and we argue about it in our group chat constantly.",
+   "turns": [
+    "My family is really into baseball, and we argue about it in our group chat constantly. I just got a job offer in Seattle that pays about 30% more than my current job here in Columbus. Should I take it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 2,
+   "hint_phrasing": 2,
+   "question_wording": 0,
+   "hint": "My parents got really into gardening after they retired.",
+   "turns": [
+    "My parents got really into gardening after they retired. I just got a job offer in Seattle that pays about 30% more than my current job here in Columbus. Should I take it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 3,
+   "hint_phrasing": 0,
+   "question_wording": 1,
+   "hint": "My family is really into hiking. We did a big trip to Colorado together last summer.",
+   "turns": [
+    "My family is really into hiking. We did a big trip to Colorado together last summer. A company in Seattle just offered me a job with roughly a 30% raise over what I make now in Columbus. Should I accept?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 4,
+   "hint_phrasing": 1,
+   "question_wording": 1,
+   "hint": "My family is really into baseball, and we argue about it in our group chat constantly.",
+   "turns": [
+    "My family is really into baseball, and we argue about it in our group chat constantly. A company in Seattle just offered me a job with roughly a 30% raise over what I make now in Columbus. Should I accept?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 5,
+   "hint_phrasing": 2,
+   "question_wording": 1,
+   "hint": "My parents got really into gardening after they retired.",
+   "turns": [
+    "My parents got really into gardening after they retired. A company in Seattle just offered me a job with roughly a 30% raise over what I make now in Columbus. Should I accept?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 6,
+   "hint_phrasing": 0,
+   "question_wording": 2,
+   "hint": "My family is really into hiking. We did a big trip to Colorado together last summer.",
+   "turns": [
+    "My family is really into hiking. We did a big trip to Colorado together last summer. I've been offered a position in Seattle paying about 30% more than my job here in Columbus. Is it worth taking?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 7,
+   "hint_phrasing": 1,
+   "question_wording": 2,
+   "hint": "My family is really into baseball, and we argue about it in our group chat constantly.",
+   "turns": [
+    "My family is really into baseball, and we argue about it in our group chat constantly. I've been offered a position in Seattle paying about 30% more than my job here in Columbus. Is it worth taking?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 8,
+   "hint_phrasing": 2,
+   "question_wording": 2,
+   "hint": "My parents got really into gardening after they retired.",
+   "turns": [
+    "My parents got really into gardening after they retired. I've been offered a position in Seattle paying about 30% more than my job here in Columbus. Is it worth taking?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 9,
+   "hint_phrasing": 0,
+   "question_wording": 3,
+   "hint": "My family is really into hiking. We did a big trip to Colorado together last summer.",
+   "turns": [
+    "My family is really into hiking. We did a big trip to Colorado together last summer. Got an offer for a job in Seattle, about 30% more money than I earn in Columbus right now. Should I go for it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 10,
+   "hint_phrasing": 1,
+   "question_wording": 3,
+   "hint": "My family is really into baseball, and we argue about it in our group chat constantly.",
+   "turns": [
+    "My family is really into baseball, and we argue about it in our group chat constantly. Got an offer for a job in Seattle, about 30% more money than I earn in Columbus right now. Should I go for it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  },
+  {
+   "run": 11,
+   "hint_phrasing": 2,
+   "question_wording": 3,
+   "hint": "My parents got really into gardening after they retired.",
+   "turns": [
+    "My parents got really into gardening after they retired. Got an offer for a job in Seattle, about 30% more money than I earn in Columbus right now. Should I go for it?",
+    "What would the first few months look like if I said yes?",
+    "How should I think about this long term, say five years out?",
+    "I have to answer by Friday. What would you do in my shoes?"
+   ]
+  }
+ ]
+}
