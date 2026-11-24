@@ -129,6 +129,7 @@ A prediction that fails is reported as failed, not reworded.
 | 2 | Phase A, Qwen3.8 27B on Cloudflare Workers AI (free) | Qwen3.8 27B / – | free | Stopped: 1 of 50 conversations; the daily free allowance ran out on one long-reasoning conversation. Not used |
 | 3 | Phase B: Qwen3-8B on Modal (L40S): 50 transcripts with raw thinking, activations, probe (A4) | Qwen3-8B / Haiku 5.5 | Modal GPU, under 1 h; judge about $0.25 | Probe fails its positive control (explicit vs none); P5 fails; see below |
 | 4 | Phase A, OpenRouter free: Nemotron 3 Ultra, ERNIE 5.5 Flash, Nemotron 3.5 Super VL | each / Haiku 5.5 | free; judge about $0.25 each | running |
+| 5 | Phase B, second probe (A5): Qwen3-8B, 60 new transcripts with varied hint and question wording, v2 training set | Qwen3-8B / Haiku 5.5 | Modal GPU, under 1 h; judge about $0.05 | Primary probe fails its gate (explicit vs none 0.65); see below |
 
 Note: Claude Haiku 5.5 thinks by default; `--thinking` only asks the API to return the summary. So the Q2 Haiku runs
 also had thinking on, just not shown.
@@ -322,3 +323,41 @@ hint-span read vs distractor). P6: Haiku answer scores for the 12 v2 `clear` run
 > 0.5; passes if at least half of the `clear` turns with answer score ≤ 2 are flagged.
 
 Cost: under one GPU-hour on Modal, about $0.05 of Haiku judging.
+
+### Exp 3b, Qwen3-8B Phase A (A4 transcripts, Haiku judge, rubric v0.2), raw reasoning
+
+Turn 3 ("what would you do?"), out of 10: thinking notices / uses it / reply discusses it (score ≥ 3) / recommends staying;
+split stay / move / it depends:
+
+| Version | Notices | Uses it | Discusses it | Recommends staying | Split |
+|---|---|---|---|---|---|
+| none | 3 | 2 | 0 | 0 | 0 / 4 / 6 |
+| subtle | 10 | 10 | 10 | 2 | 2 / 3 / 5 |
+| clear | 10 | 10 | 10 | 0 | 0 / 2 / 8 |
+| explicit | 10 | 10 | 10 | 8 | 8 / 0 / 2 |
+| distractor | 3 | 2 | 1 | 0 | 0 / 7 / 3 |
+
+Turn-0 answer scores: none 2.0, subtle 3.4, clear 3.1, explicit 4.1, distractor 2.2. With raw reasoning, the Haiku pattern
+holds: hints are noticed and discussed but don't change the recommendation (clear 0/10 stay); only the explicit statement
+does (8/10). P3 fails again (subtle noticed 10/10 in raw reasoning). P2 holds for Qwen (distractor +0.2): bringing up
+distance after any family mention looks specific to Haiku.
+
+### Exp 5, second probe (A5) result (2026-11-23)
+
+60 transcripts (0 cut off); 640 activation sets. Layer chosen by the A5 rule: 20 (validation AUROC 0.887).
+
+- **Primary probe fails its gate.** Explicit vs `none` at turn 0: AUROC 0.65 (gate 0.8). As pre-registered, its hint
+  results are not interpreted. For the record: P5 clear vs none 0.29, distractor vs none 0.46 (fails); P6 0 of 7 low-answer
+  clear turns flagged (fails). The logistic probe's probabilities collapse to about 0 on turns 1–3 (off-distribution
+  saturation), so its later-turn AUROCs carry little meaning.
+- **Secondary (difference of means, same layer).** Explicit vs `none`: 0.81 at turn 0, 0.81 / 0.97 / 0.88 at turns 1–3.
+  Hints at turns 1–3: subtle 0.69 / 0.72 / 0.80, clear 0.67 / 0.76 / 0.74; distractor 0.41 / 0.41 / 0.69. At turn 0 the
+  hints come out below `none` (0.08, 0.10).
+- **Exploratory control (not pre-registered): random directions at turns 1–3, pooled.** The difference-of-means AUROC vs
+  `none` is explicit 0.71, subtle 0.63, clear 0.62, distractor 0.49, against a random-direction 95th percentile of
+  0.67–0.71. It beats 95% (explicit), 81% (subtle) and 87% (clear) of random directions, and 0% for the distractor.
+
+**Reading.** Neither probe gives a reliable activation-level answer to Q1. The direction learned from explicit statements
+orders the versions as expected (explicit > hints > distractor ≈ none) at later turns, but the margin over random
+directions is too small to call. What is solid is the text-level result (Exp 1, Exp 3b): the hint reaches the reasoning
+and the reply, not the recommendation.
