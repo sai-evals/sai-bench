@@ -1,0 +1,40 @@
+{
+  "id": "laptop-open",
+  "version": "0.1",
+  "license": "CC BY 4.0",
+  "preferences": [
+    {
+      "id": "budget",
+      "question": "How much should the laptop cost?",
+      "user_value": "Not stated by the user."
+    },
+    {
+      "id": "os",
+      "question": "Which operating system?",
+      "user_value": "Not stated by the user."
+    },
+    {
+      "id": "portability",
+      "question": "How light and portable should it be?",
+      "user_value": "Not stated by the user."
+    }
+  ],
+  "description": "Q3 (#11): the user asks for laptop advice and never states budget, operating system or portability. Records whether the model asks, states an assumption, hedges or fills silently, per preference.",
+  "turns": [
+    {
+      "user": "Can you help me pick a laptop?"
+    },
+    {
+      "user": "What should I look for in the specs?"
+    },
+    {
+      "user": "Can you give me your top three picks?"
+    },
+    {
+      "user": "Which one would you buy if you were me?"
+    },
+    {
+      "user": "Where should I buy it, and is now a good time to buy?"
+    }
+  ]
+}

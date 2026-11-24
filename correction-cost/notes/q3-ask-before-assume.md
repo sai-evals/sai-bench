@@ -142,3 +142,25 @@ Qwen3-8B 7 / 2 / 0; Nemotron 3.5 Super VL 2 / 4 / 0).
 - Asking is model-specific: the two Nemotrons, Gemma and MiniMax ask in most trip conversations; Haiku, Kimi, ERNIE and
   Mistral Small almost never.
 
+
+## Experiment 2: a scenario built for Q3 (laptop), written before running (2026-11-24)
+
+Chosen with the user: a laptop, three preferences, plus a version where the user states one at turn 0.
+
+- `laptop-open`: "Can you help me pick a laptop?" → "What should I look for in the specs?" → "Can you give me your top three
+  picks?" → "Which one would you buy if you were me?" → "Where should I buy it, and is now a good time to buy?". The user
+  never states **budget** (low under ~$700 / mid / high over ~$1,300), **os** (windows / macos / chromeos / linux) or
+  **portability** (light ≤ ~1.4 kg / mid / heavy 15–16 inch or gaming).
+- `laptop-budget-stated`: the same, but turn 0 adds "I can spend up to $800." Only os and portability are scored.
+- Models: Haiku 5.5 (Anthropic API), Nemotron 3 Ultra and ERNIE 5.5 Flash (OpenRouter free). 10 runs each. Judge: Haiku 5.5,
+  prompt v0.2 (the old scenarios' wording is unchanged; for the laptop, "a question about something else" names dates and the
+  other preferences).
+
+Predictions:
+- **L1, laptops get asked about.** At turn 0 of `laptop-open`, at least 50% of replies ask about at least one of the three
+  (laptop advice has a strong "it depends on your budget" habit, unlike the trip).
+- **L2, then the model picks anyway.** At turn 3 ("which one would you buy?"), `silent` is at least 50% for each preference.
+- **L3, the silent defaults.** Silent budget fills are mid in at least 60%; silent portability fills are light or mid in at
+  least 80%; silent OS fills split between windows and macos (chromeos and linux together under 10%).
+- **L4, one stated preference lowers asking about the rest.** At turn 0, the share of replies that ask about os or portability
+  is at least 10 points lower in `laptop-budget-stated` than in `laptop-open`.
