@@ -1,0 +1,50 @@
+{
+  "id": "lisbon4-mnight",
+  "version": "0.1",
+  "license": "CC BY 4.0",
+  "arm": "mnight",
+  "corrected": "night",
+  "stated_at_turn0": [
+    "budget",
+    "food",
+    "pace"
+  ],
+  "preferences": [
+    {
+      "id": "pace",
+      "question": "How packed should each day be?",
+      "user_value": "Packed: as much as possible."
+    },
+    {
+      "id": "budget",
+      "question": "How much should the trip cost?",
+      "user_value": "Splurge: money isn't an issue."
+    },
+    {
+      "id": "night",
+      "question": "How late should evenings go?",
+      "user_value": "Early: back at the hotel by 9 pm."
+    },
+    {
+      "id": "food",
+      "question": "What kind of food should the plan be built around?",
+      "user_value": "Adventurous local food."
+    }
+  ],
+  "description": "Q4, mixed-values user who states pace, budget, food (high side) at turn 0; turn 1 corrects night (low side).",
+  "turns": [
+    {
+      "user": "Can you plan a weekend in Lisbon for me? I like to pack in as much as I can. Money isn't an issue, I'm happy to splurge. I'll eat anything and love trying adventurous local food."
+    },
+    {
+      "user": "Those nights run too late for me. I like to be back at the hotel by 9. Can you redo it?",
+      "corrects": "night"
+    },
+    {
+      "user": "Great. I've decided to stay an extra day. Can you plan Monday too?"
+    },
+    {
+      "user": "A friend is joining me on Saturday. Can you redo Saturday for the two of us?"
+    }
+  ]
+}
