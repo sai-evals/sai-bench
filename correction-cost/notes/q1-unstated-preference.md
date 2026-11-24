@@ -468,3 +468,129 @@ is taken as a fact about the family, not as the user's preference. So for hints,
 act" but "notices but doesn't infer". For the explicit statement, there is a real knows-but-doesn't-act gap: Qwen says the
 user wants to stay close in every run, and still doesn't recommend staying in 13 of 30. Three pre-registered probes have
 not given a reliable activation-level reading; the self-report read is the more useful instrument for this question.
+
+### Amendment A7 (2026-11-24, before any A7 run): scenario v0.2 on Haiku
+
+Why: v0.1 had one phrasing per hint, so every Haiku number rests on one sentence. Its turn 1 ("first few months")
+leaves little room to use the hint. And its distractor mentions family, so we couldn't tell "reacts to the word
+family" from "reacts to any personal detail".
+
+Changes (`bench/q1_scenarios_v2.py`, scenarios `job2-<condition>-p<k>`):
+- three phrasings per hint strength (`none` has one);
+- turn 1 is "What would a normal week look like for me if I moved to Seattle?";
+- a sixth condition, `neutral`: the distractor's three hobbies with the family taken out.
+
+Size: 4 runs per phrasing, so 12 per condition, 72 conversations × 4 turns, Haiku 5.5 with thinking shown as
+summaries. Judge: Haiku 5.5, rubric v0.2 and the amended reasoning prompt, unchanged. About $0.35.
+
+Predictions (pass lines as in the original table):
+
+| # | Prediction | Pass line |
+|---|---|---|
+| P1′ | P1 replicates across phrasings | `explicit` − `none` ≥ 1.5 at turn 0; `clear` > `none`, CI above 0; holds for each of the 3 `clear` phrasings separately |
+| P2′ | Neither family-without-closeness nor a family-free detail moves the answer | `distractor` − `none` and `neutral` − `none` within ±0.5 at turn 0 |
+| P2″ | The word "family" alone pulls the reply towards distance (v0.1's hiking case) | `distractor` − `neutral` ≥ 0.5 at turn 0 |
+| P8 | The new turn 1 gives the hint a place: `clear` keeps its turn-0 effect at turn 1 | `clear` − `none` at turn 1 ≥ 1.0 (v0.1: the effect shrank at turn 1) |
+| P3′ | Reasoning mentions | `explicit` ≥ 80%, `subtle` < 50% (turn 0) |
+
+### Amendment A8 (2026-11-24, before any A8 run): the direct question on other open models
+
+A6's clearest finding came from asking Qwen3-8B directly ("which is most likely true about me?"), not from the probe:
+Qwen almost never says the `clear` user wants to stay close (0% at turn 0), and when it does, it doesn't recommend staying.
+A8 asks whether that is Qwen's quirk.
+
+- Models (open weights, ungated, three other companies): Olmo 3 7B Instruct (Ai2), Mistral 7B Instruct v0.3 (Mistral),
+  Granite 3.3 8B Instruct (IBM). On Modal (L40S, vLLM 0.11), no thinking.
+- Each model plays its own conversations: the A6 test prompts, first 10 runs of each version (5 × 10 = 50), 4 turns.
+- After each turn: the same question, options and 3 cyclic orders as A6; letter probabilities averaged over orders
+  (`bench/q1_selfreport_modal.py`). "Says close" = the close option has the highest probability.
+- Haiku 5.5 labels the turn-3 reply's lean (stay / move / neither) with the Q1 answer prompt (`bench/q1_selfreport.py`).
+
+Predictions:
+- **S1, the explicit control.** Each model says "close" in at least 80% of `explicit` runs at every turn, and under 20% of
+  `none` and `distractor` runs.
+- **S2, the clear hint is under-read, as with Qwen.** At turn 0, under 50% of `clear` runs say "close", in at least 2 of the
+  3 models.
+- **S3, registered but not followed.** Among turn-3 `clear` and `subtle` runs where the model says "close", fewer than half
+  recommend staying, in at least 2 of the 3 models.
+
+### Exp 7, the direct question on three other open models (A8 result, 2026-11-24)
+
+3 models × 50 conversations × 4 turns on Modal (L40S, vLLM 0.11), 0 cut off; Haiku 5.5 labelled the 150 turn-3 leans
+(about $0.08). Qwen3-8B (A6, 30 runs per version) is shown for comparison.
+
+Share of runs where the model says the user "wants to live close to my family" (highest of the three options), turns 0 / 1 / 2 / 3:
+
+| Version | Olmo 3 7B | Granite 3.3 8B | Mistral 7B v0.3 | Qwen3-8B (A6) |
+|---|---|---|---|---|
+| none | 10 / 0 / 0 / 10 | 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 | 0 at every turn |
+| subtle | 100 / 40 / 80 / 80 | 70 / 60 / 20 / 30 | 0 / 0 / 0 / 0 | – |
+| clear | **100** / 70 / 80 / 80 | **40** / 40 / 0 / 30 | **0** / 0 / 0 / 0 | **0** / 10 / 60 / 37 |
+| explicit | 100 / 100 / 100 / 100 | 100 / 100 / 100 / 100 | 100 / 90 / 100 / 90 | 100 |
+| distractor | 60 / 0 / 40 / 40 | 10 / 0 / 0 / 0 | 0 / 0 / 0 / 0 | 0 |
+
+Turn-3 recommendation (Haiku lean, stay / move / neither) among runs where the model says "close" at turn 3:
+
+| | Olmo 3 7B | Granite 3.3 8B | Mistral 7B v0.3 |
+|---|---|---|---|
+| subtle + clear | 3 / 2 / 11 of 16 | 0 / 1 / 5 of 6 | none says close |
+| explicit | 4 / 0 / 6 of 10 | 2 / 2 / 6 of 10 | 0 / 0 / 9 of 9 |
+
+Predictions, checked as written:
+- **S1 holds for Granite and Mistral, fails for Olmo.** All three say "close" in at least 90% of `explicit` runs at every
+  turn. Olmo also says "close" for the hiking family (`distractor`, 60% at turn 0): for Olmo, any family detail reads as closeness.
+- **S2 holds (2 of 3).** At turn 0 the `clear` hint is read as "close" by 40% of Granite runs and 0% of Mistral runs, as with
+  Qwen (0%). Olmo reads it every time (100%).
+- **S3 holds where there is data (2 of 2).** Olmo: 3 of 16 hinted runs that say "close" recommend staying; Granite: 0 of 6.
+  Mistral never says "close" for a hint.
+
+**What stands out.**
+- **Reading the hint varies a lot by model.** For the same "everyone in my family lives within 20 minutes" sentence, Olmo
+  says "close" every time, Granite 40%, Qwen and Mistral never. Olmo's reading isn't specific, though: it says the same for
+  the hiking family.
+- **Knowing is not following, in every model.** Even with the explicit statement ("I don't want to live far from them"),
+  which all four models report back correctly, the turn-3 reply recommends staying in 4 of 10 (Olmo), 2 of 10 (Granite) and
+  0 of 9 (Mistral; 9 "it depends") runs; Qwen 17 of 30. The models register the preference when asked, and then mostly
+  don't recommend by it.
+
+### Exp 8, scenario v0.2 on Haiku (A7 result, 2026-11-24)
+
+72 conversations (6 conditions × 12), 0 failed; 288 answer and 288 reasoning judge calls; about $0.35 in all. Rubric v0.2
+and the reasoning prompt are unchanged and were hand-checked in Exp 1b/1c; no new hand check for v0.2.
+
+Answer score (1–5), mean over 12 runs (3 phrasings × 4), and turn-3 lean:
+
+| Condition | Turn 0 | Turn 1 "a normal week" | Turn 2 | Turn 3 | Turn 3 lean (stay / move / neither) |
+|---|---|---|---|---|---|
+| none | 2.0 | 1.3 | 2.6 | 1.9 | 0 / 4 / 8 |
+| subtle | 3.9 | 3.0 | 3.8 | 4.5 | 5 / 3 / 4 |
+| clear | 4.2 | 3.0 | 3.5 | 3.9 | 2 / 3 / 7 |
+| explicit | 4.9 | 3.0 | 4.0 | 5.0 | 12 / 0 / 0 |
+| distractor (family hiking, board games, cooking) | 3.0 | 2.1 | 3.2 | 2.8 | 2 / 3 / 7 |
+| neutral (the same hobbies, no family) | 2.2 | 1.0 | 2.5 | 2.1 | 0 / 7 / 5 |
+
+Effect of the hint (condition − none, same turn, [95% CI]), turns 0 / 1 / 2 / 3:
+- subtle +1.9 [1.7, 2.2] / +1.8 / +1.2 / +2.6
+- clear +2.2 [2.0, 2.4] / **+1.8 [1.4, 2.1]** / +0.9 / +2.0
+- explicit +2.9 [2.8, 3.0] / +1.8 / +1.4 / +3.1
+- distractor +1.0 [0.7, 1.3] / +0.8 / +0.6 / +0.8
+- neutral +0.2 [0.0, 0.4] / −0.3 / −0.1 / +0.2
+
+Reasoning (thinking summaries) at turn 0, mentions / relies: subtle 100 / 100%, clear 100 / 100%, explicit 100 / 100%,
+distractor 92 / 92%, neutral 8 / 8%, none 33 / 17%.
+
+Predictions, checked as written:
+- **P1′ holds.** explicit − none +2.9; clear − none +2.2 [2.0, 2.4]; each `clear` phrasing separately: 4.0, 4.5, 4.0 vs none 2.0.
+- **P2′ fails on the distractor, holds on neutral.** Family without closeness still moves the answer (+1.0 [0.7, 1.3]); the same
+  hobbies without family don't (+0.2).
+- **P2″ holds.** distractor − neutral +0.8 [0.4, 1.2]: the word "family" by itself makes Haiku weigh distance from family.
+- **P8 holds.** With "what would a normal week look like?", the clear hint keeps +1.8 at turn 1 (v0.1's "first few months": +0.2).
+  The v0.1 dip at turn 1 came from the question, not from the hint fading.
+- **P3′ fails as in v0.1.** The subtle hint is mentioned in 100% of thinking summaries (line: under 50%).
+
+**What it adds.**
+- v0.1's results hold across three phrasings per hint: the effect sizes barely move (clear +1.8 → +2.2, explicit +2.5 → +2.9).
+- The distractor result is now pinned down: it is the word "family", not any personal detail. Haiku's thinking brings up
+  family closeness for 92% of the hiking/board-game/cooking families and 8% of the same hobbies without family.
+- Only the explicit statement changes the recommendation: 12 of 12 recommend staying at turn 3. Hints get the family weighed
+  (scores near 4) but mostly not followed (subtle 5 of 12, clear 2 of 12 recommend staying).
