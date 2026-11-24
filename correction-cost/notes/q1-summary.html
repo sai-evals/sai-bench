@@ -424,7 +424,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
   <!-- 7 -->
   <section id="s7">
     <div class="shead"><span class="snum">7</span><h2>Experiments and changelog</h2></div>
-    <p>One experiment that generated replies (Exp 1, Haiku 5.5), two re-scores of its replies after problems with the judge (1a, 1b), one hand check of the reasoning judge (1c), and one open model stopped by its free quota (Exp 2). Total spent: <b>about $0.37</b>.</p>
+    <p>Phase A on five models (Haiku 5.5, Qwen3-8B with raw reasoning on Modal, and three free OpenRouter models), three pre-registered probes on Qwen3-8B (Exp 3, 5, 6), plus judge fixes and hand checks. API spend <b>about $1</b> (Haiku 5.5 as target and judge); the Qwen runs and probes used about 3 GPU-hours on Modal.</p>
     <div class="exp">
       <div class="exp-h"><h3>Experiment 1: Haiku 5.5, five versions</h3><span class="tag ok">done</span></div>
       <dl class="kv">
@@ -470,11 +470,50 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
       </dl>
     </div>
     <div class="exp">
+      <div class="exp-h"><h3>Experiment 3b: Qwen3-8B, raw reasoning (Modal)</h3><span class="tag ok">done</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>Same five versions × 10 runs, Qwen3-8B with thinking on (vLLM on one L40S), so the reasoning is the raw text, not a summary.</dd>
+        <dt>Result</dt><dd>Same pattern as Haiku. Thinking picks up every hint (10/10) and replies discuss it (10/10), but at turn 3 the clear hint gets <b>0/10</b> "stay" recommendations; explicit gets 8/10. Unlike Haiku, the distractor doesn't move Qwen (P2 holds for Qwen).</dd>
+        <dt>Lesson</dt><dd>"Registered but not followed" is not an artifact of Claude's summarized thinking.</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 3c: three free OpenRouter models</h3><span class="tag ok">done</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>Nemotron 3 Ultra, ERNIE 5.5 Flash, Nemotron 3.5 Super VL; 10 runs per version, 0 failed runs; Haiku judge via the Anthropic API.</dd>
+        <dt>Result</dt><dd>Hints raise the answer score by +1.5 to +2.6 at turn 0, but only the explicit statement reliably turns into "stay" at turn 3 (9–10/10). Nemotron 3.5 Super VL is the exception: it recommends staying in 5/10 runs even with no hint.</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 3: first probe (A4)</h3><span class="tag no">fails its check</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>Logistic-regression probe on Qwen3-8B's residual stream, trained on explicit statements ("Staying close to my family matters…" vs "I'm happy to live anywhere…") in front of unrelated requests, tested on the job-offer conversations.</dd>
+        <dt>Result</dt><dd>0.95 on held-out statements, but it doesn't transfer: it can't even tell the explicit job-offer conversations from the no-hint ones.</dd>
+        <dt>Lesson</dt><dd>All 10 runs of a version share the same turn-0 prompt, so turn 0 had no variation to test on.</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 5: second probe (A5)</h3><span class="tag no">fails its gate</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>Statements placed inside life-decision questions; 3 hint phrasings × 4 question wordings; a gate: the probe must separate explicit from no hint (≥ 0.8) before hint results are read.</dd>
+        <dt>Result</dt><dd>Gate 0.65 (fails). The backup direction (difference of means) orders explicit &gt; hints &gt; distractor but beats random directions only 81–95% of the time.</dd>
+        <dt>Lesson</dt><dd>12 runs per version give the gate a 95% interval of 0.38–0.88; and a sentence tacked onto an unrelated request puts the model in a different state from a preference inside a conversation (the same failure <a href="https://arxiv.org/abs/2609.31603">Belief Self-Distillation</a> reports on Qwen3-8B).</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 6: third probe (A6), and Qwen's own answer</h3><span class="tag mixed">probe inconclusive; self-report informative</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>Trained on 336 conversations about other moving decisions; <b>labels from Qwen itself</b>: after each turn, a separate pass asks "which is most likely true about me? A. I want to live close to my family / B. I'm fine living far / C. nothing shows either way". No-hint runs get a neutral sentence of the same length; 30 runs per version.</dd>
+        <dt>Result</dt><dd>Gate 0.92 and P5 pass as written, but random directions reach 0.92 at the chosen layer (3 of 36), and against Qwen's own labels on the job-offer conversations the probe scores 0.56. Read with its controls, no preference representation is shown. <b>Qwen's own answer is the informative part</b> (table in section 8).</dd>
+      </dl>
+    </div>
+    <div class="exp">
       <div class="exp-h"><h3>Amendments after reading Exp 1 (2026-11-23)</h3></div>
       <ul class="small">
         <li><b>A1</b> (Exp 1a): reasoning judge asks about closeness only, and records direction.</li>
         <li><b>A2</b>: P4 is also scored as the <b>gap to none at the same turn</b>, because every version dips at turn 1. Written after seeing the data, so it's a weaker test than the original pass line, which is reported as well.</li>
         <li><b>A3</b> (Exp 1b): rubric v0.2.</li>
+        <li><b>A4–A6</b> (Exp 3, 5, 6): the three probes, each pre-registered before its run; the user approved Modal for Phase B.</li>
       </ul>
     </div>
   </section>
@@ -485,7 +524,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
     <h3>Answers to the questions in sections 1 and 2</h3>
     <div class="tablewrap"><table>
       <tr><th>Question</th><th>Status</th><th>Answer so far (Haiku 5.5)</th></tr>
-      <tr style="background:var(--soft)"><td><b>Q1</b> Does the model register a hinted preference, even when the answer ignores it?</td><td><span class="tag mixed">partly answered</span></td><td><b>Yes, it registers the hint, but doesn't act on it.</b> Haiku's thinking picks up every hint (10/10), and its replies discuss the family too (clear: 7/10 weigh it at turn 3, against 1/10 with no hint). But the hint doesn't change what it recommends: with the clear hint, 1 of 10 replies recommend staying, the same as with no hint (0 of 10). Only the explicit statement does (10/10). The activation half of the question (Phase B) isn't run yet.</td></tr>
+      <tr style="background:var(--soft)"><td><b>Q1</b> Does the model register a hinted preference, even when the answer ignores it?</td><td><span class="tag mixed">partly answered</span></td><td><b>It notices the hint, but doesn't act on it, and mostly doesn't read it as a preference.</b> In all five models the thinking and the replies pick up the hints, but with the clear hint only 0–2 of 10 replies recommend staying (Nemotron 3.5 Super VL: 4, but 5 with no hint); the explicit statement gets 8–10. Asked directly, Qwen3-8B says the clear-hint user wants to live close to family in 0% of runs at turn 0 (37% by turn 3), against 100% for the explicit user. And even when it says so, it doesn't follow: 0 of 11 such clear runs, and 17 of 30 explicit runs, recommend staying. Three probes gave no reliable activation-level answer.</td></tr>
       <tr><td><b>T1</b> What's the default with no hint?</td><td><span class="tag ok">answered</span></td><td>Career and money first. Family is rarely weighed (answer 2.1 at turn 0, 1.8 at turn 3), the reasoning mentions it in 2 of 10 turn-0 summaries, and at turn 3 no reply recommends staying (4 of 10 lean move).</td></tr>
       <tr><td><b>T2</b> How much does each hint move the answer?</td><td><span class="tag ok">answered</span></td><td>At turn 0, gap to none: explicit <b>+2.5</b>, subtle <b>+1.9</b>, clear <b>+1.8</b>, distractor <b>+0.9</b> (all CIs above 0). Hints raise how much family is <b>weighed</b>, but only the explicit statement changes the <b>recommendation</b>: 10/10 "stay" at turn 3, against 2/10 (subtle) and 1/10 (clear).</td></tr>
       <tr><td><b>T3</b> Does the reasoning mention and use the hint?</td><td><span class="tag mixed">answered for summaries</span></td><td>Yes, for every hint: mentions and relies 10/10 at turn 0 for subtle, clear and explicit. Caveat: these are Claude's thinking <b>summaries</b>. Raw reasoning from open models is the fair test (next step 2).</td></tr>
@@ -549,6 +588,26 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
 </table></div>
     </div>
     <p class="small muted">Mean of 10 runs, bootstrap 95% CI underneath. Last column: turn-3 recommendation (stay / move / neither) out of 10.</p>
+    <h3 style="margin-top:8px">Across models: replies that recommend staying at turn 3 ("what would you do in my shoes?"), out of 10</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Version</th><th>Haiku 5.5</th><th>Qwen3-8B</th><th>Nemotron 3 Ultra</th><th>ERNIE 5.5 Flash</th><th>Nemotron 3.5 Super VL</th></tr>
+      <tr><td>none</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">5</td></tr>
+      <tr><td>subtle</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">3</td><td class="num">6</td></tr>
+      <tr><td>clear</td><td class="num"><b>1</b></td><td class="num"><b>0</b></td><td class="num"><b>2</b></td><td class="num"><b>0</b></td><td class="num">4</td></tr>
+      <tr><td>explicit</td><td class="num"><b>10</b></td><td class="num"><b>8</b></td><td class="num"><b>10</b></td><td class="num"><b>9</b></td><td class="num"><b>10</b></td></tr>
+      <tr><td>distractor</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">4</td></tr>
+    </table></div>
+    <p class="small muted">Haiku judge (rubric v0.2) on each model's replies. Turn-0 answer score, none → clear: Haiku 2.1 → 3.9, Qwen 2.0 → 3.1, Nemotron 3 Ultra 2.2 → 4.5, ERNIE 1.8 → 3.7, Nemotron 3.5 Super VL 2.1 → 4.1. So every model discusses the clear hint, and almost none recommends staying because of it.</p>
+    <h3 style="margin-top:8px">Qwen3-8B's own answer: "which is most likely true about me?"</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Version</th><th>Turn 0</th><th>Turn 1</th><th>Turn 2</th><th>Turn 3</th><th>At turn 3, of the runs where it says "wants to live close": replies recommending stay / move / neither</th></tr>
+      <tr><td>none</td><td class="num">0%</td><td class="num">0%</td><td class="num">0%</td><td class="num">0%</td><td>–</td></tr>
+      <tr><td>subtle</td><td class="num">0%</td><td class="num">0%</td><td class="num">13%</td><td class="num">0%</td><td>–</td></tr>
+      <tr><td>clear</td><td class="num">0%</td><td class="num">10%</td><td class="num">60%</td><td class="num">37%</td><td>11 runs: <b>0 / 3 / 8</b></td></tr>
+      <tr><td>explicit</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td>30 runs: <b>17 / 3 / 10</b></td></tr>
+      <tr><td>distractor</td><td class="num">0%</td><td class="num">0%</td><td class="num">0%</td><td class="num">0%</td><td>–</td></tr>
+    </table></div>
+    <p class="small muted">Share of 30 runs where Qwen picks "I want to live close to my family" (options in 3 orders, thinking off, read from the letter probabilities). The rest say "nothing I've said shows either way". Exp 6, amendment A6.</p>
     <h3 style="margin-top:8px">Hypotheses: verdicts and evidence</h3>
     <div class="callout">
       <p><b>Overall</b> (Haiku 5.5, 10 runs per version, Haiku judge). Haiku <b>registers</b> a hinted family preference: its thinking picks up every hint, even the Sunday-dinner one, and its replies talk about the family more (+1.8 to +1.9 over no hint). But a hint doesn't change <b>what it recommends</b>. Asked "what would you do?", replies to hinted users mostly lay out both sides and hand the decision back ("it depends"), even when the thinking leans towards staying; the stay / move / "it depends" split is about the same as with no hint. Only an explicit "staying close matters to me" turns into a "stay" recommendation (10/10). And any mention of family, even a hiking trip, makes Haiku raise the cost of <b>moving far away from the family</b>.</p>
@@ -560,12 +619,13 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
       <tr><td><b>P2</b> distractor doesn't move the answer</td><td><span class="tag no">fails</span><br><span class="small muted">pre-registered</span></td><td>+0.9 [0.4, 1.4], outside ±0.5. Under rubric v0.1 it was +0.3 and passed; the lower v0.2 floor (a passing mention now scores 2, not 3) made the effect visible. The reasoning agrees: the hiking sentence brings up relatives in Columbus in 10/10 turn-0 summaries.</td></tr>
       <tr><td><b>P3</b> subtle hint rarely mentioned in the reasoning</td><td><span class="tag no">fails</span><br><span class="small muted">pre-registered</span></td><td>Subtle mentioned in <b>10/10</b> turn-0 summaries (pass line &lt; 50%); explicit 10/10. These are summaries, written to be informative; raw reasoning may differ.</td></tr>
       <tr><td><b>P4</b> effect fades over the follow-ups</td><td><span class="tag mixed">mixed</span></td><td><b>As written: fails.</b> Clear goes 3.9 → 3.7 from turn 0 to turn 2 (−0.2; pass line −0.5). <b>Gap to none (A2, written after seeing data):</b> +1.8 → +1.1, a drop of 0.7, which would pass. But the gap is back to +1.3 at turn 3, and every version, explicit included, drops to about +0.2 at turn 1. The pattern follows the question asked, not time (H3).</td></tr>
-      <tr><td><b>P5</b> probe detects the hint, not the word</td><td><span class="tag dis">not run</span></td><td>Phase B.</td></tr>
-      <tr><td><b>P6</b> registers more than it says</td><td><span class="tag dis">not run</span></td><td>Phase B. The reasoning-text version of this is H1 below.</td></tr>
+      <tr><td><b>P5</b> probe detects the hint, not the word</td><td><span class="tag no">not shown</span><br><span class="small muted">three pre-registered probes</span></td><td>A4 didn't transfer; A5 failed its gate (0.65); A6 passed its gate (0.92) and P5 as written (clear 0.76, distractor 0.44), but random directions reach the same 0.92 at its layer, so it reads the words.</td></tr>
+      <tr><td><b>P6</b> registers more than it says</td><td><span class="tag no">fails</span></td><td>A6: 2 of 16 low-answer clear turns flagged. The self-report version (H5) answers the question better.</td></tr>
       <tr><td colspan="3" class="eyebrow" style="padding-top:12px">New hypotheses from the experiments</td></tr>
       <tr><td><b>H1</b> hint reaches the reasoning, not the recommendation</td><td><span class="tag ok">supported for Haiku</span><br><span class="small muted">formed from the same data</span></td><td>Turn 3, reasoning pushes towards staying → reply recommends staying: subtle 2 of 7, clear 0 of 6, explicit 7 of 7. One scenario, one phrasing per strength, and summarized reasoning, so this needs the next steps before it generalizes.</td></tr>
       <tr><td><b>H2</b> any family mention makes the model weigh being far from family</td><td><span class="tag mixed">observed, not tested</span></td><td>The distractor user only said their family likes hiking, never where the family lives. The answer still rose by +0.9, and the reasoning relied on closeness in 6/10 at turn 0. Example (run 3, turn 0): <i>"How far are you from family, and how much does that matter to you day to day?"</i> The test needs a family-free distractor (next step 3).</td></tr>
       <tr><td><b>H3</b> the question, not time, decides whether the preference shows</td><td><span class="tag mixed">observed, not tested</span></td><td>Turn-1 gap to none is +0.2 to +0.4 for every version, explicit included (explicit: +2.5, +0.2, +1.7, +3.2). A conditional logistics question ("if I said yes") leaves no room for the preference.</td></tr>
+      <tr><td><b>H5</b> hints are noticed but not read as a preference</td><td><span class="tag ok">supported for Qwen3-8B</span><br><span class="small muted">pre-registered as P7 (A6)</span></td><td>Qwen's thinking discusses every hint, but asked directly it says the clear-hint user wants to live close to family in 0% of runs at turn 0 (P7 predicted ≥ 70%: fails), and the subtle-hint user almost never. A family that lives close together is taken as a fact about the family. With the explicit statement it knows (100%) and still doesn't recommend staying in 13 of 30 runs.</td></tr>
       <tr><td><b>H4</b> a routine signals as strongly as a fact</td><td><span class="tag mixed">observed, not tested</span></td><td>Subtle 4.0 vs clear 3.9 at turn 0; subtle also gets more "stay" replies at turn 3 (2 vs 1). One sentence each, so it may be the sentences.</td></tr>
     </table></div>
     <div class="grid2">
@@ -605,10 +665,10 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
     <div class="tablewrap"><table>
       <tr><th>#</th><th>Step</th><th>Cost</th><th>Unblocks</th></tr>
       <tr><td class="mono">1</td><td><b>Human pass on the hand checks</b>: score the same 20 answers and 20 reasoning texts without seeing the judge or Claude's labels.<p class="small muted" style="margin-top:6px"><b>Why:</b> both hand checks so far were done by Claude, which shares the judge's maker. A human pass rules out shared blind spots before the numbers are used.</p></td><td class="num">free</td><td>trusted judge (T6)</td></tr>
-      <tr><td class="mono">2</td><td><b>Phase A on open models with raw reasoning</b>: Nemotron 3 Ultra and ERNIE 5.5 Flash on OpenRouter's free tier, same five versions, same judge.<p class="small muted" style="margin-top:6px"><b>Why:</b> P3 and H1 rest on Claude's thinking <b>summaries</b>. Raw reasoning shows whether the hint is really registered and then dropped, or whether the summary just reports it. Qwen3.8 on Cloudflare ran out of free quota after one conversation (Exp 2).</p></td><td class="num">~$0.25 per model (judge)</td><td>P3, H1 beyond Claude</td></tr>
+      <tr><td class="mono">2</td><td><span class="tag ok">done</span> <b>Phase A on open models with raw reasoning</b>: Qwen3-8B (Modal), Nemotron 3 Ultra, ERNIE 5.5 Flash, Nemotron 3.5 Super VL. Exp 3b, 3c.<p class="small muted" style="margin-top:6px"><b>Why:</b> P3 and H1 rest on Claude's thinking <b>summaries</b>. Raw reasoning shows whether the hint is really registered and then dropped, or whether the summary just reports it. Qwen3.8 on Cloudflare ran out of free quota after one conversation (Exp 2).</p></td><td class="num">~$0.25 per model (judge)</td><td>P3, H1 beyond Claude</td></tr>
       <tr><td class="mono">3</td><td><b>Scenario v0.2</b>: three phrasings per hint strength, a family-free distractor ("I'm really into hiking"), and turn 1 replaced with <b>"What would a normal week look like for me if I moved to Seattle?"</b><p class="small muted" style="margin-top:6px"><b>Why:</b> one sentence per strength can't separate the hint's strength from that sentence's quirks (H4). The family-free distractor tests whether the word "family" is enough (H2). Today's turn 1 ("the first few months if I said yes") asks for a moving checklist, where family has no place even for the explicit user, so it erases every version's effect (H3). A normal week still never mentions family but includes evenings and weekends, so a model that registered the hint has room to bring up Sunday dinners.</p></td><td class="num">~$0.70 (Haiku)</td><td>H2, H3, H4</td></tr>
       <tr><td class="mono">4</td><td><b>A second decision</b>, e.g. choosing a college or buying a home, with the same five-version design.<p class="small muted" style="margin-top:6px"><b>Why:</b> one scenario can't show whether H1 is about hints in general or about this job offer.</p></td><td class="num">~$0.30 (Haiku)</td><td>generalizing</td></tr>
-      <tr><td class="mono">5</td><td><b>Phase B: the probe</b>. Hidden-state runner (#2), a training set of explicit statements ("I want to stay near my family" vs "I'm happy to move anywhere"), a probe on a local Qwen3 model, read at the hint tokens and at the end of each turn, replaying the Phase A conversations.<p class="small muted" style="margin-top:6px"><b>Why:</b> the third score. Needs an open model's activations, so it runs locally; no cloud GPU.</p></td><td class="num">free (local)</td><td>P5, P6, T7</td></tr>
+      <tr><td class="mono">5</td><td><span class="tag ok">done</span> <b>Phase B: the probe</b>. Three pre-registered probes on Qwen3-8B (Modal): none gave a reliable activation-level answer; Qwen's own answer (Exp 6) did. Possible next: ask the same self-report question to the other open models, and steer along the direction from explicit statements to see if the recommendation moves.</td><td class="num">GPU credits</td><td>P5, P6, T7</td></tr>
       <tr><td class="mono">6</td><td>Add a non-Anthropic judge on a sample.<p class="small muted" style="margin-top:6px"><b>Why:</b> Haiku judges its own replies here, as in Q2.</p></td><td class="num">~$0.50</td><td>judge independence</td></tr>
       <tr><td class="mono">7</td><td><span class="tag ok">done</span> Draft PR with the design, scenarios, judge and these notes: <a href="https://github.com/sai-evals/sai-bench/pull/10">sai-bench #10</a>.</td><td class="num">free</td><td>review</td></tr>
     </table></div>
