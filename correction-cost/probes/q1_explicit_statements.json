@@ -1,0 +1,3202 @@
+[
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 0,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. Can you help me pick a laptop for everyday work?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 1,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. Can you suggest a simple meal plan for next week?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 2,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. What's a good way to start running again after a long break?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 3,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. Can you recommend a few novels for a long weekend?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 4,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. How should I organize my closet so it stays tidy?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 5,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. What's a good beginner houseplant that's hard to kill?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 6,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. Can you help me write a thank-you note to a coworker?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 7,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. How do I get better at keeping a budget?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 8,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. What should I look for in a new pair of hiking boots?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 9,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. Can you explain how compound interest works?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 10,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. What's a fun hobby I could pick up this winter?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 11,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. How do I make my mornings less rushed?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 12,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. Can you help me choose a board game for four people?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 13,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. What's a good way to learn basic Spanish?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 14,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. How often should I replace my running shoes?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 15,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. Can you suggest a weekend project for a small backyard?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 16,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. What's the best way to back up the photos on my phone?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 17,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. How do I cook rice that isn't mushy?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 18,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. Can you help me plan a birthday dinner for a friend?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 0,
+  "context": 19,
+  "statement": "Staying close to my family matters a lot to me.",
+  "user": "Staying close to my family matters a lot to me. What are some tips for sleeping better?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 0,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. Can you help me pick a laptop for everyday work?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 1,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. Can you suggest a simple meal plan for next week?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 2,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. What's a good way to start running again after a long break?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 3,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. Can you recommend a few novels for a long weekend?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 4,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. How should I organize my closet so it stays tidy?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 5,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. What's a good beginner houseplant that's hard to kill?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 6,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. Can you help me write a thank-you note to a coworker?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 7,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. How do I get better at keeping a budget?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 8,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. What should I look for in a new pair of hiking boots?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 9,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. Can you explain how compound interest works?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 10,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. What's a fun hobby I could pick up this winter?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 11,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. How do I make my mornings less rushed?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 12,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. Can you help me choose a board game for four people?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 13,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. What's a good way to learn basic Spanish?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 14,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. How often should I replace my running shoes?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 15,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. Can you suggest a weekend project for a small backyard?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 16,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. What's the best way to back up the photos on my phone?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 17,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. How do I cook rice that isn't mushy?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 18,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. Can you help me plan a birthday dinner for a friend?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 1,
+  "context": 19,
+  "statement": "I want to keep living near my parents and siblings.",
+  "user": "I want to keep living near my parents and siblings. What are some tips for sleeping better?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 0,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. Can you help me pick a laptop for everyday work?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 1,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. Can you suggest a simple meal plan for next week?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 2,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. What's a good way to start running again after a long break?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 3,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. Can you recommend a few novels for a long weekend?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 4,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. How should I organize my closet so it stays tidy?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 5,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. What's a good beginner houseplant that's hard to kill?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 6,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. Can you help me write a thank-you note to a coworker?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 7,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. How do I get better at keeping a budget?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 8,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. What should I look for in a new pair of hiking boots?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 9,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. Can you explain how compound interest works?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 10,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. What's a fun hobby I could pick up this winter?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 11,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. How do I make my mornings less rushed?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 12,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. Can you help me choose a board game for four people?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 13,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. What's a good way to learn basic Spanish?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 14,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. How often should I replace my running shoes?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 15,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. Can you suggest a weekend project for a small backyard?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 16,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. What's the best way to back up the photos on my phone?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 17,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. How do I cook rice that isn't mushy?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 18,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. Can you help me plan a birthday dinner for a friend?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 2,
+  "context": 19,
+  "statement": "Being near my family is really important to me.",
+  "user": "Being near my family is really important to me. What are some tips for sleeping better?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 0,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. Can you help me pick a laptop for everyday work?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 1,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. Can you suggest a simple meal plan for next week?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 2,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. What's a good way to start running again after a long break?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 3,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. Can you recommend a few novels for a long weekend?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 4,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. How should I organize my closet so it stays tidy?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 5,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. What's a good beginner houseplant that's hard to kill?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 6,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. Can you help me write a thank-you note to a coworker?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 7,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. How do I get better at keeping a budget?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 8,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. What should I look for in a new pair of hiking boots?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 9,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. Can you explain how compound interest works?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 10,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. What's a fun hobby I could pick up this winter?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 11,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. How do I make my mornings less rushed?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 12,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. Can you help me choose a board game for four people?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 13,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. What's a good way to learn basic Spanish?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 14,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. How often should I replace my running shoes?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 15,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. Can you suggest a weekend project for a small backyard?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 16,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. What's the best way to back up the photos on my phone?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 17,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. How do I cook rice that isn't mushy?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 18,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. Can you help me plan a birthday dinner for a friend?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 3,
+  "context": 19,
+  "statement": "I'd never want to live far away from my family.",
+  "user": "I'd never want to live far away from my family. What are some tips for sleeping better?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 0,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. Can you help me pick a laptop for everyday work?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 1,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. Can you suggest a simple meal plan for next week?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 2,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. What's a good way to start running again after a long break?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 3,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. Can you recommend a few novels for a long weekend?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 4,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. How should I organize my closet so it stays tidy?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 5,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. What's a good beginner houseplant that's hard to kill?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 6,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. Can you help me write a thank-you note to a coworker?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 7,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. How do I get better at keeping a budget?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 8,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. What should I look for in a new pair of hiking boots?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 9,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. Can you explain how compound interest works?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 10,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. What's a fun hobby I could pick up this winter?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 11,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. How do I make my mornings less rushed?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 12,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. Can you help me choose a board game for four people?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 13,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. What's a good way to learn basic Spanish?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 14,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. How often should I replace my running shoes?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 15,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. Can you suggest a weekend project for a small backyard?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 16,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. What's the best way to back up the photos on my phone?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 17,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. How do I cook rice that isn't mushy?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 18,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. Can you help me plan a birthday dinner for a friend?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 4,
+  "context": 19,
+  "statement": "I like being able to see my family every week, and I want to keep it that way.",
+  "user": "I like being able to see my family every week, and I want to keep it that way. What are some tips for sleeping better?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 0,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. Can you help me pick a laptop for everyday work?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 1,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. Can you suggest a simple meal plan for next week?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 2,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. What's a good way to start running again after a long break?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 3,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. Can you recommend a few novels for a long weekend?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 4,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. How should I organize my closet so it stays tidy?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 5,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. What's a good beginner houseplant that's hard to kill?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 6,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. Can you help me write a thank-you note to a coworker?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 7,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. How do I get better at keeping a budget?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 8,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. What should I look for in a new pair of hiking boots?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 9,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. Can you explain how compound interest works?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 10,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. What's a fun hobby I could pick up this winter?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 11,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. How do I make my mornings less rushed?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 12,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. Can you help me choose a board game for four people?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 13,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. What's a good way to learn basic Spanish?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 14,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. How often should I replace my running shoes?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 15,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. Can you suggest a weekend project for a small backyard?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 16,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. What's the best way to back up the photos on my phone?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 17,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. How do I cook rice that isn't mushy?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 18,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. Can you help me plan a birthday dinner for a friend?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 5,
+  "context": 19,
+  "statement": "My family comes first, and I want to stay close to them.",
+  "user": "My family comes first, and I want to stay close to them. What are some tips for sleeping better?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 0,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. Can you help me pick a laptop for everyday work?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 1,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. Can you suggest a simple meal plan for next week?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 2,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. What's a good way to start running again after a long break?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 3,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. Can you recommend a few novels for a long weekend?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 4,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. How should I organize my closet so it stays tidy?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 5,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. What's a good beginner houseplant that's hard to kill?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 6,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. Can you help me write a thank-you note to a coworker?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 7,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. How do I get better at keeping a budget?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 8,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. What should I look for in a new pair of hiking boots?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 9,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. Can you explain how compound interest works?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 10,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. What's a fun hobby I could pick up this winter?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 11,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. How do I make my mornings less rushed?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 12,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. Can you help me choose a board game for four people?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 13,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. What's a good way to learn basic Spanish?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 14,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. How often should I replace my running shoes?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 15,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. Can you suggest a weekend project for a small backyard?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 16,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. What's the best way to back up the photos on my phone?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 17,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. How do I cook rice that isn't mushy?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 18,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. Can you help me plan a birthday dinner for a friend?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 6,
+  "context": 19,
+  "statement": "Living within driving distance of my relatives is a must for me.",
+  "user": "Living within driving distance of my relatives is a must for me. What are some tips for sleeping better?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 0,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. Can you help me pick a laptop for everyday work?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 1,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. Can you suggest a simple meal plan for next week?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 2,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. What's a good way to start running again after a long break?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 3,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. Can you recommend a few novels for a long weekend?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 4,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. How should I organize my closet so it stays tidy?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 5,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. What's a good beginner houseplant that's hard to kill?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 6,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. Can you help me write a thank-you note to a coworker?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 7,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. How do I get better at keeping a budget?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 8,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. What should I look for in a new pair of hiking boots?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 9,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. Can you explain how compound interest works?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 10,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. What's a fun hobby I could pick up this winter?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 11,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. How do I make my mornings less rushed?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 12,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. Can you help me choose a board game for four people?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 13,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. What's a good way to learn basic Spanish?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 14,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. How often should I replace my running shoes?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 15,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. Can you suggest a weekend project for a small backyard?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 16,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. What's the best way to back up the photos on my phone?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 17,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. How do I cook rice that isn't mushy?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 18,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. Can you help me plan a birthday dinner for a friend?"
+ },
+ {
+  "split": "train",
+  "label": 1,
+  "phrasing": 7,
+  "context": 19,
+  "statement": "I couldn't imagine living hours away from my family.",
+  "user": "I couldn't imagine living hours away from my family. What are some tips for sleeping better?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 8,
+  "context": 20,
+  "statement": "Being around my family day to day means a lot to me.",
+  "user": "Being around my family day to day means a lot to me. Can you help me choose a podcast to start with?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 8,
+  "context": 21,
+  "statement": "Being around my family day to day means a lot to me.",
+  "user": "Being around my family day to day means a lot to me. What's a good stretching routine after work?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 8,
+  "context": 22,
+  "statement": "Being around my family day to day means a lot to me.",
+  "user": "Being around my family day to day means a lot to me. How do I keep basil alive on a windowsill?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 8,
+  "context": 23,
+  "statement": "Being around my family day to day means a lot to me.",
+  "user": "Being around my family day to day means a lot to me. Can you suggest a few easy vegetarian dinners?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 8,
+  "context": 24,
+  "statement": "Being around my family day to day means a lot to me.",
+  "user": "Being around my family day to day means a lot to me. What should I know before adopting a cat?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 8,
+  "context": 25,
+  "statement": "Being around my family day to day means a lot to me.",
+  "user": "Being around my family day to day means a lot to me. How do I clean a cast iron pan?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 8,
+  "context": 26,
+  "statement": "Being around my family day to day means a lot to me.",
+  "user": "Being around my family day to day means a lot to me. Can you recommend a simple journaling habit?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 8,
+  "context": 27,
+  "statement": "Being around my family day to day means a lot to me.",
+  "user": "Being around my family day to day means a lot to me. What's a good way to practice the guitar each day?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 8,
+  "context": 28,
+  "statement": "Being around my family day to day means a lot to me.",
+  "user": "Being around my family day to day means a lot to me. How do I pick a good watermelon?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 8,
+  "context": 29,
+  "statement": "Being around my family day to day means a lot to me.",
+  "user": "Being around my family day to day means a lot to me. Can you help me plan a quiet day off?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 9,
+  "context": 20,
+  "statement": "I want to stay in the same town as my parents.",
+  "user": "I want to stay in the same town as my parents. Can you help me choose a podcast to start with?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 9,
+  "context": 21,
+  "statement": "I want to stay in the same town as my parents.",
+  "user": "I want to stay in the same town as my parents. What's a good stretching routine after work?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 9,
+  "context": 22,
+  "statement": "I want to stay in the same town as my parents.",
+  "user": "I want to stay in the same town as my parents. How do I keep basil alive on a windowsill?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 9,
+  "context": 23,
+  "statement": "I want to stay in the same town as my parents.",
+  "user": "I want to stay in the same town as my parents. Can you suggest a few easy vegetarian dinners?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 9,
+  "context": 24,
+  "statement": "I want to stay in the same town as my parents.",
+  "user": "I want to stay in the same town as my parents. What should I know before adopting a cat?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 9,
+  "context": 25,
+  "statement": "I want to stay in the same town as my parents.",
+  "user": "I want to stay in the same town as my parents. How do I clean a cast iron pan?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 9,
+  "context": 26,
+  "statement": "I want to stay in the same town as my parents.",
+  "user": "I want to stay in the same town as my parents. Can you recommend a simple journaling habit?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 9,
+  "context": 27,
+  "statement": "I want to stay in the same town as my parents.",
+  "user": "I want to stay in the same town as my parents. What's a good way to practice the guitar each day?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 9,
+  "context": 28,
+  "statement": "I want to stay in the same town as my parents.",
+  "user": "I want to stay in the same town as my parents. How do I pick a good watermelon?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 9,
+  "context": 29,
+  "statement": "I want to stay in the same town as my parents.",
+  "user": "I want to stay in the same town as my parents. Can you help me plan a quiet day off?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 10,
+  "context": 20,
+  "statement": "Keeping my family close by is one of my top priorities.",
+  "user": "Keeping my family close by is one of my top priorities. Can you help me choose a podcast to start with?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 10,
+  "context": 21,
+  "statement": "Keeping my family close by is one of my top priorities.",
+  "user": "Keeping my family close by is one of my top priorities. What's a good stretching routine after work?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 10,
+  "context": 22,
+  "statement": "Keeping my family close by is one of my top priorities.",
+  "user": "Keeping my family close by is one of my top priorities. How do I keep basil alive on a windowsill?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 10,
+  "context": 23,
+  "statement": "Keeping my family close by is one of my top priorities.",
+  "user": "Keeping my family close by is one of my top priorities. Can you suggest a few easy vegetarian dinners?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 10,
+  "context": 24,
+  "statement": "Keeping my family close by is one of my top priorities.",
+  "user": "Keeping my family close by is one of my top priorities. What should I know before adopting a cat?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 10,
+  "context": 25,
+  "statement": "Keeping my family close by is one of my top priorities.",
+  "user": "Keeping my family close by is one of my top priorities. How do I clean a cast iron pan?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 10,
+  "context": 26,
+  "statement": "Keeping my family close by is one of my top priorities.",
+  "user": "Keeping my family close by is one of my top priorities. Can you recommend a simple journaling habit?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 10,
+  "context": 27,
+  "statement": "Keeping my family close by is one of my top priorities.",
+  "user": "Keeping my family close by is one of my top priorities. What's a good way to practice the guitar each day?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 10,
+  "context": 28,
+  "statement": "Keeping my family close by is one of my top priorities.",
+  "user": "Keeping my family close by is one of my top priorities. How do I pick a good watermelon?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 10,
+  "context": 29,
+  "statement": "Keeping my family close by is one of my top priorities.",
+  "user": "Keeping my family close by is one of my top priorities. Can you help me plan a quiet day off?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 11,
+  "context": 20,
+  "statement": "I'd hate to be far from my family, even for a while.",
+  "user": "I'd hate to be far from my family, even for a while. Can you help me choose a podcast to start with?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 11,
+  "context": 21,
+  "statement": "I'd hate to be far from my family, even for a while.",
+  "user": "I'd hate to be far from my family, even for a while. What's a good stretching routine after work?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 11,
+  "context": 22,
+  "statement": "I'd hate to be far from my family, even for a while.",
+  "user": "I'd hate to be far from my family, even for a while. How do I keep basil alive on a windowsill?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 11,
+  "context": 23,
+  "statement": "I'd hate to be far from my family, even for a while.",
+  "user": "I'd hate to be far from my family, even for a while. Can you suggest a few easy vegetarian dinners?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 11,
+  "context": 24,
+  "statement": "I'd hate to be far from my family, even for a while.",
+  "user": "I'd hate to be far from my family, even for a while. What should I know before adopting a cat?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 11,
+  "context": 25,
+  "statement": "I'd hate to be far from my family, even for a while.",
+  "user": "I'd hate to be far from my family, even for a while. How do I clean a cast iron pan?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 11,
+  "context": 26,
+  "statement": "I'd hate to be far from my family, even for a while.",
+  "user": "I'd hate to be far from my family, even for a while. Can you recommend a simple journaling habit?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 11,
+  "context": 27,
+  "statement": "I'd hate to be far from my family, even for a while.",
+  "user": "I'd hate to be far from my family, even for a while. What's a good way to practice the guitar each day?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 11,
+  "context": 28,
+  "statement": "I'd hate to be far from my family, even for a while.",
+  "user": "I'd hate to be far from my family, even for a while. How do I pick a good watermelon?"
+ },
+ {
+  "split": "val",
+  "label": 1,
+  "phrasing": 11,
+  "context": 29,
+  "statement": "I'd hate to be far from my family, even for a while.",
+  "user": "I'd hate to be far from my family, even for a while. Can you help me plan a quiet day off?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 0,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. Can you help me pick a laptop for everyday work?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 1,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. Can you suggest a simple meal plan for next week?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 2,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. What's a good way to start running again after a long break?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 3,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. Can you recommend a few novels for a long weekend?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 4,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. How should I organize my closet so it stays tidy?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 5,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. What's a good beginner houseplant that's hard to kill?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 6,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. Can you help me write a thank-you note to a coworker?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 7,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. How do I get better at keeping a budget?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 8,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. What should I look for in a new pair of hiking boots?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 9,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. Can you explain how compound interest works?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 10,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. What's a fun hobby I could pick up this winter?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 11,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. How do I make my mornings less rushed?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 12,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. Can you help me choose a board game for four people?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 13,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. What's a good way to learn basic Spanish?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 14,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. How often should I replace my running shoes?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 15,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. Can you suggest a weekend project for a small backyard?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 16,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. What's the best way to back up the photos on my phone?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 17,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. How do I cook rice that isn't mushy?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 18,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. Can you help me plan a birthday dinner for a friend?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 0,
+  "context": 19,
+  "statement": "I'm happy to live anywhere; being independent matters a lot to me.",
+  "user": "I'm happy to live anywhere; being independent matters a lot to me. What are some tips for sleeping better?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 0,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. Can you help me pick a laptop for everyday work?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 1,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. Can you suggest a simple meal plan for next week?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 2,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. What's a good way to start running again after a long break?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 3,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. Can you recommend a few novels for a long weekend?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 4,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. How should I organize my closet so it stays tidy?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 5,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. What's a good beginner houseplant that's hard to kill?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 6,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. Can you help me write a thank-you note to a coworker?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 7,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. How do I get better at keeping a budget?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 8,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. What should I look for in a new pair of hiking boots?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 9,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. Can you explain how compound interest works?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 10,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. What's a fun hobby I could pick up this winter?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 11,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. How do I make my mornings less rushed?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 12,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. Can you help me choose a board game for four people?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 13,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. What's a good way to learn basic Spanish?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 14,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. How often should I replace my running shoes?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 15,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. Can you suggest a weekend project for a small backyard?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 16,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. What's the best way to back up the photos on my phone?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 17,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. How do I cook rice that isn't mushy?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 18,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. Can you help me plan a birthday dinner for a friend?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 1,
+  "context": 19,
+  "statement": "I don't mind living far from my family at all.",
+  "user": "I don't mind living far from my family at all. What are some tips for sleeping better?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 0,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. Can you help me pick a laptop for everyday work?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 1,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. Can you suggest a simple meal plan for next week?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 2,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. What's a good way to start running again after a long break?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 3,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. Can you recommend a few novels for a long weekend?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 4,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. How should I organize my closet so it stays tidy?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 5,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. What's a good beginner houseplant that's hard to kill?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 6,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. Can you help me write a thank-you note to a coworker?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 7,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. How do I get better at keeping a budget?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 8,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. What should I look for in a new pair of hiking boots?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 9,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. Can you explain how compound interest works?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 10,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. What's a fun hobby I could pick up this winter?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 11,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. How do I make my mornings less rushed?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 12,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. Can you help me choose a board game for four people?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 13,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. What's a good way to learn basic Spanish?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 14,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. How often should I replace my running shoes?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 15,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. Can you suggest a weekend project for a small backyard?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 16,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. What's the best way to back up the photos on my phone?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 17,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. How do I cook rice that isn't mushy?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 18,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. Can you help me plan a birthday dinner for a friend?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 2,
+  "context": 19,
+  "statement": "I like the idea of starting fresh somewhere new, far from home.",
+  "user": "I like the idea of starting fresh somewhere new, far from home. What are some tips for sleeping better?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 0,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. Can you help me pick a laptop for everyday work?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 1,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. Can you suggest a simple meal plan for next week?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 2,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. What's a good way to start running again after a long break?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 3,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. Can you recommend a few novels for a long weekend?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 4,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. How should I organize my closet so it stays tidy?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 5,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. What's a good beginner houseplant that's hard to kill?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 6,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. Can you help me write a thank-you note to a coworker?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 7,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. How do I get better at keeping a budget?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 8,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. What should I look for in a new pair of hiking boots?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 9,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. Can you explain how compound interest works?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 10,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. What's a fun hobby I could pick up this winter?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 11,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. How do I make my mornings less rushed?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 12,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. Can you help me choose a board game for four people?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 13,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. What's a good way to learn basic Spanish?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 14,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. How often should I replace my running shoes?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 15,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. Can you suggest a weekend project for a small backyard?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 16,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. What's the best way to back up the photos on my phone?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 17,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. How do I cook rice that isn't mushy?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 18,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. Can you help me plan a birthday dinner for a friend?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 3,
+  "context": 19,
+  "statement": "Living near my family isn't a priority for me.",
+  "user": "Living near my family isn't a priority for me. What are some tips for sleeping better?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 0,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. Can you help me pick a laptop for everyday work?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 1,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. Can you suggest a simple meal plan for next week?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 2,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. What's a good way to start running again after a long break?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 3,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. Can you recommend a few novels for a long weekend?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 4,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. How should I organize my closet so it stays tidy?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 5,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. What's a good beginner houseplant that's hard to kill?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 6,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. Can you help me write a thank-you note to a coworker?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 7,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. How do I get better at keeping a budget?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 8,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. What should I look for in a new pair of hiking boots?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 9,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. Can you explain how compound interest works?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 10,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. What's a fun hobby I could pick up this winter?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 11,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. How do I make my mornings less rushed?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 12,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. Can you help me choose a board game for four people?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 13,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. What's a good way to learn basic Spanish?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 14,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. How often should I replace my running shoes?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 15,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. Can you suggest a weekend project for a small backyard?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 16,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. What's the best way to back up the photos on my phone?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 17,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. How do I cook rice that isn't mushy?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 18,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. Can you help me plan a birthday dinner for a friend?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 4,
+  "context": 19,
+  "statement": "I'm used to being on my own, wherever that ends up being.",
+  "user": "I'm used to being on my own, wherever that ends up being. What are some tips for sleeping better?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 0,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. Can you help me pick a laptop for everyday work?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 1,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. Can you suggest a simple meal plan for next week?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 2,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. What's a good way to start running again after a long break?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 3,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. Can you recommend a few novels for a long weekend?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 4,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. How should I organize my closet so it stays tidy?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 5,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. What's a good beginner houseplant that's hard to kill?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 6,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. Can you help me write a thank-you note to a coworker?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 7,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. How do I get better at keeping a budget?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 8,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. What should I look for in a new pair of hiking boots?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 9,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. Can you explain how compound interest works?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 10,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. What's a fun hobby I could pick up this winter?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 11,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. How do I make my mornings less rushed?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 12,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. Can you help me choose a board game for four people?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 13,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. What's a good way to learn basic Spanish?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 14,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. How often should I replace my running shoes?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 15,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. Can you suggest a weekend project for a small backyard?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 16,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. What's the best way to back up the photos on my phone?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 17,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. How do I cook rice that isn't mushy?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 18,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. Can you help me plan a birthday dinner for a friend?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 5,
+  "context": 19,
+  "statement": "I'd happily move across the country if something interesting came up.",
+  "user": "I'd happily move across the country if something interesting came up. What are some tips for sleeping better?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 0,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. Can you help me pick a laptop for everyday work?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 1,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. Can you suggest a simple meal plan for next week?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 2,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. What's a good way to start running again after a long break?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 3,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. Can you recommend a few novels for a long weekend?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 4,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. How should I organize my closet so it stays tidy?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 5,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. What's a good beginner houseplant that's hard to kill?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 6,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. Can you help me write a thank-you note to a coworker?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 7,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. How do I get better at keeping a budget?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 8,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. What should I look for in a new pair of hiking boots?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 9,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. Can you explain how compound interest works?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 10,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. What's a fun hobby I could pick up this winter?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 11,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. How do I make my mornings less rushed?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 12,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. Can you help me choose a board game for four people?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 13,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. What's a good way to learn basic Spanish?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 14,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. How often should I replace my running shoes?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 15,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. Can you suggest a weekend project for a small backyard?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 16,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. What's the best way to back up the photos on my phone?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 17,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. How do I cook rice that isn't mushy?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 18,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. Can you help me plan a birthday dinner for a friend?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 6,
+  "context": 19,
+  "statement": "Distance from my relatives has never really bothered me.",
+  "user": "Distance from my relatives has never really bothered me. What are some tips for sleeping better?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 0,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. Can you help me pick a laptop for everyday work?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 1,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. Can you suggest a simple meal plan for next week?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 2,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. What's a good way to start running again after a long break?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 3,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. Can you recommend a few novels for a long weekend?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 4,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. How should I organize my closet so it stays tidy?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 5,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. What's a good beginner houseplant that's hard to kill?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 6,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. Can you help me write a thank-you note to a coworker?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 7,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. How do I get better at keeping a budget?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 8,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. What should I look for in a new pair of hiking boots?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 9,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. Can you explain how compound interest works?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 10,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. What's a fun hobby I could pick up this winter?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 11,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. How do I make my mornings less rushed?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 12,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. Can you help me choose a board game for four people?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 13,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. What's a good way to learn basic Spanish?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 14,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. How often should I replace my running shoes?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 15,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. Can you suggest a weekend project for a small backyard?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 16,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. What's the best way to back up the photos on my phone?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 17,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. How do I cook rice that isn't mushy?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 18,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. Can you help me plan a birthday dinner for a friend?"
+ },
+ {
+  "split": "train",
+  "label": 0,
+  "phrasing": 7,
+  "context": 19,
+  "statement": "I value my independence more than staying close to home.",
+  "user": "I value my independence more than staying close to home. What are some tips for sleeping better?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 8,
+  "context": 20,
+  "statement": "I can see myself living in a completely different place from my family.",
+  "user": "I can see myself living in a completely different place from my family. Can you help me choose a podcast to start with?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 8,
+  "context": 21,
+  "statement": "I can see myself living in a completely different place from my family.",
+  "user": "I can see myself living in a completely different place from my family. What's a good stretching routine after work?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 8,
+  "context": 22,
+  "statement": "I can see myself living in a completely different place from my family.",
+  "user": "I can see myself living in a completely different place from my family. How do I keep basil alive on a windowsill?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 8,
+  "context": 23,
+  "statement": "I can see myself living in a completely different place from my family.",
+  "user": "I can see myself living in a completely different place from my family. Can you suggest a few easy vegetarian dinners?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 8,
+  "context": 24,
+  "statement": "I can see myself living in a completely different place from my family.",
+  "user": "I can see myself living in a completely different place from my family. What should I know before adopting a cat?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 8,
+  "context": 25,
+  "statement": "I can see myself living in a completely different place from my family.",
+  "user": "I can see myself living in a completely different place from my family. How do I clean a cast iron pan?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 8,
+  "context": 26,
+  "statement": "I can see myself living in a completely different place from my family.",
+  "user": "I can see myself living in a completely different place from my family. Can you recommend a simple journaling habit?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 8,
+  "context": 27,
+  "statement": "I can see myself living in a completely different place from my family.",
+  "user": "I can see myself living in a completely different place from my family. What's a good way to practice the guitar each day?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 8,
+  "context": 28,
+  "statement": "I can see myself living in a completely different place from my family.",
+  "user": "I can see myself living in a completely different place from my family. How do I pick a good watermelon?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 8,
+  "context": 29,
+  "statement": "I can see myself living in a completely different place from my family.",
+  "user": "I can see myself living in a completely different place from my family. Can you help me plan a quiet day off?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 9,
+  "context": 20,
+  "statement": "Being far away from home doesn't worry me.",
+  "user": "Being far away from home doesn't worry me. Can you help me choose a podcast to start with?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 9,
+  "context": 21,
+  "statement": "Being far away from home doesn't worry me.",
+  "user": "Being far away from home doesn't worry me. What's a good stretching routine after work?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 9,
+  "context": 22,
+  "statement": "Being far away from home doesn't worry me.",
+  "user": "Being far away from home doesn't worry me. How do I keep basil alive on a windowsill?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 9,
+  "context": 23,
+  "statement": "Being far away from home doesn't worry me.",
+  "user": "Being far away from home doesn't worry me. Can you suggest a few easy vegetarian dinners?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 9,
+  "context": 24,
+  "statement": "Being far away from home doesn't worry me.",
+  "user": "Being far away from home doesn't worry me. What should I know before adopting a cat?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 9,
+  "context": 25,
+  "statement": "Being far away from home doesn't worry me.",
+  "user": "Being far away from home doesn't worry me. How do I clean a cast iron pan?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 9,
+  "context": 26,
+  "statement": "Being far away from home doesn't worry me.",
+  "user": "Being far away from home doesn't worry me. Can you recommend a simple journaling habit?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 9,
+  "context": 27,
+  "statement": "Being far away from home doesn't worry me.",
+  "user": "Being far away from home doesn't worry me. What's a good way to practice the guitar each day?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 9,
+  "context": 28,
+  "statement": "Being far away from home doesn't worry me.",
+  "user": "Being far away from home doesn't worry me. How do I pick a good watermelon?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 9,
+  "context": 29,
+  "statement": "Being far away from home doesn't worry me.",
+  "user": "Being far away from home doesn't worry me. Can you help me plan a quiet day off?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 10,
+  "context": 20,
+  "statement": "I've always wanted to live somewhere far from where I grew up.",
+  "user": "I've always wanted to live somewhere far from where I grew up. Can you help me choose a podcast to start with?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 10,
+  "context": 21,
+  "statement": "I've always wanted to live somewhere far from where I grew up.",
+  "user": "I've always wanted to live somewhere far from where I grew up. What's a good stretching routine after work?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 10,
+  "context": 22,
+  "statement": "I've always wanted to live somewhere far from where I grew up.",
+  "user": "I've always wanted to live somewhere far from where I grew up. How do I keep basil alive on a windowsill?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 10,
+  "context": 23,
+  "statement": "I've always wanted to live somewhere far from where I grew up.",
+  "user": "I've always wanted to live somewhere far from where I grew up. Can you suggest a few easy vegetarian dinners?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 10,
+  "context": 24,
+  "statement": "I've always wanted to live somewhere far from where I grew up.",
+  "user": "I've always wanted to live somewhere far from where I grew up. What should I know before adopting a cat?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 10,
+  "context": 25,
+  "statement": "I've always wanted to live somewhere far from where I grew up.",
+  "user": "I've always wanted to live somewhere far from where I grew up. How do I clean a cast iron pan?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 10,
+  "context": 26,
+  "statement": "I've always wanted to live somewhere far from where I grew up.",
+  "user": "I've always wanted to live somewhere far from where I grew up. Can you recommend a simple journaling habit?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 10,
+  "context": 27,
+  "statement": "I've always wanted to live somewhere far from where I grew up.",
+  "user": "I've always wanted to live somewhere far from where I grew up. What's a good way to practice the guitar each day?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 10,
+  "context": 28,
+  "statement": "I've always wanted to live somewhere far from where I grew up.",
+  "user": "I've always wanted to live somewhere far from where I grew up. How do I pick a good watermelon?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 10,
+  "context": 29,
+  "statement": "I've always wanted to live somewhere far from where I grew up.",
+  "user": "I've always wanted to live somewhere far from where I grew up. Can you help me plan a quiet day off?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 11,
+  "context": 20,
+  "statement": "Where my family lives doesn't really affect where I want to be.",
+  "user": "Where my family lives doesn't really affect where I want to be. Can you help me choose a podcast to start with?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 11,
+  "context": 21,
+  "statement": "Where my family lives doesn't really affect where I want to be.",
+  "user": "Where my family lives doesn't really affect where I want to be. What's a good stretching routine after work?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 11,
+  "context": 22,
+  "statement": "Where my family lives doesn't really affect where I want to be.",
+  "user": "Where my family lives doesn't really affect where I want to be. How do I keep basil alive on a windowsill?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 11,
+  "context": 23,
+  "statement": "Where my family lives doesn't really affect where I want to be.",
+  "user": "Where my family lives doesn't really affect where I want to be. Can you suggest a few easy vegetarian dinners?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 11,
+  "context": 24,
+  "statement": "Where my family lives doesn't really affect where I want to be.",
+  "user": "Where my family lives doesn't really affect where I want to be. What should I know before adopting a cat?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 11,
+  "context": 25,
+  "statement": "Where my family lives doesn't really affect where I want to be.",
+  "user": "Where my family lives doesn't really affect where I want to be. How do I clean a cast iron pan?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 11,
+  "context": 26,
+  "statement": "Where my family lives doesn't really affect where I want to be.",
+  "user": "Where my family lives doesn't really affect where I want to be. Can you recommend a simple journaling habit?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 11,
+  "context": 27,
+  "statement": "Where my family lives doesn't really affect where I want to be.",
+  "user": "Where my family lives doesn't really affect where I want to be. What's a good way to practice the guitar each day?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 11,
+  "context": 28,
+  "statement": "Where my family lives doesn't really affect where I want to be.",
+  "user": "Where my family lives doesn't really affect where I want to be. How do I pick a good watermelon?"
+ },
+ {
+  "split": "val",
+  "label": 0,
+  "phrasing": 11,
+  "context": 29,
+  "statement": "Where my family lives doesn't really affect where I want to be.",
+  "user": "Where my family lives doesn't really affect where I want to be. Can you help me plan a quiet day off?"
+ }
+]
