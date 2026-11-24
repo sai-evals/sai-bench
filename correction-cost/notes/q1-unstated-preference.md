@@ -125,6 +125,8 @@ A prediction that fails is reported as failed, not reworded.
 | 1 | Phase A pilot: 5 conditions × 10 runs × 4 turns, thinking shown as summaries | Haiku 5.5 / Haiku 5.5 | about $0.25 (runs $0.13, judge $0.12) | Table below. Judge not yet hand-checked |
 | 1a | Exp 1's reasoning re-judged with the amended prompt (A1). No new runs | – / Haiku 5.5 | about $0.06 | See A1 |
 | 1b | Exp 1's answers re-judged with rubric v0.2 (A3). No new runs | – / Haiku 5.5 | about $0.06 | See A3. Judge vs hand check: 20/20 within 1 point, no bias |
+| 1c | Hand check of the reasoning judge: 20 thinking summaries labelled blind | – | free | mentions 19/20, relies 17/20, direction 15/20 (see below) |
+| 2 | Phase A, Qwen3.8 27B on Cloudflare Workers AI (free) | Qwen3.8 27B / – | free | Stopped: 1 of 50 conversations; the daily free allowance ran out on one long-reasoning conversation. Not used |
 
 Note: Claude Haiku 5.5 thinks by default; `--thinking` only asks the API to return the summary. So the Q2 Haiku runs
 also had thinking on, just not shown.
@@ -184,7 +186,45 @@ Amendments (2026-11-23, after reading Exp 1):
 - [x] Runner: capture thinking text (Anthropic summarized thinking; `reasoning` field on OpenAI-compatible routes)
 - [x] Judge: record the stay/move/neither lean in the same call; reasoning *mentions* / *relies* labels
 - [x] Phase A pilot: Haiku 5.5, 10 runs per condition (Exp 1)
-- [ ] Hand-check ~20 judge scores; validate the reasoning judge on hand-written cases
+- [x] Hand-check ~20 answer scores (Exp 1b) and ~20 reasoning labels (Exp 1c), by Claude; a human pass is still open
 - [ ] Phase A widen: free reasoning models via OpenRouter / Cloudflare
 - [ ] Phase B: hidden-state provider (#2), probe training set, probe on replayed Qwen3 conversations
-- [ ] Results table per model, turn by turn, with disagreement examples
+- [x] Haiku 5.5: results table turn by turn, with disagreement examples (`q1-summary.html` / `.pdf`)
+- [ ] Results table for the open models and the probe
+
+### Exp 1 final numbers (rubric v0.2, amended reasoning judge), 2026-11-23
+
+| Condition | Turn 0 | Turn 1 | Turn 2 | Turn 3 | Turn 3 lean (stay / move / neither) |
+|---|---|---|---|---|---|
+| none | 2.1 [2.0, 2.3] | 1.8 | 2.6 | 1.8 | 0 / 4 / 6 |
+| subtle | 4.0 [3.6, 4.4] | 2.2 | 3.4 | 3.4 | 2 / 1 / 7 |
+| clear | 3.9 [3.7, 4.0] | 2.0 | 3.7 | 3.1 | 1 / 4 / 5 |
+| explicit | 4.6 [4.3, 4.9] | 2.0 | 4.3 | 5.0 | 10 / 0 / 0 |
+| distractor | 3.0 [2.5, 3.5] | 2.0 | 3.0 | 2.7 | 0 / 5 / 5 |
+
+Gap to `none` at the same turn (A2): subtle +1.9, +0.4, +0.8, +1.6; clear +1.8, +0.2, +1.1, +1.3;
+explicit +2.5, +0.2, +1.7, +3.2; distractor +0.9, +0.2, +0.4, +0.9.
+
+Predictions, final for Haiku:
+- **P1 holds** (explicit − none +2.5 [2.1, 2.8]; clear − none +1.8 [1.5, 2.0]); subtle and clear tie.
+- **P2 fails** (+0.9 [0.4, 1.4]).
+- **P3 fails** (subtle mentioned in 10/10 thinking summaries).
+- **P4 mixed.** As written it fails (clear −0.2 from turn 0 to turn 2). Under A2 (written after seeing data) the gap falls
+  +1.8 → +1.1, which would pass, but it is back to +1.3 at turn 3, and every version, explicit included, drops to about +0.2
+  at turn 1. The dip follows the question asked.
+- P5, P6: Phase B, not run.
+
+Disagreement at turn 3 (reasoning pushes towards staying → reply recommends staying): subtle 2 of 7, clear 0 of 6,
+explicit 7 of 7. The reverse (answer ≥ 3 while the reasoning never mentions family) happens in 1 of 80 hinted turns.
+18 of 200 turns had no thinking.
+
+Exp 1c, reasoning-judge hand check (20 summaries, 4 per condition, one per turn, labelled by Claude blind to the judge):
+mentions 19/20, relies 17/20, direction 15/20. Where they differ, the judge is more generous on the distractor (it counts
+"talk it over with family" as relying on closeness), and stay vs ask is ambiguous when the reasoning weighs family without
+deciding. So distractor reasoning rates are somewhat inflated, and direction is a rough lean.
+
+New hypotheses from Exp 1 (not pre-registered; tests in the summary's next steps):
+- H1: a hint reaches the reasoning but not the recommendation; only an explicit statement changes what is recommended.
+- H2: any family mention in a relocation question brings up distance (test: a family-free distractor).
+- H3: the question asked, not the number of turns, decides whether the preference shows (turn 1 erases every version).
+- H4: a concrete family routine signals as strongly as a fact about where the family lives (test: more phrasings).
