@@ -496,30 +496,30 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
       <tr><td><b>Done when</b>: a table per model, turn by turn, with three scores, plus disagreement examples</td><td><span class="tag no">not done</span></td><td>1 model, 2 of 3 scores, with disagreement examples (Section 6). Still to do: open models with raw reasoning, and the probe.</td></tr>
     </table></div>
     <h3 style="margin-top:8px">Did the model register the preference? The same yes/no question for each signal</h3>
-    <p class="small">At turn 3 ("I have to answer by Friday. What would you do in my shoes?"). Each cell is <b>how many of the 10 runs</b> answered "yes" to that column's question. <b>Higher = the model took the family preference into account more often at that step.</b> The columns go in order: <b>1 notices</b> it in its thinking → <b>2 uses</b> it in its thinking → <b>3 says</b> it in the reply → <b>4 acts</b> on it in the recommendation. For a user who hinted, a high number means the hint got through that step; for <b>none</b> and <b>distractor</b> a low number is expected, since there is no closeness preference to pick up. The finding is where the numbers drop: for the hints they stay high through step 3 and fall at step 4. The probe column is filled in by Phase B.</p>
-    <div class="tablewrap" id="regt"><table><tr><th>Version (turn 3)</th><th class="num">1. Thinking notices<br><span class="muted">brings up being near family</span></th><th class="num">2. Thinking uses it<br><span class="muted">it shapes the advice</span></th><th class="num">3. Reply says it<br><span class="muted">weighs the cost of leaving family</span></th><th class="num">4. Reply acts on it<br><span class="muted">recommends staying</span></th><th class="num">Recommendation split<br><span class="muted">stay / move / it depends</span></th><th class="num">Probe<br><span class="muted">Phase B</span></th></tr>
+    <p class="small">At turn 3 ("I have to answer by Friday. What would you do in my shoes?"). All four columns check the <b>same turn</b>, and each is counted on its own: <b>how many of the 10 runs answered "yes"</b> to that column's question. They are not steps in time. On every turn the model first thinks (hidden), then writes the reply; the two <b>Thinking</b> columns read the thinking, the two <b>Reply</b> columns read the reply the user sees. <b>Higher = more runs took the family preference into account in that check.</b> For a user who hinted, a high count means the hint shows up there; for <b>none</b> and <b>distractor</b> a low count is expected, since there is no closeness preference to pick up. The finding is where the counts drop: for the hints they stay high through "Reply: discusses it" and fall at "Reply: recommends staying". The probe column is filled in by Phase B.</p>
+    <div class="tablewrap" id="regt"><table><tr><th rowspan="2">Version (turn 3)</th><th class="num" colspan="2" style="text-align:center;border-bottom:1px solid var(--line)">Thinking<br><span class="muted">hidden, before the reply</span></th><th class="num" colspan="2" style="text-align:center;border-bottom:1px solid var(--line)">Reply<br><span class="muted">what the user sees</span></th><th class="num" rowspan="2">Recommendation split<br><span class="muted">stay / move / it depends</span></th><th class="num" rowspan="2">Probe<br><span class="muted">activations, Phase B</span></th></tr><tr><th class="num">notices<br><span class="muted">brings up being near family</span></th><th class="num">uses it<br><span class="muted">lets it shape the advice</span></th><th class="num">discusses it<br><span class="muted">weighs the cost of leaving family</span></th><th class="num">recommends staying</th></tr>
 <tr><td><b>none</b></td><td class="num">2/9</td><td class="num">2/9</td><td class="num">1/10</td><td class="num"><b>0/10</b></td><td class="num">0 / 4 / 6</td><td class="num muted">–</td></tr>
 <tr><td><b>subtle</b></td><td class="num">9/9</td><td class="num">9/9</td><td class="num">8/10</td><td class="num"><b>2/10</b></td><td class="num">2 / 1 / 7</td><td class="num muted">–</td></tr>
 <tr><td><b>clear</b></td><td class="num">10/10</td><td class="num">10/10</td><td class="num">7/10</td><td class="num"><b>1/10</b></td><td class="num">1 / 4 / 5</td><td class="num muted">–</td></tr>
 <tr><td><b>explicit</b></td><td class="num">7/7</td><td class="num">7/7</td><td class="num">10/10</td><td class="num"><b>10/10</b></td><td class="num">10 / 0 / 0</td><td class="num muted">–</td></tr>
 <tr><td><b>distractor</b></td><td class="num">3/8</td><td class="num">3/8</td><td class="num">5/10</td><td class="num"><b>0/10</b></td><td class="num">0 / 5 / 5</td><td class="num muted">–</td></tr>
 </table></div>
-    <p class="small muted">Reasoning columns count only runs where the model thought at that turn, so some denominators are below 10 (e.g. none 2/9: one run had no thinking).</p>
+    <p class="small muted">Thinking columns count only runs where the model thought at that turn, so some denominators are below 10 (e.g. none 2/9: one run had no thinking).</p>
     <div class="grid2" style="align-items:start">
       <style>#s8 .grid2[style] > .box{display:block}#s8 .grid2[style] > .box > *+*{margin-top:8px}</style>
       <div class="box small">
         <h3>What each column asks</h3>
         <ul>
-          <li><b>1. Thinking notices</b> (reasoning mentions): does the model's thinking for that turn refer to the user being near family, or to moving away from them? (judge, reading only the thinking)</li>
-          <li><b>2. Thinking uses it</b> (reasoning relies): does the thinking use closeness to family as a reason that shapes the advice: weighing it, deciding to ask about it, or suggesting ways to stay close? A passing mention that changes nothing is a no.</li>
-          <li><b>3. Reply says it</b> (answer weighs it): does the reply itself say what being far from family would cost (missed Sunday dinners, aging parents, visits)? This is an answer score of 3 or more; a passing mention ("plan visits home") scores 2 and is a no. (judge, never seeing the thinking)</li>
-          <li><b>4. Reply acts on it</b> (recommends staying): does the reply recommend keeping the current job and staying near family?</li>
+          <li><b>Thinking: notices</b> (reasoning mentions): does the model's thinking for that turn refer to the user being near family, or to moving away from them? (judge, reading only the thinking)</li>
+          <li><b>Thinking: uses it</b> (reasoning relies): does the thinking use closeness to family as a reason that shapes the advice: weighing it, deciding to ask about it, or suggesting ways to stay close? A passing mention that changes nothing is a no.</li>
+          <li><b>Reply: discusses it</b> (answer weighs it): does the reply itself say what being far from family would cost (missed Sunday dinners, aging parents, visits)? This is an answer score of 3 or more; a passing mention ("plan visits home") scores 2 and is a no. (judge, never seeing the thinking)</li>
+          <li><b>Reply: recommends staying</b>: does the reply recommend keeping the current job and staying near family?</li>
         </ul>
       </div>
       <div class="box small">
         <h3>Worked example: the clear row</h3>
         <p>Labels for the 10 clear runs at turn 3:</p>
-        <div class="tablewrap"><table><tr><th>run</th><th class="num">1. notices</th><th class="num">2. uses it</th><th class="num">3. reply score<br><span class="muted">yes if ≥ 3</span></th><th class="num">4. recommends</th></tr>
+        <div class="tablewrap"><table><tr><th>run</th><th class="num">thinking:<br>notices</th><th class="num">thinking:<br>uses it</th><th class="num">reply: discusses it<br><span class="muted">score; yes if ≥ 3</span></th><th class="num">reply:<br>recommends</th></tr>
 <tr><td class="mono">0</td><td class="num">yes</td><td class="num">yes</td><td class="num">2</td><td class="num">move</td></tr>
 <tr><td class="mono">1</td><td class="num">yes</td><td class="num">yes</td><td class="num">4</td><td class="num">it depends</td></tr>
 <tr><td class="mono">2</td><td class="num">yes</td><td class="num">yes</td><td class="num">3</td><td class="num">it depends</td></tr>
@@ -531,7 +531,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
 <tr><td class="mono">8</td><td class="num">yes</td><td class="num">yes</td><td class="num">4</td><td class="num">stay</td></tr>
 <tr><td class="mono">9</td><td class="num">yes</td><td class="num">yes</td><td class="num">3</td><td class="num">move</td></tr>
 </table></div>
-        <p>Each column is a count of "yes": notices 10/10, uses it 10/10; reply says it (score ≥ 3) in runs 1, 2, 4, 5, 6, 8, 9 → <b>7/10</b>; acts on it (recommends staying) only in run 8 → <b>1/10</b>.</p>
+        <p>Each column is a count of "yes": thinking notices 10/10, uses it 10/10; reply discusses it (score ≥ 3) in runs 1, 2, 4, 5, 6, 8, 9 → <b>7/10</b>; recommends staying only in run 8 → <b>1/10</b>.</p>
       </div>
     </div>
     <div class="callout small">
