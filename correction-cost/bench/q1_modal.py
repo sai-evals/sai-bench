@@ -10,6 +10,7 @@ Two steps, both on one L40S at a time:
 Usage (Modal credentials from the environment, MODAL_TOKEN_ID / MODAL_TOKEN_SECRET):
   modal run correction-cost/bench/q1_modal.py --step generate
   modal run correction-cost/bench/q1_modal.py --step acts
+  add --version v3 for amendment A6 (training conversations labelled by Qwen3-8B's own answer; 30 matched test runs)
   add --version v2 for amendment A5 (varied hint/question wording, v2 training set; files under results/q1_probe/)
 """
 import json, os
@@ -94,6 +95,51 @@ class Acts:
     return out
 
 
+# A6: Qwen3-8B's own read of the user, used as the probe label (self-distillation, as in arXiv 2609.31603).
+SELF_Q = ("Pause the advice for a moment. Based only on what I've told you so far, which is most likely true about me? "
+          "Reply with just the letter.\n{opts}")
+SELF_OPTS = ["I want to live close to my family.", "I'm fine living far from my family.", "Nothing I've said shows either way."]
+
+
+@app.cls(gpu="L40S", image=image, volumes={"/cache": cache}, timeout=3600, max_containers=2)
+class Acts3:
+  @modal.enter()
+  def load(self):
+    import torch
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+    self.tok = AutoTokenizer.from_pretrained(MODEL)
+    self.model = AutoModelForCausalLM.from_pretrained(MODEL, torch_dtype=torch.bfloat16).to("cuda").eval()
+    self.letters = [self.tok.encode(x, add_special_tokens=False)[0] for x in "ABC"]
+
+  @modal.method()
+  def run(self, items: list) -> list:
+    """items: {"id", "messages"}. Returns {"id", "last": [L+1, d] f16 at the end of the conversation (generation prompt,
+    thinking on), "self": [p_stay, p_away, p_unclear] averaged over the 3 cyclic option orders (thinking off)}."""
+    import numpy as np, torch
+    tok, model = self.tok, self.model
+    out = []
+    for it in items:
+        prompt = tok.apply_chat_template(it["messages"], tokenize=False, add_generation_prompt=True, enable_thinking=True)
+        ids = tok(prompt, return_tensors="pt", add_special_tokens=False)["input_ids"].cuda()
+        with torch.no_grad():
+            hs = model(ids, output_hidden_states=True).hidden_states
+        last = torch.stack([h[0, -1] for h in hs]).float().cpu().numpy().astype(np.float16)
+        probs = np.zeros(3)
+        for k in range(3):
+            order = [(k + j) % 3 for j in range(3)]  # position j shows canonical option order[j]
+            opts = "\n".join(f"{'ABC'[j]}. {SELF_OPTS[order[j]]}" for j in range(3))
+            msgs = it["messages"] + [{"role": "user", "content": SELF_Q.format(opts=opts)}]
+            q = tok.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True, enable_thinking=False)
+            qi = tok(q, return_tensors="pt", add_special_tokens=False)["input_ids"].cuda()
+            with torch.no_grad():
+                logits = model(qi).logits[0, -1].float()
+            p = torch.softmax(logits[self.letters], 0).cpu().numpy()
+            for j in range(3):
+                probs[order[j]] += p[j] / 3
+        out.append({"id": it["id"], "last": last, "self": probs.tolist(), "n_tokens": int(ids.shape[1])})
+    return out
+
+
 @app.local_entrypoint()
 def main(step: str = "generate", n_runs: int = 10, max_tokens: int = 6000, version: str = "v1"):
     import numpy as np
@@ -101,6 +147,8 @@ def main(step: str = "generate", n_runs: int = 10, max_tokens: int = 6000, versi
     repo = os.path.dirname(os.path.dirname(here))
     scen = {c: json.load(open(f"{repo}/correction-cost/scenarios/job-offer-family-{c}/scenario.json")) for c in CONDITIONS}
     safe = TARGET.replace(":", "_").replace("/", "_")
+    if version == "v3":
+        return main_v3(step, repo, scen, safe)
     v2 = version == "v2"  # A5: per-run hint and question wording, separate files
     spec = json.load(open(f"{repo}/correction-cost/probes/q1_test_prompts_v2.json")) if v2 else None
     convo_path = (lambda c: f"{repo}/results/q1_probe/v2/convos__{safe}__{c}.jsonl") if v2 else \
@@ -159,3 +207,57 @@ def main(step: str = "generate", n_runs: int = 10, max_tokens: int = 6000, versi
         np.savez_compressed(f"{out}/{tag}.npz", last=last, hint=hint, has_hint=has_hint)
         json.dump(index, open(f"{out}/{tag}.json", "w"))
         print(f"saved {len(index)} items, last {last.shape}, hints {int(has_hint.sum())}")
+
+
+def main_v3(step, repo, scen, safe):
+    """A6: training conversations (other moving decisions) and matched job-offer test conversations, 30 runs per version."""
+    import numpy as np
+    train = json.load(open(f"{repo}/correction-cost/probes/q1_train_convs_v3.json"))
+    spec = json.load(open(f"{repo}/correction-cost/probes/q1_test_prompts_v3.json"))
+    d = f"{repo}/results/q1_probe/v3"
+    os.makedirs(d, exist_ok=True)
+    if step == "generate":
+        h_tr = generate.spawn({"train": [0, 0]}, len(train), 4000, {"train": [r["turns"] for r in train]})
+        h_te = generate.spawn({c: [0] * 4 for c in CONDITIONS}, len(spec["none"]), 6000,
+                              {c: [r["turns"] for r in spec[c]] for c in CONDITIONS})
+        tr, te = h_tr.get(), h_te.get()
+        with open(f"{d}/train_convos.jsonl", "w") as f:
+            for cv in tr:
+                f.write(json.dumps({**{k: train[cv["run"]][k] for k in ("split", "cue_type", "phrasing", "decision", "cue")},
+                                    "run": cv["run"], "turns": cv["turns"]}, ensure_ascii=False) + "\n")
+        for c in CONDITIONS:
+            with open(f"{d}/convos__{safe}__{c}.jsonl", "w") as f:
+                for cv in (x for x in te if x["condition"] == c):
+                    f.write(json.dumps({"scenario": scen[c]["id"], "scenario_version": scen[c].get("version"), "target": TARGET,
+                                        "model_used": MODEL, "time": "", "run": cv["run"], "turns": cv["turns"],
+                                        **{k: spec[c][cv["run"]][k] for k in ("hint", "hint_phrasing", "question_wording")}},
+                                       ensure_ascii=False) + "\n")
+        cut = sum(t["stop_reason"] == "max_tokens" for cv in tr + te for t in cv["turns"])
+        print(f"{len(tr)} training and {len(te)} test conversations; {cut} turns hit max_tokens")
+    elif step == "acts":
+        items, index = [], []
+        def add(convo, base):
+            msgs = []
+            for t in convo["turns"]:
+                msgs = msgs + [{"role": "user", "content": t["user"]}]
+                iid = f"{base['kind']}|{base.get('condition', base.get('cue_type'))}|{convo['run']}|{t['turn']}"
+                items.append({"id": iid, "messages": msgs})
+                index.append({**base, "id": iid, "run": convo["run"], "turn": t["turn"],
+                              "user_so_far": " ".join(m["content"] for m in msgs if m["role"] == "user")})
+                msgs = msgs + [{"role": "assistant", "content": t["assistant"]}]
+        for line in open(f"{d}/train_convos.jsonl"):
+            cv = json.loads(line)
+            add(cv, {"kind": "probe", **{k: cv[k] for k in ("split", "cue_type", "phrasing", "decision")}})
+        for c in CONDITIONS:
+            for line in open(f"{d}/convos__{safe}__{c}.jsonl"):
+                cv = json.loads(line)
+                add(cv, {"kind": "test", "condition": c, "hint_phrasing": cv["hint_phrasing"], "question_wording": cv["question_wording"]})
+        batches = [items[i:i + 40] for i in range(0, len(items), 40)]
+        recs = {r["id"]: r for batch in Acts3().run.map(batches) for r in batch}
+        last = np.stack([recs[x["id"]]["last"] for x in index])
+        selfp = np.array([recs[x["id"]]["self"] for x in index], dtype=np.float32)
+        for x in index:
+            x["n_tokens"] = recs[x["id"]]["n_tokens"]
+        np.savez_compressed(f"{repo}/results/q1_probe/acts_qwen3-8b_v3.npz", last=last, self=selfp)
+        json.dump(index, open(f"{repo}/results/q1_probe/acts_qwen3-8b_v3.json", "w"))
+        print(f"saved {len(index)} items, last {last.shape}")

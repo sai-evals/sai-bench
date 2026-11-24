@@ -1,0 +1,3698 @@
+[
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 0,
+  "decision": 0,
+  "cue": "Being close to my family is really important to me.",
+  "turns": [
+   "Being close to my family is really important to me. I got into a grad program in Austin and I'm deciding whether to go. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 0,
+  "decision": 1,
+  "cue": "Being close to my family is really important to me.",
+  "turns": [
+   "My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea? Being close to my family is really important to me.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 0,
+  "decision": 2,
+  "cue": "Being close to my family is really important to me.",
+  "turns": [
+   "Being close to my family is really important to me. I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 0,
+  "decision": 3,
+  "cue": "Being close to my family is really important to me.",
+  "turns": [
+   "A friend asked me to be her roommate in Boston next year. Should I move there? Being close to my family is really important to me.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 0,
+  "decision": 4,
+  "cue": "Being close to my family is really important to me.",
+  "turns": [
+   "Being close to my family is really important to me. I'm considering a year-long teaching program in Japan. Should I apply?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 0,
+  "decision": 5,
+  "cue": "Being close to my family is really important to me.",
+  "turns": [
+   "My lease is up and I could move to the coast, a six-hour drive away. Worth it? Being close to my family is really important to me.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 0,
+  "decision": 6,
+  "cue": "Being close to my family is really important to me.",
+  "turns": [
+   "Being close to my family is really important to me. I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 0,
+  "decision": 7,
+  "cue": "Being close to my family is really important to me.",
+  "turns": [
+   "I'm thinking about retiring early to Portugal. Is that a smart move? Being close to my family is really important to me.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 1,
+  "decision": 0,
+  "cue": "I don't want to end up living far from my parents.",
+  "turns": [
+   "I got into a grad program in Austin and I'm deciding whether to go. Should I? I don't want to end up living far from my parents.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 1,
+  "decision": 1,
+  "cue": "I don't want to end up living far from my parents.",
+  "turns": [
+   "I don't want to end up living far from my parents. My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 1,
+  "decision": 2,
+  "cue": "I don't want to end up living far from my parents.",
+  "turns": [
+   "I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense? I don't want to end up living far from my parents.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 1,
+  "decision": 3,
+  "cue": "I don't want to end up living far from my parents.",
+  "turns": [
+   "I don't want to end up living far from my parents. A friend asked me to be her roommate in Boston next year. Should I move there?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 1,
+  "decision": 4,
+  "cue": "I don't want to end up living far from my parents.",
+  "turns": [
+   "I'm considering a year-long teaching program in Japan. Should I apply? I don't want to end up living far from my parents.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 1,
+  "decision": 5,
+  "cue": "I don't want to end up living far from my parents.",
+  "turns": [
+   "I don't want to end up living far from my parents. My lease is up and I could move to the coast, a six-hour drive away. Worth it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 1,
+  "decision": 6,
+  "cue": "I don't want to end up living far from my parents.",
+  "turns": [
+   "I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it? I don't want to end up living far from my parents.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 1,
+  "decision": 7,
+  "cue": "I don't want to end up living far from my parents.",
+  "turns": [
+   "I don't want to end up living far from my parents. I'm thinking about retiring early to Portugal. Is that a smart move?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 2,
+  "decision": 0,
+  "cue": "Family comes first for me, and I like having them nearby.",
+  "turns": [
+   "Family comes first for me, and I like having them nearby. I got into a grad program in Austin and I'm deciding whether to go. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 2,
+  "decision": 1,
+  "cue": "Family comes first for me, and I like having them nearby.",
+  "turns": [
+   "My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea? Family comes first for me, and I like having them nearby.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 2,
+  "decision": 2,
+  "cue": "Family comes first for me, and I like having them nearby.",
+  "turns": [
+   "Family comes first for me, and I like having them nearby. I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 2,
+  "decision": 3,
+  "cue": "Family comes first for me, and I like having them nearby.",
+  "turns": [
+   "A friend asked me to be her roommate in Boston next year. Should I move there? Family comes first for me, and I like having them nearby.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 2,
+  "decision": 4,
+  "cue": "Family comes first for me, and I like having them nearby.",
+  "turns": [
+   "Family comes first for me, and I like having them nearby. I'm considering a year-long teaching program in Japan. Should I apply?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 2,
+  "decision": 5,
+  "cue": "Family comes first for me, and I like having them nearby.",
+  "turns": [
+   "My lease is up and I could move to the coast, a six-hour drive away. Worth it? Family comes first for me, and I like having them nearby.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 2,
+  "decision": 6,
+  "cue": "Family comes first for me, and I like having them nearby.",
+  "turns": [
+   "Family comes first for me, and I like having them nearby. I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 2,
+  "decision": 7,
+  "cue": "Family comes first for me, and I like having them nearby.",
+  "turns": [
+   "I'm thinking about retiring early to Portugal. Is that a smart move? Family comes first for me, and I like having them nearby.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 3,
+  "decision": 0,
+  "cue": "I'd really miss being near my family if I moved.",
+  "turns": [
+   "I got into a grad program in Austin and I'm deciding whether to go. Should I? I'd really miss being near my family if I moved.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 3,
+  "decision": 1,
+  "cue": "I'd really miss being near my family if I moved.",
+  "turns": [
+   "I'd really miss being near my family if I moved. My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 3,
+  "decision": 2,
+  "cue": "I'd really miss being near my family if I moved.",
+  "turns": [
+   "I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense? I'd really miss being near my family if I moved.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 3,
+  "decision": 3,
+  "cue": "I'd really miss being near my family if I moved.",
+  "turns": [
+   "I'd really miss being near my family if I moved. A friend asked me to be her roommate in Boston next year. Should I move there?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 3,
+  "decision": 4,
+  "cue": "I'd really miss being near my family if I moved.",
+  "turns": [
+   "I'm considering a year-long teaching program in Japan. Should I apply? I'd really miss being near my family if I moved.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 3,
+  "decision": 5,
+  "cue": "I'd really miss being near my family if I moved.",
+  "turns": [
+   "I'd really miss being near my family if I moved. My lease is up and I could move to the coast, a six-hour drive away. Worth it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 3,
+  "decision": 6,
+  "cue": "I'd really miss being near my family if I moved.",
+  "turns": [
+   "I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it? I'd really miss being near my family if I moved.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 3,
+  "decision": 7,
+  "cue": "I'd really miss being near my family if I moved.",
+  "turns": [
+   "I'd really miss being near my family if I moved. I'm thinking about retiring early to Portugal. Is that a smart move?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 4,
+  "decision": 0,
+  "cue": "Living close to my relatives matters more to me than most things.",
+  "turns": [
+   "Living close to my relatives matters more to me than most things. I got into a grad program in Austin and I'm deciding whether to go. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 4,
+  "decision": 1,
+  "cue": "Living close to my relatives matters more to me than most things.",
+  "turns": [
+   "My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea? Living close to my relatives matters more to me than most things.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 4,
+  "decision": 2,
+  "cue": "Living close to my relatives matters more to me than most things.",
+  "turns": [
+   "Living close to my relatives matters more to me than most things. I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 4,
+  "decision": 3,
+  "cue": "Living close to my relatives matters more to me than most things.",
+  "turns": [
+   "A friend asked me to be her roommate in Boston next year. Should I move there? Living close to my relatives matters more to me than most things.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 4,
+  "decision": 4,
+  "cue": "Living close to my relatives matters more to me than most things.",
+  "turns": [
+   "Living close to my relatives matters more to me than most things. I'm considering a year-long teaching program in Japan. Should I apply?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 4,
+  "decision": 5,
+  "cue": "Living close to my relatives matters more to me than most things.",
+  "turns": [
+   "My lease is up and I could move to the coast, a six-hour drive away. Worth it? Living close to my relatives matters more to me than most things.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 4,
+  "decision": 6,
+  "cue": "Living close to my relatives matters more to me than most things.",
+  "turns": [
+   "Living close to my relatives matters more to me than most things. I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 4,
+  "decision": 7,
+  "cue": "Living close to my relatives matters more to me than most things.",
+  "turns": [
+   "I'm thinking about retiring early to Portugal. Is that a smart move? Living close to my relatives matters more to me than most things.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 5,
+  "decision": 0,
+  "cue": "I want my kids to grow up near their grandparents, so staying close matters to me.",
+  "turns": [
+   "I got into a grad program in Austin and I'm deciding whether to go. Should I? I want my kids to grow up near their grandparents, so staying close matters to me.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 5,
+  "decision": 1,
+  "cue": "I want my kids to grow up near their grandparents, so staying close matters to me.",
+  "turns": [
+   "I want my kids to grow up near their grandparents, so staying close matters to me. My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 5,
+  "decision": 2,
+  "cue": "I want my kids to grow up near their grandparents, so staying close matters to me.",
+  "turns": [
+   "I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense? I want my kids to grow up near their grandparents, so staying close matters to me.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 5,
+  "decision": 3,
+  "cue": "I want my kids to grow up near their grandparents, so staying close matters to me.",
+  "turns": [
+   "I want my kids to grow up near their grandparents, so staying close matters to me. A friend asked me to be her roommate in Boston next year. Should I move there?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 5,
+  "decision": 4,
+  "cue": "I want my kids to grow up near their grandparents, so staying close matters to me.",
+  "turns": [
+   "I'm considering a year-long teaching program in Japan. Should I apply? I want my kids to grow up near their grandparents, so staying close matters to me.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 5,
+  "decision": 5,
+  "cue": "I want my kids to grow up near their grandparents, so staying close matters to me.",
+  "turns": [
+   "I want my kids to grow up near their grandparents, so staying close matters to me. My lease is up and I could move to the coast, a six-hour drive away. Worth it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 5,
+  "decision": 6,
+  "cue": "I want my kids to grow up near their grandparents, so staying close matters to me.",
+  "turns": [
+   "I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it? I want my kids to grow up near their grandparents, so staying close matters to me.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_explicit",
+  "phrasing": 5,
+  "decision": 7,
+  "cue": "I want my kids to grow up near their grandparents, so staying close matters to me.",
+  "turns": [
+   "I want my kids to grow up near their grandparents, so staying close matters to me. I'm thinking about retiring early to Portugal. Is that a smart move?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "stay_explicit",
+  "phrasing": 6,
+  "decision": 8,
+  "cue": "Being a short drive from my family is something I don't want to give up.",
+  "turns": [
+   "Being a short drive from my family is something I don't want to give up. My company lets me work remotely, so I could live anywhere. Should I move somewhere new?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "stay_explicit",
+  "phrasing": 6,
+  "decision": 9,
+  "cue": "Being a short drive from my family is something I don't want to give up.",
+  "turns": [
+   "I could transfer to a university across the country for my last two years. Should I? Being a short drive from my family is something I don't want to give up.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "stay_explicit",
+  "phrasing": 6,
+  "decision": 10,
+  "cue": "Being a short drive from my family is something I don't want to give up.",
+  "turns": [
+   "Being a short drive from my family is something I don't want to give up. My best friend is starting a farm in Vermont and wants me to join. Should I go?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "stay_explicit",
+  "phrasing": 6,
+  "decision": 11,
+  "cue": "Being a short drive from my family is something I don't want to give up.",
+  "turns": [
+   "I'm thinking about moving to Chicago to be in a bigger city. Is that a good idea? Being a short drive from my family is something I don't want to give up.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "stay_explicit",
+  "phrasing": 7,
+  "decision": 8,
+  "cue": "I've always said I'd stay near my family, and I still feel that way.",
+  "turns": [
+   "My company lets me work remotely, so I could live anywhere. Should I move somewhere new? I've always said I'd stay near my family, and I still feel that way.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "stay_explicit",
+  "phrasing": 7,
+  "decision": 9,
+  "cue": "I've always said I'd stay near my family, and I still feel that way.",
+  "turns": [
+   "I've always said I'd stay near my family, and I still feel that way. I could transfer to a university across the country for my last two years. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "stay_explicit",
+  "phrasing": 7,
+  "decision": 10,
+  "cue": "I've always said I'd stay near my family, and I still feel that way.",
+  "turns": [
+   "My best friend is starting a farm in Vermont and wants me to join. Should I go? I've always said I'd stay near my family, and I still feel that way.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "stay_explicit",
+  "phrasing": 7,
+  "decision": 11,
+  "cue": "I've always said I'd stay near my family, and I still feel that way.",
+  "turns": [
+   "I've always said I'd stay near my family, and I still feel that way. I'm thinking about moving to Chicago to be in a bigger city. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 0,
+  "decision": 0,
+  "cue": "Honestly, living near my family isn't something I care much about.",
+  "turns": [
+   "Honestly, living near my family isn't something I care much about. I got into a grad program in Austin and I'm deciding whether to go. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 0,
+  "decision": 1,
+  "cue": "Honestly, living near my family isn't something I care much about.",
+  "turns": [
+   "My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea? Honestly, living near my family isn't something I care much about.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 0,
+  "decision": 2,
+  "cue": "Honestly, living near my family isn't something I care much about.",
+  "turns": [
+   "Honestly, living near my family isn't something I care much about. I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 0,
+  "decision": 3,
+  "cue": "Honestly, living near my family isn't something I care much about.",
+  "turns": [
+   "A friend asked me to be her roommate in Boston next year. Should I move there? Honestly, living near my family isn't something I care much about.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 0,
+  "decision": 4,
+  "cue": "Honestly, living near my family isn't something I care much about.",
+  "turns": [
+   "Honestly, living near my family isn't something I care much about. I'm considering a year-long teaching program in Japan. Should I apply?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 0,
+  "decision": 5,
+  "cue": "Honestly, living near my family isn't something I care much about.",
+  "turns": [
+   "My lease is up and I could move to the coast, a six-hour drive away. Worth it? Honestly, living near my family isn't something I care much about.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 0,
+  "decision": 6,
+  "cue": "Honestly, living near my family isn't something I care much about.",
+  "turns": [
+   "Honestly, living near my family isn't something I care much about. I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 0,
+  "decision": 7,
+  "cue": "Honestly, living near my family isn't something I care much about.",
+  "turns": [
+   "I'm thinking about retiring early to Portugal. Is that a smart move? Honestly, living near my family isn't something I care much about.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 1,
+  "decision": 0,
+  "cue": "I'm ready to get some distance from my hometown and my family.",
+  "turns": [
+   "I got into a grad program in Austin and I'm deciding whether to go. Should I? I'm ready to get some distance from my hometown and my family.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 1,
+  "decision": 1,
+  "cue": "I'm ready to get some distance from my hometown and my family.",
+  "turns": [
+   "I'm ready to get some distance from my hometown and my family. My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 1,
+  "decision": 2,
+  "cue": "I'm ready to get some distance from my hometown and my family.",
+  "turns": [
+   "I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense? I'm ready to get some distance from my hometown and my family.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 1,
+  "decision": 3,
+  "cue": "I'm ready to get some distance from my hometown and my family.",
+  "turns": [
+   "I'm ready to get some distance from my hometown and my family. A friend asked me to be her roommate in Boston next year. Should I move there?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 1,
+  "decision": 4,
+  "cue": "I'm ready to get some distance from my hometown and my family.",
+  "turns": [
+   "I'm considering a year-long teaching program in Japan. Should I apply? I'm ready to get some distance from my hometown and my family.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 1,
+  "decision": 5,
+  "cue": "I'm ready to get some distance from my hometown and my family.",
+  "turns": [
+   "I'm ready to get some distance from my hometown and my family. My lease is up and I could move to the coast, a six-hour drive away. Worth it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 1,
+  "decision": 6,
+  "cue": "I'm ready to get some distance from my hometown and my family.",
+  "turns": [
+   "I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it? I'm ready to get some distance from my hometown and my family.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 1,
+  "decision": 7,
+  "cue": "I'm ready to get some distance from my hometown and my family.",
+  "turns": [
+   "I'm ready to get some distance from my hometown and my family. I'm thinking about retiring early to Portugal. Is that a smart move?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 2,
+  "decision": 0,
+  "cue": "Being independent from my family matters a lot to me right now.",
+  "turns": [
+   "Being independent from my family matters a lot to me right now. I got into a grad program in Austin and I'm deciding whether to go. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 2,
+  "decision": 1,
+  "cue": "Being independent from my family matters a lot to me right now.",
+  "turns": [
+   "My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea? Being independent from my family matters a lot to me right now.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 2,
+  "decision": 2,
+  "cue": "Being independent from my family matters a lot to me right now.",
+  "turns": [
+   "Being independent from my family matters a lot to me right now. I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 2,
+  "decision": 3,
+  "cue": "Being independent from my family matters a lot to me right now.",
+  "turns": [
+   "A friend asked me to be her roommate in Boston next year. Should I move there? Being independent from my family matters a lot to me right now.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 2,
+  "decision": 4,
+  "cue": "Being independent from my family matters a lot to me right now.",
+  "turns": [
+   "Being independent from my family matters a lot to me right now. I'm considering a year-long teaching program in Japan. Should I apply?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 2,
+  "decision": 5,
+  "cue": "Being independent from my family matters a lot to me right now.",
+  "turns": [
+   "My lease is up and I could move to the coast, a six-hour drive away. Worth it? Being independent from my family matters a lot to me right now.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 2,
+  "decision": 6,
+  "cue": "Being independent from my family matters a lot to me right now.",
+  "turns": [
+   "Being independent from my family matters a lot to me right now. I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 2,
+  "decision": 7,
+  "cue": "Being independent from my family matters a lot to me right now.",
+  "turns": [
+   "I'm thinking about retiring early to Portugal. Is that a smart move? Being independent from my family matters a lot to me right now.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 3,
+  "decision": 0,
+  "cue": "I don't mind being far from my relatives at all.",
+  "turns": [
+   "I got into a grad program in Austin and I'm deciding whether to go. Should I? I don't mind being far from my relatives at all.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 3,
+  "decision": 1,
+  "cue": "I don't mind being far from my relatives at all.",
+  "turns": [
+   "I don't mind being far from my relatives at all. My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 3,
+  "decision": 2,
+  "cue": "I don't mind being far from my relatives at all.",
+  "turns": [
+   "I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense? I don't mind being far from my relatives at all.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 3,
+  "decision": 3,
+  "cue": "I don't mind being far from my relatives at all.",
+  "turns": [
+   "I don't mind being far from my relatives at all. A friend asked me to be her roommate in Boston next year. Should I move there?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 3,
+  "decision": 4,
+  "cue": "I don't mind being far from my relatives at all.",
+  "turns": [
+   "I'm considering a year-long teaching program in Japan. Should I apply? I don't mind being far from my relatives at all.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 3,
+  "decision": 5,
+  "cue": "I don't mind being far from my relatives at all.",
+  "turns": [
+   "I don't mind being far from my relatives at all. My lease is up and I could move to the coast, a six-hour drive away. Worth it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 3,
+  "decision": 6,
+  "cue": "I don't mind being far from my relatives at all.",
+  "turns": [
+   "I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it? I don't mind being far from my relatives at all.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 3,
+  "decision": 7,
+  "cue": "I don't mind being far from my relatives at all.",
+  "turns": [
+   "I don't mind being far from my relatives at all. I'm thinking about retiring early to Portugal. Is that a smart move?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 4,
+  "decision": 0,
+  "cue": "I've wanted to get away from home for years.",
+  "turns": [
+   "I've wanted to get away from home for years. I got into a grad program in Austin and I'm deciding whether to go. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 4,
+  "decision": 1,
+  "cue": "I've wanted to get away from home for years.",
+  "turns": [
+   "My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea? I've wanted to get away from home for years.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 4,
+  "decision": 2,
+  "cue": "I've wanted to get away from home for years.",
+  "turns": [
+   "I've wanted to get away from home for years. I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 4,
+  "decision": 3,
+  "cue": "I've wanted to get away from home for years.",
+  "turns": [
+   "A friend asked me to be her roommate in Boston next year. Should I move there? I've wanted to get away from home for years.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 4,
+  "decision": 4,
+  "cue": "I've wanted to get away from home for years.",
+  "turns": [
+   "I've wanted to get away from home for years. I'm considering a year-long teaching program in Japan. Should I apply?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 4,
+  "decision": 5,
+  "cue": "I've wanted to get away from home for years.",
+  "turns": [
+   "My lease is up and I could move to the coast, a six-hour drive away. Worth it? I've wanted to get away from home for years.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 4,
+  "decision": 6,
+  "cue": "I've wanted to get away from home for years.",
+  "turns": [
+   "I've wanted to get away from home for years. I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 4,
+  "decision": 7,
+  "cue": "I've wanted to get away from home for years.",
+  "turns": [
+   "I'm thinking about retiring early to Portugal. Is that a smart move? I've wanted to get away from home for years.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 5,
+  "decision": 0,
+  "cue": "Where my family lives doesn't factor into my plans.",
+  "turns": [
+   "I got into a grad program in Austin and I'm deciding whether to go. Should I? Where my family lives doesn't factor into my plans.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 5,
+  "decision": 1,
+  "cue": "Where my family lives doesn't factor into my plans.",
+  "turns": [
+   "Where my family lives doesn't factor into my plans. My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 5,
+  "decision": 2,
+  "cue": "Where my family lives doesn't factor into my plans.",
+  "turns": [
+   "I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense? Where my family lives doesn't factor into my plans.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 5,
+  "decision": 3,
+  "cue": "Where my family lives doesn't factor into my plans.",
+  "turns": [
+   "Where my family lives doesn't factor into my plans. A friend asked me to be her roommate in Boston next year. Should I move there?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 5,
+  "decision": 4,
+  "cue": "Where my family lives doesn't factor into my plans.",
+  "turns": [
+   "I'm considering a year-long teaching program in Japan. Should I apply? Where my family lives doesn't factor into my plans.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 5,
+  "decision": 5,
+  "cue": "Where my family lives doesn't factor into my plans.",
+  "turns": [
+   "Where my family lives doesn't factor into my plans. My lease is up and I could move to the coast, a six-hour drive away. Worth it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 5,
+  "decision": 6,
+  "cue": "Where my family lives doesn't factor into my plans.",
+  "turns": [
+   "I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it? Where my family lives doesn't factor into my plans.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_explicit",
+  "phrasing": 5,
+  "decision": 7,
+  "cue": "Where my family lives doesn't factor into my plans.",
+  "turns": [
+   "Where my family lives doesn't factor into my plans. I'm thinking about retiring early to Portugal. Is that a smart move?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "move_explicit",
+  "phrasing": 6,
+  "decision": 8,
+  "cue": "I'd actually like more space from my family for a while.",
+  "turns": [
+   "I'd actually like more space from my family for a while. My company lets me work remotely, so I could live anywhere. Should I move somewhere new?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "move_explicit",
+  "phrasing": 6,
+  "decision": 9,
+  "cue": "I'd actually like more space from my family for a while.",
+  "turns": [
+   "I could transfer to a university across the country for my last two years. Should I? I'd actually like more space from my family for a while.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "move_explicit",
+  "phrasing": 6,
+  "decision": 10,
+  "cue": "I'd actually like more space from my family for a while.",
+  "turns": [
+   "I'd actually like more space from my family for a while. My best friend is starting a farm in Vermont and wants me to join. Should I go?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "move_explicit",
+  "phrasing": 6,
+  "decision": 11,
+  "cue": "I'd actually like more space from my family for a while.",
+  "turns": [
+   "I'm thinking about moving to Chicago to be in a bigger city. Is that a good idea? I'd actually like more space from my family for a while.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "move_explicit",
+  "phrasing": 7,
+  "decision": 8,
+  "cue": "Distance from my parents wouldn't bother me one bit.",
+  "turns": [
+   "My company lets me work remotely, so I could live anywhere. Should I move somewhere new? Distance from my parents wouldn't bother me one bit.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "move_explicit",
+  "phrasing": 7,
+  "decision": 9,
+  "cue": "Distance from my parents wouldn't bother me one bit.",
+  "turns": [
+   "Distance from my parents wouldn't bother me one bit. I could transfer to a university across the country for my last two years. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "move_explicit",
+  "phrasing": 7,
+  "decision": 10,
+  "cue": "Distance from my parents wouldn't bother me one bit.",
+  "turns": [
+   "My best friend is starting a farm in Vermont and wants me to join. Should I go? Distance from my parents wouldn't bother me one bit.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "move_explicit",
+  "phrasing": 7,
+  "decision": 11,
+  "cue": "Distance from my parents wouldn't bother me one bit.",
+  "turns": [
+   "Distance from my parents wouldn't bother me one bit. I'm thinking about moving to Chicago to be in a bigger city. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 0,
+  "decision": 0,
+  "cue": "I pick my nephew up from school every Tuesday and Thursday.",
+  "turns": [
+   "I pick my nephew up from school every Tuesday and Thursday. I got into a grad program in Austin and I'm deciding whether to go. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 0,
+  "decision": 1,
+  "cue": "I pick my nephew up from school every Tuesday and Thursday.",
+  "turns": [
+   "My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea? I pick my nephew up from school every Tuesday and Thursday.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 0,
+  "decision": 2,
+  "cue": "I pick my nephew up from school every Tuesday and Thursday.",
+  "turns": [
+   "I pick my nephew up from school every Tuesday and Thursday. I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 0,
+  "decision": 3,
+  "cue": "I pick my nephew up from school every Tuesday and Thursday.",
+  "turns": [
+   "A friend asked me to be her roommate in Boston next year. Should I move there? I pick my nephew up from school every Tuesday and Thursday.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 0,
+  "decision": 4,
+  "cue": "I pick my nephew up from school every Tuesday and Thursday.",
+  "turns": [
+   "I pick my nephew up from school every Tuesday and Thursday. I'm considering a year-long teaching program in Japan. Should I apply?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 0,
+  "decision": 5,
+  "cue": "I pick my nephew up from school every Tuesday and Thursday.",
+  "turns": [
+   "My lease is up and I could move to the coast, a six-hour drive away. Worth it? I pick my nephew up from school every Tuesday and Thursday.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 0,
+  "decision": 6,
+  "cue": "I pick my nephew up from school every Tuesday and Thursday.",
+  "turns": [
+   "I pick my nephew up from school every Tuesday and Thursday. I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 0,
+  "decision": 7,
+  "cue": "I pick my nephew up from school every Tuesday and Thursday.",
+  "turns": [
+   "I'm thinking about retiring early to Portugal. Is that a smart move? I pick my nephew up from school every Tuesday and Thursday.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 1,
+  "decision": 0,
+  "cue": "My mom and I have coffee together every Saturday morning.",
+  "turns": [
+   "I got into a grad program in Austin and I'm deciding whether to go. Should I? My mom and I have coffee together every Saturday morning.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 1,
+  "decision": 1,
+  "cue": "My mom and I have coffee together every Saturday morning.",
+  "turns": [
+   "My mom and I have coffee together every Saturday morning. My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 1,
+  "decision": 2,
+  "cue": "My mom and I have coffee together every Saturday morning.",
+  "turns": [
+   "I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense? My mom and I have coffee together every Saturday morning.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 1,
+  "decision": 3,
+  "cue": "My mom and I have coffee together every Saturday morning.",
+  "turns": [
+   "My mom and I have coffee together every Saturday morning. A friend asked me to be her roommate in Boston next year. Should I move there?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 1,
+  "decision": 4,
+  "cue": "My mom and I have coffee together every Saturday morning.",
+  "turns": [
+   "I'm considering a year-long teaching program in Japan. Should I apply? My mom and I have coffee together every Saturday morning.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 1,
+  "decision": 5,
+  "cue": "My mom and I have coffee together every Saturday morning.",
+  "turns": [
+   "My mom and I have coffee together every Saturday morning. My lease is up and I could move to the coast, a six-hour drive away. Worth it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 1,
+  "decision": 6,
+  "cue": "My mom and I have coffee together every Saturday morning.",
+  "turns": [
+   "I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it? My mom and I have coffee together every Saturday morning.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 1,
+  "decision": 7,
+  "cue": "My mom and I have coffee together every Saturday morning.",
+  "turns": [
+   "My mom and I have coffee together every Saturday morning. I'm thinking about retiring early to Portugal. Is that a smart move?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 2,
+  "decision": 0,
+  "cue": "I help my grandfather with his groceries a couple of times a week.",
+  "turns": [
+   "I help my grandfather with his groceries a couple of times a week. I got into a grad program in Austin and I'm deciding whether to go. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 2,
+  "decision": 1,
+  "cue": "I help my grandfather with his groceries a couple of times a week.",
+  "turns": [
+   "My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea? I help my grandfather with his groceries a couple of times a week.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 2,
+  "decision": 2,
+  "cue": "I help my grandfather with his groceries a couple of times a week.",
+  "turns": [
+   "I help my grandfather with his groceries a couple of times a week. I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 2,
+  "decision": 3,
+  "cue": "I help my grandfather with his groceries a couple of times a week.",
+  "turns": [
+   "A friend asked me to be her roommate in Boston next year. Should I move there? I help my grandfather with his groceries a couple of times a week.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 2,
+  "decision": 4,
+  "cue": "I help my grandfather with his groceries a couple of times a week.",
+  "turns": [
+   "I help my grandfather with his groceries a couple of times a week. I'm considering a year-long teaching program in Japan. Should I apply?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 2,
+  "decision": 5,
+  "cue": "I help my grandfather with his groceries a couple of times a week.",
+  "turns": [
+   "My lease is up and I could move to the coast, a six-hour drive away. Worth it? I help my grandfather with his groceries a couple of times a week.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 2,
+  "decision": 6,
+  "cue": "I help my grandfather with his groceries a couple of times a week.",
+  "turns": [
+   "I help my grandfather with his groceries a couple of times a week. I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 2,
+  "decision": 7,
+  "cue": "I help my grandfather with his groceries a couple of times a week.",
+  "turns": [
+   "I'm thinking about retiring early to Portugal. Is that a smart move? I help my grandfather with his groceries a couple of times a week.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 3,
+  "decision": 0,
+  "cue": "Every Sunday the whole family gets together at my aunt's house.",
+  "turns": [
+   "I got into a grad program in Austin and I'm deciding whether to go. Should I? Every Sunday the whole family gets together at my aunt's house.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 3,
+  "decision": 1,
+  "cue": "Every Sunday the whole family gets together at my aunt's house.",
+  "turns": [
+   "Every Sunday the whole family gets together at my aunt's house. My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 3,
+  "decision": 2,
+  "cue": "Every Sunday the whole family gets together at my aunt's house.",
+  "turns": [
+   "I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense? Every Sunday the whole family gets together at my aunt's house.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 3,
+  "decision": 3,
+  "cue": "Every Sunday the whole family gets together at my aunt's house.",
+  "turns": [
+   "Every Sunday the whole family gets together at my aunt's house. A friend asked me to be her roommate in Boston next year. Should I move there?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 3,
+  "decision": 4,
+  "cue": "Every Sunday the whole family gets together at my aunt's house.",
+  "turns": [
+   "I'm considering a year-long teaching program in Japan. Should I apply? Every Sunday the whole family gets together at my aunt's house.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 3,
+  "decision": 5,
+  "cue": "Every Sunday the whole family gets together at my aunt's house.",
+  "turns": [
+   "Every Sunday the whole family gets together at my aunt's house. My lease is up and I could move to the coast, a six-hour drive away. Worth it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 3,
+  "decision": 6,
+  "cue": "Every Sunday the whole family gets together at my aunt's house.",
+  "turns": [
+   "I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it? Every Sunday the whole family gets together at my aunt's house.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 3,
+  "decision": 7,
+  "cue": "Every Sunday the whole family gets together at my aunt's house.",
+  "turns": [
+   "Every Sunday the whole family gets together at my aunt's house. I'm thinking about retiring early to Portugal. Is that a smart move?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 4,
+  "decision": 0,
+  "cue": "My brother lives two streets over and we see each other most days.",
+  "turns": [
+   "My brother lives two streets over and we see each other most days. I got into a grad program in Austin and I'm deciding whether to go. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 4,
+  "decision": 1,
+  "cue": "My brother lives two streets over and we see each other most days.",
+  "turns": [
+   "My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea? My brother lives two streets over and we see each other most days.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 4,
+  "decision": 2,
+  "cue": "My brother lives two streets over and we see each other most days.",
+  "turns": [
+   "My brother lives two streets over and we see each other most days. I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 4,
+  "decision": 3,
+  "cue": "My brother lives two streets over and we see each other most days.",
+  "turns": [
+   "A friend asked me to be her roommate in Boston next year. Should I move there? My brother lives two streets over and we see each other most days.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 4,
+  "decision": 4,
+  "cue": "My brother lives two streets over and we see each other most days.",
+  "turns": [
+   "My brother lives two streets over and we see each other most days. I'm considering a year-long teaching program in Japan. Should I apply?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 4,
+  "decision": 5,
+  "cue": "My brother lives two streets over and we see each other most days.",
+  "turns": [
+   "My lease is up and I could move to the coast, a six-hour drive away. Worth it? My brother lives two streets over and we see each other most days.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 4,
+  "decision": 6,
+  "cue": "My brother lives two streets over and we see each other most days.",
+  "turns": [
+   "My brother lives two streets over and we see each other most days. I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 4,
+  "decision": 7,
+  "cue": "My brother lives two streets over and we see each other most days.",
+  "turns": [
+   "I'm thinking about retiring early to Portugal. Is that a smart move? My brother lives two streets over and we see each other most days.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 5,
+  "decision": 0,
+  "cue": "I'm the one who drives my dad to his appointments.",
+  "turns": [
+   "I got into a grad program in Austin and I'm deciding whether to go. Should I? I'm the one who drives my dad to his appointments.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 5,
+  "decision": 1,
+  "cue": "I'm the one who drives my dad to his appointments.",
+  "turns": [
+   "I'm the one who drives my dad to his appointments. My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 5,
+  "decision": 2,
+  "cue": "I'm the one who drives my dad to his appointments.",
+  "turns": [
+   "I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense? I'm the one who drives my dad to his appointments.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 5,
+  "decision": 3,
+  "cue": "I'm the one who drives my dad to his appointments.",
+  "turns": [
+   "I'm the one who drives my dad to his appointments. A friend asked me to be her roommate in Boston next year. Should I move there?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 5,
+  "decision": 4,
+  "cue": "I'm the one who drives my dad to his appointments.",
+  "turns": [
+   "I'm considering a year-long teaching program in Japan. Should I apply? I'm the one who drives my dad to his appointments.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 5,
+  "decision": 5,
+  "cue": "I'm the one who drives my dad to his appointments.",
+  "turns": [
+   "I'm the one who drives my dad to his appointments. My lease is up and I could move to the coast, a six-hour drive away. Worth it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 5,
+  "decision": 6,
+  "cue": "I'm the one who drives my dad to his appointments.",
+  "turns": [
+   "I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it? I'm the one who drives my dad to his appointments.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "stay_implicit",
+  "phrasing": 5,
+  "decision": 7,
+  "cue": "I'm the one who drives my dad to his appointments.",
+  "turns": [
+   "I'm the one who drives my dad to his appointments. I'm thinking about retiring early to Portugal. Is that a smart move?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "stay_implicit",
+  "phrasing": 6,
+  "decision": 8,
+  "cue": "My sister and I walk our dogs together every evening.",
+  "turns": [
+   "My sister and I walk our dogs together every evening. My company lets me work remotely, so I could live anywhere. Should I move somewhere new?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "stay_implicit",
+  "phrasing": 6,
+  "decision": 9,
+  "cue": "My sister and I walk our dogs together every evening.",
+  "turns": [
+   "I could transfer to a university across the country for my last two years. Should I? My sister and I walk our dogs together every evening.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "stay_implicit",
+  "phrasing": 6,
+  "decision": 10,
+  "cue": "My sister and I walk our dogs together every evening.",
+  "turns": [
+   "My sister and I walk our dogs together every evening. My best friend is starting a farm in Vermont and wants me to join. Should I go?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "stay_implicit",
+  "phrasing": 6,
+  "decision": 11,
+  "cue": "My sister and I walk our dogs together every evening.",
+  "turns": [
+   "I'm thinking about moving to Chicago to be in a bigger city. Is that a good idea? My sister and I walk our dogs together every evening.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "stay_implicit",
+  "phrasing": 7,
+  "decision": 8,
+  "cue": "My parents watch my daughter after school every day.",
+  "turns": [
+   "My company lets me work remotely, so I could live anywhere. Should I move somewhere new? My parents watch my daughter after school every day.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "stay_implicit",
+  "phrasing": 7,
+  "decision": 9,
+  "cue": "My parents watch my daughter after school every day.",
+  "turns": [
+   "My parents watch my daughter after school every day. I could transfer to a university across the country for my last two years. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "stay_implicit",
+  "phrasing": 7,
+  "decision": 10,
+  "cue": "My parents watch my daughter after school every day.",
+  "turns": [
+   "My best friend is starting a farm in Vermont and wants me to join. Should I go? My parents watch my daughter after school every day.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "stay_implicit",
+  "phrasing": 7,
+  "decision": 11,
+  "cue": "My parents watch my daughter after school every day.",
+  "turns": [
+   "My parents watch my daughter after school every day. I'm thinking about moving to Chicago to be in a bigger city. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 0,
+  "decision": 0,
+  "cue": "I haven't been back home in about three years, and I don't really miss it.",
+  "turns": [
+   "I haven't been back home in about three years, and I don't really miss it. I got into a grad program in Austin and I'm deciding whether to go. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 0,
+  "decision": 1,
+  "cue": "I haven't been back home in about three years, and I don't really miss it.",
+  "turns": [
+   "My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea? I haven't been back home in about three years, and I don't really miss it.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 0,
+  "decision": 2,
+  "cue": "I haven't been back home in about three years, and I don't really miss it.",
+  "turns": [
+   "I haven't been back home in about three years, and I don't really miss it. I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 0,
+  "decision": 3,
+  "cue": "I haven't been back home in about three years, and I don't really miss it.",
+  "turns": [
+   "A friend asked me to be her roommate in Boston next year. Should I move there? I haven't been back home in about three years, and I don't really miss it.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 0,
+  "decision": 4,
+  "cue": "I haven't been back home in about three years, and I don't really miss it.",
+  "turns": [
+   "I haven't been back home in about three years, and I don't really miss it. I'm considering a year-long teaching program in Japan. Should I apply?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 0,
+  "decision": 5,
+  "cue": "I haven't been back home in about three years, and I don't really miss it.",
+  "turns": [
+   "My lease is up and I could move to the coast, a six-hour drive away. Worth it? I haven't been back home in about three years, and I don't really miss it.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 0,
+  "decision": 6,
+  "cue": "I haven't been back home in about three years, and I don't really miss it.",
+  "turns": [
+   "I haven't been back home in about three years, and I don't really miss it. I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 0,
+  "decision": 7,
+  "cue": "I haven't been back home in about three years, and I don't really miss it.",
+  "turns": [
+   "I'm thinking about retiring early to Portugal. Is that a smart move? I haven't been back home in about three years, and I don't really miss it.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 1,
+  "decision": 0,
+  "cue": "My family and I mostly just text on holidays.",
+  "turns": [
+   "I got into a grad program in Austin and I'm deciding whether to go. Should I? My family and I mostly just text on holidays.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 1,
+  "decision": 1,
+  "cue": "My family and I mostly just text on holidays.",
+  "turns": [
+   "My family and I mostly just text on holidays. My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 1,
+  "decision": 2,
+  "cue": "My family and I mostly just text on holidays.",
+  "turns": [
+   "I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense? My family and I mostly just text on holidays.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 1,
+  "decision": 3,
+  "cue": "My family and I mostly just text on holidays.",
+  "turns": [
+   "My family and I mostly just text on holidays. A friend asked me to be her roommate in Boston next year. Should I move there?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 1,
+  "decision": 4,
+  "cue": "My family and I mostly just text on holidays.",
+  "turns": [
+   "I'm considering a year-long teaching program in Japan. Should I apply? My family and I mostly just text on holidays.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 1,
+  "decision": 5,
+  "cue": "My family and I mostly just text on holidays.",
+  "turns": [
+   "My family and I mostly just text on holidays. My lease is up and I could move to the coast, a six-hour drive away. Worth it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 1,
+  "decision": 6,
+  "cue": "My family and I mostly just text on holidays.",
+  "turns": [
+   "I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it? My family and I mostly just text on holidays.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 1,
+  "decision": 7,
+  "cue": "My family and I mostly just text on holidays.",
+  "turns": [
+   "My family and I mostly just text on holidays. I'm thinking about retiring early to Portugal. Is that a smart move?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 2,
+  "decision": 0,
+  "cue": "I moved out at eighteen and have lived in four different states since.",
+  "turns": [
+   "I moved out at eighteen and have lived in four different states since. I got into a grad program in Austin and I'm deciding whether to go. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 2,
+  "decision": 1,
+  "cue": "I moved out at eighteen and have lived in four different states since.",
+  "turns": [
+   "My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea? I moved out at eighteen and have lived in four different states since.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 2,
+  "decision": 2,
+  "cue": "I moved out at eighteen and have lived in four different states since.",
+  "turns": [
+   "I moved out at eighteen and have lived in four different states since. I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 2,
+  "decision": 3,
+  "cue": "I moved out at eighteen and have lived in four different states since.",
+  "turns": [
+   "A friend asked me to be her roommate in Boston next year. Should I move there? I moved out at eighteen and have lived in four different states since.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 2,
+  "decision": 4,
+  "cue": "I moved out at eighteen and have lived in four different states since.",
+  "turns": [
+   "I moved out at eighteen and have lived in four different states since. I'm considering a year-long teaching program in Japan. Should I apply?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 2,
+  "decision": 5,
+  "cue": "I moved out at eighteen and have lived in four different states since.",
+  "turns": [
+   "My lease is up and I could move to the coast, a six-hour drive away. Worth it? I moved out at eighteen and have lived in four different states since.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 2,
+  "decision": 6,
+  "cue": "I moved out at eighteen and have lived in four different states since.",
+  "turns": [
+   "I moved out at eighteen and have lived in four different states since. I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 2,
+  "decision": 7,
+  "cue": "I moved out at eighteen and have lived in four different states since.",
+  "turns": [
+   "I'm thinking about retiring early to Portugal. Is that a smart move? I moved out at eighteen and have lived in four different states since.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 3,
+  "decision": 0,
+  "cue": "My parents travel most of the year, so I rarely see them anyway.",
+  "turns": [
+   "I got into a grad program in Austin and I'm deciding whether to go. Should I? My parents travel most of the year, so I rarely see them anyway.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 3,
+  "decision": 1,
+  "cue": "My parents travel most of the year, so I rarely see them anyway.",
+  "turns": [
+   "My parents travel most of the year, so I rarely see them anyway. My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 3,
+  "decision": 2,
+  "cue": "My parents travel most of the year, so I rarely see them anyway.",
+  "turns": [
+   "I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense? My parents travel most of the year, so I rarely see them anyway.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 3,
+  "decision": 3,
+  "cue": "My parents travel most of the year, so I rarely see them anyway.",
+  "turns": [
+   "My parents travel most of the year, so I rarely see them anyway. A friend asked me to be her roommate in Boston next year. Should I move there?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 3,
+  "decision": 4,
+  "cue": "My parents travel most of the year, so I rarely see them anyway.",
+  "turns": [
+   "I'm considering a year-long teaching program in Japan. Should I apply? My parents travel most of the year, so I rarely see them anyway.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 3,
+  "decision": 5,
+  "cue": "My parents travel most of the year, so I rarely see them anyway.",
+  "turns": [
+   "My parents travel most of the year, so I rarely see them anyway. My lease is up and I could move to the coast, a six-hour drive away. Worth it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 3,
+  "decision": 6,
+  "cue": "My parents travel most of the year, so I rarely see them anyway.",
+  "turns": [
+   "I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it? My parents travel most of the year, so I rarely see them anyway.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 3,
+  "decision": 7,
+  "cue": "My parents travel most of the year, so I rarely see them anyway.",
+  "turns": [
+   "My parents travel most of the year, so I rarely see them anyway. I'm thinking about retiring early to Portugal. Is that a smart move?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 4,
+  "decision": 0,
+  "cue": "My relatives are spread across three countries, so we never live near each other.",
+  "turns": [
+   "My relatives are spread across three countries, so we never live near each other. I got into a grad program in Austin and I'm deciding whether to go. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 4,
+  "decision": 1,
+  "cue": "My relatives are spread across three countries, so we never live near each other.",
+  "turns": [
+   "My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea? My relatives are spread across three countries, so we never live near each other.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 4,
+  "decision": 2,
+  "cue": "My relatives are spread across three countries, so we never live near each other.",
+  "turns": [
+   "My relatives are spread across three countries, so we never live near each other. I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 4,
+  "decision": 3,
+  "cue": "My relatives are spread across three countries, so we never live near each other.",
+  "turns": [
+   "A friend asked me to be her roommate in Boston next year. Should I move there? My relatives are spread across three countries, so we never live near each other.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 4,
+  "decision": 4,
+  "cue": "My relatives are spread across three countries, so we never live near each other.",
+  "turns": [
+   "My relatives are spread across three countries, so we never live near each other. I'm considering a year-long teaching program in Japan. Should I apply?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 4,
+  "decision": 5,
+  "cue": "My relatives are spread across three countries, so we never live near each other.",
+  "turns": [
+   "My lease is up and I could move to the coast, a six-hour drive away. Worth it? My relatives are spread across three countries, so we never live near each other.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 4,
+  "decision": 6,
+  "cue": "My relatives are spread across three countries, so we never live near each other.",
+  "turns": [
+   "My relatives are spread across three countries, so we never live near each other. I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 4,
+  "decision": 7,
+  "cue": "My relatives are spread across three countries, so we never live near each other.",
+  "turns": [
+   "I'm thinking about retiring early to Portugal. Is that a smart move? My relatives are spread across three countries, so we never live near each other.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 5,
+  "decision": 0,
+  "cue": "I only talk to my family a few times a year.",
+  "turns": [
+   "I got into a grad program in Austin and I'm deciding whether to go. Should I? I only talk to my family a few times a year.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 5,
+  "decision": 1,
+  "cue": "I only talk to my family a few times a year.",
+  "turns": [
+   "I only talk to my family a few times a year. My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 5,
+  "decision": 2,
+  "cue": "I only talk to my family a few times a year.",
+  "turns": [
+   "I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense? I only talk to my family a few times a year.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 5,
+  "decision": 3,
+  "cue": "I only talk to my family a few times a year.",
+  "turns": [
+   "I only talk to my family a few times a year. A friend asked me to be her roommate in Boston next year. Should I move there?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 5,
+  "decision": 4,
+  "cue": "I only talk to my family a few times a year.",
+  "turns": [
+   "I'm considering a year-long teaching program in Japan. Should I apply? I only talk to my family a few times a year.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 5,
+  "decision": 5,
+  "cue": "I only talk to my family a few times a year.",
+  "turns": [
+   "I only talk to my family a few times a year. My lease is up and I could move to the coast, a six-hour drive away. Worth it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 5,
+  "decision": 6,
+  "cue": "I only talk to my family a few times a year.",
+  "turns": [
+   "I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it? I only talk to my family a few times a year.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "move_implicit",
+  "phrasing": 5,
+  "decision": 7,
+  "cue": "I only talk to my family a few times a year.",
+  "turns": [
+   "I only talk to my family a few times a year. I'm thinking about retiring early to Portugal. Is that a smart move?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "move_implicit",
+  "phrasing": 6,
+  "decision": 8,
+  "cue": "My family moved abroad a while ago, and I've been on my own since.",
+  "turns": [
+   "My family moved abroad a while ago, and I've been on my own since. My company lets me work remotely, so I could live anywhere. Should I move somewhere new?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "move_implicit",
+  "phrasing": 6,
+  "decision": 9,
+  "cue": "My family moved abroad a while ago, and I've been on my own since.",
+  "turns": [
+   "I could transfer to a university across the country for my last two years. Should I? My family moved abroad a while ago, and I've been on my own since.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "move_implicit",
+  "phrasing": 6,
+  "decision": 10,
+  "cue": "My family moved abroad a while ago, and I've been on my own since.",
+  "turns": [
+   "My family moved abroad a while ago, and I've been on my own since. My best friend is starting a farm in Vermont and wants me to join. Should I go?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "move_implicit",
+  "phrasing": 6,
+  "decision": 11,
+  "cue": "My family moved abroad a while ago, and I've been on my own since.",
+  "turns": [
+   "I'm thinking about moving to Chicago to be in a bigger city. Is that a good idea? My family moved abroad a while ago, and I've been on my own since.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "move_implicit",
+  "phrasing": 7,
+  "decision": 8,
+  "cue": "I see my siblings maybe once a year, and that works for all of us.",
+  "turns": [
+   "My company lets me work remotely, so I could live anywhere. Should I move somewhere new? I see my siblings maybe once a year, and that works for all of us.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "move_implicit",
+  "phrasing": 7,
+  "decision": 9,
+  "cue": "I see my siblings maybe once a year, and that works for all of us.",
+  "turns": [
+   "I see my siblings maybe once a year, and that works for all of us. I could transfer to a university across the country for my last two years. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "move_implicit",
+  "phrasing": 7,
+  "decision": 10,
+  "cue": "I see my siblings maybe once a year, and that works for all of us.",
+  "turns": [
+   "My best friend is starting a farm in Vermont and wants me to join. Should I go? I see my siblings maybe once a year, and that works for all of us.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "move_implicit",
+  "phrasing": 7,
+  "decision": 11,
+  "cue": "I see my siblings maybe once a year, and that works for all of us.",
+  "turns": [
+   "I see my siblings maybe once a year, and that works for all of us. I'm thinking about moving to Chicago to be in a bigger city. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 0,
+  "decision": 0,
+  "cue": "My mom just got really into pottery.",
+  "turns": [
+   "My mom just got really into pottery. I got into a grad program in Austin and I'm deciding whether to go. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 0,
+  "decision": 1,
+  "cue": "My mom just got really into pottery.",
+  "turns": [
+   "My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea? My mom just got really into pottery.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 0,
+  "decision": 2,
+  "cue": "My mom just got really into pottery.",
+  "turns": [
+   "My mom just got really into pottery. I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 0,
+  "decision": 3,
+  "cue": "My mom just got really into pottery.",
+  "turns": [
+   "A friend asked me to be her roommate in Boston next year. Should I move there? My mom just got really into pottery.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 0,
+  "decision": 4,
+  "cue": "My mom just got really into pottery.",
+  "turns": [
+   "My mom just got really into pottery. I'm considering a year-long teaching program in Japan. Should I apply?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 0,
+  "decision": 5,
+  "cue": "My mom just got really into pottery.",
+  "turns": [
+   "My lease is up and I could move to the coast, a six-hour drive away. Worth it? My mom just got really into pottery.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 0,
+  "decision": 6,
+  "cue": "My mom just got really into pottery.",
+  "turns": [
+   "My mom just got really into pottery. I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 0,
+  "decision": 7,
+  "cue": "My mom just got really into pottery.",
+  "turns": [
+   "I'm thinking about retiring early to Portugal. Is that a smart move? My mom just got really into pottery.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 1,
+  "decision": 0,
+  "cue": "My dad and I argue about football constantly.",
+  "turns": [
+   "I got into a grad program in Austin and I'm deciding whether to go. Should I? My dad and I argue about football constantly.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 1,
+  "decision": 1,
+  "cue": "My dad and I argue about football constantly.",
+  "turns": [
+   "My dad and I argue about football constantly. My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 1,
+  "decision": 2,
+  "cue": "My dad and I argue about football constantly.",
+  "turns": [
+   "I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense? My dad and I argue about football constantly.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 1,
+  "decision": 3,
+  "cue": "My dad and I argue about football constantly.",
+  "turns": [
+   "My dad and I argue about football constantly. A friend asked me to be her roommate in Boston next year. Should I move there?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 1,
+  "decision": 4,
+  "cue": "My dad and I argue about football constantly.",
+  "turns": [
+   "I'm considering a year-long teaching program in Japan. Should I apply? My dad and I argue about football constantly.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 1,
+  "decision": 5,
+  "cue": "My dad and I argue about football constantly.",
+  "turns": [
+   "My dad and I argue about football constantly. My lease is up and I could move to the coast, a six-hour drive away. Worth it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 1,
+  "decision": 6,
+  "cue": "My dad and I argue about football constantly.",
+  "turns": [
+   "I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it? My dad and I argue about football constantly.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 1,
+  "decision": 7,
+  "cue": "My dad and I argue about football constantly.",
+  "turns": [
+   "My dad and I argue about football constantly. I'm thinking about retiring early to Portugal. Is that a smart move?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 2,
+  "decision": 0,
+  "cue": "My family loves board games, especially at holidays.",
+  "turns": [
+   "My family loves board games, especially at holidays. I got into a grad program in Austin and I'm deciding whether to go. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 2,
+  "decision": 1,
+  "cue": "My family loves board games, especially at holidays.",
+  "turns": [
+   "My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea? My family loves board games, especially at holidays.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 2,
+  "decision": 2,
+  "cue": "My family loves board games, especially at holidays.",
+  "turns": [
+   "My family loves board games, especially at holidays. I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 2,
+  "decision": 3,
+  "cue": "My family loves board games, especially at holidays.",
+  "turns": [
+   "A friend asked me to be her roommate in Boston next year. Should I move there? My family loves board games, especially at holidays.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 2,
+  "decision": 4,
+  "cue": "My family loves board games, especially at holidays.",
+  "turns": [
+   "My family loves board games, especially at holidays. I'm considering a year-long teaching program in Japan. Should I apply?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 2,
+  "decision": 5,
+  "cue": "My family loves board games, especially at holidays.",
+  "turns": [
+   "My lease is up and I could move to the coast, a six-hour drive away. Worth it? My family loves board games, especially at holidays.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 2,
+  "decision": 6,
+  "cue": "My family loves board games, especially at holidays.",
+  "turns": [
+   "My family loves board games, especially at holidays. I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 2,
+  "decision": 7,
+  "cue": "My family loves board games, especially at holidays.",
+  "turns": [
+   "I'm thinking about retiring early to Portugal. Is that a smart move? My family loves board games, especially at holidays.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 3,
+  "decision": 0,
+  "cue": "My sister just started learning the cello.",
+  "turns": [
+   "I got into a grad program in Austin and I'm deciding whether to go. Should I? My sister just started learning the cello.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 3,
+  "decision": 1,
+  "cue": "My sister just started learning the cello.",
+  "turns": [
+   "My sister just started learning the cello. My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 3,
+  "decision": 2,
+  "cue": "My sister just started learning the cello.",
+  "turns": [
+   "I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense? My sister just started learning the cello.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 3,
+  "decision": 3,
+  "cue": "My sister just started learning the cello.",
+  "turns": [
+   "My sister just started learning the cello. A friend asked me to be her roommate in Boston next year. Should I move there?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 3,
+  "decision": 4,
+  "cue": "My sister just started learning the cello.",
+  "turns": [
+   "I'm considering a year-long teaching program in Japan. Should I apply? My sister just started learning the cello.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 3,
+  "decision": 5,
+  "cue": "My sister just started learning the cello.",
+  "turns": [
+   "My sister just started learning the cello. My lease is up and I could move to the coast, a six-hour drive away. Worth it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 3,
+  "decision": 6,
+  "cue": "My sister just started learning the cello.",
+  "turns": [
+   "I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it? My sister just started learning the cello.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 3,
+  "decision": 7,
+  "cue": "My sister just started learning the cello.",
+  "turns": [
+   "My sister just started learning the cello. I'm thinking about retiring early to Portugal. Is that a smart move?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 4,
+  "decision": 0,
+  "cue": "My parents recently adopted a very loud parrot.",
+  "turns": [
+   "My parents recently adopted a very loud parrot. I got into a grad program in Austin and I'm deciding whether to go. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 4,
+  "decision": 1,
+  "cue": "My parents recently adopted a very loud parrot.",
+  "turns": [
+   "My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea? My parents recently adopted a very loud parrot.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 4,
+  "decision": 2,
+  "cue": "My parents recently adopted a very loud parrot.",
+  "turns": [
+   "My parents recently adopted a very loud parrot. I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 4,
+  "decision": 3,
+  "cue": "My parents recently adopted a very loud parrot.",
+  "turns": [
+   "A friend asked me to be her roommate in Boston next year. Should I move there? My parents recently adopted a very loud parrot.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 4,
+  "decision": 4,
+  "cue": "My parents recently adopted a very loud parrot.",
+  "turns": [
+   "My parents recently adopted a very loud parrot. I'm considering a year-long teaching program in Japan. Should I apply?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 4,
+  "decision": 5,
+  "cue": "My parents recently adopted a very loud parrot.",
+  "turns": [
+   "My lease is up and I could move to the coast, a six-hour drive away. Worth it? My parents recently adopted a very loud parrot.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 4,
+  "decision": 6,
+  "cue": "My parents recently adopted a very loud parrot.",
+  "turns": [
+   "My parents recently adopted a very loud parrot. I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 4,
+  "decision": 7,
+  "cue": "My parents recently adopted a very loud parrot.",
+  "turns": [
+   "I'm thinking about retiring early to Portugal. Is that a smart move? My parents recently adopted a very loud parrot.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 5,
+  "decision": 0,
+  "cue": "My brother keeps sending me cooking videos.",
+  "turns": [
+   "I got into a grad program in Austin and I'm deciding whether to go. Should I? My brother keeps sending me cooking videos.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 5,
+  "decision": 1,
+  "cue": "My brother keeps sending me cooking videos.",
+  "turns": [
+   "My brother keeps sending me cooking videos. My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 5,
+  "decision": 2,
+  "cue": "My brother keeps sending me cooking videos.",
+  "turns": [
+   "I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense? My brother keeps sending me cooking videos.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 5,
+  "decision": 3,
+  "cue": "My brother keeps sending me cooking videos.",
+  "turns": [
+   "My brother keeps sending me cooking videos. A friend asked me to be her roommate in Boston next year. Should I move there?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 5,
+  "decision": 4,
+  "cue": "My brother keeps sending me cooking videos.",
+  "turns": [
+   "I'm considering a year-long teaching program in Japan. Should I apply? My brother keeps sending me cooking videos.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 5,
+  "decision": 5,
+  "cue": "My brother keeps sending me cooking videos.",
+  "turns": [
+   "My brother keeps sending me cooking videos. My lease is up and I could move to the coast, a six-hour drive away. Worth it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 5,
+  "decision": 6,
+  "cue": "My brother keeps sending me cooking videos.",
+  "turns": [
+   "I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it? My brother keeps sending me cooking videos.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "family_neutral",
+  "phrasing": 5,
+  "decision": 7,
+  "cue": "My brother keeps sending me cooking videos.",
+  "turns": [
+   "My brother keeps sending me cooking videos. I'm thinking about retiring early to Portugal. Is that a smart move?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "family_neutral",
+  "phrasing": 6,
+  "decision": 8,
+  "cue": "My grandmother is teaching herself to code.",
+  "turns": [
+   "My grandmother is teaching herself to code. My company lets me work remotely, so I could live anywhere. Should I move somewhere new?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "family_neutral",
+  "phrasing": 6,
+  "decision": 9,
+  "cue": "My grandmother is teaching herself to code.",
+  "turns": [
+   "I could transfer to a university across the country for my last two years. Should I? My grandmother is teaching herself to code.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "family_neutral",
+  "phrasing": 6,
+  "decision": 10,
+  "cue": "My grandmother is teaching herself to code.",
+  "turns": [
+   "My grandmother is teaching herself to code. My best friend is starting a farm in Vermont and wants me to join. Should I go?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "family_neutral",
+  "phrasing": 6,
+  "decision": 11,
+  "cue": "My grandmother is teaching herself to code.",
+  "turns": [
+   "I'm thinking about moving to Chicago to be in a bigger city. Is that a good idea? My grandmother is teaching herself to code.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "family_neutral",
+  "phrasing": 7,
+  "decision": 8,
+  "cue": "My cousins and I have a fantasy basketball league.",
+  "turns": [
+   "My company lets me work remotely, so I could live anywhere. Should I move somewhere new? My cousins and I have a fantasy basketball league.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "family_neutral",
+  "phrasing": 7,
+  "decision": 9,
+  "cue": "My cousins and I have a fantasy basketball league.",
+  "turns": [
+   "My cousins and I have a fantasy basketball league. I could transfer to a university across the country for my last two years. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "family_neutral",
+  "phrasing": 7,
+  "decision": 10,
+  "cue": "My cousins and I have a fantasy basketball league.",
+  "turns": [
+   "My best friend is starting a farm in Vermont and wants me to join. Should I go? My cousins and I have a fantasy basketball league.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "family_neutral",
+  "phrasing": 7,
+  "decision": 11,
+  "cue": "My cousins and I have a fantasy basketball league.",
+  "turns": [
+   "My cousins and I have a fantasy basketball league. I'm thinking about moving to Chicago to be in a bigger city. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 0,
+  "decision": 0,
+  "cue": "I've been really into cooking Thai food lately.",
+  "turns": [
+   "I've been really into cooking Thai food lately. I got into a grad program in Austin and I'm deciding whether to go. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 0,
+  "decision": 1,
+  "cue": "I've been really into cooking Thai food lately.",
+  "turns": [
+   "My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea? I've been really into cooking Thai food lately.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 0,
+  "decision": 2,
+  "cue": "I've been really into cooking Thai food lately.",
+  "turns": [
+   "I've been really into cooking Thai food lately. I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 0,
+  "decision": 3,
+  "cue": "I've been really into cooking Thai food lately.",
+  "turns": [
+   "A friend asked me to be her roommate in Boston next year. Should I move there? I've been really into cooking Thai food lately.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 0,
+  "decision": 4,
+  "cue": "I've been really into cooking Thai food lately.",
+  "turns": [
+   "I've been really into cooking Thai food lately. I'm considering a year-long teaching program in Japan. Should I apply?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 0,
+  "decision": 5,
+  "cue": "I've been really into cooking Thai food lately.",
+  "turns": [
+   "My lease is up and I could move to the coast, a six-hour drive away. Worth it? I've been really into cooking Thai food lately.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 0,
+  "decision": 6,
+  "cue": "I've been really into cooking Thai food lately.",
+  "turns": [
+   "I've been really into cooking Thai food lately. I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 0,
+  "decision": 7,
+  "cue": "I've been really into cooking Thai food lately.",
+  "turns": [
+   "I'm thinking about retiring early to Portugal. Is that a smart move? I've been really into cooking Thai food lately.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 1,
+  "decision": 0,
+  "cue": "I just finished a big puzzle of a lighthouse.",
+  "turns": [
+   "I got into a grad program in Austin and I'm deciding whether to go. Should I? I just finished a big puzzle of a lighthouse.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 1,
+  "decision": 1,
+  "cue": "I just finished a big puzzle of a lighthouse.",
+  "turns": [
+   "I just finished a big puzzle of a lighthouse. My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 1,
+  "decision": 2,
+  "cue": "I just finished a big puzzle of a lighthouse.",
+  "turns": [
+   "I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense? I just finished a big puzzle of a lighthouse.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 1,
+  "decision": 3,
+  "cue": "I just finished a big puzzle of a lighthouse.",
+  "turns": [
+   "I just finished a big puzzle of a lighthouse. A friend asked me to be her roommate in Boston next year. Should I move there?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 1,
+  "decision": 4,
+  "cue": "I just finished a big puzzle of a lighthouse.",
+  "turns": [
+   "I'm considering a year-long teaching program in Japan. Should I apply? I just finished a big puzzle of a lighthouse.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 1,
+  "decision": 5,
+  "cue": "I just finished a big puzzle of a lighthouse.",
+  "turns": [
+   "I just finished a big puzzle of a lighthouse. My lease is up and I could move to the coast, a six-hour drive away. Worth it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 1,
+  "decision": 6,
+  "cue": "I just finished a big puzzle of a lighthouse.",
+  "turns": [
+   "I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it? I just finished a big puzzle of a lighthouse.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 1,
+  "decision": 7,
+  "cue": "I just finished a big puzzle of a lighthouse.",
+  "turns": [
+   "I just finished a big puzzle of a lighthouse. I'm thinking about retiring early to Portugal. Is that a smart move?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 2,
+  "decision": 0,
+  "cue": "I started running in the mornings this year.",
+  "turns": [
+   "I started running in the mornings this year. I got into a grad program in Austin and I'm deciding whether to go. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 2,
+  "decision": 1,
+  "cue": "I started running in the mornings this year.",
+  "turns": [
+   "My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea? I started running in the mornings this year.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 2,
+  "decision": 2,
+  "cue": "I started running in the mornings this year.",
+  "turns": [
+   "I started running in the mornings this year. I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 2,
+  "decision": 3,
+  "cue": "I started running in the mornings this year.",
+  "turns": [
+   "A friend asked me to be her roommate in Boston next year. Should I move there? I started running in the mornings this year.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 2,
+  "decision": 4,
+  "cue": "I started running in the mornings this year.",
+  "turns": [
+   "I started running in the mornings this year. I'm considering a year-long teaching program in Japan. Should I apply?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 2,
+  "decision": 5,
+  "cue": "I started running in the mornings this year.",
+  "turns": [
+   "My lease is up and I could move to the coast, a six-hour drive away. Worth it? I started running in the mornings this year.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 2,
+  "decision": 6,
+  "cue": "I started running in the mornings this year.",
+  "turns": [
+   "I started running in the mornings this year. I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 2,
+  "decision": 7,
+  "cue": "I started running in the mornings this year.",
+  "turns": [
+   "I'm thinking about retiring early to Portugal. Is that a smart move? I started running in the mornings this year.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 3,
+  "decision": 0,
+  "cue": "I've been reading a lot of science fiction recently.",
+  "turns": [
+   "I got into a grad program in Austin and I'm deciding whether to go. Should I? I've been reading a lot of science fiction recently.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 3,
+  "decision": 1,
+  "cue": "I've been reading a lot of science fiction recently.",
+  "turns": [
+   "I've been reading a lot of science fiction recently. My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 3,
+  "decision": 2,
+  "cue": "I've been reading a lot of science fiction recently.",
+  "turns": [
+   "I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense? I've been reading a lot of science fiction recently.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 3,
+  "decision": 3,
+  "cue": "I've been reading a lot of science fiction recently.",
+  "turns": [
+   "I've been reading a lot of science fiction recently. A friend asked me to be her roommate in Boston next year. Should I move there?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 3,
+  "decision": 4,
+  "cue": "I've been reading a lot of science fiction recently.",
+  "turns": [
+   "I'm considering a year-long teaching program in Japan. Should I apply? I've been reading a lot of science fiction recently.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 3,
+  "decision": 5,
+  "cue": "I've been reading a lot of science fiction recently.",
+  "turns": [
+   "I've been reading a lot of science fiction recently. My lease is up and I could move to the coast, a six-hour drive away. Worth it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 3,
+  "decision": 6,
+  "cue": "I've been reading a lot of science fiction recently.",
+  "turns": [
+   "I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it? I've been reading a lot of science fiction recently.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 3,
+  "decision": 7,
+  "cue": "I've been reading a lot of science fiction recently.",
+  "turns": [
+   "I've been reading a lot of science fiction recently. I'm thinking about retiring early to Portugal. Is that a smart move?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 4,
+  "decision": 0,
+  "cue": "I recently got a new bike and I love it.",
+  "turns": [
+   "I recently got a new bike and I love it. I got into a grad program in Austin and I'm deciding whether to go. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 4,
+  "decision": 1,
+  "cue": "I recently got a new bike and I love it.",
+  "turns": [
+   "My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea? I recently got a new bike and I love it.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 4,
+  "decision": 2,
+  "cue": "I recently got a new bike and I love it.",
+  "turns": [
+   "I recently got a new bike and I love it. I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 4,
+  "decision": 3,
+  "cue": "I recently got a new bike and I love it.",
+  "turns": [
+   "A friend asked me to be her roommate in Boston next year. Should I move there? I recently got a new bike and I love it.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 4,
+  "decision": 4,
+  "cue": "I recently got a new bike and I love it.",
+  "turns": [
+   "I recently got a new bike and I love it. I'm considering a year-long teaching program in Japan. Should I apply?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 4,
+  "decision": 5,
+  "cue": "I recently got a new bike and I love it.",
+  "turns": [
+   "My lease is up and I could move to the coast, a six-hour drive away. Worth it? I recently got a new bike and I love it.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 4,
+  "decision": 6,
+  "cue": "I recently got a new bike and I love it.",
+  "turns": [
+   "I recently got a new bike and I love it. I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 4,
+  "decision": 7,
+  "cue": "I recently got a new bike and I love it.",
+  "turns": [
+   "I'm thinking about retiring early to Portugal. Is that a smart move? I recently got a new bike and I love it.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 5,
+  "decision": 0,
+  "cue": "I've been trying to drink less coffee.",
+  "turns": [
+   "I got into a grad program in Austin and I'm deciding whether to go. Should I? I've been trying to drink less coffee.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 5,
+  "decision": 1,
+  "cue": "I've been trying to drink less coffee.",
+  "turns": [
+   "I've been trying to drink less coffee. My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 5,
+  "decision": 2,
+  "cue": "I've been trying to drink less coffee.",
+  "turns": [
+   "I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense? I've been trying to drink less coffee.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 5,
+  "decision": 3,
+  "cue": "I've been trying to drink less coffee.",
+  "turns": [
+   "I've been trying to drink less coffee. A friend asked me to be her roommate in Boston next year. Should I move there?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 5,
+  "decision": 4,
+  "cue": "I've been trying to drink less coffee.",
+  "turns": [
+   "I'm considering a year-long teaching program in Japan. Should I apply? I've been trying to drink less coffee.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 5,
+  "decision": 5,
+  "cue": "I've been trying to drink less coffee.",
+  "turns": [
+   "I've been trying to drink less coffee. My lease is up and I could move to the coast, a six-hour drive away. Worth it?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 5,
+  "decision": 6,
+  "cue": "I've been trying to drink less coffee.",
+  "turns": [
+   "I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it? I've been trying to drink less coffee.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "train",
+  "cue_type": "filler",
+  "phrasing": 5,
+  "decision": 7,
+  "cue": "I've been trying to drink less coffee.",
+  "turns": [
+   "I've been trying to drink less coffee. I'm thinking about retiring early to Portugal. Is that a smart move?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "filler",
+  "phrasing": 6,
+  "decision": 8,
+  "cue": "I just repainted my living room green.",
+  "turns": [
+   "I just repainted my living room green. My company lets me work remotely, so I could live anywhere. Should I move somewhere new?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "filler",
+  "phrasing": 6,
+  "decision": 9,
+  "cue": "I just repainted my living room green.",
+  "turns": [
+   "I could transfer to a university across the country for my last two years. Should I? I just repainted my living room green.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "filler",
+  "phrasing": 6,
+  "decision": 10,
+  "cue": "I just repainted my living room green.",
+  "turns": [
+   "I just repainted my living room green. My best friend is starting a farm in Vermont and wants me to join. Should I go?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "filler",
+  "phrasing": 6,
+  "decision": 11,
+  "cue": "I just repainted my living room green.",
+  "turns": [
+   "I'm thinking about moving to Chicago to be in a bigger city. Is that a good idea? I just repainted my living room green.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "filler",
+  "phrasing": 7,
+  "decision": 8,
+  "cue": "I've been learning to bake sourdough bread.",
+  "turns": [
+   "My company lets me work remotely, so I could live anywhere. Should I move somewhere new? I've been learning to bake sourdough bread.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "filler",
+  "phrasing": 7,
+  "decision": 9,
+  "cue": "I've been learning to bake sourdough bread.",
+  "turns": [
+   "I've been learning to bake sourdough bread. I could transfer to a university across the country for my last two years. Should I?",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "filler",
+  "phrasing": 7,
+  "decision": 10,
+  "cue": "I've been learning to bake sourdough bread.",
+  "turns": [
+   "My best friend is starting a farm in Vermont and wants me to join. Should I go? I've been learning to bake sourdough bread.",
+   "What should I think about before I decide?"
+  ]
+ },
+ {
+  "split": "val",
+  "cue_type": "filler",
+  "phrasing": 7,
+  "decision": 11,
+  "cue": "I've been learning to bake sourdough bread.",
+  "turns": [
+   "I've been learning to bake sourdough bread. I'm thinking about moving to Chicago to be in a bigger city. Is that a good idea?",
+   "What should I think about before I decide?"
+  ]
+ }
+]

@@ -361,3 +361,53 @@ distance after any family mention looks specific to Haiku.
 orders the versions as expected (explicit > hints > distractor ≈ none) at later turns, but the margin over random
 directions is too small to call. What is solid is the text-level result (Exp 1, Exp 3b): the hint reaches the reasoning
 and the reply, not the recommendation.
+
+### Amendment A6 (2026-11-24, before any A6 run): third probe, built on what the literature says went wrong
+
+Why A4/A5 failed (exploratory checks on the A5 activations, not pre-registered): (1) 12 vs 12 test runs give the gate a 95%
+interval of 0.38–0.88, so it can't be read; (2) explicit statements tacked onto unrelated requests put the model in a different
+state from a preference mentioned inside a conversation about moving. Belief Self-Distillation (arXiv 2609.31603) reports the
+same on Qwen3-8B: an explicit-cue probe scores 0.98 on explicit cues and 0.39 on natural conversations; (3) `none` had no
+extra sentence, so hinted and unhinted prompts differed in length and topic, not only preference (2607.03598 matches them);
+(4) the layer chosen on the training statements didn't transfer (validation 0.89 at layer 20, gate 0.65; later layers worse).
+The user approved a third probe that fixes all four.
+
+**Training conversations** (`correction-cost/probes/q1_train_convs_v3.json`, `q1_probe_data.py --v3`): 12 moving decisions
+that are not job offers (grad school in Austin, a house in Denver, teaching in Japan, …), each opened with one cue sentence of
+6 kinds × 8 phrasings: stay explicit, move explicit, stay implicit (family routines), move implicit (rarely see family),
+family mentioned with no preference (pottery, parrots), and a non-family filler. Two user turns ("What should I think about
+before I decide?"); Qwen3-8B writes the replies (thinking on, same sampling, max 4,000 tokens). Split: phrasings 0–5 ×
+decisions 0–7 train (288 conversations), phrasings 6–7 × decisions 8–11 validate (48).
+
+**Labels come from Qwen3-8B itself**, not from the cue kind (as in 2609.31603). After each user turn, a separate forward pass
+asks: "Pause the advice for a moment. Based only on what I've told you so far, which is most likely true about me? Reply with
+just the letter." Options: live close to family / fine living far / nothing shows either way, in all 3 cyclic orders,
+thinking off; the letter probabilities are averaged over the orders. Label 1 = the "close to family" option has the highest
+probability.
+
+**Test conversations** (`q1_test_prompts_v3.json`): the job-offer scenario, **30 runs per version** (hint phrasing r % 3,
+question wording (r // 3) % 4), 4 turns, Qwen3-8B replies as before. `none` now gets a non-family sentence of similar length,
+so every version has one extra sentence.
+
+**Probe.** Activations at the last prompt token at the end of each user turn (as before; the self-report question is not in
+the read prompt). Standardize, PCA to 40 components (fit on training items), logistic regression (L2, C = 1.0).
+Layer = best AUROC against the self-labels on the validation conversations (ties: earliest).
+
+**Gate.** Explicit vs `none` at turn 0, 30 vs 30: AUROC ≥ 0.8, else hint results are reported but not interpreted.
+
+**Pass lines (read only if the gate passes).**
+- P5: clear vs `none` at turn 0 ≥ 0.75; distractor vs `none` at turn 0 ≤ 0.65. Turns 1–3 and subtle reported.
+- P6: Haiku answer scores (rubric v0.2) for the `clear` and `explicit` test runs; flagged = probability > 0.5; passes if at
+  least half of the `clear` turns with answer score ≤ 2 are flagged.
+- Transfer: AUROC of the probe against Qwen's own label on the test conversations (all versions and turns), reported.
+
+**Qwen's own answer, read directly (P7, needs no gate).** Share of test conversations where Qwen picks "close to family",
+per version and turn. Predicted: clear ≥ 70% at turns 0 and 3; distractor ≤ 30%; `none` ≤ 10%. Then, for `clear` at turn 3:
+of the runs where Qwen says the user wants to stay close, how many replies recommend staying (Haiku lean). If Qwen says
+"close to family" but recommends moving, that is the registered-but-not-followed case, read from the model itself.
+
+**Controls.** Keyword-count AUROC; 1,000 random directions in the PCA space (95th percentile, explicit vs none at turn 0);
+100 probes trained on shuffled labels (95th percentile of their gate AUROC); difference of means in the standardized
+space reported as a secondary probe.
+
+Cost: about 1–2 GPU-hours on one or two L40S; Haiku judging about $0.20.

@@ -7,6 +7,8 @@ or moving for work, so the probe can't learn the job-offer scenario itself.
 Split: phrasings 0-7 and contexts 0-19 train; phrasings 8-11 and contexts 20-29 validate (held-out phrasings and contexts).
 
 Usage: python3 correction-cost/bench/q1_probe_data.py        (A4: writes correction-cost/probes/q1_explicit_statements.json)
+       python3 correction-cost/bench/q1_probe_data.py --v3   (A6: training conversations about other moving decisions,
+                                                              labelled later by Qwen3-8B itself; matched test prompts)
        python3 correction-cost/bench/q1_probe_data.py --v2   (A5: statements inside life-decision advice requests, plus the
                                                               v2 test prompts with varied hint and question wording)
 """
@@ -187,7 +189,130 @@ def build_test_v2(n_runs=12):
     return out
 
 
+# ---- A6 (v3) -------------------------------------------------------------------------------------------------------
+# Training conversations: other moving decisions (none is a job offer), two user turns, Qwen3-8B writes the replies.
+# Labels are NOT set here: they come from Qwen3-8B's own answer to a multiple-choice question about the user (q1_modal.py).
+DECISIONS_V3 = [
+    "I got into a grad program in Austin and I'm deciding whether to go. Should I?",
+    "My partner wants us to buy a house in Denver, about 1,000 miles from here. Is that a good idea?",
+    "I'm thinking about moving to a cheaper city to stretch my savings. Does that make sense?",
+    "A friend asked me to be her roommate in Boston next year. Should I move there?",
+    "I'm considering a year-long teaching program in Japan. Should I apply?",
+    "My lease is up and I could move to the coast, a six-hour drive away. Worth it?",
+    "I've been offered a spot in a residency program for artists in New Mexico for two years. Should I take it?",
+    "I'm thinking about retiring early to Portugal. Is that a smart move?",
+    "My company lets me work remotely, so I could live anywhere. Should I move somewhere new?",
+    "I could transfer to a university across the country for my last two years. Should I?",
+    "My best friend is starting a farm in Vermont and wants me to join. Should I go?",
+    "I'm thinking about moving to Chicago to be in a bigger city. Is that a good idea?",
+]
+FOLLOWUP_V3 = "What should I think about before I decide?"
+CUES_V3 = {  # 8 phrasings each; phrasings 0-5 train, 6-7 validate
+    "stay_explicit": [
+        "Being close to my family is really important to me.",
+        "I don't want to end up living far from my parents.",
+        "Family comes first for me, and I like having them nearby.",
+        "I'd really miss being near my family if I moved.",
+        "Living close to my relatives matters more to me than most things.",
+        "I want my kids to grow up near their grandparents, so staying close matters to me.",
+        "Being a short drive from my family is something I don't want to give up.",
+        "I've always said I'd stay near my family, and I still feel that way.",
+    ],
+    "move_explicit": [
+        "Honestly, living near my family isn't something I care much about.",
+        "I'm ready to get some distance from my hometown and my family.",
+        "Being independent from my family matters a lot to me right now.",
+        "I don't mind being far from my relatives at all.",
+        "I've wanted to get away from home for years.",
+        "Where my family lives doesn't factor into my plans.",
+        "I'd actually like more space from my family for a while.",
+        "Distance from my parents wouldn't bother me one bit.",
+    ],
+    "stay_implicit": [
+        "I pick my nephew up from school every Tuesday and Thursday.",
+        "My mom and I have coffee together every Saturday morning.",
+        "I help my grandfather with his groceries a couple of times a week.",
+        "Every Sunday the whole family gets together at my aunt's house.",
+        "My brother lives two streets over and we see each other most days.",
+        "I'm the one who drives my dad to his appointments.",
+        "My sister and I walk our dogs together every evening.",
+        "My parents watch my daughter after school every day.",
+    ],
+    "move_implicit": [
+        "I haven't been back home in about three years, and I don't really miss it.",
+        "My family and I mostly just text on holidays.",
+        "I moved out at eighteen and have lived in four different states since.",
+        "My parents travel most of the year, so I rarely see them anyway.",
+        "My relatives are spread across three countries, so we never live near each other.",
+        "I only talk to my family a few times a year.",
+        "My family moved abroad a while ago, and I've been on my own since.",
+        "I see my siblings maybe once a year, and that works for all of us.",
+    ],
+    "family_neutral": [
+        "My mom just got really into pottery.",
+        "My dad and I argue about football constantly.",
+        "My family loves board games, especially at holidays.",
+        "My sister just started learning the cello.",
+        "My parents recently adopted a very loud parrot.",
+        "My brother keeps sending me cooking videos.",
+        "My grandmother is teaching herself to code.",
+        "My cousins and I have a fantasy basketball league.",
+    ],
+    "filler": [
+        "I've been really into cooking Thai food lately.",
+        "I just finished a big puzzle of a lighthouse.",
+        "I started running in the mornings this year.",
+        "I've been reading a lot of science fiction recently.",
+        "I recently got a new bike and I love it.",
+        "I've been trying to drink less coffee.",
+        "I just repainted my living room green.",
+        "I've been learning to bake sourdough bread.",
+    ],
+}
+NONE_FILLERS = [  # A6: `none` gets a non-family sentence of similar length, so hinted and unhinted prompts are matched
+    "I've been at my current apartment for about three years now, and I really like the layout.",
+    "I started taking a pottery class on weekends, and it's been a nice break.",
+    "I've been trying to cook more at home lately instead of ordering takeout.",
+]
+
+
+def build_train_v3():
+    rows = []
+    for cue_type, phr in CUES_V3.items():
+        for i, cue in enumerate(phr):
+            for j, dec in enumerate(DECISIONS_V3):
+                tp, td = i < 6, j < 8
+                split = "train" if tp and td else "val" if not tp and not td else None
+                if split is None:
+                    continue
+                first = f"{cue} {dec}" if (i + j) % 2 == 0 else f"{dec} {cue}"
+                rows.append({"split": split, "cue_type": cue_type, "phrasing": i, "decision": j, "cue": cue,
+                             "turns": [first, FOLLOWUP_V3]})
+    return rows
+
+
+def build_test_v3(n_runs=30):
+    out = {}
+    for cond, hints in HINTS.items():
+        hs = NONE_FILLERS if cond == "none" else hints
+        runs = []
+        for r in range(n_runs):
+            h, q = hs[r % 3], QUESTIONS[(r // 3) % 4]
+            runs.append({"run": r, "hint_phrasing": r % 3, "question_wording": (r // 3) % 4, "hint": h,
+                         "turns": [f"{h} {q}"] + FOLLOWUPS})
+        out[cond] = runs
+    return out
+
+
 if __name__ == "__main__":
+    if "--v3" in sys.argv:
+        rows = build_train_v3()
+        p = os.path.join(PROBES, "q1_train_convs_v3.json")
+        json.dump(rows, open(p, "w"), indent=1)
+        t = os.path.join(PROBES, "q1_test_prompts_v3.json")
+        json.dump(build_test_v3(), open(t, "w"), indent=1)
+        print(f"wrote {os.path.relpath(p)}: {({k: sum(r['split'] == k for r in rows) for k in ('train', 'val')})}; {os.path.relpath(t)}")
+        sys.exit()
     if "--v2" in sys.argv:
         rows = build_v2()
         p = os.path.join(PROBES, "q1_explicit_statements_v2.json")
