@@ -411,3 +411,60 @@ of the runs where Qwen says the user wants to stay close, how many replies recom
 space reported as a secondary probe.
 
 Cost: about 1–2 GPU-hours on one or two L40S; Haiku judging about $0.20.
+
+### Exp 3c, Phase A on three free OpenRouter models (Haiku judge, rubric v0.2)
+
+Nemotron 3 Ultra, ERNIE 5.5 Flash and Nemotron 3.5 Super VL, 10 runs per version, 0 failed runs. Turn 3 ("what would you
+do in my shoes?"), share of replies recommending staying (stay / move / neither):
+
+| Version | Nemotron 3 Ultra | ERNIE 5.5 Flash | Nemotron 3.5 Super VL |
+|---|---|---|---|
+| none | 0 / 60 / 40 | 10 / 90 / 0 | 50 / 10 / 40 |
+| subtle | 20 / 30 / 50 | 30 / 60 / 10 | 60 / 10 / 30 |
+| clear | 20 / 80 / 0 | 0 / 90 / 10 | 40 / 40 / 20 |
+| explicit | 100 / 0 / 0 | 90 / 10 / 0 | 100 / 0 / 0 |
+| distractor | 0 / 50 / 50 | 10 / 90 / 0 | 40 / 0 / 60 |
+
+Turn-0 answer score (1–5): none 2.2 / 1.8 / 2.1; subtle 4.8 / 3.9 / 4.3; clear 4.5 / 3.7 / 4.1; explicit 4.8 / 4.5 / 5.0;
+distractor 2.4 / 2.5 / 2.4. Same pattern as Haiku and Qwen3-8B: the hints are discussed (high answer scores, reasoning
+mentions 90–100%) but rarely turn into a recommendation to stay, which only the explicit statement does. Nemotron 3.5
+Super VL is the exception: it recommends staying in half the runs even with no hint, so its hint effect is small.
+
+### Exp 6, third probe (A6) result (2026-11-24)
+
+336 training and 150 test conversations (0 cut off), 1,272 activation sets, Qwen's own answer for each.
+
+**Qwen's own answer (the labels).** On the training conversations, only an explicit statement makes Qwen say the user
+wants to live close to family (76%); for family routines ("I pick my nephew up every Tuesday") it says "nothing shows
+either way" 96% of the time. Labels: 77 stay of 576 training items, 12 of 96 validation.
+
+**Probe (pre-registered rules).** Layer chosen: 3 of 36 (validation AUROC 0.895).
+- Gate, explicit vs `none` at turn 0: **0.92 [0.84, 0.98], passes**. P5: clear vs `none` 0.76 (≥ 0.75), distractor 0.44
+  (≤ 0.65), **passes**. P6: 2 of 16 low-answer clear turns flagged, **fails**.
+- **But the controls say the gate pass means little.** Random directions in the same 40-dimensional space reach 0.92 at the
+  95th percentile, the same as the probe; shuffled-label probes reach 0.83. At layer 3 the explicit sentence and the
+  neutral filler are different words, and any direction separates them. Against Qwen's own labels on the job-offer
+  conversations, the probe's AUROC is 0.56. Read with its controls, the probe does not show a preference representation.
+
+**P7, Qwen's own answer on the job-offer conversations** (share saying "I want to live close to my family"):
+
+| Version | Turn 0 | Turn 1 | Turn 2 | Turn 3 |
+|---|---|---|---|---|
+| none | 0.00 | 0.00 | 0.00 | 0.00 |
+| subtle | 0.00 | 0.00 | 0.13 | 0.00 |
+| clear | 0.00 | 0.10 | 0.60 | 0.37 |
+| explicit | 1.00 | 1.00 | 1.00 | 1.00 |
+| distractor | 0.00 | 0.00 | 0.00 | 0.00 |
+
+P7 fails as predicted for `clear` (0% at turn 0, 37% at turn 3; line 70%); holds for distractor and none.
+
+**Registered but not followed, from the model itself.** At turn 3, of the 11 clear runs where Qwen says the user wants to
+stay close, 0 replies recommend staying (3 move, 8 neither). With the explicit statement, Qwen says so in 30 of 30 runs,
+yet 13 replies don't recommend staying (3 move, 10 neither).
+
+**Reading.** The new result is Qwen's own answer. It notices the hint (its reasoning discusses it in every run, Exp 3b),
+but when asked directly what the user wants, it says the conversation doesn't show it: a family that lives close together
+is taken as a fact about the family, not as the user's preference. So for hints, the gap is mostly not "knows but doesn't
+act" but "notices but doesn't infer". For the explicit statement, there is a real knows-but-doesn't-act gap: Qwen says the
+user wants to stay close in every run, and still doesn't recommend staying in 13 of 30. Three pre-registered probes have
+not given a reliable activation-level reading; the self-report read is the more useful instrument for this question.
