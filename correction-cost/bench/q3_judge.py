@@ -20,8 +20,16 @@ LAPTOP = [
     ("portability", "Size and weight of what the reply recommends. light = about 1.4 kg or less, 13-14 inch; mid = 14-15 inch, "
                     "1.4-1.8 kg; heavy = 15-16 inch or larger, gaming or workstation class."),
 ]
+DINNER = [  # second domain (Exp 3): no standard "it depends on your budget" opening
+    ("diet", "What the menu the reply plans contains. meat = includes meat or fish; vegetarian = no meat or fish; "
+             "vegan = no animal products at all."),
+    ("guests", "How many people the reply's plan or quantities are sized for. small = 2-4; medium = 5-8; large = 9 or more."),
+    ("effort", "How much cooking work the reply's menu takes. easy = little hands-on time, simple or store-bought; "
+               "moderate = a few hours, ordinary techniques; ambitious = many components, long or advanced cooking."),
+]
 SCENARIOS = {  # scenario -> (preference id, how the lean is defined), or a list of them
     "laptop-open": LAPTOP,
+    "dinner-open": DINNER,
     "laptop-budget-stated": LAPTOP[1:],  # budget is stated by the user at turn 0
     "trip-pace-plain-control": ("pace",
         "How packed the days are. packed = 4 or more planned activities or sights on a day; moderate = about 3; "
@@ -33,13 +41,18 @@ SCENARIOS = {  # scenario -> (preference id, how the lean is defined), or a list
        for c in ("none", "subtle", "clear", "explicit", "distractor")},
 }
 LEANS = {"pace": ["packed", "moderate", "relaxed"], "family_closeness": ["low", "mid", "high"],
-         "budget": ["low", "mid", "high"], "os": ["windows", "macos", "chromeos", "linux"], "portability": ["light", "mid", "heavy"]}
+         "budget": ["low", "mid", "high"], "diet": ["meat", "vegetarian", "vegan"],
+         "guests": ["small", "medium", "large"], "effort": ["easy", "moderate", "ambitious"], "os": ["windows", "macos", "chromeos", "linux"], "portability": ["light", "mid", "heavy"]}
 QUESTIONS = {"pace": "How packed should each day of the trip be?",
              "family_closeness": "How much should being near family weigh in this decision?",
              "budget": "How much should the laptop cost?", "os": "Which operating system should the laptop run?",
-             "portability": "How light and portable should the laptop be?"}
+             "portability": "How light and portable should the laptop be?",
+             "diet": "What can the guests eat (any dietary restrictions, e.g. vegetarian)?",
+             "guests": "How many people is the dinner party for?",
+             "effort": "How much cooking effort and time does the host want to put in?"}
 IGNORE_EG = {"budget": "dates, or the other preferences", "os": "dates, or the other preferences",
-             "portability": "dates, or the other preferences"}  # older scenarios keep v0.2's exact wording
+             "portability": "dates, or the other preferences",
+             **{p: "the date, or the other preferences" for p in ("diet", "guests", "effort")}}  # older scenarios keep v0.2's exact wording
 LABELS = ["asked", "stated", "conditional", "silent", "not_addressed"]
 PROMPT_VERSION = "v0.2"  # v0.1 failed the hand check (13/20); v0.2 fixes the asked / conditional boundary
 
