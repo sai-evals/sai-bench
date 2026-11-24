@@ -164,3 +164,50 @@ Predictions:
   least 80%; silent OS fills split between windows and macos (chromeos and linux together under 10%).
 - **L4, one stated preference lowers asking about the rest.** At turn 0, the share of replies that ask about os or portability
   is at least 10 points lower in `laptop-budget-stated` than in `laptop-open`.
+
+### Experiment 2 results (laptop, 2026-11-24)
+
+60 conversations (3 models × 2 versions × 10 runs), 0 failed; 750 judge calls (prompt v0.2), 0 unparsed; about $0.40.
+Hand check (Claude, blind, 12 labels from turns 2–4, stratified): **10/12**; both misses are `stated` vs `silent` /
+`conditional`, the label already known to be noisiest. All three `asked` budget labels checked were right.
+
+**`laptop-open`**, % of replies (3 models pooled, 30 per turn), asked / stated / conditional / silent / not addressed:
+
+| Turn | budget | os | portability |
+|---|---|---|---|
+| 0 "help me pick a laptop" | 100 / 0 / 0 / 0 / 0 | 100 / 0 / 0 / 0 / 0 | 100 / 0 / 0 / 0 / 0 |
+| 1 "what specs?" | 90 / 0 / 3 / 0 / 7 | 10 / 0 / 20 / 0 / 70 | 3 / 0 / 73 / 10 / 13 |
+| 2 "top three picks" | 100 / 0 / 0 / 0 / 0 | 67 / 0 / 30 / 3 / 0 | 23 / 3 / 37 / 33 / 3 |
+| 3 "which would you buy?" | 87 / 3 / 0 / 10 / 0 | 47 / 47 / 0 / 7 / 0 | 20 / 20 / 7 / 53 / 0 |
+| 4 "where to buy?" | 27 / 0 / 13 / 23 / 37 | 10 / 0 / 33 / 27 / 30 | 7 / 0 / 13 / 17 / 63 |
+
+**`laptop-budget-stated`** ("I can spend up to $800"), os / portability:
+
+| Turn | os | portability |
+|---|---|---|
+| 0 | 97 / 0 / 0 / 0 / 3 | 97 / 0 / 0 / 0 / 3 |
+| 1 | 10 / 0 / 17 / 33 / 40 | 7 / 0 / 33 / 43 / 17 |
+| 2 | 43 / 0 / 23 / 27 / 7 | 27 / 0 / 27 / 40 / 7 |
+| 3 | 27 / 10 / 3 / **50** / 10 | 7 / 0 / 10 / **73** / 10 |
+| 4 | 3 / 0 / 0 / **60** / 37 | 0 / 0 / 0 / 53 / 47 |
+
+Silent fills: budget mid 8 of 10; portability light 46, mid 4, heavy 0; **os: macOS 10 of 11 when nothing is said, Windows
+43 of 51 once the user says "up to $800"** (Nemotron 3 Ultra fills Windows silently in 64% of its budget-stated replies).
+
+Predictions, checked as written:
+- **L1 holds.** Every model asks at turn 0, about all three (100%).
+- **L2 fails.** At "which one would you buy?", models keep asking about budget (87%) and mostly *state* the OS
+  ("my default is the MacBook Air; if you need Windows, …", 47% stated) rather than fill it silently (7%). Portability is
+  the one filled silently (53%), always light.
+- **L3 holds.** Budget fills are mid, portability light or mid (100%), OS macOS or Windows (Linux 1 of 62, ChromeOS 0).
+- **L4 fails as written** (turn 0: 97% vs 100%). But the effect shows later: once the budget is known, models stop asking
+  about the rest and fill it in. OS silent at turn 3 goes from 7% to 50%, at turn 4 from 27% to 60%; portability at
+  turn 3 from 53% to 73%.
+
+**What stands out.**
+- **Laptops are the opposite of trips.** Here every model asks first, about everything, and keeps asking about budget until
+  told. It is also the only scenario where models regularly state an assumption ("my default is the Air; if you need
+  Windows…"). Whether a model asks seems to depend on whether the domain has a familiar "it depends on your budget" script.
+- **One answer closes the questions.** Telling the model the budget doesn't change turn 0, but afterwards it stops asking
+  about OS and size and picks for the user: Windows and a light 14-inch for "$800", macOS when nothing is said.
+- **The silent default for an unknown user is a MacBook Air**, in all three models.
