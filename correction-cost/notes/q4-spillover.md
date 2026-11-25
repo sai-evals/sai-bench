@@ -76,6 +76,7 @@ point in at least 18 of 20.
 | # | What | Model | Cost | Result |
 |---|---|---|---|---|
 | 1 | 14 arms × 10 runs, separate + joint scoring | Haiku 5.5 (target and judge) | about $1 | 140 conversations, 0 failed, 0 cut off; 2,100 judge calls, 0 unparsed. Results below |
+| 2 | ERNIE 5.5 Flash (OpenRouter free): the same 14 arms × 10 runs; Nemotron 3.5 Super VL next | ERNIE 5.5 Flash / Haiku 5.5 | about $0.35 (judging) | 140 conversations, 0 cut off; finished over two days of free quota. Results below |
 | 3 | Tokyo: the same 14 arms × 10 runs | Haiku 5.5 (target and judge) | about $1 | 140 conversations, 0 failed. Results at the end |
 
 ## Results (Exp 1, Haiku 5.5, 2026-11-24)
@@ -199,3 +200,50 @@ Predictions, checked as written:
 users, and so does "familiar food means earlier nights" (unstated user) and "pack it in means later nights". The budget
 couplings are city-specific: in Lisbon "cheaper" also meant earlier nights and simpler food; in Tokyo it doesn't, and it
 makes the mixed user's days busier (+0.57 pace: free walks replace paid sights, as in Lisbon's unstated user).
+
+## Experiment 2 results (ERNIE 5.5 Flash, 2026-11-24)
+
+Same 14 Lisbon arms × 10 runs on ERNIE 5.5 Flash (OpenRouter free; the first 26 conversations ran in the morning, the
+rest after the daily quota reset), Haiku 5.5 judge. 140 conversations, 0 cut off. Hand check (Claude, blind, 6 scores on
+ERNIE replies): **6/6 within 1 point**, 5 exact. Nemotron 3.5 Super VL runs on the next quota day; Nemotron 3 Ultra was
+dropped (too slow for the free quota).
+
+**Defaults** (unstated control, turns 1–3): pace 4.3, budget 2.4, night 3.0, food 2.7 (Haiku: 4.3, 2.2, 2.9, 3.1).
+
+**Spillover, separate scoring** (corrected minus control, turns 1–3, [95% CI]; Haiku in brackets):
+
+Unstated user:
+
+| Corrected → | pace | budget | night | food |
+|---|---|---|---|---|
+| pace (slower) | **−2.23** | −0.40 [−0.6, −0.2] (−0.30) | **−0.66 [−1.1, −0.3]** (−0.60) | −0.05 (−0.50) |
+| budget (cheaper) | +0.40 [−0.0, +0.9] (+0.40) | **−1.43** | −0.14 (−0.43) | +0.43 [+0.1, +0.8] (−0.20) |
+| night (earlier) | −0.17 (−0.03) | −0.10 (+0.07) | **−1.97** | +0.30 (−0.03) |
+| food (more familiar) | −0.17 (−0.30) | −0.37 [−0.6, −0.2] (+0.27) | **−0.50 [−0.8, −0.2]** (−0.53) | **−0.40** |
+| pace-up | **+0.67** | +0.23 (+0.17) | **+0.93 [+0.5, +1.3]** (+0.63) | −0.04 (+0.00) |
+
+Mixed-values user:
+
+| Corrected → | pace | budget | night | food |
+|---|---|---|---|---|
+| pace (slower) | **−1.77** | −0.37 [−0.7, −0.1] (+0.00) | **−0.79 [−1.2, −0.4]** (−0.73) | −0.13 (+0.00) |
+| budget (cheaper) | −0.10 (−0.27) | **−1.50** | −0.10 (−0.43) | −0.57 [−0.9, −0.2] (−0.40) |
+| night (earlier) | −0.13 (−0.37) | −0.50 [−0.8, −0.2] (−0.10) | **−2.17** | +0.10 (+0.07) |
+| food (more familiar) | −0.13 (+0.13) | −0.67 [−0.9, −0.4] (−0.17) | +0.03 (−0.07) | **−0.90** |
+
+Joint scoring differs from separate by +0.04 on average (P4 fails again).
+
+Predictions, checked as written for ERNIE:
+- **P0 partly holds.** Turn 1: pace −2.8, night −2.3 pass; budget −1.4 (just under the line); food −0.6 fails (ERNIE's default
+  food is already 2.7, and its "familiar" redo keeps Portuguese classics); pace-up 0.0 fails at the ceiling, as for Haiku.
+- **P1 holds.** Pace → night −0.66 [−1.1, −0.3]; food → night −0.50 [−0.8, −0.2].
+- **P2 holds.** 9 of 12 unstated pairs negative; pace-up moves budget and night up (2 of 3).
+- **P3 fails on its first part, holds on its second,** as for Haiku: |spillover| is smaller for the mixed user in 7 of 12 pairs,
+  and wrong spillovers exist (pace → night −0.79, food → budget −0.67, budget → food −0.57, night → budget −0.50).
+- **P4 fails** (+0.04).
+
+**What it adds.** The two strongest couplings in Haiku are the same in ERNIE, at the same size: **slow → earlier nights**
+(−0.66 / −0.79, Haiku −0.60 / −0.73) and **pack it in → later nights** (+0.93, Haiku +0.63), plus **familiar food → earlier
+nights** (−0.50, Haiku −0.53). So "slow means quiet" now holds in two models and two cities. What differs is the budget:
+in ERNIE, corrections to the nights or the food make the plan cheaper for the mixed user (−0.50, −0.67), a user who said
+they're happy to splurge. Comparing the two models on the same 12 unstated pairs, 10 have the same sign or are within ±0.1.

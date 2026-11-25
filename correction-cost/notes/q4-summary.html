@@ -164,7 +164,7 @@ td.hl{background:var(--soft)}
     <div><span>Issue </span><a href="https://github.com/sai-evals/sai-bench/issues/13">#13: Q4: Does correcting one preference drag the other preferences along?</a></div>
     <div><span>Parent </span><a href="https://github.com/sai-evals/sai-bench/issues/1">#1: Pick a question… and build its eval</a></div>
     <div><span>Branch </span><span class="mono" style="color:var(--ink)">13-spillover</span> · <a href="https://github.com/sai-evals/sai-bench/pull/14">PR #14</a></div>
-    <div><span>Status </span><span style="color:var(--ink)">Pilot done for Claude Haiku 5.5 (140 conversations, 2,100 judge calls, hand-checked 20/20 within 1 point, about $1). Three free open models are running (results will be added).</span></div>
+    <div><span>Status </span><span style="color:var(--ink)">Done for Claude Haiku 5.5 in two cities (Lisbon and Tokyo, 140 conversations each) and for ERNIE 5.5 Flash in Lisbon (140, free). Nemotron 3.5 Super VL is queued for the next free-quota day. Judge hand-checked (20/20, 8/8, 6/6 within 1 point) and checked by a judge from another company (Gemma 4 31B: 83–100% within 1 point). About $2.40 spent.</span></div>
   </div>
   <nav class="toc" aria-labelledby="toc-h">
     <span class="eyebrow" id="toc-h">Contents</span>
@@ -213,6 +213,15 @@ td.hl{background:var(--soft)}
         <li><b>P2</b> It follows the correction's side: at least 8 of 12 pairs move the same way as the correction; "pack it in" pushes at least 2 of 3 others up.</li>
         <li><b>P3</b> A stated preference mostly holds (smaller spillover in ≥ 8 of 12 pairs), but at least one pair still gets pulled ≥ 0.3 against what the user said.</li>
         <li><b>P4</b> Scoring all four preferences in one judge call inflates spillover by ≥ 0.1.</li>
+      </ul>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Second city (Tokyo)</h3><span class="tag dis">before running</span></div>
+      <ul class="small">
+        <li><b>T1</b> Slow → earlier nights replicates: pace → night ≤ −0.3, interval below 0, for both users.</li>
+        <li><b>T2</b> Cheaper → earlier nights replicates for the mixed user, interval below 0.</li>
+        <li><b>T3</b> Same pattern: at least 8 of 12 unstated pairs have Lisbon's sign (within ±0.1 counts as matching).</li>
+        <li><b>T4</b> The corrections work: pace, night and food move ≥ 1.5 at turn 1.</li>
       </ul>
     </div>
   </section>
@@ -290,10 +299,26 @@ td.hl{background:var(--soft)}
       </dl>
     </div>
     <div class="exp">
-      <div class="exp-h"><h3>Experiment 2: three free open models</h3><span class="tag dis">running</span></div>
+      <div class="exp-h"><h3>Experiment 2: ERNIE 5.5 Flash (free)</h3><span class="tag ok">done</span></div>
       <dl class="kv">
-        <dt>Changed</dt><dd>Same 14 arms × 10 runs on Nemotron 3 Ultra, ERNIE 5.5 Flash and Nemotron 3.5 Super VL (OpenRouter, free); Haiku judge.</dd>
-        <dt>Cost</dt><dd>about $0.35 per model (judging only)</dd>
+        <dt>Data</dt><dd>The same 14 arms × 10 runs on ERNIE 5.5 Flash (OpenRouter, free; spread over two days of the 1,000-requests-a-day quota). 140 conversations, 0 cut off. Haiku judge.</dd>
+        <dt>Cost</dt><dd>about $0.35 (judging only)</dd>
+        <dt>Judge check</dt><dd>6 scores on ERNIE replies, blind: <b>6/6 within 1 point</b>, 5 exact. Nemotron 3.5 Super VL runs next; Nemotron 3 Ultra was too slow for the free quota.</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 3: a second city (Tokyo), Haiku 5.5</h3><span class="tag ok">done</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>"Can you plan a weekend in Tokyo for me?", same 14 arms and turns. Budget and food anchors in Tokyo terms (¥1,500 meals; ramen and tonkatsu vs natto, offal yakitori, a yokocho crawl); pace and night unchanged.</dd>
+        <dt>Data</dt><dd>140 conversations, 0 failed; about $1</dd>
+        <dt>Judge check</dt><dd>8 scores on the new anchors: <b>8/8 within 1 point</b>, 2 exact; the judge scores food about one point higher, which cancels in spillover.</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Judge check: a judge from another company</h3><span class="tag ok">done</span></div>
+      <dl class="kv">
+        <dt>Setup</dt><dd>Gemma 4 31B (Google, NVIDIA NIM) re-scores 30 Haiku replies × 4 preferences with the same prompt.</dd>
+        <dt>Result</dt><dd>Within 1 point: budget 100%, food 97%, night 93%, pace 83%. Gemma scores food and night about 0.3 higher across the board, which cancels in spillover. Details in <span class="mono">notes/judge-check.md</span>.</dd>
       </dl>
     </div>
   </section>
@@ -301,7 +326,7 @@ td.hl{background:var(--soft)}
   <!-- 8 -->
   <section id="s8">
     <div class="shead"><span class="snum">8</span><h2>Findings</h2></div>
-    <div class="callout"><p><b>Overall</b> (Haiku 5.5). Corrections spill over, and in the direction of a stereotype. "Slow pace" is read as "quiet": it pulls the nights earlier, even for a user who said they love late nights. "Cheaper" pulls the nights earlier and the food blander, against a user who said they splurge and eat anything. Corrections to the nights or the food mostly stay contained. Scoring all four preferences in one judge call doesn't change this.</p></div>
+    <div class="callout"><p><b>Overall.</b> Corrections spill over, and in the direction of a stereotype. <b>"Slow pace" is read as "quiet"</b>: it pulls the nights earlier, even for a user who said they love late nights, in both models (Haiku, ERNIE) and both cities (Lisbon, Tokyo), at about the same size (−0.6 to −0.8). "Pack it in" pushes the nights later, and "familiar food" pulls them earlier, in every run. The budget couplings depend on the model and the city: in Haiku's Lisbon plans "cheaper" also meant earlier nights and blander food; in Tokyo it doesn't; in ERNIE, corrections to the nights or the food make the plan cheaper for a user who said they splurge. Scoring all four preferences in one judge call doesn't change any of this, and a judge from another company scores the same way.</p></div>
     <h3>Spillover, mixed-values user (separate scoring)</h3>
     <div class="tablewrap"><table>
       <tr><th>Corrected →</th><th>pace</th><th>budget</th><th>night</th><th>food</th></tr>
@@ -321,7 +346,19 @@ td.hl{background:var(--soft)}
       <tr><td><b>pace</b> ("pack it in")</td><td class="num hl"><b>+0.67</b></td><td class="num">+0.17</td><td class="num">+0.63</td><td class="num">+0.00</td></tr>
     </table></div>
     <p class="small muted">Defaults (control, turns 1–3): pace 4.3, budget 2.2, night 2.9, food 3.1. Budget was already cheap-ish, so the budget correction had little room; "pack it in" had little room on pace.</p>
-    
+    <h3 style="margin-top:8px">Across models and cities: the couplings that replicate, and the ones that don't</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Correction → spillover</th><th>User</th><th class="num">Haiku, Lisbon</th><th class="num">ERNIE, Lisbon</th><th class="num">Haiku, Tokyo</th></tr>
+      <tr><td><b>slower → earlier nights</b></td><td>stated nothing</td><td class="num">−0.60</td><td class="num">−0.66</td><td class="num">−0.67</td></tr>
+      <tr><td><b>slower → earlier nights</b></td><td>loves late nights</td><td class="num"><span class="bad">−0.73</span></td><td class="num"><span class="bad">−0.79</span></td><td class="num"><span class="bad">−0.63</span></td></tr>
+      <tr><td><b>pack it in → later nights</b></td><td>stated nothing</td><td class="num">+0.63</td><td class="num">+0.93</td><td class="num">+0.87</td></tr>
+      <tr><td><b>familiar food → earlier nights</b></td><td>stated nothing</td><td class="num">−0.53</td><td class="num">−0.50</td><td class="num">−0.50</td></tr>
+      <tr><td>cheaper → earlier nights</td><td>loves late nights</td><td class="num"><span class="bad">−0.43</span></td><td class="num">−0.10</td><td class="num">+0.03</td></tr>
+      <tr><td>cheaper → blander food</td><td>eats anything</td><td class="num"><span class="bad">−0.40</span></td><td class="num"><span class="bad">−0.57</span></td><td class="num">−0.10</td></tr>
+      <tr><td>earlier nights → cheaper</td><td>happy to splurge</td><td class="num">−0.10</td><td class="num"><span class="bad">−0.50</span></td><td class="num">+0.10</td></tr>
+      <tr><td>familiar food → cheaper</td><td>happy to splurge</td><td class="num">−0.17</td><td class="num"><span class="bad">−0.67</span></td><td class="num">−0.27</td></tr>
+    </table></div>
+    <p class="small muted">Separate scoring, turns 1–3, 30 replies per arm. Red = a pull against what this user stated, with an interval that excludes 0. ERNIE's defaults: pace 4.3, budget 2.4, night 3.0, food 2.7; its "familiar food" correction only moved food −0.4 (its default was already low). Tokyo's food default (3.7) is not comparable with Lisbon's, since the anchors differ.</p>
     <h3 style="margin-top:8px">Hypotheses: verdicts</h3>
     <div class="tablewrap"><table>
       <tr><th>Hypothesis</th><th>Verdict</th><th>Evidence</th></tr>
@@ -329,7 +366,12 @@ td.hl{background:var(--soft)}
       <tr><td><b>P1</b> spillover exists</td><td><span class="tag ok">holds</span></td><td>pace → night −0.60 [−1.0, −0.2]; food → night −0.53 [−0.9, −0.1].</td></tr>
       <tr><td><b>P2</b> it follows the correction's side</td><td><span class="tag ok">holds</span></td><td>9 of 12 pairs negative (several near 0); "pack it in" moves budget and night up.</td></tr>
       <tr><td><b>P3</b> a stated preference mostly holds</td><td><span class="tag mixed">first part fails, second holds</span></td><td>Smaller spillover for the mixed user in only 6 of 12 pairs. Wrong spillovers: pace → night −0.73, budget → night −0.43, budget → food −0.40.</td></tr>
-      <tr><td><b>P4</b> joint scoring inflates it</td><td><span class="tag no">fails</span></td><td>Joint minus separate: +0.04 on average (line 0.1). No judge halo.</td></tr>
+      <tr><td><b>P4</b> joint scoring inflates it</td><td><span class="tag no">fails</span></td><td>Joint minus separate: +0.04 on average (line 0.1). No judge halo. ERNIE: also +0.04.</td></tr>
+      <tr><td><b>P0–P4 on ERNIE</b></td><td><span class="tag mixed">same as Haiku</span></td><td>P0 partly (food −0.6 at turn 1 fails); P1 holds (pace → night −0.66); P2 holds (9 of 12); P3 first part fails (7 of 12), second holds; P4 fails.</td></tr>
+      <tr><td><b>T1</b> slow → earlier nights in Tokyo</td><td><span class="tag ok">holds</span></td><td>−0.67 [−1.1, −0.3] (stated nothing), −0.63 [−0.9, −0.3] (loves late nights).</td></tr>
+      <tr><td><b>T2</b> cheaper → earlier nights in Tokyo</td><td><span class="tag no">fails</span></td><td>+0.03 for the mixed user (Lisbon −0.43). Cheap Tokyo nights (izakaya, all-you-can-drink, 2 am ramen) run late.</td></tr>
+      <tr><td><b>T3</b> same pattern in Tokyo</td><td><span class="tag ok">holds</span></td><td>12 of 12 pairs match: 9 same sign, 3 within ±0.1.</td></tr>
+      <tr><td><b>T4</b> corrections work in Tokyo</td><td><span class="tag ok">holds</span></td><td>Turn 1: pace −3.4, night −2.2, food −2.1.</td></tr>
     </table></div>
   </section>
 
@@ -339,13 +381,14 @@ td.hl{background:var(--soft)}
     <div class="tablewrap"><table>
       <tr><th>#</th><th>Step</th><th>Cost</th></tr>
       <tr><td class="mono">1</td><td><b>Human pass on the hand check</b> (20 scores), blind to the judge and to Claude's scores.</td><td class="num">free</td></tr>
-      <tr><td class="mono">2</td><td><b>A second scenario</b> (e.g. planning a week of dinners, or a city other than Lisbon), to tell "slow means quiet" apart from something specific to Lisbon plans.</td><td class="num">~$1</td></tr>
+      <tr><td class="mono">2</td><td><span class="tag ok">done</span> <b>A second city</b> (Tokyo): "slow means quiet" is not about Lisbon. Next: a different domain (a week of dinners, a gym plan) to see whether it is about trips.</td><td class="num">~$1</td></tr>
+      <tr><td class="mono">2b</td><td><b>Nemotron 3.5 Super VL</b> on Lisbon (queued, next free-quota day).</td><td class="num">~$0.35</td></tr>
       <tr><td class="mono">3</td><td><b>Correct towards the high side</b> for budget and food (Haiku's defaults there were already low), so those corrections have room to move.</td><td class="num">~$0.30</td></tr>
     </table></div>
   </section>
 
   <footer>
-    <span>Data: <span class="mono">results/lisbon4-*</span> (not committed). Code: <span class="mono">correction-cost/bench/q4_scenarios.py</span>, <span class="mono">q4_judge.py</span>. Notes and predictions: <span class="mono">correction-cost/notes/q4-spillover.md</span>.</span>
+    <span>Data: <span class="mono">results/lisbon4-*</span>, <span class="mono">results/tokyo4-*</span> (not committed). Code: <span class="mono">correction-cost/bench/q4_scenarios.py</span>, <span class="mono">q4_judge.py</span>. Notes and predictions: <span class="mono">correction-cost/notes/q4-spillover.md</span>.</span>
     <span>All scores are from an LLM judge (Claude Haiku 5.5) on synthetic scripted conversations.</span>
   </footer>
 </div>
