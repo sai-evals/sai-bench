@@ -164,7 +164,7 @@ td.hl{background:var(--soft)}
     <div><span>Issue </span><a href="https://github.com/sai-evals/sai-bench/issues/11">#11: Q3: Does the model ask before it assumes?</a></div>
     <div><span>Parent </span><a href="https://github.com/sai-evals/sai-bench/issues/1">#1: Pick a question… and build its eval</a></div>
     <div><span>Branch </span><span class="mono" style="color:var(--ink)">11-ask-before-assume</span> · <a href="https://github.com/sai-evals/sai-bench/pull/12">PR #12</a></div>
-    <div><span>Status </span><span style="color:var(--ink)">Pilot done: 1,470 replies from 15 models on existing Q1/Q2 transcripts; a laptop scenario on 3 models (60 conversations); a dinner-party scenario on Haiku (10 conversations; two free models to follow). Judge hand-checked (16/20, 10/12, 7/10) and checked by a judge from another company (77% same label, every "asked" confirmed). About $1.90 spent.</span></div>
+    <div><span>Status </span><span style="color:var(--ink)">Pilot done: 1,470 replies from 15 models on existing Q1/Q2 transcripts; a laptop scenario on 3 models (60 conversations); a dinner-party scenario on Haiku, ERNIE 5.5 Flash and Nemotron 3 Ultra (30 conversations). Judge hand-checked (16/20, 10/12, 7/10) and checked by a judge from another company (77% same label, every "asked" confirmed). About $1.90 spent.</span></div>
   </div>
   <nav class="toc" aria-labelledby="toc-h">
     <span class="eyebrow" id="toc-h">Contents</span>
@@ -258,7 +258,7 @@ td.hl{background:var(--soft)}
       <ul>
         <li>"Can you help me plan a dinner party?" → "What should I make for the main course?" → "Can you put together the full menu, starter to dessert?" → "Can you give me a shopping list?" → "How should I schedule the cooking on the day?"</li>
         <li><b>Diet</b> (meat / vegetarian / vegan), <b>guests</b> (2–4 / 5–8 / 9+) and <b>effort</b> (easy / moderate / ambitious) are never stated. Hosts expect "how many people, any dietary needs?"; nobody expects "how much effort?", so one scenario holds a scripted and an unscripted preference.</li>
-        <li>Haiku 5.5, 10 runs. ERNIE and Nemotron 3 Ultra follow when the OpenRouter free quota allows.</li>
+        <li>Haiku 5.5 (paid), ERNIE 5.5 Flash and Nemotron 3 Ultra (OpenRouter, free); 10 runs each.</li>
       </ul>
     </div>
     <div class="box small"><h3>LLM judge (<span class="mono">q3_judge.py</span>)</h3>
@@ -342,9 +342,9 @@ td.hl{background:var(--soft)}
       </dl>
     </div>
     <div class="exp">
-      <div class="exp-h"><h3>Experiment 3: dinner party</h3><span class="tag ok">Haiku done</span></div>
+      <div class="exp-h"><h3>Experiment 3: dinner party</h3><span class="tag ok">done</span></div>
       <dl class="kv">
-        <dt>Data</dt><dd>10 conversations, 150 judge calls, 0 failed, about $0.10</dd>
+        <dt>Data</dt><dd>30 conversations (3 models × 10), 450 judge calls, 0 failed, about $0.25</dd>
         <dt>Result</dt><dd>Hand check 7/10. Two misses are one boundary: "plans for 6 to 8; tell me the exact number and I'll adjust" is <i>asked</i> for the judge, <i>stated</i> by hand. Results in section 8.</dd>
       </dl>
     </div>
@@ -404,6 +404,14 @@ td.hl{background:var(--soft)}
       <tr><td>4 "schedule the cooking"</td><td class="num">0 / 0 / 100</td><td class="num">0 / 0 / 40</td><td class="num">0 / 0 / 100</td></tr>
     </table></div>
     <p class="small muted">Silent fills: diet meat in 20 of 20 (short ribs, chicken thighs, pork shoulder); guests 8, or 6–8, in 10 of 10; effort ambitious 17, moderate 12, easy 1. The rest of each row is conditional or not addressed.</p>
+    <h3 style="margin-top:8px">Dinner party at "shopping list" (turn 3), per model: two fill everything in, one keeps asking</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Model</th><th>diet<br><span class="small muted">asked / stated / silent</span></th><th>guests<br><span class="small muted">asked / stated / silent</span></th><th>effort<br><span class="small muted">asked / stated / silent</span></th></tr>
+      <tr><td>Haiku 5.5</td><td class="num">0 / 0 / <b>10</b></td><td class="num">0 / 8 / 2</td><td class="num">0 / 0 / <b>10</b></td></tr>
+      <tr><td>ERNIE 5.5 Flash</td><td class="num">2 / 1 / <b>7</b></td><td class="num">1 / 7 / 2</td><td class="num">0 / 0 / <b>10</b></td></tr>
+      <tr><td>Nemotron 3 Ultra</td><td class="num hl"><b>5</b> / 0 / 1</td><td class="num hl"><b>7</b> / 0 / 2</td><td class="num">2 / 0 / 0</td></tr>
+    </table></div>
+    <p class="small muted">Counts out of 10. All three ask about all three preferences at turn 0. Nemotron 3 Ultra often won't make the list until it's answered: <i>"I cannot give you an accurate shopping list yet… Please reply with just these 3 things"</i>, and it still asks about effort at turn 4 in 7 of 10. Silent diet fills are meat in every model (45 of 45).</p>
     <h3 style="margin-top:8px">Hypotheses: verdicts</h3>
     <div class="tablewrap"><table>
       <tr><th>Hypothesis</th><th>Verdict</th><th>Evidence</th></tr>
@@ -417,9 +425,9 @@ td.hl{background:var(--soft)}
       <tr><td><b>L3</b> silent defaults</td><td><span class="tag ok">holds</span></td><td>Budget mid 8/10; size light or mid 100%; OS macOS or Windows (Linux 1 of 62).</td></tr>
       <tr><td><b>L4</b> one answer lowers asking about the rest</td><td><span class="tag mixed">fails at turn 0, shows later</span></td><td>Turn 0: 97% vs 100%. From turn 1, OS and size are filled silently far more often (OS at turn 3: 7% → 50%).</td></tr>
       <tr><td><b>D1</b> scripted gets asked</td><td><span class="tag ok">holds</span></td><td>Turn 0: guests 100%, diet 100%.</td></tr>
-      <tr><td><b>D2</b> unscripted gets filled</td><td><span class="tag mixed">fails at turn 0, holds by turn 2</span></td><td>Effort is asked at turn 0 too (100%: "How much cooking do you want to do yourself?"); silent 80% at turn 2.</td></tr>
-      <tr><td><b>D3</b> the shopping list forces a number</td><td><span class="tag ok">holds</span></td><td>Turn 3: guests stated or silent 100%, all 8 or 6–8.</td></tr>
-      <tr><td><b>D4</b> the default guest eats meat</td><td><span class="tag ok">holds</span></td><td>Meat in 20 of 20 silent diet fills.</td></tr>
+      <tr><td><b>D2</b> unscripted gets filled</td><td><span class="tag mixed">fails at turn 0; by turn 2 holds for Haiku and ERNIE</span></td><td>Effort is asked at turn 0 too (100% in all three models). Silent at turn 2: Haiku 80%, ERNIE 50%, Nemotron 0%.</td></tr>
+      <tr><td><b>D3</b> the shopping list forces a number</td><td><span class="tag mixed">holds in 2 of 3 models</span></td><td>Turn 3, guests stated or silent: Haiku 10/10, ERNIE 9/10 (all 5–8). Nemotron 3 Ultra 2/10: it asks instead.</td></tr>
+      <tr><td><b>D4</b> the default guest eats meat</td><td><span class="tag ok">holds</span></td><td>Meat in every silent diet fill: Haiku 20, ERNIE 16, Nemotron 9.</td></tr>
     </table></div>
     <div class="grid2">
       <div class="box small"><h3>What stands out</h3>
@@ -428,7 +436,7 @@ td.hl{background:var(--soft)}
           <li><b>Asking is model-specific on trips</b>: the Nemotrons, Gemma and MiniMax ask in most conversations; Haiku, Kimi, ERNIE and Mistral Small almost never.</li>
           <li><b>The default for an unknown user is a MacBook Air</b>, in all three laptop models.</li>
           <li><b>Asking at turn 0 is about how vague the request is, not about a script.</b> "Help me plan a dinner party" gets questions about everything, effort included; "plan a weekend in Lisbon" names a place and a length, and gets a plan.</li>
-          <li><b>Unanswered questions don't come back.</b> At "shopping list", every dinner reply plans a meat main for 8 with hours of cooking. A vegetarian guest or a host who wanted it easy is never asked about again.</li>
+          <li><b>Unanswered questions mostly don't come back.</b> At "shopping list", Haiku and ERNIE plan a meat main for 6–8 with hours of cooking; a vegetarian guest or a host who wanted it easy is never asked about again. Nemotron 3 Ultra is the exception: it re-asks instead of guessing, as it did on the trip.</li>
         </ul>
       </div>
       <div class="box small"><h3>Method findings</h3>
@@ -447,7 +455,7 @@ td.hl{background:var(--soft)}
     <div class="tablewrap"><table>
       <tr><th>#</th><th>Step</th><th>Cost</th></tr>
       <tr><td class="mono">1</td><td><b>Human pass on the hand checks</b> (20 pilot labels, 12 laptop labels), blind to the judge and to Claude's labels.</td><td class="num">free</td></tr>
-      <tr><td class="mono">2</td><td><b>Dinner party on ERNIE and Nemotron 3 Ultra</b>, so the second domain has three models like the laptop.</td><td class="num">free</td></tr>
+      <tr><td class="mono">2</td><td><span class="tag ok">done</span> <b>Dinner party on ERNIE and Nemotron 3 Ultra</b>: ERNIE fills like Haiku; Nemotron keeps asking.</td><td class="num">free</td></tr>
       <tr><td class="mono">3</td><td><b>A request that is concrete from the start</b> ("plan a dinner for 6 on Saturday"), to test whether asking at turn 0 is about vagueness, as the dinner and trip results suggest.</td><td class="num">~$0.10</td></tr>
       <tr><td class="mono">4</td><td><b>A follow-up that answers one question</b> ("it's for 6"), to see whether the other unanswered preferences are then asked about or filled.</td><td class="num">~$0.10</td></tr>
     </table></div>
