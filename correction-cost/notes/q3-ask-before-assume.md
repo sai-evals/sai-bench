@@ -270,3 +270,28 @@ Predictions, checked as written:
 - **The questions stop as soon as the user asks for a concrete artifact.** Nobody answered them. At "full menu" the model
   states a guess ("about 6 to 8 guests"); at "shopping list" it fills every preference silently: a meat main for 8, with
   hours of cooking. A vegetarian guest or a host who wanted something easy is never brought back up.
+
+### Experiment 3, free models (ERNIE 5.5 Flash, Nemotron 3 Ultra; 2026-11-24)
+
+10 runs each, 0 failed; 300 judge calls, Haiku judge, prompt v0.2. No new hand check (the judge was checked on the
+dinner scenario, 7/10, and by Gemma on a sample including dinner, 13/13).
+
+Turn 0: all three models ask about all three preferences in 10 of 10 replies. Turn 3 ("shopping list"), counts out of 10,
+asked / stated / conditional / silent / not addressed:
+
+| Model | diet | guests | effort |
+|---|---|---|---|
+| Haiku 5.5 | 0 / 0 / 0 / **10** / 0 | 0 / 8 / 0 / 2 / 0 | 0 / 0 / 0 / **10** / 0 |
+| ERNIE 5.5 Flash | 2 / 1 / 0 / **7** / 0 | 1 / 7 / 0 / 2 / 0 | 0 / 0 / 0 / **10** / 0 |
+| Nemotron 3 Ultra | **5** / 0 / 1 / 1 / 3 | **7** / 0 / 0 / 2 / 1 | 2 / 0 / 1 / 0 / 7 |
+
+Silent diet fills are meat in every model (Haiku 20, ERNIE 16, Nemotron 9 of 9).
+
+**What it adds.** Haiku and ERNIE behave alike: questions at turn 0, then everything filled at the shopping list.
+**Nemotron 3 Ultra holds out**: at "Can you give me a shopping list?" it often refuses to commit ("I cannot give you an
+accurate shopping list yet… Please reply with just these 3 things: package choice, guest count, allergies"), and still
+asks about effort at turn 4 in 7 of 10. It is also the model that asked most on the trip (8/10 conversations). So asking
+before assuming is partly a model trait: the same unanswered questions get re-asked by one model and silently answered by two.
+Predictions per model: D1 holds in all three (100% at turn 0). D2 fails its first part in all three (effort is asked at
+turn 0); its second part (effort silent ≥ 50% at turn 2) holds for Haiku (8/10) and ERNIE (5/10), fails for Nemotron (0/10).
+D3 holds for Haiku (10/10) and ERNIE (9/10, all medium), fails for Nemotron (2/10). D4 holds in all three (meat in every silent fill).
