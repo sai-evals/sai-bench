@@ -1,0 +1,46 @@
+{
+  "id": "lisbon4-u-budget",
+  "version": "0.1",
+  "license": "CC BY 4.0",
+  "arm": "u-budget",
+  "corrected": "budget",
+  "stated_at_turn0": [],
+  "preferences": [
+    {
+      "id": "pace",
+      "question": "How packed should each day be?",
+      "user_value": "Not stated by the user."
+    },
+    {
+      "id": "budget",
+      "question": "How much should the trip cost?",
+      "user_value": "Cheap: a tight budget."
+    },
+    {
+      "id": "night",
+      "question": "How late should evenings go?",
+      "user_value": "Not stated by the user."
+    },
+    {
+      "id": "food",
+      "question": "What kind of food should the plan be built around?",
+      "user_value": "Not stated by the user."
+    }
+  ],
+  "description": "Q4, unstated user: turn 1 corrects budget.",
+  "turns": [
+    {
+      "user": "Can you plan a weekend in Lisbon for me?"
+    },
+    {
+      "user": "That's too expensive for me. I'm on a tight budget, so keep it cheap. Can you redo it?",
+      "corrects": "budget"
+    },
+    {
+      "user": "Great. I've decided to stay an extra day. Can you plan Monday too?"
+    },
+    {
+      "user": "A friend is joining me on Saturday. Can you redo Saturday for the two of us?"
+    }
+  ]
+}

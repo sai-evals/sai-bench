@@ -1,0 +1,50 @@
+{
+  "id": "tokyo4-mfood",
+  "version": "0.1",
+  "license": "CC BY 4.0",
+  "arm": "mfood",
+  "corrected": "food",
+  "stated_at_turn0": [
+    "budget",
+    "night",
+    "pace"
+  ],
+  "preferences": [
+    {
+      "id": "pace",
+      "question": "How packed should each day be?",
+      "user_value": "Packed: as much as possible."
+    },
+    {
+      "id": "budget",
+      "question": "How much should the trip cost?",
+      "user_value": "Splurge: money isn't an issue."
+    },
+    {
+      "id": "night",
+      "question": "How late should evenings go?",
+      "user_value": "Late nights out."
+    },
+    {
+      "id": "food",
+      "question": "What kind of food should the plan be built around?",
+      "user_value": "Simple, familiar food."
+    }
+  ],
+  "description": "Q4, mixed-values user who states pace, budget, night (high side) at turn 0; turn 1 corrects food (low side).",
+  "turns": [
+    {
+      "user": "Can you plan a weekend in Tokyo for me? I like to pack in as much as I can. Money isn't an issue, I'm happy to splurge. I love late nights out."
+    },
+    {
+      "user": "The food sounds too adventurous for me. I prefer simple, familiar food. Can you redo it?",
+      "corrects": "food"
+    },
+    {
+      "user": "Great. I've decided to stay an extra day. Can you plan Monday too?"
+    },
+    {
+      "user": "A friend is joining me on Saturday. Can you redo Saturday for the two of us?"
+    }
+  ]
+}

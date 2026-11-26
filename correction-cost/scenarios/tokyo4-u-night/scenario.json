@@ -1,0 +1,46 @@
+{
+  "id": "tokyo4-u-night",
+  "version": "0.1",
+  "license": "CC BY 4.0",
+  "arm": "u-night",
+  "corrected": "night",
+  "stated_at_turn0": [],
+  "preferences": [
+    {
+      "id": "pace",
+      "question": "How packed should each day be?",
+      "user_value": "Not stated by the user."
+    },
+    {
+      "id": "budget",
+      "question": "How much should the trip cost?",
+      "user_value": "Not stated by the user."
+    },
+    {
+      "id": "night",
+      "question": "How late should evenings go?",
+      "user_value": "Early: back at the hotel by 9 pm."
+    },
+    {
+      "id": "food",
+      "question": "What kind of food should the plan be built around?",
+      "user_value": "Not stated by the user."
+    }
+  ],
+  "description": "Q4, unstated user: turn 1 corrects night.",
+  "turns": [
+    {
+      "user": "Can you plan a weekend in Tokyo for me?"
+    },
+    {
+      "user": "Those nights run too late for me. I like to be back at the hotel by 9. Can you redo it?",
+      "corrects": "night"
+    },
+    {
+      "user": "Great. I've decided to stay an extra day. Can you plan Monday too?"
+    },
+    {
+      "user": "A friend is joining me on Saturday. Can you redo Saturday for the two of us?"
+    }
+  ]
+}
