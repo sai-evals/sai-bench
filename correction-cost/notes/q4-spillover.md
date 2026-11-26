@@ -76,7 +76,7 @@ point in at least 18 of 20.
 | # | What | Model | Cost | Result |
 |---|---|---|---|---|
 | 1 | 14 arms × 10 runs, separate + joint scoring | Haiku 5.5 (target and judge) | about $1 | 140 conversations, 0 failed, 0 cut off; 2,100 judge calls, 0 unparsed. Results below |
-| 2 | ERNIE 5.5 Flash (OpenRouter free): the same 14 arms × 10 runs; Nemotron 3.5 Super VL next | ERNIE 5.5 Flash / Haiku 5.5 | about $0.35 (judging) | 140 conversations, 0 cut off; finished over two days of free quota. Results below |
+| 2 | ERNIE 5.5 Flash and Nemotron 3.5 Super VL (OpenRouter free): the same 14 arms × 10 runs each | each / Haiku 5.5 | about $0.35 per model (judging) | 140 conversations each, 0 cut off; spread over three days of free quota. Results below |
 | 3 | Tokyo: the same 14 arms × 10 runs | Haiku 5.5 (target and judge) | about $1 | 140 conversations, 0 failed. Results at the end |
 
 ## Results (Exp 1, Haiku 5.5, 2026-11-24)
@@ -247,3 +247,49 @@ Predictions, checked as written for ERNIE:
 nights** (−0.50, Haiku −0.53). So "slow means quiet" now holds in two models and two cities. What differs is the budget:
 in ERNIE, corrections to the nights or the food make the plan cheaper for the mixed user (−0.50, −0.67), a user who said
 they're happy to splurge. Comparing the two models on the same 12 unstated pairs, 10 have the same sign or are within ±0.1.
+
+## Experiment 2 results, Nemotron 3.5 Super VL (2026-11-25)
+
+Same 14 Lisbon arms × 10 runs (OpenRouter free, over three quota days), Haiku 5.5 judge. 140 conversations, 0 cut off.
+Hand check (Claude, blind, 6 scores on Super VL replies): **6/6 within 1 point**, 4 exact (both misses: the judge one point higher).
+
+**Defaults** (unstated control, turns 1–3): pace 4.6, budget 2.6, night 3.0, food 3.5.
+
+**Spillover, separate scoring** (corrected minus control, turns 1–3, [95% CI]; Haiku / ERNIE in brackets):
+
+Unstated user:
+
+| Corrected → | pace | budget | night | food |
+|---|---|---|---|---|
+| pace (slower) | **−3.60** | **−0.93 [−1.2, −0.7]** (−0.30 / −0.40) | **−1.28 [−1.6, −1.0]** (−0.60 / −0.66) | **−0.73 [−1.2, −0.2]** (−0.50 / −0.05) |
+| budget (cheaper) | +0.13 | **−1.63** | −0.17 | −0.33 [−0.7, +0.1] |
+| night (earlier) | −0.43 [−0.9, +0.0] | −0.30 [−0.5, −0.1] | **−2.03** | −0.20 |
+| food (more familiar) | −0.40 [−0.8, +0.0] | −0.40 [−0.6, −0.2] | **−1.07 [−1.4, −0.7]** (−0.53 / −0.50) | **−1.63** |
+| pace-up | **+0.40** | +0.33 [+0.1, +0.5] | **+0.59 [+0.2, +1.0]** (+0.63 / +0.93) | −0.16 |
+
+Mixed-values user:
+
+| Corrected → | pace | budget | night | food |
+|---|---|---|---|---|
+| pace (slower) | **−1.63** | −0.10 | **−0.10 [−0.5, +0.3]** (−0.73 / −0.79) | +0.10 |
+| budget (cheaper) | −0.33 [−0.7, +0.0] | **−1.97** | +0.10 | −0.37 [−0.6, −0.1] |
+| night (earlier) | −0.23 | +0.00 | **−2.53** | +0.10 |
+| food (more familiar) | −0.07 | +0.00 | −0.07 | **−1.87** |
+
+Joint scoring: for the unstated user, |spillover| is 0.15 larger on average than separate scoring (the first model where P4
+passes); for the mixed user 0.06. The one pair that changes meaning: mixed pace → night is −0.10 [−0.5, +0.3] separate but
+−0.37 [−0.6, −0.1] joint. At turn 3 every Saturday night in both arms scores 5 (past midnight), so the difference is in turns 1–2.
+
+Predictions, checked as written for Super VL:
+- **P0 nearly holds.** Turn 1: pace −4.0, night −2.3, food −1.9, budget −1.6 all pass; pace-up 0.0 fails at the ceiling (default 4.6).
+- **P1 holds.** Pace → night −1.28 [−1.6, −1.0]; food → night −1.07.
+- **P2 holds.** 11 of 12 unstated pairs negative; pace-up moves budget and night up.
+- **P3 holds, the only model where it does.** |spillover| is smaller for the mixed user in 10 of 12 pairs; one wrong pull remains
+  (budget → food −0.37 [−0.6, −0.1]).
+- **P4 holds for the unstated user** (+0.15), fails for the mixed user (+0.06).
+
+**What it adds.** Super VL drags the most when the user has said nothing (slow → earlier nights −1.28, twice Haiku and ERNIE;
+slow → cheaper −0.93; familiar food → earlier nights −1.07), and the least when the user has: for the user who said they love
+late nights, the pace correction leaves the nights almost alone (−0.10 separate, −0.37 joint, against −0.73 / −0.79 in Haiku
+and ERNIE). It fills unstated preferences from the correction's stereotype and keeps stated ones, which is the behaviour a
+benchmark would reward. Across all three models, slow → earlier nights for a user who stated nothing is −0.60, −0.66, −1.28.
