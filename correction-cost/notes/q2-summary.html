@@ -1,0 +1,1269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Does a correction stick, or does the model drift back a few turns later?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a research summary in one reading column, nine numbered sections (the order is the argument:
+   question → sub-questions → hypotheses → method → scale → example → experiments → findings → next). */
+:root{
+  --bg:#f6f7f9; --panel:#ffffff; --ink:#18202b; --muted:#5b6676; --line:#dde2e9; --soft:#eef1f5;
+  --accent:#2f5bd3; --control:#b86a12;
+  --s1:#c2412d; --s2:#d9772b; --s3:#c9a227; --s4:#6aa84f; --s5:#2e8b6e; --chipText:#ffffff;
+  --ok:#2e8b6e; --mixed:#c9a227; --no:#c2412d;
+  --font-body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11151b; --panel:#181d25; --ink:#e6eaf0; --muted:#9aa5b4; --line:#2a313c; --soft:#1f252f;
+  --accent:#7d9bf0; --control:#e3a25a;
+  --s1:#e0705c; --s2:#e8975a; --s3:#d9bd55; --s4:#89c26f; --s5:#4fb592; --chipText:#11151b;
+  --ok:#4fb592; --mixed:#d9bd55; --no:#e0705c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11151b; --panel:#181d25; --ink:#e6eaf0; --muted:#9aa5b4; --line:#2a313c; --soft:#1f252f;
+  --accent:#7d9bf0; --control:#e3a25a;
+  --s1:#e0705c; --s2:#e8975a; --s3:#d9bd55; --s4:#89c26f; --s5:#4fb592; --chipText:#11151b;
+  --ok:#4fb592; --mixed:#d9bd55; --no:#e0705c; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:900px;margin:0 auto;padding-block:36px 90px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{text-wrap:balance;margin:0;font-weight:650}
+h1{font-size:2.1rem;line-height:1.15;font-weight:700}
+h2{font-size:1.4rem}
+h3{font-size:1rem}
+p,li{max-width:70ch}
+p{margin:0}
+ul,ol{margin:0;padding-left:1.25em;display:grid;gap:4px}
+a{color:var(--accent)}
+.mono{font-family:var(--font-mono);font-size:.86em}
+.eyebrow{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+.lede{color:var(--muted);margin-top:10px;font-size:1.02rem}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;font-size:.85rem}
+.meta span{color:var(--muted)}
+nav.toc{margin:24px 0 4px;padding:14px 18px;border:1px solid var(--line);border-radius:10px;background:var(--panel);display:grid;gap:8px}
+nav.toc ol{margin:0;padding-left:1.4em;columns:2;column-gap:32px;display:block}
+nav.toc li{break-inside:avoid;padding:2px 0;font-size:.92rem}
+nav.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+nav.toc a:hover,nav.toc a:focus-visible{color:var(--accent);border-color:var(--accent);outline:none}
+@media (max-width:560px){nav.toc ol{columns:1}}
+section{padding:36px 0 8px;border-bottom:1px solid var(--line);display:grid;gap:14px;scroll-margin-top:12px}
+.shead{display:flex;gap:12px;align-items:baseline}
+.snum{font-family:var(--font-mono);color:var(--accent);font-weight:500}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:12px;min-width:0}
+.callout{border-left:3px solid var(--accent);padding:4px 0 4px 14px;display:grid;gap:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid2>*{min-width:0}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;font-size:.86rem;width:100%}
+th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:.78rem}
+td.num,th.num{text-align:center;font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-family:var(--font-mono);font-weight:500;font-size:.78rem;border-radius:6px;padding:1px 7px;color:var(--chipText);min-width:26px;text-align:center}
+.na{background:var(--line);color:var(--ink)}
+.tag{display:inline-block;font-family:var(--font-mono);font-size:.72rem;border-radius:999px;padding:1px 9px;border:1px solid currentColor;white-space:nowrap}
+.tag.ok{color:var(--ok)}.tag.mixed{color:var(--mixed)}.tag.no{color:var(--no)}.tag.dis{color:var(--muted)}
+.hyp{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:baseline}
+.hyp .id{font-family:var(--font-mono);font-weight:500;color:var(--accent)}
+.convo{display:grid;gap:6px}
+.turn{display:grid;grid-template-columns:62px 1fr;gap:10px;font-size:.88rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.turn .t{font-family:var(--font-mono);font-size:.74rem;color:var(--muted);padding-top:2px}
+.turn.corr{border-color:var(--accent)}
+.turn .q{color:var(--muted);font-size:.84rem;margin-top:4px}
+.say-c{color:var(--accent);font-weight:600}
+.say-k{color:var(--control);font-weight:600}
+.controls{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex-wrap:wrap}
+.seg button{font:inherit;font-size:.82rem;border:0;background:transparent;color:var(--ink);padding:5px 11px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.ctl-label{font-size:.78rem;color:var(--muted);margin-right:6px}
+.exp{display:grid;gap:10px;padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.exp-h{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}
+.exp-h h3{font-size:1.05rem}
+.kv{display:grid;grid-template-columns:130px 1fr;gap:4px 12px;font-size:.88rem}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0}
+@media (max-width:520px){.kv{grid-template-columns:1fr}.kv dt{margin-top:6px}}
+.stats{display:flex;flex-wrap:wrap;gap:24px}
+.stat{display:grid;gap:2px}
+.big{font-size:1.8rem;font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums}
+.small{font-size:.82rem}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.78rem;color:var(--muted)}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+svg text{fill:var(--muted);font-family:var(--font-mono);font-size:11px}
+.chat{display:grid;gap:10px;border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--panel)}
+.chead,.crow{display:grid;grid-template-columns:96px 1fr 1fr;gap:12px;align-items:start}
+.chead{grid-template-columns:96px 1fr 1fr;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.chead::before{content:""}
+.who{display:flex;gap:10px;align-items:center;font-size:.9rem}
+.who.wa b{color:var(--accent)}.who.wb b{color:var(--control)}
+.crow{padding:10px 0;border-bottom:1px dashed var(--line)}
+.crow-key{background:var(--soft);border-radius:10px;padding:10px 8px;border-bottom:0}
+.csum{border-bottom:0}
+.tlabel{display:grid;gap:4px;color:var(--muted);font-size:.8rem;padding-top:4px}
+.ttag{font-size:.7rem;color:var(--muted)}
+.ttag-key{color:var(--ink);font-weight:600}
+.side{display:grid;gap:8px;min-width:0}
+.ub{justify-self:end;max-width:92%;border-radius:14px 14px 4px 14px;padding:8px 12px;font-size:.86rem;color:var(--chipText)}
+.sa .ub{background:var(--accent)}.sb .ub{background:var(--control)}
+.ub-key{outline:3px solid var(--ink);outline-offset:2px;font-weight:600}
+.bb{display:flex;gap:8px;align-items:flex-start;max-width:96%}
+.botav{flex:0 0 auto;margin-top:2px}
+.bt{background:var(--bg);border:1px solid var(--line);border-radius:14px 14px 14px 4px;padding:8px 12px;font-size:.84rem}
+.bs{font-size:.78rem;color:var(--muted);margin-top:4px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.chead .who.wa,.crow .sa{grid-column:2}.chead .who.wb,.crow .sb{grid-column:3}
+@media (max-width:720px){
+  .chead,.crow{grid-template-columns:1fr}
+  .chead::before{display:none}
+  .chead .who.wa,.crow .sa,.chead .who.wb,.crow .sb{grid-column:1}
+  .crow .sb{border-top:1px dotted var(--line);padding-top:8px}
+}
+.topbar{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:max(12px,env(safe-area-inset-right,0px));z-index:20;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.themebtn{display:inline-flex;gap:6px;align-items:center;font:inherit;font-size:.8rem;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.themebtn:hover,.themebtn:focus-visible{border-color:var(--accent);outline:none}
+body.editing .wrap{outline:2px dashed var(--accent);outline-offset:8px;border-radius:6px}
+[data-eid][contenteditable="true"]{cursor:text}
+[data-eid][contenteditable="true"]:focus{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.sg{border-left:3px solid var(--s5);padding-left:6px}
+del.sd{color:var(--s1);text-decoration:line-through;text-decoration-thickness:1.5px;background:color-mix(in srgb,var(--s1) 10%,transparent)}
+ins.si{color:var(--s5);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:2px;background:color-mix(in srgb,var(--s5) 12%,transparent)}
+body.hide-del del.sd{display:none}
+.chg .rj{justify-self:start;font-size:.75rem;padding:2px 10px}
+body.editing [data-eid]:hover{background:color-mix(in srgb,var(--accent) 8%,transparent)}
+body.editing .editbanner{display:block}
+.editbanner{display:none;position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:var(--accent);color:var(--chipText);font-size:.85rem;padding:8px 12px;border-radius:8px;margin-top:12px}
+.drawer{position:fixed;left:0;right:0;bottom:0;z-index:30;max-height:70vh;overflow:auto;background:var(--panel);border-top:2px solid var(--accent);box-shadow:0 -6px 20px rgba(0,0,0,.18);padding-block:16px calc(16px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.drawer-in{max-width:900px;margin:0 auto;display:grid;gap:12px}
+.chg{border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:grid;gap:6px;font-size:.86rem}
+.chg .b{color:var(--s1);text-decoration:line-through;text-decoration-thickness:1px}
+.chg .a{color:var(--s5)}
+.drawer textarea{width:100%;min-height:140px;font-family:var(--font-mono);font-size:.78rem;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px}
+.topbar .rv-sgbtn{display:inline-flex;gap:6px;align-items:center;font:inherit;font-size:.8rem;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 12px;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.topbar .rv-sgbtn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--chipText)}
+footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
+.lg{display:inline-block;width:16px;height:16px;border-radius:4px;background-size:cover;vertical-align:-3px;margin-right:6px;flex:none}.lg-anthropics{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAADu0lEQVR4nOyXz08aaRjHH2bGH7uMHjRLdCKGRJKuka0mNtnGigJupNGuFChMV9dD94+wf8GmR7eX7h9QD1t+lBYywB7QPZluTDdEk9bpocSLHkggimAi4mwYfd6ZbUgVCxsP88wcvl++7+jHl+d935Hp7++H61QUCg1IA9KANCAN6JoCMSjqK4pS/hJJLpBLJxcmcHp6irKZM/Tkya+i+J7cT58uYwJO57Q6mpiwYtI0oPb29unpaXTVa2pqqru7u6oAUqnVbDaLCfA8j7JpQHfvOjs7O9FVr9bWVo/HXVUA5XL55csIJmC32wyGb9A1B4jn/SiV8vt9pHWCwVClUpEltLS0eD1eHNUEILPZPDo6ik4pk8l0+/b3INfOzs6bN39jAj7/A3WbNxhocXGB/PRcLre/v48JLC7+jBJWVlZQgtFotNtt6BoKxLKsy3UfHYRC4UjkFTpwOBwcx8kS1tb+2tvbq8naSKC5uR/1+q/JBhMOh0OhMNmBaJr2+R7IEiqViiDE8TkYGxszGvvQNQ5I3c5v3/7z8WNGFMXNzU38DLxeD03TsoRYLEZYKYry+Xw4qkFAN29+Nzg4iA6CwRCKMH4Gvb29k5OTsoR3795vb29jUmVlGKaRQDzvJ+1cKBSSyaQsQRCEYrGIo+DhQ2UWX7wIoASDweBw2NF9MRDLsjMzM+hgdXXt6OhIlnB4eJhM/okJWK1Wjusl31qpVKp3174U0L17syzLooNUKvWVqgRBIO3CMIzXe74THhwUEokEPgR37oz19V3c2rrL/KMYiYQtFgs6ODk5IQRnJzxN0+QL3d3ddTh+ONusR0ZGAoE/SPTs2e/Ly7/hc1edIYvFMjQ0hO58GlpUxTAM+ZUAwHEcOeTT6bQofsAEPB73ha1N1dXOlyx1uwQCSmv39PTYbLYvAtLr9bOzSjtLny0cBRMTVnLIv34dJSvgk2V4FSC3+35HRwc6WFp6fOPGtzXvR49+wVHVQ97lcmFrH0SjUUxgfHzcZDKhqxNIp9MtLMyjg3w+H48nJAlq3uvr65lMBseC262ces+fr5D5o2l6fv4nTOoEunVrdGBgAB1Eo7Hj42N0n5YkVY9bdGA2m4eHh2UJovghnU5jAi7XXFtbG7p6gHieJ+0sSVIwGMSkdkUir8rlMpldnq+9a3d1dTmd/3kJVl+fW4QbGxtbW1tni7BUKqkXcM3KZrNLS4/J+3WxqGzT8XhCr2fJYs3l8ufqahvj/1nUxUM0IA1IA9KANCANSAOqB+jfAQDj4Ws9rXFMQgAAAABJRU5ErkJggg==)}.lg-nvidia{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAHqElEQVR4nOyYC1CU1xWAv91leQiLQjCroijq4gtEVIiuQqRaaShig6gTtVo1VidNfM00UWOi1kjaqpM4mqmdivGR2iETrS+sEbRqfMYHj/jAiEq2UBRUwADKY9nOxXs7W7JGFEjjzJ7z79zzuOfe/9xz7/nPXS3PODgdcDrgdMDpwP/XARdFPC30ima8ycwYxTcV8jLYn72PjYpvcQfaBhLcM4qxim8qPCinKBs2OrfQo7aQRoPGP5jwwAGMNJoYUHyDc1tn00enx6tNewLb9+SFruHEtTZiUjY/Cgc8ffANG8XMkBhmGPwIFMKKUix387ns6UvHylKKvz7GrgtppGg0zO8UijkikXldw0loyUg/1gE3LzwHv8Jb/eOZ5+KKV8ElDh3/hHevf8n+8jvcjprG8oSlfC4611l5YMkiLWMPa6+eIM2SyYnOYZhHvsF6H39C1JjNCTpFOILugxkxLom0wAGMqijhX3v/wNgjySy7lUt2TRX3jd0J9uuMqewWeZUl5LfywegXQFivYfyyU1/Cv8nkYNE1crL3k9ymAx3adqG/GvtRcPMqZ66dZp/inyoCLq64/mQWSaGxzNNo0OaeJCV1JdOrKqho3Q7/8DHM7R3NRHcD7U+lsDT1j0wXhjo9+t7DSYycQlJAKD+fvI6zO5YQV5hD1p4kXi0p4Jp5AklqnhaJgLsBw9j3SQ0yM0Ec2MtH+Hj3CibXVlPdfzTTEpaS6t+bYTdz+fJUCu+5G/Aydqdf0TWyRJ+iXC5cSGdLYH+G+HQguNcwxt04y96KuxRbsjimdaGmUwjD1XxNjcB3DpfJTJx/L6IFc/8eBftWMsNWhy361ywb8RrJWh2uaeuYum0+IzL38rGtDrdh01kz8UOOuHrQqt6ujJK8DNIE7eqBb48oXlbjF1zihDguim8qfMeBy4fZXlFCvmA8vPE3dn94+GqrqRKttZYHlw/zmeqv4PlAIl58leV6d9xGL2ZzRCLLhPzqSbZ9senhtgnoR2T8InY5mrfZHKitovpUCssVP3QKvxPt2R18VFXJHb0b3oPGM1/p7SE0ljcmr+V4j0gmCz7vPLt2r2CKiGBQJLHjkvjc1QNvobtj4RxgU7bN5oB4MvaQfCuXk4LuEsaoHlG8dP8eZUeSH774wAQWBfRjiOqvQKtF/1wAA2w26jL2smr7OyTWWbGaJzI/fiE7tTo8bDasxz/hzeQZDExZwJDCKxxV9s1yiMUjVsySzcGQkUzR6fEI6Muwy4fZasnkpOF5WrczMTQokjGVpVz38MbYsQ9RylasbOpKJpzbyQZPX/xefpeUvjG8rtGiq75PiUjFmXvYLPqW3SQ/+x9s+vY2Od0GEa/RoHvSQ6xRhCMwmYkZvZjd4uAW53E2ZQExlSXcjRjLb4ZM4j29O20uHmK9cExkrOIbZBReIdvDm9Zh8cyKGMNvXVvxnBjLksW+/R8ws7SQfPuJDG0xxsxhXddwEgWfuY+PDqzhdaVvkgPi6RFJ/KiFpGh1uN/N56sdS4i/m09eqzb4BI9ggpsBzxtnOKrVofPtiKnLAIZ3DecX4qst7MtukXtsCwsuprNdjSnQzZNWEYnMHjiGheJcKXmzOyAeUQ7EvcU2Tx861zyg7NwuVp3fxZ/L71AsSolB41ms+sqSoqrgIocvHGTzpXQ+s9ZSo3R+XTCFxjIj+KdMc5PRsccWcUDVREMmsahfHLNd9HjV1VFTdI0z/87hRHUl31prqKkso6gknyuFX3O+qpxKYafRomlnIqTbC8QGDSXBrzPhakxH8KQOuDSyH1XlVBxaz9unP2V1n+FMMpkZ3S6IiLzzHDi68WGqFejli4/4Mhu7EebfG3OnvkR7eNNe6ZsbNE/Y/39Aq0MTOZV3ekbVZyuduwFfFz0GpX8aaLEIOMI6KzZbHfrWRroq2Q8NTXJAPIU5nBarpvimQv5XHG2GYZ4d1H6PzunAD+GAOgOhwEJJKxTl80VgE1AErAI6AunABtUJWAu0Bf4i9S+JigD4PfAnwEf2swL3oL4K/au4NkB9ev1A6kX5cFvSSFsvSa8RBbGkHeLPZGnr6CdeXmSZ1ZLPVkbiIy1lVkl/KHlVjBU0GEv9sqC+fAiyk3WWNgKHS1mtbLcqRWO2UBwQC8yVq9RWrs6nUh8iV1rgaNmeB76RtCOcIV9wkoxCX2COUjqAWbJ9Xy6O+OuyjZQ9NgL2qTVZyvbLj55F8jOlPl3qF0l+9SMikCB5gSuk7NAjImCU27dCvvQBqZ8r9Y+NgD3ekK2bHOTvko+Xe1vdA3bItjE3LIu8YfnKtiH+Slyl5VylwBYpf81R5fA4Bxq+0E7ZRsvtoxfXaCBHyhuDqpgrlm1DnCpbcdl6U0ZJPCY5r8Ms1Fj8Qlxnob4MXtLAqe/DF+V2GCxXGLk1GoK4pvaA+vI7Rv6QZ9EDmCa3XqPPwNtS9k8lADbb9RURilAKmWobk4XEXy7uDs7ABkmvkfYKXpFyUaJ3B5bKzPjflxWpcbJMjVbZCtwt9+wtJYD6v0jSJS0mOyNp8fxNpsgCyc+RK6dArOx1aSNsC+3mFd+AVOCI/NnjHrt+YmtdAcol/2yjtnHdnA44HXA64HSghRz4zwBLRIYoLxW3GQAAAABJRU5ErkJggg==)}.lg-baidu{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAAFK0lEQVR4nOyWe0wU5xbAz+w89sHsQ0BguQEUBVFALniv8d6oUeujahEL1qSpUkVtbUPER9OmwWorsbGpFm2N0Vo1tRpLkFq1rRWloiuPqqWg0DRVsDzchdWVfc9rZ6aZZcb9t42W+secb/8435zvO/v7znfOmcFEUYSnSTSKogKpQCqQCqQCqUAq0NMB1HmHpWlBmf3TQMc/98yb3rvkuXscB+5B/tUVjpKX7IMPecU+7EBfHvMCwK+/sK0t1I4KV11t8Mol6shBt2IfdiAEiSitLXRYhWBAGG6gXTtc82f21tUGCpcaAWDMWDwnV5+WTgAAikJBkfFxgJC/+gnbeYedN70XAKJIpLl1VEc7k5ZOmC2ox82f/sqfmU3camVqzwVeLDblLzYOB9D33/pL1wyEVbjUnJyUjN/tYn/v4iZP0UeRmkBAmDT+bigEGA4NP6XExGLKvj8rmOD1+PbsVqaAmE36+QvxtHTlQUSY5ib6Qm3WklKdDqFpMS4eTbDiXxzxbNv8QBQhwYoerUrEMCQUkhaHOLB3+Q0/2pTdESHyJrEdHcBIOResqRa8XnLlKum6rYlE3iSE6+2xj0lRFoeHVpvQcI3IzlbmsvgOHfRur4hvaO7oj266Si3IJ30+YemiPoaRF6Sl48dOJs76f0/ALxoMiO28nlpZJFl4nr1xHU38F5qUBACW9ypcK4qxjAy+uxtNSUFjYniXi7fbydVrTGUb5ZAa160f8eFHAEA3NjhnTqPrfwjd7WJsl8NGBM/MJItXELl5xrINGtKYk6vLydW1t9ElyxykUXOxIWnaf7oB4PZv3KZS5+Hj1pbr9P+m6s1jdDD3WcHj5p1O9sZ1bNw4InsiAOC5eVI1jYxjGhsARUWKEsJAgssFADIQ+3OLd08lIAjT3AQAxMScUE83f69POt7Dh76PK/n+fkSvd7+5yVC0RGM01tUGNpYOFBQaJ2QR1kRs8hQdALTfYtIyiAN73Z8ciNfqpIbiP/wZlpoqnWTdesmVwxGsrjKWbQAAclkxY7sctbxYN2MWfaE2eKrGWLYxAsTYrjC2K5IGgI5OxbOydNOmE5lZIssCwP22Vuq7bwxFL0hmAHsfV7Z2YHmJ6Zm5UY02CgBmz4sCgJ5urvzd2LGJnWWvDew/YpWWAuATcx5tZDvag9VVcr+xWAz5BdzNNu5mm1Szy19GY2IiQFErV5k3bwEArr39fsFC9zvlCIr5D32KJkh+BY9HTpPwr74uSNPihCxt9QmvrZ5atylaschy8XzQ9SA0VGKBY0epr0+FH4PIKukG4Nu3N1h1AiFJjdkieNzBmpMiHzK/8ZYMJDy4z7W1SkC3b0vTwUG67oL++cLonZUA4JjyX8WPNGJHogBwusa/dXts/mIOALrusK+vHzFuPCGfXgM4Lndxc/kWU/iOpARtanTOmDqkk6+s1c2e43m/Ak8dG+rtsXyw07BgYSRC1Nkz1Nkz8pWNGm1+uxxLTvHt3nXvZLVMkRKpxFlzyH/nuevrgteaek1mKVf6Hfz5cwGtVoZYVEiazOgQhGf7Nt+eyiEIkQoCiiI6KeF8+/fxXZ2ix6OJixNutg2WrmVLVls2b0VEjgv1O5T/AgTD0YR4AMk173Q+CjJCaBG9XvC4sQQrYBjLQuPVgN8nRkdr0jMIkxmz97E3rtED/XxSMrZgkRELh5532EWel151ymsP0eqkOnfYAcVEltHExGr0+sfq1H/30DwBHyqQCqQCqUAqkAqkAqlAKtATBPpjAEnlGucIWutOAAAAAElFTkSuQmCC)}.lg-google-deepmind{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAHCUlEQVR4nOyZe0xb5xnGH99NwGCCsQmliUlYQiFbUhOgCYSSEraQaE2XpmNZpbVdpbJEmqq1f4wu2h/blIZJS7WqqxiamqZTuzTryppKSagIhaKQCwRStuGQjmsGAWwuBtvYxrfpO+3rlvlyjomJNo3fdyS+932POc+j43POd16L8T/OioEVA3dpQEqTmCGJU2D1lnwkbsiBXJ3KHcPntsNpGsFcnxGW3h74PV7a/b/HQFrJLmRWHoauqAISeQKlg/C6rJjs/AR3Gusx0vAXLMxaqbQURDRZMgl6PQy/qEVq/h5KCcbrsmP47En01h2HY2yM0tEgoYlgRBIx0neXwj46Cl1xKXa+0QyVfjOVo0IslSM5txDrK5+D3+fAdHc74PdTOfYG4nRabHu5FsP17yJ581bs+N15SJQJfB/jHWKpAtrte5D60E6Y2hrgsdupFLu7kDonB7vOXMPQB+9AJJWi8MT7EMviqBwTNIZHsOtMO3esmBpg/7DkzVZYB3sw1tSAbcffgEyVQuWYEqddxx1LoAn+i1ip0+KRM+3cP259diekynjseL2BysuGwzSMjysL4JwwUSr6M8Au2MITf+LE2273wHzlErKeep7Kywo7ZuGJ05yGJRvY+MMfQ2Mo4+Z3mj6APFmN1G3lVF522DXBNCzJQNyaNXjg8K8oxGRXGzR5OyASx/7pHQmmgWmJ2kB21UuQKFUUwjpwE4kbcim8ZzANTEtUBmRJiVi3/xkKueGanoIiRUshL36/B46JAcze+hQO0yAXLxWmhWkSvBa6v+IgJIr/eED5/BBJ+O9ac/03cOsPNRhrOQ/3nI3SkMavgia/CBl7DiLjm4cWnV2+wbTcv/cgBk6fpFTkM5BefoCmAeTJyXBNz1AYkr53juPigXzc/vDPi8SzzWOfx3hLI65XV+HCbj36330Ffq+byryk7z4g7CskkkqgMZRQGECVuRG2oV4Kgxiqfw3dx34Gv5t/qSxXx+NvNT9Fyw+2Y35ikNIRYZqYNl4DSdkPQKIIPr0pDxbD3HkJfr+PUgGcU6PorqmmkBeneRpFde/DO29Hc2UhLLc6qBQWpolp4zWQuD70IzzjW0/AOT6Bqa4mSgUYfK8WHts8hby4rXaY2y+h9HQ7kr+eh9anyzHb10XlsITQFmxAqb2PpotIWJcL7fYi/POtVykVYPyTCzQVDLvIpUoVHnrlr1DnbEZb1T64LONUDkkIbcEGQn19iE1VR3Gn6RwmOxspxQ3r0Gc0FYx9pJ/7K5YpuZWtSCzGp8d+ROWQhNAWbCAS2oIKZOzdj47qp+GyTFAafl/09/ivPtEVah3ya05h5PxZmNqjOpvBBtg7ayS2Hv09/D4frr34OHxuJ0shPmMDlQWj0m+kKTc0eeVIL9uHW3XHKCVEW7ABp2mUpiFRqNNQVHcOFuM/cPWF78DjtGJN6V4qCybt4QqaBvjaU8/DdKUNtuEeSvFpCzYwN2CkaViSsgwoOdWImb93ouVQAVILiiFTxVOZF2nCKmQ+cZjCACmGMijTdBj56D1K8WkLNjDbe5P3a8Q29aZ87hVTsioebVWPQ5m6mkq8bKmugTIl+G4nEomRmleMqRuXKBWAaWLaeA2wptNkVyuFEVmly0TpH6/gG9W/xoKF/0VcJJNgy9GXoT8Qfo2foM+GdTD4rsY0hWiIBRtg487FepryIpLIsOF7L6Di4hC21dQhrbScW7hRnQ1ZYgLWPvpd7K7vQNaTYZfG3KZYnYyFmeA1F2uECX4nZkvXfS2jwStSgbCls9P8LyzMzEKuToRSuxYikTTSRwKj7+3fwPj6L/HolTlKweuy4VzpfXDPfpmLeAbYjsNn36QwapjYOG0mkjZtRZxuvWDxbHNNmaBYvbjjwbSEEB/eABus3ed18l/MsWauvweq9V8u2pgGpiUM4Q04xsZws/bnFN4T2BN9svMyNIYiSnEaIvRNwxtg47OTr2Gy62MKlx3z9UYszFiQXvbYF3eeJk5DBCIb8HvZkuEQ12S6F/S99SpStxcjYW0uHKYhXHvx+5yGJRtgG+uMXT6yF27rFKWWhckbFzHW/BGyn6vmjnX5yD6+rpwwA2xYjEa0PlOybGeCCb7+0rNYU7YHqsxc7ljsmAIQZoBMNFcWxPya8Lkd3MrW7/FA/9iTn79iGo3L8/sA69vfPvs2vC4LUh4s4vr6d4NnfhZXf7If5vY2aPIN6K39LdxWW6hdY2Pgi8csprquYvjDU5DEyZGYtZn7pSVazB0NuHzk25juvsFdqNaBoWh/nRHWXudDnqTimlWsl6TJezjiK6l3wYaJtgsYPFOL8dZmSt8Nd2/gq7C+jTo7F4lZOVBqMyCWsXcEDxYsZsz1GzHd3QGvw0W7/5/zOeJoP7BiYMXAYgP/HgC4JXaIzWD4kAAAAABJRU5ErkJggg==)}.lg-moonshotai{background-image:url(data:image/png;base64,/9j/2wCEAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDIBCQkJDAsMGA0NGDIhHCEyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMv/AABEIADAAMAMBIgACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AOk+JnxMuNKu5ND0OQR3KDFzcgAlCf4V9/U9vrXiN9qN1fzNNd3U1xKeryyFyfxNGo30l/fXF3M2ZZ5Glc+pY5P866b4d+BR411R/tN2tvY2+DKFcebIfRQf1OK00SM9WziXeqsklfVth8OrXQAx0Ca3iJOdl9ZR3A+m4bZPzY4rK8XWml2ujzXPjLwrpktknDXunzKsgz0wH2MD7KzZ96XMVY+Z7bU73TpxPZXc9tMpyJIZCjD8RXu3wk+LtzrOoR+HPEUoku5Bi0uyADIQPuP746Hv069fFfFdnoVnfCbw7qpvtOlyVWVCk0J/uuCBn2YcVh2F/Np2qWt/bsVmtpkmQjsykEfyqWNGy719MeGYvBsPhfSdFv0sluY4FzHqEHkyNIeWK+YAT8xOCK+Xnkr6m8OeOfD+teEdPfVFaGJ4FSVry2b7OXUbW/eEFOoPUg+1OTEjdHhg2+H0nWtSsR1EZm+0RH/gMu7A/wB0ivK/FPxUfStXutC8W+E4tV06KUrHcSWxg8zHG9Uk3A98EEZHPGa9Bv8Aw9Yv4fvLvwZJ5F75LG0GnXmyBpMfLlAfLIzjqK8vn+IvxK8NxNbeMPCKalZjiSSS2wG/4GmY/wBKkoxtQi+DvifTrqXTp73QdTETNDDLuEbSAHAOdygZx0IryNEr1nVPE3wr8Q6ReSN4VuNK1YQuYPs3yxmTB2j5CBjOOq15ciUAXNTtpdO1G6sZwVlt5WicHsykg/yrsvhp8UZ/At29reI9zo1w26WJfvRN03pn9R3wK9E+Lvwku9ZvZPEXhyIS3cgzdWYIBkIH3098dR36jnr89X+n32n3LQX9ncWsynBjnjKMPwIp3FY+otVbwn438PXVx4O1fSrDX5ArQ3ccv2WZGDAkPtw/IyOQetcBd+PPiX4Akji1bUdK1SHO1Q80UxP/AHwVk/EivF0SrCJSGdZ418aN41vbe4Oj2GnGNfnNvGN8rHqWfAJHoO3NYem2EuoahbWUClpbiVYkA7liAP50WGm3moTrBZWk9zKeAkMZcn8BXvXwp+FNzo97H4g1+IR3UYza2hIJjJH339/QduvWgD//2Q==)}.lg-minimax-ai{background-image:url(data:image/png;base64,/9j/2wCEAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDIBCQkJDAsMGA0NGDIhHCEyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMv/AABEIADAAMAMBIgACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AMdKmWoUrd0bQzqkLSveQ2qealvGZAx3ytnC8A46dTRUP02rUjTjzSegmn6JqGpW7z2lv5kaHbncAWOM4UE/Mcc4FTWujX91YveQwboF3c7gCdvLYBOTjviug8PxPAmiwyDDx6vKrD0IRAadpH+r0L/rlff+gtXJOKZ5lTGVE5WtZfpzef8Ad/E5RKmWtGHQZH0wXf2mISmFrhbcg7jGpwWzjHY8VnLXm1YtbnbGrCd+V7GDEQHUsMrnkV3fm6ZDc2tvp9zDIlzrEVzFFEG/dRjjDZHBy3T2rg0q9p9x9jv7a527vJlWTb64IOP0r3qgYmh7VXvtfTud5p//AB/6f/2Hbj+S1DpH+r0L/rlff+gtVT7fo99qFhZI8zWsl89zO8w8vbvwNuQe2OtLdTXGgQ6MjJH9qtxOXhYhhtc4wcHuM1yTdtf66Hk+zk/c2k76P0n/AJ/l3L1v/wAedt/2A5v/AEJ65ZanvtSa/liKxJbxQxiKOKMnCrknqTk8k1AtebXlfQ9DD0nBNy6/5swYl3uq5xk4rrbrwXNZicvfQOI3lC7OSwSN3yeeMlGXHqDXJRkqwYdQcitZdbv990/nDNzI8kvyD5mdWVj044dvzr3KhvXjWbXspWNq58Hz2bXG+6QrFvKsF4cKjMe/HKlfrU1z4PuLSVUF3DIXu1tl2ehDfMfQAqwx7Gsk+ItUkSVHucrK7uwKDq67WxxxkGnxa7qEc80yTgSTSmZ2CDO8hlyOOOHb8646jj1OTkxttZL+vkX4vD5a6u4RdpttlErPt4aEjO8fgV496y1q4uv6kXDm4y2FDMVGWC5ADccjBPBqmtefW5ehtSVZX9o+3/B6H//Z)}.lg-mistralai{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAACVklEQVR4nOxYO2gUURQ9b+bG7MYIIsGgkmAl0RUUUQIRxAhaRGxsRKwsUsRCrLS3EaxsFSvtLNbOxkpEMKw2Fn5AsHAJSEz8JGY/2TdXdvS6+hzXmQnh+cw7l8A5meFxz865e4clfoEvcBgEoE+EiwiEeAOWDBA+K+FOgrge+AjZjJDzBoibQt0E4WMo3EfIRoS8AdsGiN9n9xCeegIUNoqEnr4MvLwlMh1Kkwj3XxIF1D5A3zkgKjUIUY5NXNwCFDaJggr7wRnPUeEGoLhNJIAC8vTifIScN0C8mP2xITLisP04sH6rSOBTFVHlhqi4grHzQN+ASKhBI+8M5OmFsLTyh6CGjsR/P1CtIHpwU1RcwchZYGCHyGTk6GXl3VuG8waIW0IzgIX8AT1FYHPJWB7rhCWjPQM5eiHMr8LL3OBu0LnHotKh/aHMh2svQt6AbQOEWaH5F5m+ew3Rw7JIqOGdoAvXRca1fOUMMPtWJILx0whPTIn8dmaOXgh5voVMzM0Ab56JAqhHWAfVV8DMa1HAnsPCOmitwQi5PwO6HiVeEKjBIdDBCWNR9QqLS+0aQ8Cd7cZhL5rlX2cg2HcMau+4SKiRUePMAoKJSVFxtR7dA7/rzE0S1MKh/q57NRw9iuLVsvnvrqWfV1Cb+unlrv0T+O2nCIb/8jJnVO3iSejp+yL/zwi5PwPMnHzlO1hroLYkMhW4UYd5Ljdq2c/R+rdzzFJzpUL3O3yEVjdC3oBtA7S8oIU7CeIm+wjZjJD7MxA1ojT3/bNFrcXIR8hmhLwB2wa+DgDbZZVO1M6DqAAAAABJRU5ErkJggg==)}.lg-zai-org{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAFEElEQVR4nNSaX2wU1RfHv3f2zuy/drvlR8sL4RcgUdNaTUOTIoKxASQF8dUXIBGIpYhLTCRGJKFPBFoCBksRYikGE0PLg9gEERqtVIstkijU+ASxfSC0GJZK6e7SnT3mFg/Buu3OnW2k+zlzk57vmZ2cu/fcO3NnK/FPLJ/Pv8Hr870uTfN5IURICMGxJwIRgYjuJZNj1xLx+Ol4LNYCIMbxR9l5pCwPhQo+90j5NGszEdu2B+79ObwuOTbW9agDKvmCcGGnYRghPnEmQ0Sjw9HoymRyrFt1wAoXzvrFI+UzfEIukLLtgWj0TonH6/O94fP7N3IgVxCGUUCp1B+eQCC41/B4FnIglxBChEV41v8GDcMoZjGXIKK4FAL5IGItpxCAT6pqys30H5rM1W+fkZnS//REC15bu5ZdbfbV12PvvnoUFRXh+4vfobjY+XRLJpNY8+pa9F6+zJKLEcjUwyn46coVNOzfD/U0cvRIk1by6jhw8CB6e3vZdTcCbhkZGUFNzRYkkzYi27ahqqqKQ45Qidc37AdlPwcyxf/N6GgMke3bcf36dZSVPYtduz7gkCPu3r2LjZs3Izk2xtKkiFC4MA7Ay8JECsNheL2ThtPa8PAwYvE4vJaFzm+/QUlJCYcc8WZNDU61trGb3QhEo1H+U5udO9/XTv6LM2dw6lQruxkRoYLwlCPg1pYuXYr2L8/AMAyWMnLz5k28sOTF8RJyiiQiZ2dqWEG4AEc/PqKVfCqVwpbaWu0Rl1mtk5PYhwcOYu7cuew64nBTEzo7O9l1jMjLD01rCa1fvw5Nhw+z64hrfX3jy2wi8YClJ9OBBfPno7v7BwSDQZYykkgk8HJVFfr6fmVJC0nTVELS48GxY0e1klfH7rq68RFwi5yuKbDj3R2orKxk1xFfnz+Pxka9cpuICOblZV1CFRUV6LhwAVLK9Ceksdu3b6Ny8WIMDQ2x5Iqsl9FgMA/NnzRrJa+OrVvfwuDgILuuMXQ/MNEa6vdh4cIF7Dqi+fhxnP3qLLtZIfyBoOsSWl1djdOn23Q+ghs3boyXzv37oyxlhfAHAq46oDYovT09mDNnDksZsW0br6xahUuXLrGUNdLNFDCEQHNzs1by6qhvaEB39/Ql7/pR4u1IBCuWL2fXET09PdizZ092W7w0CK/Pr1VCz5WVoavrotYeQT1dVlYuRv/AAEtPZgR8Ph9aTrRob3AikQj6B/rZnVa07sR1u+tQqrlBaWtrQ2trm85HtBCW1+uohF5atgznzp2Dx+NhKSNqg7JoUQXuRO9A/VASDAQ45AjbTiEWj01QJ2BZVtyyLJqqFRUXU39/P+lg2zZVr149ft0VK1fSrVu3OOSYrq6utPk83hy9Vvno0CHMmzePXUc0Njaio6MDRbNn47OTJ7WXXLaM+ZmmFTdNiyZrmzZt4i/EMVevXqW8/HwyLYva29tZ1kaNQLqcHm+QphmXpknpWmlpKY2MjPD1HBGLxai8vHz8erW1tSy7QnUgXV6PNyGlOekkNi1Te8lUjwux0YcTzx/wa036qa41GUJK6WgVmqkmU0QpMRMycWkGiO6zk2sQUULdlaoBMZ/FXIIIP6sOBIQQa1jMJYhSh1T5+yHEbwLi/xzIDWiIiJ5Se+IYiNYRpUYf3vdmfiOiB0S0Qb3J5+4oWwLgdwhBM7oB6lXGKk56Iupx8R0AP/79Ly3pv4L/viUAqF/63lMvvzlZAPhrAOOfjdVQa5fNAAAAAElFTkSuQmCC)}</style>
+</head>
+<body>
+<div class="topbar"><button class="themebtn" id="themeBtn" type="button" aria-label="Switch light or dark theme"><span id="themeIcon" aria-hidden="true">◐</span><span id="themeText">Dark</span></button></div>
+<div class="wrap">
+  <div class="eyebrow">sai-bench · correction-cost · question 2</div>
+  <h1 style="margin-top:6px">Does a correction stick, or does the model drift back a few turns later?</h1>
+  <div class="meta">
+    <div><span>Issue </span><a href="https://github.com/sai-evals/sai-bench/issues/7">#7: Q2: Does a correction stick, or does the model drift back a few turns later?</a></div>
+    <div><span>Parent </span><a href="https://github.com/sai-evals/sai-bench/issues/1">#1: Pick a question… and build its eval</a></div>
+    <div><span>Branch </span><span class="mono" style="color:var(--ink)">7-correction-drift</span></div>
+    <div><span>Status </span><span style="color:var(--ink)">pilot, 10 experiments done (incl. 7 open models), 2 not run (no working free route), all scored by one judge (Haiku 5.5), about $20 spent</span></div>
+  </div>
+  <nav class="toc" aria-labelledby="toc-h">
+    <span class="eyebrow" id="toc-h">Contents</span>
+    <ol>
+      <li><a href="#s1">The question and the goal</a></li>
+      <li><a href="#s2">Technical questions underneath it</a></li>
+      <li><a href="#s3">Hypotheses</a></li>
+      <li><a href="#s4">How we test it</a></li>
+      <li><a href="#s5">What the 1–5 scores mean</a></li>
+      <li><a href="#s6">Example: two users, same conversation</a></li>
+      <li><a href="#s7">Experiments and changelog</a></li>
+      <li><a href="#s8">Findings</a></li>
+      <li><a href="#s9">Next steps</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1 -->
+  <section id="s1">
+    <div class="shead"><span class="snum">1</span><h2>The question and the goal</h2></div>
+    <div class="callout">
+      <p><b>Problem:</b> sai-bench measures how much effort it takes a user to get a model to do what they want / prefer (e.g. giving the model the correction "too packed, I like a slow pace" for a busy itinerary it recommended). We want to know whether the model <b>sticks to the stated preference</b>, or whether the user has to state it again because the model <b>drifts back to its own default a few turns later</b>.</p>
+      <p><b>Question (from <a href="https://github.com/sai-evals/sai-bench/issues/1">#1</a>, Q2).</b> After one explicit correction of a preference, on later turns where that preference applies but isn't specifically mentioned, how often and how far does the model fall back toward the default it shows when never corrected explicitly?</p>
+      <p><b>Done when</b> (from #7): we report a drift-back rate per model and per preference over at least 10 runs.</p>
+    </div>
+    <h3 style="margin-top:6px">Why do this, given prior benchmarks?</h3>
+    <p class="small">Two benchmarks already test whether models keep what the user said across turns. Q2 measures something neither of them does.</p>
+    <div class="tablewrap"><table>
+      <tr><th></th><th>MultiChallenge</th><th>PrefEval</th><th>This study (Q2)</th></tr>
+      <tr><td><b>What it checks</b></td><td>Whether the model keeps earlier instructions and user details across turns, and holds up under pushback</td><td>Whether the model follows a preference the user stated earlier, when answering later questions, sometimes after many unrelated turns</td><td>Whether a <b>correction</b> of the model's own behaviour lasts, turn by turn</td></tr>
+      <tr><td><b>How it scores</b></td><td>Pass/fail on the final reply</td><td>Pass/fail per answer: was the preference followed?</td><td>A 1–5 score on <b>every</b> later turn, compared with a matched control</td></tr>
+      <tr><td><b>What it can't tell</b></td><td>Whether a failure is the model falling back to its own habit, or just a different mistake</td><td>The same: a miss isn't compared with what the model does by default</td><td><b>Direction:</b> is a miss a slide back toward the default the model showed when never corrected, or noise? And <b>timing:</b> how many turns before it happens, and does it recover?</td></tr>
+    </table></div>
+    <p class="small"><b>Why it matters for sai-bench:</b> sai-bench counts user effort. A correction that slides back means the user has to say it again, and that's exactly the effort we want to measure. Neither benchmark measures it directly.</p>
+    <p class="small"><b>What we borrow from them:</b></p>
+    <ul class="small">
+      <li><b>From MultiChallenge:</b> specific yes/no questions for the judge instead of a vague scale. It reports far better agreement with humans than a generic judge. Our own judge problem (T5) points the same way.</li>
+      <li><b>From PrefEval:</b> test turns where the generic answer breaks the preference (our turns 2–4 do this), and <b>distractor turns</b> between the preference and the test. PrefEval found that following a preference gets much harder as it moves further back, and that a reminder helps a lot. This is our "hardening" option.</li>
+    </ul>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <div class="shead"><span class="snum">2</span><h2>Technical questions underneath it</h2></div>
+    <div class="tablewrap"><table>
+      <tr><th>#</th><th>Question</th><th>Why it matters</th></tr>
+      <tr><td class="mono">T1</td><td>What does the model do when the preference is never stated? (its <b>default</b>)</td><td>Drift only means something if there is a particular default to drift back to: not a random one (e.g. a default in attempt 1 that differs from attempt 2).</td></tr>
+      <tr><td class="mono">T2</td><td>Does the model follow the correction on the very next reply?</td><td>If it never takes the correction, there's nothing to drift from.</td></tr>
+      <tr><td class="mono">T3</td><td>On later turns that don't mention the preference, how often and how far does it fall back toward the default?</td><td>This is the answer to Q2: the drift-back rate and the share of the gap lost.</td></tr>
+      <tr><td class="mono">T4</td><td>Is a measured drop real, or caused by how a turn is worded?</td><td>A turn that invites a busy answer could look like drift.</td></tr>
+      <tr><td class="mono">T5</td><td>Can an LLM judge score this reliably? Do two judges agree?</td><td>Every number comes from the judge. If the judges disagree, the drift rate is a judging artifact.</td></tr>
+    </table></div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <div class="shead"><span class="snum">3</span><h2>Hypotheses</h2></div>
+    <p>Two groups: the <b>initial hypotheses</b> we started with, and <b>new hypotheses</b> that came from running the experiments.</p>
+    <div class="box">
+      <div class="exp-h"><h3>Initial hypotheses</h3><span class="tag dis">before any experiment</span></div>
+      <div class="hyp"><span class="id">H1</span><span>Without a correction, models plan <b>packed</b> trips: a clear, consistent default far from a slow-pace user. <span class="small muted">(T1) Tested in Exp 1–3.</span></span></div>
+      <div class="hyp"><span class="id">H2</span><span>One explicit correction is followed on the next reply. <span class="small muted">(T2) Tested in Exp 1–3.</span></span></div>
+      <div class="hyp"><span class="id">H3</span><span>The correction fades: later turns drift back toward the default. <span class="small muted">(T3) Tested in Exp 1–3.</span></span></div>
+      <p class="small muted">Gap: we fixed the method in advance (control pair, 10 runs, a dip = falling ≥1 point) but not a threshold for "fading", such as how many of 10 runs must dip. That has to be set before the next round.</p>
+    </div>
+    <div class="box">
+      <div class="exp-h"><h3>New hypotheses from the experiments</h3><span class="tag mixed">formed from results</span></div>
+      <div class="tablewrap"><table>
+        <tr><th>#</th><th>New hypothesis</th><th>Found in</th><th>Why: what we saw</th><th>How it was tested</th></tr>
+        <tr><td class="mono">H5</td><td>Part of the pilot's drift is a judging artifact: the first rubric counted meals and coffee as activities.</td><td>Exp 1</td><td>Sonnet dipped at turn 2 in almost every run, but the replies still said "slow version". The judge's reasons listed "pastries… long lunch… sunset drink… dinner" as activities.</td><td>Exp 2: the same replies re-scored with rubric v0.2. <span class="muted">A weaker test, because the new rubric was written after seeing the data.</span></td></tr>
+        <tr><td class="mono">H4</td><td>Asking for "more detail" pushes the plan back toward busy, so the turn-2 dip comes from that wording.</td><td>Exp 2</td><td>The dips left after the rubric fix were all at turn 2, the only turn asking for "more detail", and those replies filled every hour slot.</td><td>Exp 3: turn 2 changed to "Can you plan Sunday?", with the pass/fail rule written before the run. <span class="muted">The only fully pre-registered test so far.</span></td></tr>
+        <tr><td class="mono">H6</td><td>What the judges still disagree on comes down to a few borderline items (viewpoints, sights passed on a walk).</td><td>Exp 2, Exp 3</td><td>Every case where Sonnet and Haiku differ by 2 points is the same reply counted differently: one judge counts a sunset viewpoint or a sight on a walk, the other doesn't.</td><td><b>Not tested yet.</b> Plan: write the borderline rules into the rubric and re-score. Passes if the judges agree exactly on ≥45/50.</td></tr>
+        <tr><td class="mono">H7</td><td>An open-weight model behaves like the Claude models on a single correction.</td><td>Issue #1</td><td>#1 asks about open-weight models, and so far only Anthropic models had been tested.</td><td>Exp 4, with rules written <b>before</b> the run: the default is measurable (control turns 2–3 ≤ 2.5), the correction is taken (turn 1 ≥ 4.0), and drift-back ≤ 4/10 counts as "like Claude", ≥ 6/10 as "drifts more", 5/10 as unclear.</td></tr>
+      </table></div>
+    </div>
+    <p class="small muted">Verdicts for all six are in section 8. The numbers follow the order the hypotheses were written. H5 came before H4 because it was noticed first.</p>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <div class="shead"><span class="snum">4</span><h2>How we test it</h2></div>
+    <div class="box">
+      <h3>The core idea: two versions of the same conversation</h3>
+      <p class="small">We script one 5-turn conversation and run it in two versions that are <b>identical except for turn 1</b>. The user's preference being tested is <span class="mono">pace</span>: this user wants "slow, one or two activities a day with plenty of free time".</p>
+      <div class="grid2">
+        <div class="small" style="border:2px solid var(--accent);border-radius:8px;padding:10px 12px;display:grid;gap:4px">
+          <span class="say-c">Corrected conversation</span>
+          <span>At turn 1 the user <b>corrects</b> the model: "too packed, I like a slow pace".</span>
+          <span class="muted">Shows what the model does <b>after being told</b> the preference.</span>
+        </div>
+        <div class="small" style="border:2px solid var(--control);border-radius:8px;padding:10px 12px;display:grid;gap:4px">
+          <span class="say-k">Control conversation</span>
+          <span>At turn 1 the user asks something <b>neutral</b> and never mentions pace.</span>
+          <span class="muted">Shows what the model does <b>when nobody told it</b>: its default.</span>
+        </div>
+      </div>
+      <div class="tablewrap"><table>
+        <tr><th>Turn</th><th><span class="say-c">Corrected</span>: what the user says</th><th><span class="say-k">Control</span>: what the user says</th></tr>
+        <tr><td class="mono">0</td><td colspan="2">"Can you plan a weekend in Lisbon for me?" <span class="muted">(same in both)</span></td></tr>
+        <tr style="background:var(--soft)"><td class="mono"><b>1</b></td><td><b class="say-c">"That's way too packed. I like a slow pace, one or two things a day at most."</b><br><span class="small muted">← the correction</span></td><td><b class="say-k">"Thanks! Is Lisbon easy to get around on foot?"</b><br><span class="small muted">← neutral, no correction</span></td></tr>
+        <tr><td class="mono">2</td><td colspan="2">"Great. Can you plan Sunday in more detail?" <span class="muted">(same in both)</span></td></tr>
+        <tr><td class="mono">3</td><td colspan="2">"A friend is joining me on Saturday. Can you redo Saturday for the two of us?" <span class="muted">(same in both)</span></td></tr>
+        <tr><td class="mono">4</td><td colspan="2">"I've decided to stay an extra day. Can you plan Monday too?" <span class="muted">(same in both)</span></td></tr>
+      </table></div>
+      <p class="small">Turns 2–4 never mention pace again, but each one asks for a day plan, so the model is free to pack it. That's where drift would show.</p>
+      <h3 style="margin-top:4px">Example: the same turns, side by side (Sonnet 5.5, real replies)</h3>
+      <div class="tablewrap"><table>
+        <tr><th>Turn</th><th><span class="say-c">Corrected</span>: model reply → score</th><th><span class="say-k">Control</span>: model reply → score</th></tr>
+        <tr><td class="mono">0</td><td>Tram 28, Alfama, Sé, the castle, Baixa, Santa Justa lift, Chiado, fado… → <span class="pill" style="background:var(--s1)">1</span></td><td>Same kind of packed weekend → <span class="pill" style="background:var(--s1)">1</span></td></tr>
+        <tr style="background:var(--soft)"><td class="mono"><b>1</b></td><td>"A Slow Weekend in Lisbon. One or two anchors per day… São Jorge Castle optional, fine to skip." → <span class="pill" style="background:var(--s5)">5</span></td><td>"Partly. Lisbon is very walkable in terms of distance, but the hills make it tiring…" (plans no days) → <span class="pill" style="background:var(--s5)">5</span> <span class="small muted">meaningless, not used</span></td></tr>
+        <tr><td class="mono">3</td><td>"Saturday for Two: Alfama, Slowly." Long lunch, an Alfama wander, rest at 4:30, fado dinner → <span class="pill" style="background:var(--s5)">5</span></td><td>Tram 28, Alfama, flea market, castle, Baixa, Chiado, sunset, fado (8 activities) → <span class="pill" style="background:var(--s1)">1</span></td></tr>
+      </table></div>
+      <div class="callout small">
+        <p><b>How to read it.</b> Both conversations get the exact same request at turn 3. The control (score 1) shows the model's own default. The corrected one (score 5) shows the correction still working. <b>The gap between them is what the correction is worth.</b></p>
+        <p><b>Drift</b> means a corrected reply sliding back toward the control's score on a later turn: for example, the corrected turn 3 falling from 5 to 3 while the control stays at 1.</p>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="box">
+        <h3>Scale per experiment</h3>
+        <ul class="small">
+          <li>Models: <b>Claude Sonnet 5.5</b> and <b>Claude Haiku 5.5</b>, through OpenRouter, with default settings (thinking on)</li>
+          <li>10 runs × 2 scenarios × 2 models = <b>40 conversations</b>, or 200 replies</li>
+          <li>Each run is an independent conversation. The user's turns are scripted, and only the model's replies vary.</li>
+          <li>Token cap per reply: 3000 in Exp 1, 8000 from Exp 3</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>LLM judge</h3>
+        <ul class="small">
+          <li>One judge call per reply. The judge sees the preference, what the user wants, the rubric, the conversation so far, and the reply.</li>
+          <li>It returns JSON: a 1–5 <b>score</b>, a <b>handling</b> label (asked / stated assumption / silent), and a one-line <b>reason</b> that starts with its count.</li>
+          <li><b>Judge: Haiku 5.5</b>, called through the Anthropic API, on every reply of every experiment. During Exp 1–6 the judge was Sonnet 5.5 (with a Haiku cross-check); then everything was re-scored with Haiku so all models share one judge. Exp 7 onward were judged by Haiku from the start.</li>
+          <li>About $0.06 per 100 replies with Haiku (Sonnet cost about 20× more).</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Metrics (<span class="mono">drift.py</span>)</h3>
+        <ul class="small">
+          <li><b>Default level:</b> the control's average on turns 2–4</li>
+          <li><b>Corrected level:</b> each run's score on the correction turn</li>
+          <li><b>Drift-back rate:</b> share of runs where a later turn falls ≥1 point below the corrected level</li>
+          <li><b>How far back:</b> per turn, (corrected level − score) ÷ (corrected level − default). 0% means the correction held; 100% means the reply is back at the default.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box">
+      <h3>Models and routes</h3>
+      <p class="small">Which company made each model, how we called it, and whether that cost money. The same weights can behave slightly differently on different hosts (for example, compressed versions), so the route is part of the result.</p>
+      <div class="tablewrap"><table>
+        <tr><th>Model</th><th>Made by</th><th>Open weights?</th><th>Served via</th><th>Cost to us</th><th>Experiments</th></tr>
+        <tr><td><span class="lg lg-anthropics" role="img" aria-label="Anthropic"></span>Claude Sonnet 5.5</td><td>Anthropic</td><td>No</td><td>OpenRouter (paid)</td><td>paid</td><td>Exp 1–3</td></tr>
+        <tr><td><span class="lg lg-anthropics" role="img" aria-label="Anthropic"></span>Claude Haiku 5.5</td><td>Anthropic</td><td>No</td><td>OpenRouter (paid)</td><td>paid</td><td>Exp 1–3</td></tr>
+        <tr><td><span class="lg lg-nvidia" role="img" aria-label="NVIDIA"></span>Nemotron 3 Ultra (550B, 55B active)</td><td>NVIDIA</td><td>Yes</td><td>OpenRouter, free tier (<span class="mono">:free</span>)</td><td>free</td><td>Exp 4</td></tr>
+        <tr><td><span class="lg lg-nvidia" role="img" aria-label="NVIDIA"></span>Nemotron 3.5 Super VL (120B, 12B active)</td><td>NVIDIA</td><td>Yes</td><td>OpenRouter, free tier</td><td>free</td><td>Exp 5</td></tr>
+        <tr><td><span class="lg lg-baidu" role="img" aria-label="Baidu"></span>ERNIE 5.5 Flash (preview)</td><td>Baidu</td><td>Yes</td><td>OpenRouter, free tier</td><td>free</td><td>Exp 6</td></tr>
+        <tr><td><span class="lg lg-google-deepmind" role="img" aria-label="Google DeepMind"></span>Gemma 4 31B (dense)</td><td>Google</td><td>Yes</td><td>NVIDIA NIM, free endpoint</td><td>free</td><td>Exp 7</td></tr>
+        <tr><td><span class="lg lg-moonshotai" role="img" aria-label="Moonshot AI"></span>Kimi K3.1 Pro</td><td>Moonshot</td><td>Yes</td><td>NVIDIA NIM, free endpoint</td><td>free</td><td>Exp 8</td></tr>
+        <tr><td><span class="lg lg-mistralai" role="img" aria-label="Mistral"></span>Mistral Large 4 (1T, 52B active)</td><td>Mistral</td><td>Yes</td><td>NVIDIA NIM, free endpoint (tried)</td><td>free</td><td>Exp 9 (not run)</td></tr>
+        <tr><td><span class="lg lg-minimax-ai" role="img" aria-label="MiniMax"></span>MiniMax M3.1 Flash</td><td>MiniMax</td><td>Yes</td><td>NVIDIA NIM, free endpoint</td><td>free</td><td>Exp 10</td></tr>
+        <tr><td><span class="lg lg-zai-org" role="img" aria-label="Z.ai"></span>GLM 5.3 Flash</td><td>Z.ai</td><td>Yes</td><td>NVIDIA NIM, free endpoint (tried)</td><td>free</td><td>Exp 11 (not run)</td></tr>
+        <tr><td><span class="lg lg-mistralai" role="img" aria-label="Mistral"></span>Mistral Small 3.1 24B</td><td>Mistral</td><td>Yes</td><td>Cloudflare Workers AI, free plan</td><td>free</td><td>Exp 12</td></tr>
+        <tr><td colspan="6" class="eyebrow" style="padding-top:12px">Judges</td></tr>
+        <tr><td><span class="lg lg-anthropics" role="img" aria-label="Anthropic"></span><b>Claude Haiku 5.5</b> (judge for all results shown)</td><td>Anthropic</td><td>No</td><td><b>Anthropic API directly</b></td><td>paid (cheap)</td><td>all</td></tr>
+        <tr><td><span class="lg lg-anthropics" role="img" aria-label="Anthropic"></span>Claude Sonnet 5.5 (judge at the time, history only)</td><td>Anthropic</td><td>No</td><td>OpenRouter for Exp 1–5, then the Anthropic API</td><td>paid</td><td>Exp 1–6</td></tr>
+        
+      </table></div>
+      <p class="small muted">The judge changed during the pilot: Sonnet through OpenRouter, then Sonnet through the Anthropic API when OpenRouter credits ran out (the two routes agreed exactly on 44/49 replies), then Haiku through the Anthropic API, to cut cost about 20×. Every result in Section 6 and Section 8 and in the cross-model table uses Haiku. The experiment cards for Exp 1–6 in Section 7 keep the Sonnet numbers found at the time; Exp 7 onward were judged by Haiku from the start. Tried and dropped: Groq's free tier (it caps each request at 8,000 tokens, too small for 5-turn conversations).</p>
+    </div>
+    <p class="small muted">Re-scoring: the same saved replies can be judged again with a new rubric, without generating new replies. That makes before/after rubric comparisons exact and cheap. Experiment 2 is one of these.</p>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <div class="shead"><span class="snum">5</span><h2>What the 1–5 scores mean</h2></div>
+    <p>The judge answers one question per reply: how well does this plan match a user who wants a slow pace? <b>5 = slow (what the user asked for). 1 = packed (the models' default).</b> It counts <b>main activities</b> on the busiest day in the reply.</p>
+    <div class="tablewrap"><table>
+      <tr><th class="num">Score</th><th>Rubric v0.2 (Exp 2 and 3)</th><th>Example from the transcripts</th></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s5)">5</span></td><td>At most 2 main activities, and free time is stated</td><td>Alfama wander, long lunch, rest at 4:30, fado dinner</td></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s4)">4</span></td><td>At most 2, but no free time stated; or 2 plus more than two optional extras</td><td>Two sights back to back, nothing about rest</td></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s3)">3</span></td><td>3 main activities</td><td>Jerónimos, a riverside walk to the tower, LX Factory</td></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s2)">2</span></td><td>4 main activities</td><td>Jerónimos, Belém Tower, the Discoveries monument, MAAT</td></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s1)">1</span></td><td>5 or more main activities</td><td>Tram 28, Alfama and Sé, the castle, Baixa, Chiado, fado</td></tr>
+    </table></div>
+    <div class="grid2">
+      <div class="box small">
+        <p><b>Counts as a main activity:</b> a sight, museum, tour, neighbourhood walk, viewpoint, show or excursion.</p>
+        <p><b>Doesn't count:</b> meals, coffee, drinks, travel, check-in, rest, and anything marked optional. How detailed the plan is doesn't matter. Asking about pace doesn't raise the score; it's recorded in <span class="mono">handling</span>.</p>
+      </div>
+      <div class="box small">
+        <p><b>Same reply, different rubric:</b> Sonnet's turn-2 "Sunday in Belém, Slow Version" scored <span class="pill" style="background:var(--s3)">3</span> under v0.1 ("roughly seven timed items: pastries, … long lunch, … dinner") and <span class="pill" style="background:var(--s5)">5</span> under v0.2 ("2 main activities, a free rest block").</p>
+      </div>
+    </div>
+    <h3 style="margin-top:6px">Rubric version history: the 1–5 scale used in each experiment</h3>
+    <div class="tablewrap"><table>
+      <tr><th class="num">Score</th><th>v0.1<br><span class="muted">Exp 1</span></th><th>v0.2 draft<br><span class="muted">Exp 1b (discarded)</span></th><th>v0.2<br><span class="muted">Exp 2 and Exp 3 (current)</span></th></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s5)">5</span></td><td>Each day has one or two activities with clear free time, <b>or the reply asks</b> how busy the user wants each day</td><td>At most 2 main activities with stated free time, <b>or the reply asks</b> how busy the user wants each day</td><td>At most 2 main activities, and free time is stated. Asking doesn't count.</td></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s4)">4</span></td><td><span class="muted">between 5 and 3 (judge's call)</span></td><td>At most 2 but no free time; or 2 plus more than two optional extras</td><td>At most 2 but no free time; or 2 plus more than two optional extras</td></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s3)">3</span></td><td>Three or four activities, or a mix of slow and busy days</td><td>3 main activities</td><td>3 main activities</td></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s2)">2</span></td><td><span class="muted">between 3 and 1 (judge's call)</span></td><td>4 main activities</td><td>4 main activities</td></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s1)">1</span></td><td>A packed schedule with five or more activities a day</td><td>5 or more main activities</td><td>5 or more main activities</td></tr>
+      <tr><td><b>What counts</b></td><td><b>Not defined.</b> The judge counted every timed item, including meals, coffee and travel.</td><td>Main activities only (sights, museums, tours, walks, viewpoints, shows, excursions). Meals, drinks, travel, rest and optional items don't count.</td><td>Same as the draft, and the judge must write its count first</td></tr>
+      <tr><td><b>Problem found</b></td><td>Detailed plans looked busy because meals were counted</td><td>Loophole: an 8-activity plan scored 5 because it ended with "want it more relaxed?"</td><td>Still open: borderline items (viewpoints, sights passed on a walk) are counted differently by different judges</td></tr>
+    </table></div>
+    <p class="small muted">Version numbers come from the <span class="mono">version</span> field in <span class="mono">scenario.json</span>. Both the v0.2 draft and the final v0.2 were tagged 0.2 in the files, because the draft was replaced within the same session.</p>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <div class="shead"><span class="snum">6</span><h2>Example: two users, same conversation, run 10 times</h2></div>
+    <p>Two people have the same conversation with the same model. The <b>only</b> difference is what they say at turn 1. These are real Sonnet 5.5 replies: corrected run 3 on the left, control run 8 on the right.</p>
+    <div class="chat">
+      <div class="chead">
+        <div class="who wa"><svg viewBox="0 0 40 40" width="36" height="36" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="var(--accent)"/><circle cx="20" cy="15" r="7" fill="var(--panel)"/><path d="M7 34c2-8 8-11 13-11s11 3 13 11" fill="var(--panel)"/></svg><div><b>User A</b>: corrected<br><span class="small muted">says "too packed, slow pace please" once, at turn 1</span></div></div>
+        <div class="who wb"><svg viewBox="0 0 40 40" width="36" height="36" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="var(--control)"/><circle cx="20" cy="15" r="7" fill="var(--panel)"/><path d="M7 34c2-8 8-11 13-11s11 3 13 11" fill="var(--panel)"/></svg><div><b>User B</b>: control<br><span class="small muted">never mentions pace; asks about walking instead</span></div></div>
+      </div>
+      <div class="crow">
+        <div class="tlabel"><span class="mono">turn 0</span><span class="ttag">same message</span></div>
+        <div class="side sa">
+          <div class="ub">"Can you plan a weekend in Lisbon for me?"</div>
+          <div class="bb"><span class="botav"><svg viewBox="0 0 28 28" width="24" height="24" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="var(--ink)"/><path d="M14 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="var(--panel)"/></svg></span><div><div class="bt">"A Weekend in Lisbon… Saturday: Tram 28, São Jorge Castle, Alfama, Sé, Praça do Comércio, fado…"</div><div class="bs">judge: <span class="pill" style="background:var(--s1)">1</span> <span class="small muted">5 activities</span></div></div></div>
+        </div>
+        <div class="side sb">
+          <div class="ub">"Can you plan a weekend in Lisbon for me?"</div>
+          <div class="bb"><span class="botav"><svg viewBox="0 0 28 28" width="24" height="24" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="var(--ink)"/><path d="M14 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="var(--panel)"/></svg></span><div><div class="bt">"A Weekend in Lisbon… Saturday: Tram 28, São Jorge Castle, Sé and Alfama, Praça do Comércio, Livraria Bertrand…"</div><div class="bs">judge: <span class="pill" style="background:var(--s1)">1</span> <span class="small muted">6 activities</span></div></div></div>
+        </div>
+      </div>
+      <div class="crow crow-key">
+        <div class="tlabel"><span class="mono">turn 1</span><span class="ttag ttag-key">the only difference</span></div>
+        <div class="side sa">
+          <div class="ub ub-key">"That's way too packed. I like a slow pace, one or two things a day at most."</div>
+          <div class="bb"><span class="botav"><svg viewBox="0 0 28 28" width="24" height="24" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="var(--ink)"/><path d="M14 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="var(--panel)"/></svg></span><div><div class="bt">"A Slow Weekend in Lisbon. One or two anchor things per day. Everything else is optional wandering, long meals, and café stops."</div><div class="bs">judge: <span class="pill" style="background:var(--s5)">5</span> <span class="small muted">correction taken</span></div></div></div>
+        </div>
+        <div class="side sb">
+          <div class="ub ub-key">"Thanks! Is Lisbon easy to get around on foot?"</div>
+          <div class="bb"><span class="botav"><svg viewBox="0 0 28 28" width="24" height="24" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="var(--ink)"/><path d="M14 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="var(--panel)"/></svg></span><div><div class="bt">"Partly. Lisbon is very walkable in terms of distance, but the terrain makes it tiring… hills, cobblestones…"</div><div class="bs">judge: <span class="pill" style="background:var(--s5)">5</span> <span class="small muted">plans nothing, so not used</span></div></div></div>
+        </div>
+      </div>
+      <div class="crow">
+        <div class="tlabel"><span class="mono">turn 2</span><span class="ttag">same message</span></div>
+        <div class="side sa">
+          <div class="ub">"Great. Can you plan Sunday in more detail?"</div>
+          <div class="bb"><span class="botav"><svg viewBox="0 0 28 28" width="24" height="24" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="var(--ink)"/><path d="M14 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="var(--panel)"/></svg></span><div><div class="bt">"Sunday in Belém, Slow Version… Jerónimos, a riverside stroll to Belém Tower, LX Factory, then a rest"</div><div class="bs">judge: <span class="pill" style="background:var(--s3)">3</span> <span class="small muted">dip: calls itself slow, plans 3</span></div></div></div>
+        </div>
+        <div class="side sb">
+          <div class="ub">"Great. Can you plan Sunday in more detail?"</div>
+          <div class="bb"><span class="botav"><svg viewBox="0 0 28 28" width="24" height="24" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="var(--ink)"/><path d="M14 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="var(--panel)"/></svg></span><div><div class="bt">"Sunday in Lisbon: Belém, LX Factory, and a Slow Finish… Jerónimos, riverside walk to Belém Tower, LX Factory"</div><div class="bs">judge: <span class="pill" style="background:var(--s2)">2</span> <span class="small muted">4 activities (counts the sunset miradouro)</span></div></div></div>
+        </div>
+      </div>
+      <div class="crow">
+        <div class="tlabel"><span class="mono">turn 3</span><span class="ttag">same message</span></div>
+        <div class="side sa">
+          <div class="ub">"A friend is joining me on Saturday. Can you redo Saturday for the two of us?"</div>
+          <div class="bb"><span class="botav"><svg viewBox="0 0 28 28" width="24" height="24" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="var(--ink)"/><path d="M14 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="var(--panel)"/></svg></span><div><div class="bt">"Saturday in Alfama, for Two… 11:00 São Jorge Castle, walk down through Alfama, fado dinner, rest break"</div><div class="bs">judge: <span class="pill" style="background:var(--s3)">3</span> <span class="small muted">3 activities</span></div></div></div>
+        </div>
+        <div class="side sb">
+          <div class="ub">"A friend is joining me on Saturday. Can you redo Saturday for the two of us?"</div>
+          <div class="bb"><span class="botav"><svg viewBox="0 0 28 28" width="24" height="24" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="var(--ink)"/><path d="M14 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="var(--panel)"/></svg></span><div><div class="bt">"Saturday in Lisbon for Two… Tram 28, Sé and Alfama, flea market, Portas do Sol, castle, Praça do Comércio, Chiado, sunset, fado"</div><div class="bs">judge: <span class="pill" style="background:var(--s1)">1</span> <span class="small muted">about 6 activities</span></div></div></div>
+        </div>
+      </div>
+      <div class="crow">
+        <div class="tlabel"><span class="mono">turn 4</span><span class="ttag">same message</span></div>
+        <div class="side sa">
+          <div class="ub">"I've decided to stay an extra day. Can you plan Monday too?"</div>
+          <div class="bb"><span class="botav"><svg viewBox="0 0 28 28" width="24" height="24" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="var(--ink)"/><path d="M14 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="var(--panel)"/></svg></span><div><div class="bt">"Monday: A Slow Day by the Sea (Cascais)… old-town stroll, Boca do Inferno walk, beach time with no agenda"</div><div class="bs">judge: <span class="pill" style="background:var(--s5)">5</span> <span class="small muted">back to slow</span></div></div></div>
+        </div>
+        <div class="side sb">
+          <div class="ub">"I've decided to stay an extra day. Can you plan Monday too?"</div>
+          <div class="bb"><span class="botav"><svg viewBox="0 0 28 28" width="24" height="24" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="var(--ink)"/><path d="M14 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="var(--panel)"/></svg></span><div><div class="bt">"Monday: Sintra Day Trip… Pena Palace, Quinta da Regaleira… Since Sunday was the lighter day, this one is more active."</div><div class="bs">judge: <span class="pill" style="background:var(--s4)">4</span> <span class="small muted">2 big palaces, no free time</span></div></div></div>
+        </div>
+      </div>
+      <div class="crow csum">
+        <div class="tlabel"><span class="mono">scores</span></div>
+        <div class="side sa small"><b>1 → 5 → 3 → 3 → 5</b><br><span class="muted">Takes the correction, dips at turns 2–3, slow again at turn 4.</span></div>
+        <div class="side sb small"><b>1 → (5) → 2 → 1 → 4</b><br><span class="muted">Stays busy; turn 1 is a walking answer, not a plan.</span></div>
+      </div>
+    </div>
+    <div class="callout small">
+      <p><b>How to read it.</b> Same request, two users: compare the bubbles across a row. At turn 3, User B (never corrected) gets about 6 activities, while User A gets 3. That gap is what the correction is worth. <b>Drift</b> means User A's replies sliding toward User B's.</p>
+      <p>Turn 2 separates the two least. In this pair it's 3 vs 2, and across all 10 runs the control averages 2.1 there, against 3.9 for the corrected runs. One pair is a single example; the grid below shows all 10 runs.</p>
+    </div>
+    <div class="box">
+      <div class="controls">
+        <span><span class="ctl-label">Experiment</span><span class="seg" id="segExp"><button aria-pressed="false" data-v="e1">Exp 1</button><button aria-pressed="true" data-v="e2">Exp 2</button><button aria-pressed="false" data-v="e3">Exp 3</button><button aria-pressed="false" data-v="e4">Exp 4</button><button aria-pressed="false" data-v="e5">Exp 5</button><button aria-pressed="false" data-v="e6">Exp 6</button><button aria-pressed="false" data-v="e7">Exp 7</button><button aria-pressed="false" data-v="e8">Exp 8</button><button aria-pressed="false" data-v="e10">Exp 10</button><button aria-pressed="false" data-v="e12">Exp 12</button></span></span>
+        <span><span class="ctl-label">Model</span><span class="seg" id="segModel"><button aria-pressed="true" data-v="sonnet">Sonnet 5.5</button><button aria-pressed="false" data-v="haiku">Haiku 5.5</button><button aria-pressed="false" data-v="nemotron">Nemotron 3 Ultra</button><button aria-pressed="false" data-v="supervl">Nemotron 3.5 Super VL</button><button aria-pressed="false" data-v="ernie">ERNIE 5.5 Flash</button><button aria-pressed="false" data-v="gemma">Gemma 4 31B</button><button aria-pressed="false" data-v="kimi">Kimi K3.1 Pro</button><button aria-pressed="false" data-v="minimax">MiniMax M3.1 Flash</button><button aria-pressed="false" data-v="mistralsmall">Mistral Small 3.1</button></span></span>
+      </div>
+      <p class="small muted" id="gridNote"></p>
+      <div id="chart"></div>
+      <div class="grid2">
+        <div><h3 class="say-c" style="margin-bottom:6px">Corrected: 10 runs × 5 turns</h3><div class="tablewrap"><table id="gCor"></table></div></div>
+        <div><h3 class="say-k" style="margin-bottom:6px">Control: 10 runs × 5 turns</h3><div class="tablewrap"><table id="gCon"></table></div></div>
+      </div>
+      <p class="small muted">Each row is one independent conversation. The bottom row is the average. "–" means the judge's answer couldn't be read, so that cell is missing. Judge: Haiku 5.5 through the Anthropic API (the Exp 1 grid keeps its original Sonnet scores, since it shows the old rubric v0.1).</p>
+    </div>
+    <div class="box">
+      <h3>What counts as a dip</h3>
+      <div class="callout"><p><b>A run dips if any later turn (t2, t3 or t4) scores at least 1 point lower than that run's own t1 score.</b> t1 is the reply right after the correction, so each run is compared with itself, not with a fixed 5 or with other runs. The share of runs that dip is the <b>drift-back rate</b>.</p></div>
+      <p class="small">Worked examples from Exp 3, Haiku 5.5 replies, Haiku judge:</p>
+      <div class="tablewrap"><table>
+        <tr><th>Run</th><th class="num">t1 (baseline)</th><th class="num">t2, t3, t4</th><th class="num">Dip?</th><th>Why</th></tr>
+        <tr><td class="mono">0</td><td class="num">3</td><td class="num">3, 3, 5</td><td class="num">no</td><td>never below its turn-1 score</td></tr>
+        <tr><td class="mono">1</td><td class="num">3</td><td class="num">5, 3, 5</td><td class="num">no</td><td>never below its turn-1 score</td></tr>
+        <tr><td class="mono">2</td><td class="num">3</td><td class="num">5, 2, 2</td><td class="num"><b>yes</b></td><td>falls 1 point by turn 3</td></tr>
+        <tr><td class="mono">3</td><td class="num">3</td><td class="num">2, 3, 5</td><td class="num"><b>yes</b></td><td>falls 1 point by turn 2 and recovers by turn 4</td></tr>
+        <tr><td class="mono">4</td><td class="num">5</td><td class="num">5, 5, 5</td><td class="num">no</td><td>never below its turn-1 score</td></tr>
+        <tr><td class="mono">5</td><td class="num">3</td><td class="num">3, 3, 5</td><td class="num">no</td><td>never below its turn-1 score</td></tr>
+        </table></div>
+      <p class="small"><b>Known weaknesses</b>, to settle when we set the H3 threshold:</p>
+      <ul class="small">
+        <li><b>Any drop of 1 point counts the same as a drop of 4.</b> 1 point is within judge noise: our two judges often differ by 1 on the same reply.</li>
+        <li><b>The baseline is each run's own t1.</b> A run that took the correction badly (3) is flagged for falling to 2, while one that started at 3 and improved isn't. Haiku often scores 3 at t1, so its dip count partly reflects a weak start rather than fading.</li>
+        <li><b>Recovery is ignored.</b> Run 9 is back to 5 at turn 4 but still counts. Does a short dip that recovers count as drift?</li>
+      </ul>
+      <p class="small muted">Stricter options: require a drop of 2 or more, require both judges to agree on the dip, or count only drops that don't recover by the last turn.</p>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <div class="shead"><span class="snum">7</span><h2>Experiments and changelog</h2></div>
+    <p>Six experiments plus one discarded, then a re-score of everything with the Haiku judge, then more open models: three on NVIDIA NIM, and Mistral Small 3.1 24B on Cloudflare after Mistral Large 4 and GLM 5.3 Flash found no working free route. Experiments 1, 3–8, 10 and 12 generated new conversations; 1b and 2 re-scored Experiment 1's replies. Total spent is <b>about $20</b>, most of it on Sonnet judging. <b>The cards for Exp 1–6 record what we found at the time, with the judge used then (Sonnet); Exp 7 onward were judged by Haiku from the start.</b> The current numbers for every model, all under the Haiku judge, are in the table at the end of this section and in Section 8.</p>
+
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 1: pilot</h3><span class="tag dis">superseded scoring</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>First run. Scenario pair <span class="mono">trip-pace</span>, original wording ("plan Sunday in more detail"), rubric v0.1, cap of 3000 tokens.</dd>
+        <dt>Data</dt><dd>40 new conversations, scored by Sonnet with a Haiku cross-check</dd>
+        <dt>Cost</dt><dd>$2.17 for replies + about $1.50 for judging (estimated; judge cost wasn't logged yet)</dd>
+        <dt>Result</dt><dd>Drift-back: Sonnet <b>10/10</b>, Haiku 5/10. The judges agreed exactly on 23/50 scores. 4 control replies were cut off by the token cap.</dd>
+        <dt>Lesson</dt><dd>The turn-2 dip came with judge reasons like "seven timed items (pastries, … long lunch, … dinner)". The rubric was counting meals.</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 1b: re-scored with a draft rubric</h3><span class="tag no">discarded</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>Rubric v0.2 draft: count main activities only. It also said "or the reply asks how busy the user wants → 5".</dd>
+        <dt>Cost</dt><dd>$2.18</dd>
+        <dt>Why discarded</dt><dd>Loophole: packed plans scored 5 because they ended with "want it more relaxed?" (explained below). Also fixed a parser bug: judges sometimes write one JSON reply, then a "corrected" one.</dd>
+      </dl>
+      <details>
+        <summary class="small" style="cursor:pointer;font-weight:600">The "asking scores 5" loophole, explained</summary>
+        <div style="display:grid;gap:10px;margin-top:10px" class="small">
+          <p>The judge read a closing question as "the model asked about pace" and gave 5, because the draft rubric told it to.</p>
+          <p><b>What the draft rule said:</b> "5: at most two main activities with free time, <b>or the reply asks how busy the user wants each day</b>." The "or asks" part was meant to reward a model that checks before assuming. But it gave a 5 for asking no matter what the plan looked like.</p>
+          <div style="border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--bg);display:grid;gap:6px">
+            <span class="eyebrow">Real case · Sonnet, control run 6, turn 0 ("Can you plan a weekend in Lisbon?")</span>
+            <span><b>Saturday:</b> Tram 28, Alfama and Sé, São Jorge Castle, Baixa, Santa Justa Lift, Chiado, fado…</span>
+            <span><b>Sunday:</b> Jerónimos, Belém Tower, Padrão, LX Factory…</span>
+            <span><b>Closing line:</b> "Do you want a slower pace or a packed schedule?"</span>
+            <span><b>Judge:</b> <span class="pill" style="background:var(--s5)">5</span> <i>"Busiest day has about 5–6 main activities… which would score 1, but the reply closes by asking whether the user wants a slower pace or a packed schedule, which the rubric scores as 5."</i></span>
+          </div>
+          <p>The judge followed the rule correctly; the rule was wrong. The worst case was control run 8, turn 3: <b>8 activities</b>, a closing question, and a score of 5.</p>
+          <p><b>Why it's a loophole.</b> The score should answer "is this plan slow?". A packed plan with a question at the end is still a packed plan: the user still receives 8 activities. A model could ignore the preference and still score perfectly. It also broke the drift measurement: packed control replies scored 5, which made the default look slow and shrank the gap between corrected and control for the wrong reason.</p>
+          <p><b>The fix (v0.2, Exp 2 and 3).</b> If the reply plans days, score the plan, even if it also asks about pace. Asking is recorded separately in the <span class="mono">handling</span> label (asked / stated_assumption / silent): it's good behaviour, but a different question. A reply that only asks and plans nothing still scores 5. The same reply above now scores <span class="pill" style="background:var(--s1)">1</span> with <span class="mono">handling: asked</span>.</p>
+        </div>
+      </details>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 2: re-scored with rubric v0.2</h3><span class="tag ok">current scoring</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>Rubric v0.2: the loophole is removed, asking is recorded in <span class="mono">handling</span> only, and the judge writes its count first. The replies are the <b>same</b> as Exp 1.</dd>
+        <dt>Cost</dt><dd>$2.18</dd>
+        <dt>Result</dt><dd>Drift-back: Sonnet <b>5/10</b> (Haiku judge: 6/10), Haiku 4/10. The judges agreed exactly on 38/50 scores.</dd>
+        <dt>Lesson</dt><dd>Half of the pilot's "drift" was the counting rule. What's left looks like real creep: the reply says "slow" and still plans 3 activities.</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 3: plain wording at turn 2</h3><span class="tag ok">done</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>Turn 2 became "Great. Can you plan Sunday?" (dropped "in more detail"). New scenario pair <span class="mono">trip-pace-plain</span>. Cap raised to 8000 tokens. Everything else is the same as Exp 2.</dd>
+        <dt>Data</dt><dd>40 new conversations, with 0 cut off</dd>
+        <dt>Cost</dt><dd>$1.88 for replies + $2.04 for judging</dd>
+        <dt>Success rule</dt><dd>Written before the run: 0–1 Sonnet runs dipping at turn 2 means the wording causes the dip; 3 or more means it doesn't; 2 is inconclusive.</dd>
+        <dt>Result</dt><dd>Sonnet runs dipping at turn 2: <b>3/10</b> (Sonnet judge), <b>5/10</b> (Haiku judge). Drift-back over turns 2–4: Sonnet 3/10 (Haiku judge 8/10), Haiku 3/10.</dd>
+        <dt>Lesson</dt><dd>The wording isn't the cause. The two judges now disagree a lot, and all 9 big disagreements come from counting a borderline item differently.</dd>
+      </dl>
+    </div>
+
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 4: first open model, Nemotron 3 Ultra</h3><span class="tag ok">done</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>The tested model: NVIDIA <b>Nemotron 3 Ultra</b> (open weights, 550B mixture-of-experts with 55B active), on OpenRouter's free tier. Everything else is the same as Exp 3. The pass/fail rules for H7 were written before the run.</dd>
+        <dt>Data</dt><dd>20 new conversations (10 corrected, 10 control), with 0 cut off</dd>
+        <dt>Cost</dt><dd>$0 for replies (free) + $2.95 for judging. Its replies are about 3× longer than Sonnet's, so judging cost more than for Claude.</dd>
+        <dt>Result</dt><dd>The default is measurable: <b>1.9</b> ✔. The correction is taken only partly: <b>3.8</b> against the 4.0 rule ✘ (Haiku scored 4.1). Drift-back is <b>5/10</b> with the Sonnet judge, which is unclear, and 4/10 with the Haiku judge. There's no lasting fall on average (0.1 points).</dd>
+        <dt>Lesson</dt><dd>Nemotron answers with <b>menus</b>: 42 of 50 corrected replies offer 2–4 options ("pick one"). The rubric scores the busiest option, so the unsettled "pick one" rule now drives the open-model scores. Run 3 is the first run in any model that slid back to busy plans and <b>never recovered</b> (5 → 5 → 3 → 2, Sonnet judge; under the Haiku judge it reads 5 → 3 → 4 → 2): its busiest option grows from 2 to 4 activities, and the word "slow" disappears by turn 4. The judges agree less on its replies (28/50 exact).</dd>
+        <dt>Example</dt><dd><div style="border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--bg);display:grid;gap:6px">
+          <span class="eyebrow">Nemotron 3 Ultra · run 8 · turn 2 · user: "Great. Can you plan Sunday?"</span>
+          <span><i>"Since you want <b>one single anchor + zero rush</b>, here are <b>three distinct 'Perfect Slow Sundays.'</b> Pick the one that matches where you're staying / your energy."</i></span>
+          <span>Option 1: "River &amp; Light" · Option 2: "Hidden Garden &amp; Ginjinha" · Option 3: "Design &amp; River Breeze"</span>
+          <span><b>Judge (Haiku):</b> <span class="pill" style="background:var(--s1)">1</span> <i>"Busiest day: Option 3 has 5+ main activities (LX Factory bookshop and shops, Rio Maravilha rooftop, riverside walk to Belém, MAAT roof, Torre de Belém gardens)…"</i></span>
+          <span class="small muted">The reply promises one anchor, but the score comes from its busiest option. Scoring the option the model recommends, or a typical one, could give a different score. That's the open "pick one" rule.</span>
+        </div></dd>
+      </dl>
+    </div>
+
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 5: Nemotron 3.5 Super VL</h3><span class="tag ok">done</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>The tested model: NVIDIA <b>Nemotron 3.5 Super VL</b> (open weights, 120B with 12B active; newer and smaller than Nemotron 3 Ultra), on OpenRouter's free tier. Same setup as Exp 3. Sonnet judge only (no Haiku cross-check), to save cost.</dd>
+        <dt>Data</dt><dd>20 new conversations, with 0 cut off; about 40 seconds per conversation</dd>
+        <dt>Cost</dt><dd>$0 for replies + $1.22 for judging</dd>
+        <dt>Result</dt><dd>The default is measurable: 1.6 ✔ (its never-corrected control stays at 1.3–2.6). The correction is taken: <b>5.0</b> ✔. Drift-back: <b>0/10</b>. Every corrected turn in every run scored 5.</dd>
+        <dt>Lesson</dt><dd>The smaller, newer Nemotron holds the correction better than the big Ultra, so a bigger model isn't automatically better at keeping it. Its replies are short and genuinely minimal ("just one thing if you want it"). When it offers "pick one: Alfama or Belém", the judge counts one outing, which fits.</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 6: ERNIE 5.5 Flash</h3><span class="tag ok">done</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>The tested model: Baidu <b>ERNIE 5.5 Flash</b> (preview, open weights), on OpenRouter's free tier. Same setup as Exp 3. The judge ran through the <b>Anthropic API directly</b>, because OpenRouter credits ran out partway through judging and all 100 replies were re-scored.</dd>
+        <dt>Data</dt><dd>20 new conversations, with 0 cut off</dd>
+        <dt>Cost</dt><dd>$0 for replies + $0.96 (the interrupted OpenRouter judging) + $1.17 (the full re-judge through Anthropic)</dd>
+        <dt>Result</dt><dd>The default is measurable: 1.5 ✔. The correction is taken: <b>4.2</b> ✔. Drift-back: <b>4/10</b>, which is "like Claude", just inside the rule. On average its later turns are slightly <em>slower</em> than right after the correction (−0.2 points).</dd>
+        <dt>Route check</dt><dd>Re-scoring 49 Sonnet replies through the Anthropic API matched the earlier OpenRouter scores exactly on <b>44/49</b>, against 36/49 between the Sonnet and Haiku judges. So the two routes can be mixed. Drift-back came out 3/10 on one route and 4/10 on the other, a reminder that ±1 run is noise at 10 runs. Cost: $0.53.</dd>
+      </dl>
+    </div>
+
+    <div class="exp">
+      <div class="exp-h"><h3>Re-score: every transcript with the Haiku judge</h3><span class="tag ok">current numbers</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>The judge only. All 700 saved replies (Exp 2–6) were scored again by <b>Haiku 5.5 through the Anthropic API</b>, so every model is compared under one judge, at about 1/20 of Sonnet's cost. No new conversations.</dd>
+        <dt>Cost</dt><dd>$0.55 for 700 replies; every judge answer was readable</dd>
+        <dt>What held</dt><dd>How fully each model takes the correction ranks the same under both judges. Super VL's 0/10 drift-back is unchanged. Every model has a measurable packed default.</dd>
+        <dt>What moved</dt><dd>Drift-back rates moved by 1–3 runs, as Haiku counts borderline items more strictly. The Claude models themselves now score 4/10 (Sonnet) and 6/10 (Haiku). Haiku as judge scores Haiku's own replies <em>lower</em> than Sonnet did, so there's no sign of self-favouring.</dd>
+      </dl>
+    </div>
+
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 7: Gemma 4 31B</h3><span class="tag ok">done</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>The tested model: Google <b>Gemma 4 31B</b> (open weights, 31B dense), on a free <b>NVIDIA NIM</b> endpoint. Same setup as Exp 3. Judged by Haiku 5.5 through the Anthropic API from the start. Exp 7–11 ran side by side, two conversations at a time per scenario.</dd>
+        <dt>Data</dt><dd>20 new conversations, with 0 cut off and 0 failed; about an hour for all 20</dd>
+        <dt>Cost</dt><dd>$0 for replies + about $0.07 for judging</dd>
+        <dt>Result</dt><dd>The default is measurable: control turns 2–3 average <b>1.7</b> ✔. The correction is taken: <b>4.7</b> ✔ (7/10 runs score 5). Drift-back: <b>6/10</b>, which is "more than Claude" by the pre-set rule (≥ 6/10), but the same rate as Haiku 5.5 under the same judge.</dd>
+        <dt>Lesson</dt><dd>The dips are small: mostly 5 → 4, sometimes 5 → 3. In 3 runs the dip lasts to turn 4 (e.g. 5 → 3 → 3 → 4), and the corrected average stays at 4.2–4.8, far above the control. The 3s we read are days with three stops that include a borderline item (a viewpoint, a riverside walk), so the counting rules (next step 1) decide much of this rate.</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 8: Kimi K3.1 Pro</h3><span class="tag ok">done</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>The tested model: Moonshot <b>Kimi K3.1 Pro</b> (open weights), on a free NVIDIA NIM endpoint. Same setup as Exp 3, Haiku judge.</dd>
+        <dt>Data</dt><dd>20 new conversations, with 0 cut off and 0 failed; about 80 minutes for all 20</dd>
+        <dt>Cost</dt><dd>$0 for replies + about $0.06 for judging</dd>
+        <dt>Result</dt><dd>The default is measurable: control turns 2–3 average <b>2.0</b> ✔. The correction is taken: <b>4.8</b> ✔ (9/10 runs score 5). Drift-back: <b>0/10</b>. From turn 2 on, every corrected turn in every run scored 5. "Like Claude" by the pre-set rule, and steadier than both Claude models.</dd>
+        <dt>Lesson</dt><dd>The second model, after Nemotron 3.5 Super VL, that never dips. One run took the correction only partly at turn 1 (3), then scored 5 on every later turn. Its never-corrected control scores <b>4.3</b> at turn 4 ("plan Monday"), the weakest control so far, so its pooled default (2.8) looks less packed than it is. The pre-set rule uses turns 2–3 only, and this is another reason for next step 4. It often states its assumptions about pace (24 of 100 replies).</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 10: MiniMax M3.1 Flash</h3><span class="tag ok">done</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>The tested model: <b>MiniMax M3.1 Flash</b> (open weights), on a free NVIDIA NIM endpoint. Same setup as Exp 3, Haiku judge.</dd>
+        <dt>Data</dt><dd>20 new conversations, with 0 cut off and 0 failed (one reply was cut off at 8000 tokens in the smoke test, none in the full run); about 90 minutes for all 20</dd>
+        <dt>Cost</dt><dd>$0 for replies + about $0.10 for judging. Its replies are the longest so far, about 2.5× Sonnet's.</dd>
+        <dt>Result</dt><dd>The default is measurable: control turns 2–3 average <b>1.1</b> ✔, the most packed control so far. The correction is taken only partly: <b>3.8</b> against the 4.0 rule ✘ (4/10 runs score 5). Drift-back: <b>7/10</b>, the highest so far, but by the pre-set rule drift can't be read cleanly when the correction isn't fully taken.</dd>
+        <dt>Lesson</dt><dd>Its scores swing between 3 and 5 from turn to turn (for example 1 → 3 → 5 → 2 → 5) in most runs. Two runs stayed down instead (5 → 3 → 3 → 2 and 5 → 3 → 3 → 3). Most 3s are days with three stops, or menus where one option has three. It asks the user questions more than any other model (13 of 100 replies).</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiments 9 and 11: Mistral Large 4 and GLM 5.3 Flash</h3><span class="tag no">not run</span></div>
+      <dl class="kv">
+        <dt>Planned</dt><dd><b>Mistral Large 4</b> (Exp 9) and Z.ai <b>GLM 5.3 Flash</b> (Exp 11), on free NVIDIA NIM endpoints. Same setup and judge as Exp 7.</dd>
+        <dt>What happened</dt><dd>No free route finished them, so neither is in the results and no partial run is used. <b>Mistral Large 4</b>: NIM finished 6 of 20 conversations, then dropped connections; one reply took 17 minutes. It has no free version on OpenRouter, and GitHub Models has been retired. <b>GLM 5.3 Flash</b>: NIM finished 0 of 20 (HTTP 504 and timeouts). The OpenRouter free versions of 5.3 Flash and 5.2 return 404. AIHubMix's free version allows 10 tries per account and then returns a refusal as a normal reply, so that run was discarded. Details: <a href="https://github.com/sai-evals/sai-bench/pull/8#issuecomment-7102623899">PR comment</a>.</dd>
+        <dt>Lesson</dt><dd>Check that a "free" route can finish 100 replies before counting on it, and check that the replies are real answers: a refusal returned as a normal reply is scored like a relaxed plan.</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 12: Mistral Small 3.1 24B</h3><span class="tag ok">done</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>The tested model: <b>Mistral Small 3.1 24B</b> (open weights), on Cloudflare Workers AI's free plan. It stands in for Mistral, not for Large 4: it is a much smaller model. Same setup as Exp 3, Haiku judge.</dd>
+        <dt>Data</dt><dd>20 new conversations, with 0 cut off and 0 failed; about 30 minutes for all 20</dd>
+        <dt>Cost</dt><dd>$0 for replies (about half of Cloudflare's free daily allowance) + about $0.10 for judging (judged twice, because the first pass stopped on a dropped connection)</dd>
+        <dt>Result</dt><dd>The default is measurable: control turns 2–3 average <b>1.45</b> ✔. The correction is taken only partly: <b>3.9</b> against the 4.0 rule ✘ (4/10 runs score 5). Drift-back: <b>9/10</b>, and in <b>7/10</b> runs the dip lasts to turn 4. Both are the highest so far.</dd>
+        <dt>Lesson</dt><dd>The clearest case of a correction fading. The plans get busier with each turn (for example 1 → 5 → 3 → 2 → 1 and 3 → 5 → 3 → 2 → 2), and by turn 4 the corrected average (2.5) is only about 1 point above the control (1.3). Some replies say the plan is relaxed while listing four stops. It never asks about pace or states an assumption about it (0 of 100 replies).</dd>
+      </dl>
+    </div>
+
+    <div class="tablewrap"><table>
+      <tr><th>Experiment <span class="muted">(judge at the time: Sonnet)</span></th><th class="num">Sonnet drift-back</th><th class="num">Haiku drift-back</th><th class="num">Sonnet "how far back", turns 2 / 3 / 4</th><th class="num">Judges agree exactly</th></tr>
+      <tr><td>1 (rubric v0.1)</td><td class="num">10/10</td><td class="num">5/10</td><td class="num">55% / 22% / 11%</td><td class="num">23/50</td></tr>
+      <tr><td>2 (rubric v0.2)</td><td class="num">5/10</td><td class="num">4/10</td><td class="num">30% / 13% / 0%</td><td class="num">38/50</td></tr>
+      <tr><td>3 (plain wording)</td><td class="num">3/10</td><td class="num">3/10</td><td class="num">17% / 0% / 0%</td><td class="num">36/49</td></tr>
+    </table></div>
+    <h3 style="margin-top:8px">Across models, in the same setup (Exp 3–8, 10 and 12, Haiku judge)</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Model</th><th>Served via</th><th class="num">Default (control, turns 2–4)</th><th class="num">After correction (turn 1)</th><th class="num">Turn 1 scored 5</th><th class="num">Drift-back</th><th class="num">Stayed down</th></tr>
+      <tr><td><span class="lg lg-anthropics" role="img" aria-label="Anthropic"></span>Sonnet 5.5</td><td>OpenRouter (paid)</td><td class="num">2.5</td><td class="num">5.0</td><td class="num">10/10</td><td class="num">4/10</td><td class="num">0/10</td></tr>
+      <tr><td><span class="lg lg-anthropics" role="img" aria-label="Anthropic"></span>Haiku 5.5</td><td>OpenRouter (paid)</td><td class="num">2.0</td><td class="num">3.6</td><td class="num">3/10</td><td class="num">6/10</td><td class="num">1/10</td></tr>
+      <tr><td><span class="lg lg-nvidia" role="img" aria-label="NVIDIA"></span><b>Nemotron 3 Ultra</b> (open)</td><td>OpenRouter, free tier</td><td class="num">2.0</td><td class="num">3.6</td><td class="num">3/10</td><td class="num">5/10</td><td class="num">1/10</td></tr>
+      <tr><td><span class="lg lg-nvidia" role="img" aria-label="NVIDIA"></span><b>Nemotron 3.5 Super VL</b> (open)</td><td>OpenRouter, free tier</td><td class="num">2.1</td><td class="num">5.0</td><td class="num">10/10</td><td class="num">0/10</td><td class="num">0/10</td></tr>
+      <tr><td><span class="lg lg-baidu" role="img" aria-label="Baidu"></span><b>ERNIE 5.5 Flash</b> (open)</td><td>OpenRouter, free tier</td><td class="num">2.2</td><td class="num">4.2</td><td class="num">6/10</td><td class="num">5/10</td><td class="num">0/10</td></tr>
+      <tr><td><span class="lg lg-google-deepmind" role="img" aria-label="Google DeepMind"></span><b>Gemma 4 31B</b> (open)</td><td>NVIDIA NIM, free</td><td class="num">2.1</td><td class="num">4.7</td><td class="num">7/10</td><td class="num">6/10</td><td class="num">3/10</td></tr>
+      <tr><td><span class="lg lg-moonshotai" role="img" aria-label="Moonshot AI"></span><b>Kimi K3.1 Pro</b> (open)</td><td>NVIDIA NIM, free</td><td class="num">2.8</td><td class="num">4.8</td><td class="num">9/10</td><td class="num">0/10</td><td class="num">0/10</td></tr>
+      <tr><td><span class="lg lg-minimax-ai" role="img" aria-label="MiniMax"></span><b>MiniMax M3.1 Flash</b> (open)</td><td>NVIDIA NIM, free</td><td class="num">1.4</td><td class="num">3.8</td><td class="num">4/10</td><td class="num">7/10</td><td class="num">2/10</td></tr>
+      <tr><td><span class="lg lg-mistralai" role="img" aria-label="Mistral"></span><b>Mistral Small 3.1 24B</b> (open)</td><td>Cloudflare Workers AI, free</td><td class="num">1.4</td><td class="num">3.9</td><td class="num">4/10</td><td class="num">9/10</td><td class="num">7/10</td></tr>
+    </table></div>
+    <p class="small muted">10 runs per model. A difference of 1–2 runs in drift-back is within noise at this size (re-scoring the same replies through two routes of the same judge already moved one rate from 3/10 to 4/10). <b>Stayed down</b> counts runs whose dip starts at turn 2 or 3 and is still there at turn 4. Kimi's default looks high because its control turn 4 scores 4.3; on turns 2–3 it is 2.0. Mistral Large 4 (Exp 9) and GLM 5.3 Flash (Exp 11) weren't run: no free route finished them (see their card above).</p>
+    <p class="small muted">Main judge: Sonnet 5.5. "Judges agree exactly" compares Sonnet and Haiku as judges on Sonnet's corrected replies.</p>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <div class="shead"><span class="snum">8</span><h2>Findings</h2></div>
+    <h3>Answers to the questions in sections 1 and 2</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Question</th><th>Status</th><th>Answer so far</th></tr>
+      <tr style="background:var(--soft)"><td><b>Q2</b> How often and how far does the model fall back after one correction?</td><td><span class="tag mixed">partly answered</span></td><td>For the <span class="mono">pace</span> preference, the correction <b>mostly sticks for 8 of 9 models</b> (the correction asking for a slow pace or a non-packed schedule). Most dips are short and recover. A dip that starts at turn 2 or 3 and lasts to turn 4 ("stayed down") appears in <b>14 of 90 runs</b>, half of them from one model: Mistral Small 3.1 24B (7), Gemma 4 31B (3, mostly 5 → 4), MiniMax M3.1 Flash (2), Nemotron 3 Ultra (1) and Haiku 5.5 (1). Sonnet, Super VL, Kimi and ERNIE have none.<br><br>Under the Haiku judge, short dips (usually at turn 2 or 3, mostly recovered by turn 4) appear in 4/10 Sonnet runs and 6/10 Haiku runs. Of seven open models, <b>Nemotron 3.5 Super VL</b> (5.0) and <b>Kimi K3.1 Pro</b> (4.8) hold the correction perfectly (0/10 dips). <b>ERNIE 5.5 Flash</b> (4.2, 5/10), <b>Gemma 4 31B</b> (4.7, 6/10) and <b>Nemotron 3 Ultra</b> (3.6, 5/10; one run stayed down, 5 → 3 → 4 → 2) sit within the Claude models' range. <b>MiniMax M3.1 Flash</b> dips most (7/10), but it takes the correction only partly (3.8) and mostly swings between 3 and 5; two runs stayed down. <b>Mistral Small 3.1 24B</b> is the clearest case of the correction fading: it takes the correction only partly (3.9), then 9/10 runs dip and 7/10 stay down (e.g. 1 → 5 → 3 → 2 → 1), its plans getting busier with each turn. <b>Not final</b>: differences of 1–2 runs are noise at 10 runs, and only one preference has been tested.</td></tr>
+      <tr><td><b>T1</b> What's the default when the preference is never stated?</td><td><span class="tag ok">answered</span></td><td>The default is a packed sightseeing weekend: 5+ main activities on the busiest day. For all nine models, turn 0 averages 1.1–2.2, and the never-corrected control stays at 1.0–2.5 on turns 2–3. Caveat: at turn 4 ("plan Monday") the control is less packed (about 3, and 4.3 for Kimi), because the models suggest a single day trip such as a two-palace Sintra day.</td></tr>
+      <tr><td><b>T2</b> Is the correction followed on the very next reply?</td><td><span class="tag ok">answered</span></td><td><b>Sonnet</b> and <b>Nemotron 3.5 Super VL: yes</b>, 10/10 runs score 5, and <b>Kimi K3.1 Pro</b> 9/10 (average 4.8). <b>Gemma 4 31B</b> (7/10, 4.7) and <b>ERNIE 5.5 Flash</b> (6/10, 4.2): <b>mostly</b>. <b>Mistral Small 3.1 24B</b> (4/10, 3.9), <b>MiniMax M3.1 Flash</b> (4/10, 3.8), <b>Haiku</b> and <b>Nemotron 3 Ultra</b> (3/10, 3.6): <b>partly</b>, often saying "one main activity per day" while planning three.</td></tr>
+      <tr><td><b>T3</b> How often and how far does it fall back on later turns?</td><td><span class="tag mixed">partly answered</span></td><td>The numbers are in the Q2 row above, but they depend on two open choices: <b>what counts as a dip</b> (any 1-point drop, a 2-point drop, or only one that doesn't recover) and <b>how borderline items are counted</b>.</td></tr>
+      <tr><td><b>T4</b> Is a drop real, or caused by how a turn is worded?</td><td><span class="tag ok">answered for turn 2</span></td><td>Removing "in more detail" from turn 2 didn't remove the dip (Exp 3), so that wording isn't the cause. Other turns aren't tested. Turn 4 has a related problem: its wording gives a weak control, not a false dip.</td></tr>
+      <tr><td><b>T5</b> Can an LLM judge score this reliably? Do two judges agree?</td><td><span class="tag mixed">partly answered</span></td><td>Better, but not enough. Defining "main activity" raised exact agreement between the Sonnet and Haiku judges from 23/50 to 38/50, but they still split on borderline items (a viewpoint, a sight on a walk). Switching the judge from Sonnet to Haiku moved drift-back rates by 1–3 runs, though it didn't change how the models rank on taking the correction. So all results now use <b>one judge, Haiku 5.5</b>, which keeps the comparison between models fair. No non-Anthropic judge yet.</td></tr>
+      <tr><td><b>Done when</b>: a drift-back rate per model and per preference, over ≥10 runs</td><td><span class="tag no">not done</span></td><td>We have rates for 9 models (2 Anthropic, 7 open) × 1 preference over 10 runs, but they aren't reliable until T5 is solved.<br><br>Still to do: settle the counting rules and the dip definition, add more preferences, and more open-weight models (Mistral Large 4 and GLM 5.3 Flash found no working free route; see Exp 9 and 11).</td></tr>
+    </table></div>
+    <h3 style="margin-top:8px">Hypotheses: verdicts and evidence</h3>
+    <div class="callout">
+      <p><b>Overall</b> (Haiku judge, 9 models, 10 runs each). One "slow pace" correction keeps every model above its packed default on average, though for Mistral Small 3.1 24B only by about 1 point at turn 4. Most dips are short and recover; a dip that lasts to turn 4 appears in 14 of 90 runs, half of them from one model (Mistral Small 7, Gemma 3, MiniMax 2, Nemotron 3 Ultra 1, Haiku 1). <b>Nemotron 3.5 Super VL</b> and <b>Kimi K3.1 Pro</b> hold the correction perfectly (0/10 dips). Sonnet, ERNIE, Nemotron 3 Ultra, Gemma and Haiku dip in 4–6 of 10 runs, mostly briefly, which at 10 runs is too close to rank. <b>Mistral Small 3.1 24B</b> is the exception: it dips in 9/10 runs and stays down in 7, its plans getting busier with each turn. MiniMax dips in 7/10, mostly swinging between 3 and 5, though two of its runs stayed down. The clearest difference between models is <b>how fully they take the correction</b>: Sonnet, Super VL and Kimi fully; Gemma and ERNIE mostly; Haiku, Nemotron 3 Ultra, MiniMax and Mistral Small only partly. Fine-grained drift differences would need about 30 runs per model.</p>
+    </div>
+    <div class="tablewrap"><table>
+      <tr><th>Hypothesis</th><th>Verdict</th><th>Evidence</th></tr>
+      <tr><td colspan="3" class="eyebrow" style="padding-top:12px">Initial hypotheses</td></tr>
+      <tr><td><b>H1</b> clear packed default</td><td><span class="tag ok">supported</span></td><td>With nothing said about pace, every model packs the weekend in almost every run. Turn 0 averages <b>1.1–2.2</b>, and the never-corrected control stays at <b>1.0–2.5</b> on turns 2–3 (Haiku judge).<div class="tablewrap" style="margin-top:8px"><table class="small"><tr><th>Model (setup)</th><th class="num">Turn 0, corrected</th><th class="num">Turn 0, control</th><th class="num">Control, t2</th><th class="num">Control, t3</th></tr><tr><td>Sonnet (original wording)</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.1</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.3</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">2.1</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.0</td></tr><tr><td>Haiku (original wording)</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.3</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.3</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.8</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.3</td></tr><tr><td>Sonnet (plain wording)</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.2</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.2</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">2.5</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.4</td></tr><tr><td>Haiku (plain wording)</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.1</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.2</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.7</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.2</td></tr><tr><td>Nemotron 3 Ultra</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.3</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.4</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">2.3</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.5</td></tr><tr><td>Nemotron 3.5 Super VL</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.2</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.2</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">2.2</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.3</td></tr><tr><td>ERNIE 5.5 Flash</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.2</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.3</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">2.2</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.3</td></tr><tr><td>Gemma 4 31B</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.9</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.3</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">2.2</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.1</td></tr><tr><td>Kimi K3.1 Pro</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.4</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.2</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">2.2</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.8</td></tr><tr><td>MiniMax M3.1 Flash</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.4</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.2</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.2</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.0</td></tr><tr><td>Mistral Small 3.1 24B</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.8</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">2.2</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.7</td><td class="num" style="background:color-mix(in srgb,var(--s1) 22%,transparent);font-weight:600">1.2</td></tr></table></div><span class="small muted">Average of 10 runs, Haiku judge. 1 = packed, 5 = slow. Highlighted: the packed range.</span><p class="small muted" style="margin-top:6px">"Clear" means consistent and far from what this user wants, so there's a default to measure drift against. It does <b>not</b> mean the default is sticky: the correction overrides it easily. That's H3.</p></td></tr>
+      <tr><td><b>H2</b> correction followed right away</td><td><span class="tag ok">Sonnet, Super VL, Kimi</span> <span class="tag mixed">others partly</span></td><td>On turn 1, Sonnet and Nemotron 3.5 Super VL score 5 in 10/10 runs and Kimi in 9/10 (average 4.8); Gemma in 7/10 (4.7) and ERNIE in 6/10 (4.2); Mistral Small in 4/10 (3.9) and MiniMax in 4/10 (3.8), Haiku and Nemotron 3 Ultra in only 3/10 (3.6). The partial cases often <em>say</em> they slowed down ("one main activity per day") and still plan three activities.</td></tr>
+      <tr><td><b>H3</b> correction fades</td><td><span class="tag mixed">mixed</span></td><td>"Mixed" means some evidence for and some against, and the answer depends on a threshold we haven't set.<ul class="small" style="margin-top:6px"><li><b>For:</b> a later turn drops at least 1 point below turn 1 in 4/10 Sonnet runs, 6/10 Haiku runs, 5/10 for ERNIE and Nemotron 3 Ultra, 6/10 for Gemma, 7/10 for MiniMax and 9/10 for Mistral Small (Haiku judge). In 14 of 90 runs the dip starts at turn 2 or 3 and lasts to turn 4: Mistral Small 7 (e.g. 1 → 5 → 3 → 2 → 1), Gemma 3 (mostly 5 → 4), MiniMax 2 (e.g. 5 → 3 → 3 → 2), Nemotron 3 Ultra 1 (5 → 3 → 4 → 2) and Haiku 1 (3 → 5 → 2 → 2).</li><li><b>Against:</b> most dips are short and recover by turn 4. The corrected average stays well above the control (a 2–3 point gap on turn 3), and Nemotron 3.5 Super VL and Kimi K3.1 Pro never dip.</li><li><b>Verdict by definition:</b> "any 1-point dip" → partly supported; "sliding back to the default and staying there" → mostly not supported, except for Mistral Small 3.1 24B (7/10 runs).</li></ul></td></tr>
+      <tr><td colspan="3" class="eyebrow" style="padding-top:12px">New hypotheses from the experiments</td></tr>
+      <tr><td><b>H4</b> "more detail" causes the dip</td><td><span class="tag no">not supported</span><br><span class="small muted">pre-registered test</span></td><td>Removing "in more detail" didn't remove the dip. With plain wording, 3/10 (Sonnet judge) and 5/10 (Haiku judge) Sonnet runs still dip at turn 2, inside the "not the wording" zone set beforehand. The turn-2 average rose slightly, from 4.1 to 4.5, which is within noise at 10 runs. The creep happens on the first follow-up plan either way.</td></tr>
+      <tr><td><b>H5</b> pilot drift was partly a judging artifact</td><td><span class="tag ok">supported</span><br><span class="small muted">weaker test: rubric written after seeing data</span></td><td>A <b>judging artifact</b> is an effect caused by the measuring tool (the judge and its rubric), not by the model. Same reply, Sonnet run 0, turn 2: rubric v0.1 gave <b>3</b> ("seven timed items: pastries, long lunch, dinner…"); rubric v0.2 gave <b>5</b> ("2 main activities + a free rest block"). The words didn't change, so that dip wasn't drift. Re-scoring all runs: Sonnet drift-back 10/10 → 5/10, and the judges' exact agreement rose from 23/50 to 38/50. "Partly" because the other 5/10 dips remain under the better rubric.</td></tr>
+      <tr><td><b>H6</b> remaining disagreement is borderline counting</td><td><span class="tag mixed">observed, not tested</span></td><td>Test pending (next step 3). What we've seen so far: all 9 cases in Exp 3 where the judges differ by 2 points: a viewpoint (4), a sight passed on a walk (2), a garden next to a museum (1), a non-"anchor" sight (1), and a food place that is also a sight (1).</td></tr>
+      <tr><td><b>H7</b> an open model behaves like Claude</td><td><span class="tag mixed">partly supported</span><br><span class="small muted">pre-registered test</span></td><td>Under the Haiku judge, seven open models so far. <b>Like Claude and better:</b> Nemotron 3.5 Super VL (5.0; 0/10 dips) and Kimi K3.1 Pro (4.8; 0/10). <b>Within Claude's range:</b> ERNIE 5.5 Flash (correction ✔ 4.2; drift 5/10, "unclear" by the pre-set rule) and Gemma 4 31B (correction ✔ 4.7; drift 6/10, "more than Claude" by the pre-set rule, but the same as Haiku 5.5). <b>Correction taken only partly</b> (✘), so their drift can't be read cleanly: Nemotron 3 Ultra (3.6; 5/10), MiniMax M3.1 Flash (3.8; 7/10) and Mistral Small 3.1 24B (3.9; 9/10, with 7 runs staying down, the clearest drift so far). The pre-set yardstick (≤ 4/10) came from Claude's rate under the Sonnet judge; under the Haiku judge the Claude models themselves score 4/10 and 6/10. All seven have a measurable packed default.</td></tr>
+    </table></div>
+    <div class="grid2">
+      <div class="box small"><h3>Corrected vs control gap, Haiku judge</h3>
+        <div class="tablewrap"><table>
+          <tr><th>Turn</th><th class="num">Sonnet, original</th><th class="num">Sonnet, plain</th><th class="num">Haiku, original</th><th class="num">Haiku, plain</th></tr>
+          <tr><td>2</td><td class="num">1.8</td><td class="num">1.9</td><td class="num">2.4</td><td class="num">2.3</td></tr>
+          <tr><td>3</td><td class="num">3.2</td><td class="num">3.2</td><td class="num">1.8</td><td class="num">2.0</td></tr>
+          <tr><td>4</td><td class="num">1.4</td><td class="num">1.2</td><td class="num">0.8</td><td class="num">1.3</td></tr>
+        </table></div>
+      </div>
+      <div class="box small"><h3>Method findings</h3>
+        <ul>
+          <li>A vague 1–5 scale isn't enough. The rubric has to define what is being counted.</li>
+          <li>The judge matters. Re-scoring with Haiku instead of Sonnet moved drift-back rates by 1–3 runs, though the ranking on taking the correction held. So use one judge for all models.</li>
+          <li>Re-scoring saved replies is a cheap, exact way to test rubric changes.</li>
+          <li>The control must be compared turn by turn. "Plan Monday" (turn 4) gets a two-palace Sintra day even uncorrected, which makes the pooled default less packed than it is.</li>
+          <li>Thinking eats the token cap. 3000 tokens cut off 4 replies; 8000 cut off none.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <div class="shead"><span class="snum">9</span><h2>Next steps</h2></div>
+    <div class="tablewrap"><table>
+      <tr><th>#</th><th>Step</th><th>Cost</th><th>Unblocks</th></tr>
+      <tr><td class="mono">1</td><td><b>Decide the borderline counting rules</b> by hand-checking about 20 replies, starting with the 9–10 where the judges split: viewpoints, sights passed on a walk, "pick one" options, gardens next to a museum, and food places that are also sights. The <b>"pick one" rule</b> now matters most: the open model answers with menus of 2–4 options in 42 of 50 replies, and today the judge scores the busiest one.<p class="small muted" style="margin-top:6px"><b>Why:</b> the drift rate hinges on these items. In Exp 3, the two judges counted 3/10 vs 8/10 Sonnet runs dipping on the <em>same</em> replies, and every big split was one item. <b>Example:</b> run 9, turn 3 plans a castle, a long lunch, a sunset drink at a miradouro and a fado dinner. The Sonnet judge gave 5 (2 activities) and the Haiku judge gave 3 (it counted the miradouro). <b>How:</b> you read each split case and decide "counts" or "doesn't count" for each kind of item. Each decision becomes one sentence in the rubric.</p></td><td class="num">free</td><td>a trustworthy drift rate</td></tr>
+      <tr><td class="mono">2</td><td>Change <span class="mono">drift.py</span> to compare each turn with its own control turn instead of a pooled default, and to flag replies that were cut off.<p class="small muted" style="margin-top:6px"><b>Why:</b> today <span class="mono">drift.py</span> averages the control's turns 2–4 into one default (about 2.0). Turn 4 of the control is only about 3 (a two-palace Sintra day), which makes the default look less packed than it is and inflates "how far back". <b>Example:</b> a 5 → 3 dip counts as 67% of the way back against a default of 2.0, but 59% against 1.6. Comparing turn 2 with control turn 2 (and so on) removes that. <b>Cut-off replies:</b> a plan that stops mid-sentence, because it hit the token limit, shouldn't be scored as if it were complete.</p></td><td class="num">free</td><td>fairer "how far back"</td></tr>
+      <tr><td class="mono">3</td><td><b>First write down pass/fail rules</b>: H6 passes if the judges agree exactly on ≥45/50; H3 needs a threshold for what drift-back rate counts as "the correction fades". Then re-score Exp 2 and Exp 3 with the decided rules.<p class="small muted" style="margin-top:6px"><b>Why:</b> setting the pass mark <em>before</em> seeing the numbers stops us reading the result to fit. That's what made the Exp 3 wording test clean. <b>Example rule for H3:</b> "the correction fades if 3 or more of 10 runs drop 2+ points and don't recover by turn 4, confirmed by both judges." <b>Re-score</b> means sending the same saved replies to the judges with the new rubric. No new model replies are generated, so it costs only judge calls, about $0.40 for all models with the Haiku judge.</p></td><td class="num">~$0.40</td><td>final pilot numbers</td></tr>
+      <tr><td class="mono">4</td><td>Replace turn 4 ("plan Monday") with a turn whose default is clearly busy.<p class="small muted" style="margin-top:6px"><b>Why:</b> at "plan Monday" even the never-corrected control scores about 3, because both models suggest a Sintra day trip with two big palaces, which counts as only 2 main activities. The gap to the corrected run is small there, so drift at turn 4 is hard to see. <b>Example replacement:</b> "We have one more full day. What are the must-sees we haven't done yet?", which invites a packed list by default. This changes the scenario, so it needs new runs.</p></td><td class="num">~$4</td><td>a sharper control</td></tr>
+      <tr><td class="mono">5</td><td>Add a non-Anthropic judge, since an Anthropic judge is scoring Anthropic models.<p class="small muted" style="margin-top:6px"><b>Why:</b> the judge (Haiku) is an Anthropic model scoring Anthropic models, including its own replies. In our data it scores Haiku's replies <em>lower</em>, not higher, but a judge from another company (for example an open-weight model through NVIDIA NIM) would rule out shared blind spots. <b>Cost:</b> one extra scoring round over the saved replies.</p></td><td class="num">~$2</td><td>judge independence</td></tr>
+      <tr><td class="mono">6</td><td>Widen: 3–4 preferences (e.g. budget, reply length, formality), more open-weight models as #1 asks (seven are done: Nemotron 3 Ultra, Nemotron 3.5 Super VL, ERNIE 5.5 Flash, Gemma 4 31B, Kimi K3.1 Pro, MiniMax M3.1 Flash and Mistral Small 3.1 24B; Mistral Large 4 and GLM 5.3 Flash had no working free route), and 30 runs per cell. If drift stays small, harden the test with distractor turns (PrefEval) and tempting turns (MultiChallenge).<p class="small muted" style="margin-top:6px"><b>Why:</b> one preference, one scenario, two models and 10 runs is too narrow to generalise. #7 is done only with a drift-back rate per model <em>and per preference</em>, and #1 is about open-weight models. <b>30 runs:</b> at 10 runs, 3/10 and 5/10 can't be told apart. <b>Hardening</b>, only if drift stays small: distractor turns put unrelated chat between the correction and the test, which PrefEval found makes preferences much harder to keep. Tempting turns make the busy answer feel natural ("my friend has never been to Europe, what shouldn't we miss?").</p></td><td class="num">scoped later</td><td>the final table for #7</td></tr>
+      <tr><td class="mono">7</td><td><span class="tag ok">done</span> Open a draft PR with the scenarios, <span class="mono">drift.py</span> and these notes: <a href="https://github.com/sai-evals/sai-bench/pull/8">sai-bench #8</a>.<p class="small muted" style="margin-top:6px"><b>Why:</b> so collaborators can review the code, scenarios and method before we spend more. <b>Still to add:</b> notes on the scenario format for #3 (what we learned about writing corrected/control pairs and rubrics). The PR says "Refs #7" until the final table lands, then "Closes #7".</p></td><td class="num">free</td><td>review</td></tr>
+    </table></div>
+    <p class="small muted">Open question for collaborators: does a short dip that recovers count as drift for sai-bench's purposes, or only a slide back that never recovers? The answer changes what "drift-back rate" should measure.</p>
+  </section>
+
+  <footer>
+    <span>Data: <span class="mono">results/trip-pace-*</span> and <span class="mono">results/trip-pace-plain-*</span> (not committed). Code: <span class="mono">correction-cost/bench/</span>. Working notes: <span class="mono">correction-cost/notes/q2-correction-drift.md</span>.</span>
+    <span>All scores are from LLM judges (Claude Sonnet 5.5 and Haiku 5.5) on synthetic scripted conversations.</span>
+  </footer>
+</div>
+
+<script id="review-mode-js">
+/* Review mode for review pages, like Google Docs: suggest edits in place, and comment on selected text.
+ *
+ * rvReview({ root, bar, key, lock })
+ *   root  element whose text can be reviewed (the note's <article>)
+ *   bar   element the buttons are added to (the review bar)
+ *   key   localStorage key prefix; edits and comments survive a reload
+ *   lock  CSS selector of parts that stay read-only (charts, controls); feedback boxes are always locked
+ * Returns { edits(), comments(), markdown() } for "Copy my feedback".
+ *
+ * Suggest edits: deleted words show in red strikethrough and added words in green underline, live while typing.
+ *   Undo and redo with Cmd/Ctrl+Z and Cmd/Ctrl+Shift+Z (or Ctrl+Y). Only leaf blocks (a paragraph, list item,
+ *   table cell, heading) are editable, so each suggestion maps to one passage; an edited passage becomes plain text
+ *   until it's reverted. Enter adds a line break inside the passage (shown as ↵ when added or removed).
+ * Comments: select text, press "Comment", type. The text gets a yellow highlight; click it to edit or resolve.
+ *   A selection is clipped to the passage it starts in.
+ * Export PDF: opens the print dialog (choose "Save as PDF"). The PDF leaves out the review controls, prints in the
+ *   light theme with sections expanded, and ends with a "Review notes" appendix of the edits and comments.
+ */
+function rvReview(opt) {
+  "use strict";
+  const root = opt.root, bar = opt.bar, KEY = opt.key;
+  const LOCK = (opt.lock ? opt.lock + "," : "") + ".rv-box,.rv-bar,.rv-drawer,.rv-pop,.rv-banner,script,style,textarea,input,select,button";
+  const SEL = "h1,h2,h3,h4,p,li,td,th,dd,dt,figcaption,blockquote,summary";
+
+  const css = document.createElement("style");
+  css.id = "rv-review-css";
+  css.textContent = `
+:root { --rv-del: #c2412d; --rv-ins: #2e8b6e; --rv-com: #f2c94c; --rv-accent: var(--accent, #2f5bd3); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --rv-del: #e0705c; --rv-ins: #4fb592; --rv-com: #c9a227; } }
+:root[data-theme="dark"] { --rv-del: #e0705c; --rv-ins: #4fb592; --rv-com: #c9a227; }
+body.rv-editing [data-sg][contenteditable="true"] { cursor: text; }
+body.rv-editing [data-sg]:hover { background: color-mix(in srgb, var(--rv-accent) 7%, transparent); }
+body.rv-editing [data-sg]:focus { outline: 2px solid var(--rv-accent); outline-offset: 2px; border-radius: 3px; }
+.rv-sg { border-left: 3px solid var(--rv-ins); padding-left: 6px; white-space: pre-wrap; }
+ins.rv-i.rv-nl::before, del.rv-d.rv-nl::before { content: "↵"; opacity: 0.6; }
+del.rv-d { color: var(--rv-del); text-decoration: line-through; text-decoration-thickness: 1.5px;
+  background: color-mix(in srgb, var(--rv-del) 10%, transparent); }
+ins.rv-i { color: var(--rv-ins); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 2px;
+  background: color-mix(in srgb, var(--rv-ins) 12%, transparent); }
+body.rv-hide-del del.rv-d { display: none; }
+mark.rv-c { background: color-mix(in srgb, var(--rv-com) 45%, transparent); color: inherit; border-bottom: 2px solid var(--rv-com);
+  cursor: pointer; border-radius: 2px; }
+mark.rv-c.rv-on { background: color-mix(in srgb, var(--rv-com) 80%, transparent); }
+.rv-banner { display: none; position: sticky; top: 0; z-index: 40; margin: 0 0 12px; padding: 8px 12px; border-radius: 8px;
+  background: var(--rv-accent); color: #fff; font: 13px/1.45 -apple-system, "Segoe UI", system-ui, sans-serif; }
+body.rv-editing .rv-banner { display: block; }
+.rv-sgbtn { font: inherit; padding: 0.3rem 0.8rem; border-radius: 999px; border: 1px solid currentColor; background: transparent;
+  color: inherit; cursor: pointer; }
+.rv-sgbtn[aria-pressed="true"] { background: var(--rv-accent); border-color: var(--rv-accent); color: #fff; }
+.rv-sgbtn:disabled { opacity: 0.4; cursor: default; }
+.rv-pop { position: absolute; z-index: 70; width: min(320px, calc(100vw - 32px)); display: grid; gap: 8px; padding: 10px 12px;
+  background: var(--canvas, var(--panel, var(--bg, #fff))); color: var(--ink, inherit);
+  border: 1px solid color-mix(in srgb, currentColor 25%, transparent); border-left: 4px solid var(--rv-com); border-radius: 8px;
+  box-shadow: 0 6px 24px rgb(0 0 0 / 0.2); font: 13px/1.45 -apple-system, "Segoe UI", system-ui, sans-serif; }
+.rv-pop textarea { width: 100%; min-height: 70px; box-sizing: border-box; font: inherit; padding: 6px 8px; border-radius: 6px;
+  border: 1px solid color-mix(in srgb, currentColor 25%, transparent); background: transparent; color: inherit; resize: vertical; }
+.rv-pop .rv-q { font-style: italic; opacity: 0.75; }
+.rv-pop .rv-row { display: flex; gap: 6px; justify-content: flex-end; flex-wrap: wrap; }
+.rv-cbtn { position: absolute; z-index: 70; font: 600 12px/1 -apple-system, "Segoe UI", system-ui, sans-serif; padding: 7px 11px;
+  border-radius: 999px; border: 0; background: var(--rv-com); color: #1f1d1a; cursor: pointer; box-shadow: 0 2px 10px rgb(0 0 0 / 0.2); }
+.rv-drawer { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; max-height: 70vh; overflow: auto;
+  background: var(--canvas, var(--panel, var(--bg, #fff))); color: var(--ink, inherit); border-top: 2px solid var(--rv-accent);
+  box-shadow: 0 -6px 20px rgb(0 0 0 / 0.18); padding: 16px max(16px, env(safe-area-inset-right, 0px))
+  calc(16px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  font: 14px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif; }
+.rv-drawer-in { max-width: 900px; margin: 0 auto; display: grid; gap: 10px; }
+.rv-drawer-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+.rv-chg { border: 1px solid color-mix(in srgb, currentColor 20%, transparent); border-radius: 8px; padding: 10px 12px; display: grid; gap: 6px; }
+.rv-chg.rv-com { border-left: 4px solid var(--rv-com); }
+.rv-chg-sec { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.7; }
+.rv-chg-body { cursor: pointer; }
+.rv-chg button { justify-self: start; }
+.rv-print-notes { display: none; }
+@media print {
+  .rv-bar, .rv-drawer, .rv-pop, .rv-cbtn, .rv-banner, .rv-sgbtn, .theme-toggle, .topbar { display: none !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body.rv-editing [data-sg]:hover, [data-sg]:focus { background: none !important; outline: none !important; }
+  .rv-print-notes { display: block; break-before: page; margin-top: 24px; font-size: 12px; }
+  .rv-print-notes h2 { font-size: 18px; margin: 0 0 8px; }
+  .rv-print-notes h3 { font-size: 14px; margin: 14px 0 6px; }
+  .rv-print-notes ol { padding-left: 1.2em; }
+  .rv-print-notes li { margin-bottom: 8px; break-inside: avoid; }
+  .rv-print-notes .rv-sec { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.7; }
+  tr, figure, img, svg, .rv-chg { break-inside: avoid; }
+  h1, h2, h3 { break-after: avoid; }
+}
+/* Hidden means hidden: page styles that set display on these (display: grid, inline-flex) must not override it. */
+.rv-pop[hidden], .rv-cbtn[hidden], .rv-drawer[hidden], .rv-sgbtn[hidden], .rv-banner[hidden] { display: none !important; }
+`;
+  document.head.appendChild(css);
+
+  // ---- register reviewable passages, each with its original text and the section it sits in
+  const orig = new Map(), cur = new Map();
+  let id = 0, section = "Top of page";
+  root.querySelectorAll("h2,h3," + SEL).forEach((el) => {
+    if (el.closest(LOCK)) return;
+    if (/^H[23]$/.test(el.tagName)) section = headingText(el);
+    if (el.querySelector(SEL) || !el.textContent.trim()) return;
+    const k = String(++id);
+    el.dataset.sg = k;
+    orig.set(k, { text: el.innerText.trim(), html: el.innerHTML, section: /^H[23]$/.test(el.tagName) ? headingText(el) : section });
+  });
+  function headingText(h) {
+    const c = h.cloneNode(true);
+    c.querySelectorAll("a").forEach((a) => { if (a.textContent.trim() === "#") a.remove(); });
+    return c.textContent.replace(/\s+/g, " ").replace(/^#\s*/, "").trim();
+  }
+  const elOf = (k) => root.querySelector('[data-sg="' + k + '"]');
+  const store = (k, v) => { try { v ? localStorage.setItem(k, v) : localStorage.removeItem(k); } catch (e) {} };
+  const load = (k) => { try { return JSON.parse(localStorage.getItem(k) || "null"); } catch (e) { return null; } };
+
+  // ---- word diff (longest common subsequence over words and spaces); changes separated only by a space are grouped
+  const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  function diff(a, b) {
+    const A = a.match(/\s+|[^\s]+/g) || [], B = b.match(/\s+|[^\s]+/g) || [], n = A.length, m = B.length;
+    const L = Array.from({ length: n + 1 }, () => new Uint16Array(m + 1));
+    for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--) L[i][j] = A[i] === B[j] ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
+    let i = 0, j = 0, out = "", dl = "", ad = "";
+    const tag = (t, cls, x) => "<" + t + ' class="' + cls + (x.includes("\n") ? " rv-nl" : "") + '">' + esc(x) + "</" + t + ">";
+    const flush = () => { if (dl) out += tag("del", "rv-d", dl); if (ad) out += tag("ins", "rv-i", ad); dl = ad = ""; };
+    while (i < n && j < m) {
+      if (A[i] === B[j]) {
+        if ((dl || ad) && /^\s+$/.test(A[i]) && i + 1 < n && j + 1 < m && A[i + 1] !== B[j + 1]) { dl += A[i]; ad += B[j]; i++; j++; continue; }
+        flush(); out += esc(A[i]); i++; j++;
+      } else if (L[i + 1][j] >= L[i][j + 1]) dl += A[i++];
+      else ad += B[j++];
+    }
+    while (i < n) dl += A[i++];
+    while (j < m) ad += B[j++];
+    flush();
+    return out;
+  }
+
+  // ---- a passage's current text is everything outside <del>; positions are offsets in that text
+  function liveNodes(el) {
+    const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+      acceptNode: (n) => (n.parentElement.closest("del.rv-d") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
+    });
+    const a = []; let n;
+    while ((n = w.nextNode())) a.push(n);
+    return a;
+  }
+  const liveText = (el) => liveNodes(el).map((n) => n.nodeValue).join("");
+  function offsetOf(el, node, off) {
+    let acc = 0;
+    for (const n of liveNodes(el)) { if (n === node) return acc + off; acc += n.nodeValue.length; }
+    const pre = document.createRange(); pre.selectNodeContents(el); pre.setEnd(node, off);
+    return liveNodes(el).filter((n) => pre.intersectsNode(n)).reduce((s, n) => s + n.nodeValue.length, 0);
+  }
+  function caretOffset(el) { const s = getSelection(); return s.rangeCount ? offsetOf(el, s.getRangeAt(0).startContainer, s.getRangeAt(0).startOffset) : null; }
+  function setCaret(el, off) {
+    const r = document.createRange(), s = getSelection(); let acc = 0;
+    for (const n of liveNodes(el)) {
+      const len = n.nodeValue.length;
+      if (off != null && off <= acc + len) { r.setStart(n, off - acc); r.collapse(true); s.removeAllRanges(); s.addRange(r); return; }
+      acc += len;
+    }
+    r.selectNodeContents(el); r.collapse(false); s.removeAllRanges(); s.addRange(r);
+  }
+
+  // ================= comments =================
+  const CKEY = KEY + ":comments";
+  let comments = load(CKEY) || [];  // { id, k, quote, start, text }
+  const saveComments = () => { store(CKEY, comments.length ? JSON.stringify(comments) : ""); refresh(); };
+  function unpaint(el) {
+    el.querySelectorAll("mark.rv-c").forEach((m) => { m.replaceWith(...m.childNodes); });
+    el.normalize();
+  }
+  // Wrap [a, b) of the passage's live text in <mark>, one piece per text node it crosses.
+  function wrap(el, a, b, cid) {
+    let acc = 0; const pieces = [];
+    for (const n of liveNodes(el)) {
+      const s = acc, e = acc + n.nodeValue.length; acc = e;
+      const x = Math.max(a, s), y = Math.min(b, e);
+      if (x < y) pieces.push([n, x - s, y - s]);
+    }
+    pieces.forEach(([n, x, y]) => {
+      let t = n;
+      if (x > 0) t = t.splitText(x);
+      if (y - x < t.nodeValue.length) t.splitText(y - x);
+      const m = document.createElement("mark"); m.className = "rv-c"; m.dataset.c = cid; m.title = "Comment: click to open";
+      t.replaceWith(m); m.appendChild(t);
+    });
+  }
+  function paint(el) {
+    unpaint(el);
+    const text = liveText(el);
+    comments.filter((c) => c.k === el.dataset.sg).forEach((c) => {
+      let at = text.indexOf(c.quote, Math.max(0, c.start - 40));
+      if (at < 0) at = text.indexOf(c.quote);
+      c.lost = at < 0;  // the quoted text was edited away; the comment stays in the list
+      if (at >= 0) wrap(el, at, at + c.quote.length, c.id);
+    });
+  }
+
+  // ---- suggestion state: draw a passage from `cur`, then repaint its comments
+  let editing = false;
+  function draw(el) {
+    const k = el.dataset.sg, o = orig.get(k);
+    if (!cur.has(k)) { el.innerHTML = o.html; el.classList.remove("rv-sg"); }
+    else {
+      el.innerHTML = diff(o.text, cur.get(k)); el.classList.add("rv-sg");
+      el.querySelectorAll("del.rv-d").forEach((d) => (d.contentEditable = "false"));
+    }
+    paint(el);
+  }
+  function setText(k, text) { if (text == null || text === orig.get(k).text) cur.delete(k); else cur.set(k, text); }
+  const EKEY = KEY;
+  function saveEdits() {
+    const o = {}; cur.forEach((t, k) => (o[k] = { o: orig.get(k).text, t: t }));
+    store(EKEY, cur.size ? JSON.stringify(o) : "");
+    refresh();
+  }
+  const savedEdits = load(EKEY) || {};
+  Object.keys(savedEdits).forEach((k) => { if (orig.has(k) && orig.get(k).text === savedEdits[k].o) cur.set(k, savedEdits[k].t); });
+  new Set([...cur.keys(), ...comments.map((c) => c.k)]).forEach((k) => { if (elOf(k)) draw(elOf(k)); });
+
+  // ---- undo / redo for edits: typing within 800 ms in the same passage is one step
+  const hist = [], fwd = []; let lastK = null, lastT = 0;
+  function record(k, before, after, group) {
+    const now = Date.now();
+    if (group && hist.length && lastK === k && now - lastT < 800) hist[hist.length - 1].after = after;
+    else hist.push({ k: k, before: before, after: after });
+    lastK = group ? k : null; lastT = now; fwd.length = 0;
+  }
+  function jump(from, to, useBefore) {
+    const e = from.pop();
+    if (!e) return;
+    to.push(e); lastK = null;
+    setText(e.k, useBefore ? e.before : e.after);
+    const el = elOf(e.k); draw(el);
+    if (editing) { el.focus(); setCaret(el, null); }
+    el.scrollIntoView({ block: "nearest" });
+    saveEdits();
+  }
+  const undo = () => jump(hist, fwd, true), redo = () => jump(fwd, hist, false);
+
+  // ---- live editing
+  function onEdit(el) {
+    const k = el.dataset.sg, prev = cur.has(k) ? cur.get(k) : orig.get(k).text, now = liveText(el);
+    if (now === prev) return;
+    const off = caretOffset(el);
+    record(k, prev, now, true); setText(k, now); draw(el); setCaret(el, off); saveEdits();
+  }
+  let composing = false;
+  root.addEventListener("compositionstart", () => (composing = true));
+  root.addEventListener("compositionend", (e) => { composing = false; const el = e.target.closest("[data-sg]"); if (el && editing) onEdit(el); });
+  root.addEventListener("input", (e) => { if (composing || !editing) return; const el = e.target.closest("[data-sg]"); if (el) onEdit(el); });
+  // Replace the selection (or insert at the caret) with `str`, working on the passage's live text.
+  function insertAtCaret(el, str) {
+    const s = getSelection();
+    if (!s.rangeCount) return;
+    const r = s.getRangeAt(0), text = liveText(el);
+    const a = offsetOf(el, r.startContainer, r.startOffset);
+    const b = el.contains(r.endContainer) ? offsetOf(el, r.endContainer, r.endOffset) : text.length;
+    const k = el.dataset.sg, prev = cur.has(k) ? cur.get(k) : orig.get(k).text, now = text.slice(0, a) + str + text.slice(b);
+    if (now === prev) return;
+    record(k, prev, now, true); setText(k, now); draw(el); setCaret(el, a + str.length); saveEdits();
+  }
+  root.addEventListener("keydown", (e) => {
+    const el = editing && e.key === "Enter" && e.target.closest("[data-sg]");
+    if (!el) return;
+    e.preventDefault();
+    insertAtCaret(el, "\n");  // Enter and Shift+Enter both add a line break inside the passage
+  });
+  root.addEventListener("paste", (e) => {
+    const el = editing && e.target.closest("[data-sg]");
+    if (!el) return;
+    e.preventDefault();
+    insertAtCaret(el, (e.clipboardData || window.clipboardData).getData("text/plain").replace(/\r\n?/g, "\n"));
+  });
+  document.addEventListener("keydown", (e) => {
+    if (!(e.metaKey || e.ctrlKey) || e.altKey) return;
+    const t = e.target, inField = t && (t.tagName === "TEXTAREA" || t.tagName === "INPUT");
+    if (inField || !(editing || hist.length || fwd.length)) return; // text boxes keep the browser's own undo
+    const k = e.key.toLowerCase();
+    if (k === "z" && !e.shiftKey) { e.preventDefault(); undo(); }
+    else if ((k === "z" && e.shiftKey) || (k === "y" && !e.metaKey)) { e.preventDefault(); redo(); }
+  });
+
+  // ================= UI =================
+  const btn = (label, title) => { const b = document.createElement("button"); b.type = "button"; b.className = "rv-sgbtn"; b.textContent = label; if (title) b.title = title; return b; };
+  const bEdit = btn("✎ Suggest edits", "Edit the text in place; changes show as suggestions");
+  const bUndo = btn("↶", "Undo (Cmd/Ctrl+Z)"), bRedo = btn("↷", "Redo (Cmd/Ctrl+Shift+Z)");
+  const bHide = btn("Hide deletions", "Show only the new text");
+  const bList = btn("Edits & comments", "List every suggested edit and comment");
+  const bPdf = btn("Export PDF", "Print or save as PDF, with a Review notes appendix");
+  bEdit.setAttribute("aria-pressed", "false");
+  [bEdit, bUndo, bRedo, bHide, bList, bPdf].forEach((b) => bar.appendChild(b));
+  const banner = document.createElement("div");
+  banner.className = "rv-banner"; banner.setAttribute("role", "status");
+  banner.innerHTML = "<b>Suggesting.</b> Click any passage and type: deletions show in red, additions in green. " +
+    "Undo with Cmd/Ctrl+Z, redo with Cmd/Ctrl+Shift+Z. Select text to comment. Everything is saved in this browser.";
+  root.insertBefore(banner, root.firstChild);
+
+  // ---- comment button on selection, and the comment popover
+  const cbtn = document.createElement("button");
+  cbtn.type = "button"; cbtn.className = "rv-cbtn"; cbtn.textContent = "💬 Comment"; cbtn.hidden = true;
+  document.body.appendChild(cbtn);
+  const pop = document.createElement("div");
+  pop.className = "rv-pop"; pop.hidden = true; pop.setAttribute("role", "dialog"); pop.setAttribute("aria-label", "Comment");
+  document.body.appendChild(pop);
+  let pending = null;  // { k, start, end, quote } for a new comment
+  const place = (node, rect) => {
+    node.style.top = window.scrollY + rect.bottom + 8 + "px";
+    node.style.left = Math.max(16, Math.min(window.scrollX + rect.left, window.scrollX + document.documentElement.clientWidth - node.offsetWidth - 16)) + "px";
+  };
+  function selectionTarget() {
+    const s = getSelection();
+    if (!s.rangeCount || s.isCollapsed) return null;
+    const r = s.getRangeAt(0), start = r.startContainer.nodeType === 3 ? r.startContainer.parentElement : r.startContainer;
+    const el = start && start.closest("[data-sg]");
+    if (!el || !root.contains(el) || el.closest(LOCK)) return null;
+    const a = offsetOf(el, r.startContainer, r.startOffset);
+    const b = el.contains(r.endContainer) ? offsetOf(el, r.endContainer, r.endOffset) : liveText(el).length;
+    const text = liveText(el), quote = text.slice(a, b);
+    if (!quote.trim()) return null;
+    return { k: el.dataset.sg, start: a, quote: quote, rect: r.getBoundingClientRect() };
+  }
+  document.addEventListener("selectionchange", () => {
+    if (!pop.hidden) return;
+    const t = selectionTarget();
+    if (!t) { cbtn.hidden = true; return; }
+    pending = t; cbtn.hidden = false; place(cbtn, t.rect);
+  });
+  cbtn.addEventListener("mousedown", (e) => e.preventDefault());  // keep the selection
+  cbtn.addEventListener("click", () => { if (pending) openPop(null, pending); cbtn.hidden = true; });
+  function openPop(c, target) {
+    const isNew = !c;
+    pop.innerHTML = '<div class="rv-q"></div><textarea aria-label="Comment text" placeholder="Add a comment"></textarea><div class="rv-row"></div>';
+    pop.querySelector(".rv-q").textContent = "“" + (isNew ? target.quote : c.quote).slice(0, 140) + ((isNew ? target.quote : c.quote).length > 140 ? "…" : "") + "”";
+    const ta = pop.querySelector("textarea"); ta.value = isNew ? "" : c.text;
+    const row = pop.querySelector(".rv-row");
+    const bSave = btn(isNew ? "Comment" : "Save"), bCancel = btn("Cancel");
+    if (!isNew) { const bDel = btn("Resolve"); bDel.title = "Delete this comment"; bDel.onclick = () => { comments = comments.filter((x) => x.id !== c.id); const el = elOf(c.k); if (el) paint(el); closePop(); saveComments(); }; row.appendChild(bDel); }
+    row.appendChild(bCancel); row.appendChild(bSave);
+    bCancel.onclick = closePop;
+    bSave.onclick = () => {
+      const text = ta.value.trim();
+      if (!text) { ta.focus(); return; }
+      if (isNew) {
+        const nc = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), k: target.k, quote: target.quote, start: target.start, text: text };
+        comments.push(nc); paint(elOf(target.k));
+      } else c.text = text;
+      closePop(); saveComments(); getSelection().removeAllRanges();
+    };
+    ta.addEventListener("keydown", (e) => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) bSave.click(); if (e.key === "Escape") closePop(); });
+    pop.hidden = false;
+    let rect = target ? target.rect : null;
+    if (!rect) { const m = root.querySelector('mark.rv-c[data-c="' + c.id + '"]'); rect = (m || elOf(c.k)).getBoundingClientRect(); }
+    place(pop, rect);
+    root.querySelectorAll("mark.rv-c").forEach((m) => m.classList.toggle("rv-on", !isNew && m.dataset.c === c.id));
+    ta.focus();
+  }
+  function closePop() { pop.hidden = true; root.querySelectorAll("mark.rv-on").forEach((m) => m.classList.remove("rv-on")); }
+  root.addEventListener("click", (e) => {
+    const m = e.target.closest("mark.rv-c");
+    if (!m || (editing && getSelection().isCollapsed === false)) return;
+    const c = comments.find((x) => x.id === m.dataset.c);
+    if (c) openPop(c, null);
+  });
+  document.addEventListener("mousedown", (e) => { if (!pop.hidden && !pop.contains(e.target) && !e.target.closest("mark.rv-c")) closePop(); });
+
+  // ---- drawer listing edits and comments
+  const drawer = document.createElement("div");
+  drawer.className = "rv-drawer"; drawer.hidden = true; drawer.setAttribute("role", "dialog"); drawer.setAttribute("aria-label", "Edits and comments");
+  drawer.innerHTML = '<div class="rv-drawer-in"><div class="rv-drawer-head"><b>Edits and comments</b><span class="rv-drawer-btns"></span></div>' +
+    '<div class="rv-status" style="opacity:.75">Copy the list and paste it into the chat.</div><div class="rv-list" style="display:grid;gap:8px"></div></div>';
+  document.body.appendChild(drawer);
+  const dCopy = btn("Copy all"), dDiscard = btn("Discard all edits"), dClose = btn("Close");
+  [dCopy, dDiscard, dClose].forEach((b) => drawer.querySelector(".rv-drawer-btns").appendChild(b));
+
+  function edits() {
+    return [...cur.keys()].sort((a, b) => a - b).map((k) => ({ k: k, section: orig.get(k).section, before: orig.get(k).text, after: cur.get(k) || "(deleted)" }));
+  }
+  function commentList() {
+    return comments.slice().sort((a, b) => a.k - b.k || a.start - b.start).map((c) => ({ id: c.id, k: c.k, section: (orig.get(c.k) || {}).section || "", quote: c.quote, text: c.text, lost: !!c.lost }));
+  }
+  function markdown() {
+    const e = edits(), c = commentList(), out = [];
+    if (e.length) out.push("## Suggested edits", "", e.map((x, i) => (i + 1) + ". [" + x.section + "]\n   BEFORE: " + x.before + "\n   AFTER: " + x.after).join("\n\n"), "");
+    if (c.length) out.push("## Comments", "", c.map((x, i) => (i + 1) + ". [" + x.section + '] on "' + x.quote + '"' + (x.lost ? " (text since edited)" : "") + "\n   " + x.text).join("\n\n"), "");
+    return out.join("\n");
+  }
+  function refresh() {
+    const n = cur.size, m = comments.length;
+    bList.textContent = "Edits & comments" + (n || m ? " (" + n + " · " + m + ")" : "");
+    bHide.hidden = !n; bUndo.disabled = !hist.length; bRedo.disabled = !fwd.length;
+    if (!drawer.hidden) list();
+  }
+  function list() {
+    const box = drawer.querySelector(".rv-list"), e = edits(), c = commentList();
+    box.innerHTML = e.length || c.length ? "" : "<p>No edits or comments yet.</p>";
+    e.forEach((x, i) => {
+      const d = document.createElement("div"); d.className = "rv-chg";
+      d.innerHTML = '<span class="rv-chg-sec">Edit ' + (i + 1) + " · " + esc(x.section) + '</span><div class="rv-chg-body" title="Jump to this passage">' +
+        diff(x.before, x.after === "(deleted)" ? "" : x.after) + "</div>";
+      const rj = btn("Reject this edit");
+      rj.onclick = () => { record(x.k, cur.get(x.k), null, false); setText(x.k, null); draw(elOf(x.k)); saveEdits(); };
+      d.querySelector(".rv-chg-body").onclick = () => { drawer.hidden = true; elOf(x.k).scrollIntoView({ block: "center", behavior: "smooth" }); };
+      d.appendChild(rj); box.appendChild(d);
+    });
+    c.forEach((x, i) => {
+      const d = document.createElement("div"); d.className = "rv-chg rv-com";
+      d.innerHTML = '<span class="rv-chg-sec">Comment ' + (i + 1) + " · " + esc(x.section) + (x.lost ? " · quoted text since edited" : "") + "</span>" +
+        '<div class="rv-chg-body" title="Jump to this comment"><i>“' + esc(x.quote) + "”</i><br>" + esc(x.text) + "</div>";
+      const rs = btn("Resolve");
+      rs.onclick = () => { comments = comments.filter((y) => y.id !== x.id); const el = elOf(x.k); if (el) paint(el); saveComments(); };
+      d.querySelector(".rv-chg-body").onclick = () => {
+        drawer.hidden = true;
+        const target = root.querySelector('mark.rv-c[data-c="' + x.id + '"]') || elOf(x.k);
+        target.scrollIntoView({ block: "center", behavior: "smooth" });
+        setTimeout(() => openPop(comments.find((y) => y.id === x.id), null), 400);
+      };
+      d.appendChild(rs); box.appendChild(d);
+    });
+  }
+  function setEditing(on) {
+    editing = on;
+    document.body.classList.toggle("rv-editing", on);
+    root.querySelectorAll("[data-sg]").forEach((el) => { el.contentEditable = on ? "true" : "false"; });
+    bEdit.setAttribute("aria-pressed", String(on));
+    bEdit.textContent = on ? "✎ Stop suggesting" : "✎ Suggest edits";
+    refresh();
+  }
+  bEdit.onclick = () => setEditing(!editing);
+  bUndo.onclick = undo; bRedo.onclick = redo;
+  bHide.onclick = () => { const h = !document.body.classList.contains("rv-hide-del"); document.body.classList.toggle("rv-hide-del", h); bHide.textContent = h ? "Show deletions" : "Hide deletions"; };
+  bList.onclick = () => { drawer.hidden = false; list(); };
+  dClose.onclick = () => (drawer.hidden = true);
+  dDiscard.onclick = () => { edits().forEach((x) => { record(x.k, cur.get(x.k), null, false); setText(x.k, null); draw(elOf(x.k)); }); saveEdits(); };
+  dCopy.onclick = () => {
+    const text = "# Review\n\n" + (markdown() || "No edits or comments."), st = drawer.querySelector(".rv-status");
+    const done = () => (st.textContent = "Copied. Paste it into the chat.");
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, () => window.prompt("Copy:", text));
+    else window.prompt("Copy:", text);
+  };
+  // ---- PDF: print in the light theme with everything expanded, plus an appendix of the review notes
+  let printState = null;
+  function beforePrint() {
+    if (printState) return;
+    const ae = document.activeElement; if (ae && ae.dataset && ae.dataset.sg) ae.blur();
+    const rootEl = document.documentElement, closed = [...document.querySelectorAll("details:not([open])")];
+    printState = { theme: rootEl.getAttribute("data-theme"), closed: closed };
+    rootEl.setAttribute("data-theme", "light");
+    closed.forEach((d) => (d.open = true));
+    pop.hidden = true; cbtn.hidden = true; drawer.hidden = true;
+    const e = edits(), c = commentList();
+    if (e.length || c.length) {
+      const box = document.createElement("section");
+      box.className = "rv-print-notes";
+      let h = "<h2>Review notes</h2>";
+      if (e.length) h += "<h3>Suggested edits</h3><ol>" + e.map((x) => '<li><div class="rv-sec">' + esc(x.section) + "</div>" + diff(x.before, x.after === "(deleted)" ? "" : x.after) + "</li>").join("") + "</ol>";
+      if (c.length) h += "<h3>Comments</h3><ol>" + c.map((x) => '<li><div class="rv-sec">' + esc(x.section) + '</div><i>“' + esc(x.quote) + "”</i><br>" + esc(x.text) + "</li>").join("") + "</ol>";
+      box.innerHTML = h;
+      root.appendChild(box);
+      printState.box = box;
+    }
+  }
+  function afterPrint() {
+    if (!printState) return;
+    const rootEl = document.documentElement;
+    if (printState.theme == null) rootEl.removeAttribute("data-theme"); else rootEl.setAttribute("data-theme", printState.theme);
+    printState.closed.forEach((d) => (d.open = false));
+    if (printState.box) printState.box.remove();
+    printState = null;
+  }
+  window.addEventListener("beforeprint", beforePrint);
+  window.addEventListener("afterprint", afterPrint);
+  bPdf.onclick = () => { beforePrint(); window.print(); setTimeout(afterPrint, 500); };
+  refresh();
+  return { edits: edits, comments: commentList, markdown: markdown };
+}
+</script>
+<script type="application/json" id="grids">{"e1_sonnet_corrected": [[1, 5, 3, 5, 5], [1, 5, 3, 4, 5], [1, 5, 4, 5, 5], [1, 5, 3, 3, 4], [1, 5, 4, 5, 5], [2, 5, 2, 4, 4], [1, 5, 2, 4, 4], [1, 4, 2, 3, 4], [1, 5, 3, 5, 5], [2, 5, 3, 3, 4]], "e2_sonnet_corrected": [[1, 5, 5, 3, 5], [1, 5, 5, 3, 5], [1, 5, 5, 5, 5], [1, 5, 3, 3, 5], [1, 5, 5, 5, 5], [1, 5, 5, 5, 5], [1, 5, 3, 5, 5], [1, 5, 2, 3, 5], [1, 5, 2, 5, 5], [2, 5, 4, 5, 3]], "e3_sonnet_corrected": [[1, 5, 3, 5, 3], [1, 5, 5, 5, 5], [1, 5, 5, 3, 5], [1, 5, 5, 5, 5], [1, 5, 5, 5, 5], [2, 5, 3, 3, 5], [1, 5, 5, 5, 5], [1, 5, 5, 5, 5], [2, 5, 3, 5, 5], [1, 5, 5, 5, 5]], "e1_sonnet_control": [[2, 3, 1, 1, 2], [1, 3, 2, 1, 1], [1, 3, 1, 1, 2], [1, 2, 1, 1, 2], [1, 3, 1, 1, 1], [1, 3, 1, 1, 2], [2, 3, 1, 1, 2], [1, 3, 1, 1, 1], [1, 3, 1, 1, 2], [1, 2, 1, 1, 1]], "e2_sonnet_control": [[1, 5, 2, 1, 3], [1, 5, 5, 1, 2], [1, 5, 2, 1, 3], [1, 5, 2, 1, 3], [2, 5, 3, 1, 3], [1, 5, 1, 1, 5], [2, 5, 1, 1, 3], [2, 5, 1, 1, 4], [1, 5, 2, 1, 4], [1, 5, 2, 1, 4]], "e3_sonnet_control": [[1, 5, 2, 1, 4], [1, 5, 1, 1, 3], [1, 5, 2, 2, 4], [2, 5, 3, 2, 5], [1, 5, 2, 3, 5], [1, 5, 4, 1, 2], [1, 5, 4, 1, 4], [2, 5, 3, 1, 2], [1, 5, 3, 1, 3], [1, 5, 1, 1, 4]], "e1_haiku_corrected": [[1, 3, 3, 3, 3], [2, 4, 3, 3, 4], [1, 4, 4, 4, 4], [1, 4, 4, 5, 4], [2, 4, 2, 2, 3], [1, 4, 3, 3, 4], [1, 3, 3, 5, 4], [1, 4, 3, 3, 4], [1, 4, 3, 4, 3], [1, 4, 4, 5, 4]], "e2_haiku_corrected": [[2, 3, 3, 3, 3], [3, 3, 5, 5, 3], [1, 3, 5, 3, 3], [1, 5, 5, 3, 5], [1, 5, 5, 3, 5], [1, 5, 5, 3, 5], [1, 3, 3, 3, 5], [1, 3, 3, 3, 3], [1, 3, 3, 3, 3], [1, 2, 5, 2, 5]], "e3_haiku_corrected": [[1, 3, 3, 3, 5], [1, 3, 5, 3, 5], [1, 3, 5, 2, 2], [1, 3, 2, 3, 5], [2, 5, 5, 5, 5], [1, 3, 3, 3, 5], [1, 3, 5, 2, 5], [1, 5, 5, 3, 5], [1, 5, 5, 5, 3], [1, 3, 2, 3, 5]], "e1_haiku_control": [[2, 3, 1, 1, 2], [2, 3, 1, 1, 2], [1, 3, 1, 1, 1], [1, 3, 1, 1, 2], [1, 3, 1, 1, 2], [1, 3, 1, 2, 2], [2, 3, 1, 2, 1], [2, 3, 1, 1, 2], [1, 3, 1, 1, 2], [1, 3, 1, 1, 1]], "e2_haiku_control": [[1, 5, 2, 1, 2], [3, 5, 1, 1, 3], [1, 5, 3, 1, 5], [1, 5, 2, 1, 4], [2, 5, 2, 1, 4], [1, 5, 2, 3, 3], [1, 5, 2, 2, 3], [1, 5, 1, 1, 3], [1, 5, 2, 1, 3], [1, 5, 1, 1, 2]], "e3_haiku_control": [[1, 5, 1, 1, 1], [1, 5, 1, 1, 4], [1, 5, 4, 1, 3], [1, 5, 3, 2, 4], [1, 5, 2, 1, 3], [2, 5, 2, 1, 2], [1, 5, 1, 1, 3], [2, 5, 1, 1, 4], [1, 5, 1, 2, 4], [1, 5, 1, 1, 4]], "e4_nemotron_corrected": [[1, 3, 4, 2, 3], [2, 5, 5, 5, 5], [2, 3, 5, 3, 3], [1, 5, 3, 4, 2], [1, 3, 4, 3, 3], [1, 3, 5, 3, 4], [1, 5, 3, 2, 5], [1, 3, 4, 4, 4], [1, 3, 1, 2, 3], [2, 3, 3, 2, 4]], "e4_nemotron_control": [[2, 4, 3, 1, 2], [1, 4, 2, 2, 2], [1, 3, 2, 1, 1], [1, 5, 2, 1, 2], [1, 5, 2, 1, 2], [2, 3, 3, 2, 2], [2, 5, 1, 2, 3], [1, 4, 3, 2, 2], [2, 3, 2, 2, 3], [1, 1, 3, 1, 2]], "e5_supervl_corrected": [[1, 5, 5, 5, 5], [1, 5, 5, 5, 5], [1, 5, 5, 5, 5], [2, 5, 5, 5, 5], [1, 5, 5, 5, 5], [1, 5, 5, 5, 5], [2, 5, 5, 5, 5], [1, 5, 5, 5, 5], [1, 5, 5, 5, 5], [1, 5, 5, 5, 5]], "e5_supervl_control": [[1, 5, 2, 2, 2], [1, 5, 3, 1, 3], [1, 5, 2, 1, 4], [3, 5, 3, 3, 3], [1, 5, 1, 1, 3], [1, 5, 2, 1, 2], [1, 5, 2, 1, 3], [1, 5, 1, 1, 2], [1, 5, 3, 1, 3], [1, 5, 3, 1, 2]], "e6_ernie_corrected": [[2, 5, 3, 4, 5], [1, 3, 3, 3, 4], [1, 5, 5, 3, 5], [1, 5, 5, 5, 2], [1, 3, 5, 3, 3], [2, 5, 5, 5, 5], [1, 5, 5, 5, 3], [1, 5, 5, 3, 5], [1, 3, 5, 3, 5], [1, 3, 5, 3, 3]], "e6_ernie_control": [[1, 5, 1, 1, 2], [1, 5, 2, 1, 3], [2, 5, 2, 1, 4], [3, 5, 2, 3, 4], [1, 5, 3, 2, 4], [1, 5, 1, 1, 1], [1, 5, 2, 1, 4], [1, 5, 3, 1, 1], [1, 5, 1, 1, 4], [1, 5, 5, 1, 4]], "e7_gemma_corrected": [[2, 5, 3, 3, 4], [2, 4, 5, 4, 5], [2, 4, 5, 5, 4], [2, 5, 5, 5, 4], [1, 5, 5, 5, 5], [2, 5, 5, 4, 5], [3, 5, 5, 4, 4], [2, 5, 5, 4, 3], [1, 4, 5, 4, 3], [2, 5, 5, 5, 5]], "e7_gemma_control": [[1, 5, 2, 1, 3], [1, 5, 2, 1, 3], [2, 5, 3, 1, 3], [1, 5, 2, 1, 4], [2, 5, 4, 1, 3], [1, 5, 1, 1, 3], [1, 5, 2, 1, 3], [2, 5, 2, 2, 3], [1, 5, 2, 1, 3], [1, 5, 2, 1, 3]], "e8_kimi_corrected": [[1, 5, 5, 5, 5], [1, 5, 5, 5, 5], [1, 5, 5, 5, 5], [1, 5, 5, 5, 5], [3, 5, 5, 5, 5], [2, 5, 5, 5, 5], [1, 3, 5, 5, 5], [1, 5, 5, 5, 5], [2, 5, 5, 5, 5], [1, 5, 5, 5, 5]], "e8_kimi_control": [[1, 5, 3, 2, 3], [3, 5, 1, 3, 5], [1, 5, 2, 2, 5], [1, 5, 3, 2, 4], [1, 5, 2, 1, 5], [1, 4, 2, 2, 5], [1, 5, 3, 2, 4], [1, 4, 2, 1, 4], [1, 5, 2, 1, 4], [1, 5, 2, 2, 4]], "e10_minimax_corrected": [[3, 3, 5, 5, 3], [2, 5, 3, 3, 2], [1, 3, 1, 3, 5], [1, 3, 3, 3, 5], [1, 5, 5, 3, 5], [1, 5, 5, 3, 5], [1, 3, 5, 2, 5], [1, 3, 3, 3, 3], [2, 5, 3, 3, 3], [1, 3, 5, 2, 5]], "e10_minimax_control": [[2, 5, 1, 1, 1], [1, 5, 1, 1, 2], [1, 5, 1, 1, 2], [1, 2, 1, 1, 1], [1, 5, 1, 1, 2], [1, 5, 3, 1, 3], [1, 5, 1, 1, 4], [1, 5, 1, 1, 1], [2, 5, 1, 1, 1], [1, 2, 1, 1, 2]], "e12_mistralsmall_corrected": [[2, 4, 4, 2, 1], [2, 3, 2, 4, 1], [3, 4, 3, 2, 3], [1, 3, 1, 3, 5], [2, 5, 4, 3, 2], [1, 2, 3, 4, 5], [2, 5, 3, 2, 2], [3, 5, 3, 2, 2], [1, 5, 3, 2, 1], [1, 3, 3, 2, 3]], "e12_mistralsmall_control": [[3, 5, 1, 1, 1], [2, 5, 3, 2, 1], [2, 5, 2, 1, 2], [2, 5, 1, 2, 1], [2, 5, 2, 1, 1], [2, 5, 2, 1, 2], [2, 5, 3, 1, 2], [3, 5, 1, 1, 1], [2, 5, 1, 1, 1], [2, 5, 1, 1, 1]]}</script>
+<script>
+const G=JSON.parse(document.getElementById('grids').textContent);
+const st={exp:'e2',model:'sonnet'};
+const NOTES={e1:'Exp 1: original wording, rubric v0.1 (counted meals, so turn 2 looks worse). Kept with its original Sonnet-judge scores, as history.',e2:'Exp 2: the same replies as Exp 1, re-scored with rubric v0.2.',e3:'Exp 3: new replies, with turn 2 changed to "Can you plan Sunday?", rubric v0.2.',e4:'Exp 4: the first open model, Nemotron 3 Ultra (free on OpenRouter), in the Exp 3 setup.',e5:'Exp 5: Nemotron 3.5 Super VL (free on OpenRouter), Exp 3 setup.',e6:'Exp 6: ERNIE 5.5 Flash (free on OpenRouter), Exp 3 setup; judged through the Anthropic API.',e7:'Exp 7: Gemma 4 31B (free on NVIDIA NIM), Exp 3 setup.',e8:'Exp 8: Kimi K3.1 Pro (free on NVIDIA NIM), Exp 3 setup.',e10:'Exp 10: MiniMax M3.1 Flash (free on NVIDIA NIM), Exp 3 setup.',e12:'Exp 12: Mistral Small 3.1 24B (free on Cloudflare Workers AI), Exp 3 setup.'};
+const col=s=>s?`var(--s${s})`:'var(--line)';
+const mean=a=>{a=a.filter(x=>x!=null);return a.length?a.reduce((x,y)=>x+y,0)/a.length:null};
+function pill(s){return `<span class="pill${s?'':' na'}" style="${s?`background:${col(s)}`:''}">${s??'–'}</span>`}
+function grid(id,rows,corrected){
+  let h='<tr><th>run</th>'+[0,1,2,3,4].map(t=>`<th class="num">t${t}</th>`).join('')+(corrected?'<th class="num">dip</th>':'')+'</tr>';
+  rows.forEach((r,i)=>{const lv=r[1];const dip=corrected&&lv!=null&&[2,3,4].some(t=>r[t]!=null&&lv-r[t]>=1);
+    h+=`<tr><td class="mono">${i}</td>`+r.map(s=>`<td class="num">${pill(s)}</td>`).join('')+(corrected?`<td class="num">${dip?'yes':''}</td>`:'')+'</tr>'});
+  const m=[0,1,2,3,4].map(t=>mean(rows.map(r=>r[t])));
+  const dips=corrected?rows.filter(r=>r[1]!=null&&[2,3,4].some(t=>r[t]!=null&&r[1]-r[t]>=1)).length:null;
+  h+='<tr><td class="mono"><b>avg</b></td>'+m.map(v=>`<td class="num"><b>${v==null?'–':v.toFixed(1)}</b></td>`).join('')+(corrected?`<td class="num"><b>${dips}/10</b></td>`:'')+'</tr>';
+  document.getElementById(id).innerHTML=h;return m;
+}
+function chart(mc,mk){
+  const W=640,H=160,L=30,R=12,T=10,B=24,x=t=>L+t*(W-L-R)/4,y=s=>T+(5-s)*(H-T-B)/4;
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Average score per turn, corrected vs control">`;
+  for(let v=1;v<=5;v++)s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end">${v}</text>`;
+  for(let t=0;t<5;t++)s+=`<text x="${x(t)}" y="${H-6}" text-anchor="middle">turn ${t}</text>`;
+  for(const[m,c]of[[mc,'var(--accent)'],[mk,'var(--control)']]){s+=`<polyline fill="none" stroke="${c}" stroke-width="2.5" points="${m.map((v,t)=>`${x(t)},${y(v)}`).join(' ')}"/>`;m.forEach((v,t)=>s+=`<circle cx="${x(t)}" cy="${y(v)}" r="3.5" fill="${c}"/>`)}
+  s+='</svg>';
+  document.getElementById('chart').innerHTML=`<div class="legend"><span><i class="sw" style="background:var(--accent)"></i>corrected average</span><span><i class="sw" style="background:var(--control)"></i>control average (turn 1 plans nothing, so it scores high there)</span></div>`+s;
+}
+function render(){
+  const kc=`${st.exp}_${st.model}_corrected`,kk=`${st.exp}_${st.model}_control`;
+  if(!G[kc]){
+    document.getElementById('gridNote').textContent=(st.model==='nemotron'?'Nemotron 3 Ultra was only run in Exp 4.':'Exp 4 tested the open model only. Pick Nemotron 3 Ultra.');
+    ['gCor','gCon'].forEach(id=>document.getElementById(id).innerHTML='');document.getElementById('chart').innerHTML='';return;
+  }
+  document.getElementById('gridNote').textContent=NOTES[st.exp];
+  const mc=grid('gCor',G[kc],true);
+  const mk=grid('gCon',G[kk],false);
+  chart(mc,mk);
+}
+const OPEN={e4:'nemotron',e5:'supervl',e6:'ernie',e7:'gemma',e8:'kimi',e10:'minimax',e12:'mistralsmall'};const EXP_OF={nemotron:'e4',supervl:'e5',ernie:'e6',gemma:'e7',kimi:'e8',minimax:'e10',mistralsmall:'e12'};
+function sync(){[['segExp','exp'],['segModel','model']].forEach(([id,k])=>document.querySelectorAll(`#${id} button`).forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===st[k])))}
+function seg(id,key){document.querySelectorAll(`#${id} button`).forEach(b=>b.addEventListener('click',()=>{st[key]=b.dataset.v;
+  // each open model was run in one experiment only, so picking one selects the other
+  if(key==='exp'){if(OPEN[st.exp])st.model=OPEN[st.exp];else if(EXP_OF[st.model])st.model='sonnet'}
+  else{if(EXP_OF[st.model])st.exp=EXP_OF[st.model];else if(OPEN[st.exp])st.exp='e3'}
+  sync();render()}))}
+seg('segExp','exp');seg('segModel','model');render();
+(function(){
+  const root=document.documentElement,btn=document.getElementById('themeBtn');
+  const sysDark=()=>window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const current=()=>root.dataset.theme||(sysDark()?'dark':'light');
+  function paint(){const dark=current()==='dark';document.getElementById('themeText').textContent=dark?'Light':'Dark';document.getElementById('themeIcon').textContent=dark?'☀':'☾';btn.setAttribute('aria-label',dark?'Switch to light theme':'Switch to dark theme')}
+  try{const saved=localStorage.getItem('q2-summary-theme');if(saved==='dark'||saved==='light')root.dataset.theme=saved}catch(e){}
+  btn.addEventListener('click',()=>{const next=current()==='dark'?'light':'dark';root.dataset.theme=next;try{localStorage.setItem('q2-summary-theme',next)}catch(e){}paint()});
+  paint();
+})();
+
+rvReview({root:document.querySelector('.wrap'),bar:document.querySelector('.topbar'),key:'q2-summary-review',lock:'#gCor,#gCon,#chart,.controls,nav.toc'});
+
+</script>
+</body>
+</html>

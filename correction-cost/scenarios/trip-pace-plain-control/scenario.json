@@ -1,0 +1,30 @@
+{
+  "id": "trip-pace-plain-control",
+  "version": "0.2",
+  "license": "CC BY 4.0",
+  "preferences": [
+    {
+      "id": "pace",
+      "question": "How packed should each day be?",
+      "user_value": "Slow. One or two activities a day with plenty of free time."
+    }
+  ],
+  "description": "Control for trip-pace-plain-corrected. Same turns, but turn 1 asks a neutral question instead of correcting the pace, so turns 2-4 show the model's uncorrected default. Variant of trip-pace: turn 2 drops \"in more detail\", to test whether asking for detail is what makes the plan creep.",
+  "turns": [
+    {
+      "user": "Can you plan a weekend in Lisbon for me?"
+    },
+    {
+      "user": "Thanks! Is Lisbon easy to get around on foot?"
+    },
+    {
+      "user": "Great. Can you plan Sunday?"
+    },
+    {
+      "user": "A friend is joining me on Saturday. Can you redo Saturday for the two of us?"
+    },
+    {
+      "user": "I've decided to stay an extra day. Can you plan Monday too?"
+    }
+  ]
+}

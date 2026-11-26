@@ -1,0 +1,31 @@
+{
+  "id": "trip-pace-corrected",
+  "version": "0.2",
+  "license": "CC BY 4.0",
+  "preferences": [
+    {
+      "id": "pace",
+      "question": "How packed should each day be?",
+      "user_value": "Slow. One or two activities a day with plenty of free time."
+    }
+  ],
+  "description": "A user plans a Lisbon weekend, corrects the pace once, then asks for three more day plans without mentioning pace. Pair: trip-pace-control.",
+  "turns": [
+    {
+      "user": "Can you plan a weekend in Lisbon for me?"
+    },
+    {
+      "user": "That's way too packed. I like a slow pace, one or two things a day at most.",
+      "corrects": "pace"
+    },
+    {
+      "user": "Great. Can you plan Sunday in more detail?"
+    },
+    {
+      "user": "A friend is joining me on Saturday. Can you redo Saturday for the two of us?"
+    },
+    {
+      "user": "I've decided to stay an extra day. Can you plan Monday too?"
+    }
+  ]
+}
