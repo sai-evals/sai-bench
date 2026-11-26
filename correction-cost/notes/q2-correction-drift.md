@@ -362,3 +362,71 @@ Earlier notes said Nemotron 3 Ultra had the only run that slid back and never re
 - Default measurable: control turns 2–3 average 1.45 ✔. Correction taken only partly: 3.9 < 4.0 ✘ (4/10 runs score 5).
 - Drift-back 9/10, stayed down 7/10: both the highest so far. The plans get busier with each turn (e.g. 1 → 5 → 3 → 2 → 1). Some replies call the plan relaxed while listing four stops. It never asks about or states an assumption about pace (0/100 replies).
 - Across 9 models, a dip that lasts to turn 4 now appears in 14 of 90 runs, 7 of them from Mistral Small.
+
+## Experiment 13: a second preference, the user's own voice ("sounds like me"), written before running (2026-11-26)
+
+Why: every Q2 result so far is about trip pace. Writing in the user's voice is the everyday case of the same question:
+people paste their own emails, ask for a draft "that sounds like me", correct it once, and then watch the next drafts
+slide back to the assistant's register. The Sounds Like Me plan (playground repo) calls this the "assistant persona
+pull"; its deslop toolkit supplies habits that can be checked without a judge.
+
+Scenario (`bench/voice_scenarios.py`, `scenarios/voice-*`): "jo", an invented ceramicist, pastes three short emails (all
+lowercase, short, dry, no "!", no dashes, no pleasantries, signs off "thx, jo") and asks for a reply to a client.
+Turn 1 corrects the voice explicitly or is a neutral "final version" request. Turns 2-4 ask for a Slack message to an
+assistant, a follow-up email and a thank-you note, never mentioning style. Four arms:
+
+| Arm | Turn 0 | Turn 1 |
+|---|---|---|
+| `voice-corrected` | samples | "too polished, that's not me… all lowercase, short, no exclamation marks, no dashes, sign off 'thx, jo'" |
+| `voice-control` | samples | "ok thanks. can you give me the final version?" |
+| `voice-note` | samples + the same style note | neutral |
+| `voice-nosamples` | no samples | neutral (the model's own voice for these tasks) |
+
+Scores (`bench/voice_score.py`), on the draft only (preamble and notes cut by a heuristic; method recorded per reply):
+five rule checks with no judge (lowercase, no "!", no dashes, no stock pleasantries, ≤ 80 words), the sign-off on email
+turns, and a Haiku 1-5 "sounds like the samples" score. Haiku 5.5 target, 10 runs per arm (40 conversations, 200
+replies), about $0.30.
+
+Predictions:
+- **V1, the correction works.** At turn 1, `corrected` passes at least 1.5 more core rules than `control`.
+- **V2, it drifts back.** In at least half the corrected runs, a later turn (2-4) passes at least 2 fewer core rules than
+  that run's turn 1.
+- **V3, the new genre pulls hardest.** The thank-you note (turn 4) is the corrected arm's lowest later turn on core rules
+  (capitals, "!" and "thank you so much" come back).
+- **V4, samples alone don't carry the voice.** At turn 0, `control` (samples) is closer to `nosamples` than to `note`
+  (samples + note) on core rules.
+- **V5, the judge and the rules agree.** Pearson r between core rules and judge score ≥ 0.6 over all replies.
+
+### Experiment 13 results (Haiku 5.5, 2026-11-26)
+
+40 conversations (4 arms × 10), 0 failed; 200 judge calls, 0 unparsed; about $0.25. Extraction found the draft by its
+greeting in 196 of 200 replies and in a code block in 4; none fell back to the whole reply. Claude read 12 turn-1 and
+turn-4 drafts with the judge's reasons (not blind) and agreed with every score within 1 point.
+
+| Arm | Turn 0 | Turn 1 | Turn 2 (Slack) | Turn 3 (follow-up) | Turn 4 (thank-you note) |
+|---|---|---|---|---|---|
+| corrected | 5.0 / 4.4 | 5.0 / **4.9** | 5.0 / 4.7 | 5.0 / 4.5 | 4.7 / **3.9** |
+| control | 5.0 / 4.6 | 4.9 / 4.7 | 4.7 / 4.3 | 4.9 / 4.0 | 4.6 / **3.1** |
+| note | 5.0 / 5.0 | 5.0 / 4.9 | 5.0 / 4.6 | 4.9 / 4.4 | 4.9 / 4.0 |
+| nosamples | 3.6 / 1.9 | 3.6 / 1.8 | 3.8 / 2.8 | 3.8 / 2.0 | 3.0 / 1.2 |
+
+Cells: core rules passed (0-5) / judge (1-5), mean of 10. Without samples, Haiku never writes lowercase or signs "thx, jo",
+and uses stock phrases in 40% of first drafts. With samples, every surface rule passes from the first draft on, and the
+sign-off holds on every email turn. Words per draft: samples 19-31; corrected 23-39; nosamples 38-65.
+
+Predictions, checked as written:
+- **V1 fails.** At turn 1, corrected passes 5.0 rules vs control 4.9 (line +1.5). There was nothing left to correct on the
+  surface: three samples were enough for Haiku to copy lowercase, the sign-off and the length.
+- **V2 fails on rules, holds on the judge.** 0 of 10 corrected runs lose 2 rules. But 9 of 10 lose at least 1 judge
+  point by turn 4, from 5 at turn 1 to 4: the draft stays lowercase and signed, and the warmth comes back.
+- **V3 holds.** The thank-you note is the lowest turn in every arm with samples (judge 3.1 to 4.0); stock phrases appear
+  in 30% of corrected and control thank-you notes ("thanks so much", "really appreciate it", "we're grateful").
+- **V4 fails.** At turn 0, samples alone (control) match samples plus note (5.0 rules each), far from no samples (3.6).
+- **V5 holds.** Rules vs judge r = 0.81.
+
+**What it shows.** Haiku copies the *form* of a voice from three samples at once (lowercase, length, sign-off) and keeps
+it. What drifts is the *register*: when the genre turns warm (a thank-you note), the assistant's politeness comes back
+("thanks so much… we'd love to return the favour"), wrapped in the user's lowercase. The explicit correction slows this
+(thank-you note judge 3.9 corrected vs 3.1 control) but doesn't stop it. So "sounds like me" fails less on the habits a
+rule can check and more on tone, which only the judge sees; the next version needs a register check (sentence length,
+warmth words) and a model that doesn't copy surface form as easily as Haiku (the free models).

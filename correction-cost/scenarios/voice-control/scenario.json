@@ -1,0 +1,32 @@
+{
+  "id": "voice-control",
+  "version": "0.1",
+  "license": "CC BY 4.0",
+  "arm": "control",
+  "description": "Samples at turn 0; turn 1 is a neutral redo request.",
+  "samples": "hey marta,\nkiln's fixed. your bowls go in tonight, out thursday.\nthe blue came out darker than the test tile. i think it's better but tell me if not.\nthx, jo\n\n---\n\nhey dev,\ncan't do the 20th. the studio's booked for a class.\nthe 27th works. same time?\nthx, jo\n\n---\n\nhey lena,\ninvoice attached. no rush, end of month is fine.\nthe planters were fun to make. send me a photo once they're planted.\nthx, jo",
+  "preferences": [
+    {
+      "id": "voice",
+      "question": "Does the draft sound like the user's own emails?",
+      "user_value": "jo's voice: all lowercase, short, dry, no exclamation marks, no dashes, no pleasantries, signs off 'thx, jo'."
+    }
+  ],
+  "turns": [
+    {
+      "user": "here are three emails i wrote, so you get how i sound:\n\nhey marta,\nkiln's fixed. your bowls go in tonight, out thursday.\nthe blue came out darker than the test tile. i think it's better but tell me if not.\nthx, jo\n\n---\n\nhey dev,\ncan't do the 20th. the studio's booked for a class.\nthe 27th works. same time?\nthx, jo\n\n---\n\nhey lena,\ninvoice attached. no rush, end of month is fine.\nthe planters were fun to make. send me a photo once they're planted.\nthx, jo\n\ncan you draft a reply to priya? she asked if we can move her order of 40 mugs from the 12th to the 5th. we can, but only if she confirms the glaze colour by friday."
+    },
+    {
+      "user": "ok thanks. can you give me the final version?"
+    },
+    {
+      "user": "now a quick slack message to sam, my studio assistant: priya's mugs move to the 5th, so the kiln schedule has to shift."
+    },
+    {
+      "user": "and a follow-up to priya for next tuesday, in case she still hasn't confirmed the glaze."
+    },
+    {
+      "user": "last one: a thank-you note to the harbour gallery. they're the ones who sent priya our way."
+    }
+  ]
+}
