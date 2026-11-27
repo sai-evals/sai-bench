@@ -52,18 +52,28 @@ LAST = {}  # stop_reason and token usage of the last call, where the provider re
 
 PROVIDER = {"gpt": "openai", "claude": "anthropic", "gemini": "google", "deepseek": "deepseek"}
 
-def chat(provider, model, messages, system=None, temperature=None, max_tokens=8000, json_mode=False):
-    """messages: [{'role':'user'|'assistant','content':str}]. Returns (text, model_used)."""
+def split_think(text):
+    """Some open models write their reasoning inline as <think>...</think> before the answer. Returns (answer, thinking)."""
+    m = re.match(r"\s*<think>(.*?)</think>\s*(.*)", text or "", re.S)
+    return (m.group(2), m.group(1).strip()) if m else (text, None)
+
+def chat(provider, model, messages, system=None, temperature=None, max_tokens=8000, json_mode=False, thinking=False):
+    """messages: [{'role':'user'|'assistant','content':str}]. Returns (text, model_used).
+    The model's reasoning, when the provider returns it, goes to LAST["thinking"] (never into the returned text).
+    thinking=True turns on Claude's adaptive thinking with summarized display: Claude's API returns a summary
+    of its reasoning, not the raw text. OpenAI-compatible reasoning models return theirs without a flag."""
     if provider == "anthropic":
         body = {"model": model, "max_tokens": max_tokens, "messages": messages}
         if system: body["system"] = system
         if temperature is not None: body["temperature"] = temperature
+        if thinking: body["thinking"] = {"type": "adaptive", "display": "summarized"}
         h = {"x-api-key": KEYS["anthropic"], "anthropic-version": "2023-06-01", "content-type": "application/json"}
         try: r = _post("https://api.anthropic.com/v1/messages", h, body)
         except RuntimeError as e:
             if "temperature" not in str(e): raise
             body.pop("temperature"); r = _post("https://api.anthropic.com/v1/messages", h, body)
-        LAST.clear(); LAST.update(stop_reason=r.get("stop_reason"), usage=r.get("usage"))
+        think = "\n\n".join(b.get("thinking", "") for b in r["content"] if b.get("type") == "thinking") or None
+        LAST.clear(); LAST.update(stop_reason=r.get("stop_reason"), usage=r.get("usage"), thinking=think)
         return "".join(b.get("text", "") for b in r["content"]), r.get("model")
     if provider in ("openai", "deepseek", "openrouter", "local", "groq", "nim", "aihubmix", "cloudflare"):
         msgs = ([{"role": "system", "content": system}] if system else []) + messages
@@ -96,9 +106,11 @@ def chat(provider, model, messages, system=None, temperature=None, max_tokens=80
         # AIHubMix answers an exhausted free quota with a normal-looking reply; treat it as an error, never as model output.
         if provider == "aihubmix" and (c["message"].get("content") or "").startswith("Sorry, to prevent abuse of free resources"):
             raise RuntimeError("aihubmix: free quota exhausted: " + c["message"]["content"][:200])
+        text, inline = split_think(c["message"].get("content") or "")
+        think = c["message"].get("reasoning") or c["message"].get("reasoning_content") or inline
         LAST.clear(); LAST.update(stop_reason="max_tokens" if c.get("finish_reason") == "length" else c.get("finish_reason"),
-                                  usage=r.get("usage"))
-        return c["message"]["content"] or "", r.get("model")
+                                  usage=r.get("usage"), thinking=think)
+        return text, r.get("model")
     if provider == "google":
         contents = [{"role": "model" if m["role"] == "assistant" else "user", "parts": [{"text": m["content"]}]} for m in messages]
         body = {"contents": contents}

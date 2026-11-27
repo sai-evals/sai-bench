@@ -1,0 +1,1251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Does the model register an unstated preference?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a research summary in one reading column, nine numbered sections (the order is the argument:
+   question → sub-questions → hypotheses → method → scale → example → experiments → findings → next). */
+:root{
+  --bg:#f6f7f9; --panel:#ffffff; --ink:#18202b; --muted:#5b6676; --line:#dde2e9; --soft:#eef1f5;
+  --accent:#2f5bd3; --control:#b86a12;
+  --s1:#c2412d; --s2:#d9772b; --s3:#c9a227; --s4:#6aa84f; --s5:#2e8b6e; --chipText:#ffffff;
+  --ok:#2e8b6e; --mixed:#c9a227; --no:#c2412d;
+  --font-body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11151b; --panel:#181d25; --ink:#e6eaf0; --muted:#9aa5b4; --line:#2a313c; --soft:#1f252f;
+  --accent:#7d9bf0; --control:#e3a25a;
+  --s1:#e0705c; --s2:#e8975a; --s3:#d9bd55; --s4:#89c26f; --s5:#4fb592; --chipText:#11151b;
+  --ok:#4fb592; --mixed:#d9bd55; --no:#e0705c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11151b; --panel:#181d25; --ink:#e6eaf0; --muted:#9aa5b4; --line:#2a313c; --soft:#1f252f;
+  --accent:#7d9bf0; --control:#e3a25a;
+  --s1:#e0705c; --s2:#e8975a; --s3:#d9bd55; --s4:#89c26f; --s5:#4fb592; --chipText:#11151b;
+  --ok:#4fb592; --mixed:#d9bd55; --no:#e0705c; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:900px;margin:0 auto;padding-block:36px 90px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{text-wrap:balance;margin:0;font-weight:650}
+h1{font-size:2.1rem;line-height:1.15;font-weight:700}
+h2{font-size:1.4rem}
+h3{font-size:1rem}
+p,li{max-width:70ch}
+p{margin:0}
+ul,ol{margin:0;padding-left:1.25em;display:grid;gap:4px}
+a{color:var(--accent)}
+.mono{font-family:var(--font-mono);font-size:.86em}
+.eyebrow{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+.lede{color:var(--muted);margin-top:10px;font-size:1.02rem}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;font-size:.85rem}
+.meta span{color:var(--muted)}
+nav.toc{margin:24px 0 4px;padding:14px 18px;border:1px solid var(--line);border-radius:10px;background:var(--panel);display:grid;gap:8px}
+nav.toc ol{margin:0;padding-left:1.4em;columns:2;column-gap:32px;display:block}
+nav.toc li{break-inside:avoid;padding:2px 0;font-size:.92rem}
+nav.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+nav.toc a:hover,nav.toc a:focus-visible{color:var(--accent);border-color:var(--accent);outline:none}
+@media (max-width:560px){nav.toc ol{columns:1}}
+section{padding:36px 0 8px;border-bottom:1px solid var(--line);display:grid;gap:14px;scroll-margin-top:12px}
+.shead{display:flex;gap:12px;align-items:baseline}
+.snum{font-family:var(--font-mono);color:var(--accent);font-weight:500}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:12px;min-width:0}
+.callout{border-left:3px solid var(--accent);padding:4px 0 4px 14px;display:grid;gap:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid2>*{min-width:0}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;font-size:.86rem;width:100%}
+th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:.78rem}
+td.num,th.num{text-align:center;font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-family:var(--font-mono);font-weight:500;font-size:.78rem;border-radius:6px;padding:1px 7px;color:var(--chipText);min-width:26px;text-align:center}
+.na{background:var(--line);color:var(--ink)}
+.tag{display:inline-block;font-family:var(--font-mono);font-size:.72rem;border-radius:999px;padding:1px 9px;border:1px solid currentColor;white-space:nowrap}
+.tag.ok{color:var(--ok)}.tag.mixed{color:var(--mixed)}.tag.no{color:var(--no)}.tag.dis{color:var(--muted)}
+.hyp{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:baseline}
+.hyp .id{font-family:var(--font-mono);font-weight:500;color:var(--accent)}
+.convo{display:grid;gap:6px}
+.turn{display:grid;grid-template-columns:62px 1fr;gap:10px;font-size:.88rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.turn .t{font-family:var(--font-mono);font-size:.74rem;color:var(--muted);padding-top:2px}
+.turn.corr{border-color:var(--accent)}
+.turn .q{color:var(--muted);font-size:.84rem;margin-top:4px}
+.say-c{color:var(--accent);font-weight:600}
+.say-k{color:var(--control);font-weight:600}
+.controls{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex-wrap:wrap}
+.seg button{font:inherit;font-size:.82rem;border:0;background:transparent;color:var(--ink);padding:5px 11px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.ctl-label{font-size:.78rem;color:var(--muted);margin-right:6px}
+.exp{display:grid;gap:10px;padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.exp-h{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}
+.exp-h h3{font-size:1.05rem}
+.kv{display:grid;grid-template-columns:130px 1fr;gap:4px 12px;font-size:.88rem}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0}
+@media (max-width:520px){.kv{grid-template-columns:1fr}.kv dt{margin-top:6px}}
+.stats{display:flex;flex-wrap:wrap;gap:24px}
+.stat{display:grid;gap:2px}
+.big{font-size:1.8rem;font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums}
+.small{font-size:.82rem}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.78rem;color:var(--muted)}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+svg text{fill:var(--muted);font-family:var(--font-mono);font-size:11px}
+.chat{display:grid;gap:10px;border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--panel)}
+.chead,.crow{display:grid;grid-template-columns:96px 1fr 1fr;gap:12px;align-items:start}
+.chead{grid-template-columns:96px 1fr 1fr;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.chead::before{content:""}
+.who{display:flex;gap:10px;align-items:center;font-size:.9rem}
+.who.wa b{color:var(--accent)}.who.wb b{color:var(--control)}
+.crow{padding:10px 0;border-bottom:1px dashed var(--line)}
+.crow-key{background:var(--soft);border-radius:10px;padding:10px 8px;border-bottom:0}
+.csum{border-bottom:0}
+.tlabel{display:grid;gap:4px;color:var(--muted);font-size:.8rem;padding-top:4px}
+.ttag{font-size:.7rem;color:var(--muted)}
+.ttag-key{color:var(--ink);font-weight:600}
+.side{display:grid;gap:8px;min-width:0}
+.ub{justify-self:end;max-width:92%;border-radius:14px 14px 4px 14px;padding:8px 12px;font-size:.86rem;color:var(--chipText)}
+.sa .ub{background:var(--accent)}.sb .ub{background:var(--control)}
+.ub-key{outline:3px solid var(--ink);outline-offset:2px;font-weight:600}
+.bb{display:flex;gap:8px;align-items:flex-start;max-width:96%}
+.botav{flex:0 0 auto;margin-top:2px}
+.bt{background:var(--bg);border:1px solid var(--line);border-radius:14px 14px 14px 4px;padding:8px 12px;font-size:.84rem}
+.bs{font-size:.78rem;color:var(--muted);margin-top:4px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.chead .who.wa,.crow .sa{grid-column:2}.chead .who.wb,.crow .sb{grid-column:3}
+@media (max-width:720px){
+  .chead,.crow{grid-template-columns:1fr}
+  .chead::before{display:none}
+  .chead .who.wa,.crow .sa,.chead .who.wb,.crow .sb{grid-column:1}
+  .crow .sb{border-top:1px dotted var(--line);padding-top:8px}
+}
+.topbar{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:max(12px,env(safe-area-inset-right,0px));z-index:20;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.themebtn{display:inline-flex;gap:6px;align-items:center;font:inherit;font-size:.8rem;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.themebtn:hover,.themebtn:focus-visible{border-color:var(--accent);outline:none}
+body.editing .wrap{outline:2px dashed var(--accent);outline-offset:8px;border-radius:6px}
+[data-eid][contenteditable="true"]{cursor:text}
+[data-eid][contenteditable="true"]:focus{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.sg{border-left:3px solid var(--s5);padding-left:6px}
+del.sd{color:var(--s1);text-decoration:line-through;text-decoration-thickness:1.5px;background:color-mix(in srgb,var(--s1) 10%,transparent)}
+ins.si{color:var(--s5);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:2px;background:color-mix(in srgb,var(--s5) 12%,transparent)}
+body.hide-del del.sd{display:none}
+.chg .rj{justify-self:start;font-size:.75rem;padding:2px 10px}
+body.editing [data-eid]:hover{background:color-mix(in srgb,var(--accent) 8%,transparent)}
+body.editing .editbanner{display:block}
+.editbanner{display:none;position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:var(--accent);color:var(--chipText);font-size:.85rem;padding:8px 12px;border-radius:8px;margin-top:12px}
+.drawer{position:fixed;left:0;right:0;bottom:0;z-index:30;max-height:70vh;overflow:auto;background:var(--panel);border-top:2px solid var(--accent);box-shadow:0 -6px 20px rgba(0,0,0,.18);padding-block:16px calc(16px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.drawer-in{max-width:900px;margin:0 auto;display:grid;gap:12px}
+.chg{border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:grid;gap:6px;font-size:.86rem}
+.chg .b{color:var(--s1);text-decoration:line-through;text-decoration-thickness:1px}
+.chg .a{color:var(--s5)}
+.drawer textarea{width:100%;min-height:140px;font-family:var(--font-mono);font-size:.78rem;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px}
+.topbar .rv-sgbtn{display:inline-flex;gap:6px;align-items:center;font:inherit;font-size:.8rem;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 12px;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.topbar .rv-sgbtn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--chipText)}
+footer{color:var(--muted);font-size:.8rem;margin-top:30px;display:grid;gap:4px}
+.lg{display:inline-block;width:16px;height:16px;border-radius:4px;background-size:cover;vertical-align:-3px;margin-right:6px;flex:none}.lg-anthropics{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAADu0lEQVR4nOyXz08aaRjHH2bGH7uMHjRLdCKGRJKuka0mNtnGigJupNGuFChMV9dD94+wf8GmR7eX7h9QD1t+lBYywB7QPZluTDdEk9bpocSLHkggimAi4mwYfd6ZbUgVCxsP88wcvl++7+jHl+d935Hp7++H61QUCg1IA9KANCAN6JoCMSjqK4pS/hJJLpBLJxcmcHp6irKZM/Tkya+i+J7cT58uYwJO57Q6mpiwYtI0oPb29unpaXTVa2pqqru7u6oAUqnVbDaLCfA8j7JpQHfvOjs7O9FVr9bWVo/HXVUA5XL55csIJmC32wyGb9A1B4jn/SiV8vt9pHWCwVClUpEltLS0eD1eHNUEILPZPDo6ik4pk8l0+/b3INfOzs6bN39jAj7/A3WbNxhocXGB/PRcLre/v48JLC7+jBJWVlZQgtFotNtt6BoKxLKsy3UfHYRC4UjkFTpwOBwcx8kS1tb+2tvbq8naSKC5uR/1+q/JBhMOh0OhMNmBaJr2+R7IEiqViiDE8TkYGxszGvvQNQ5I3c5v3/7z8WNGFMXNzU38DLxeD03TsoRYLEZYKYry+Xw4qkFAN29+Nzg4iA6CwRCKMH4Gvb29k5OTsoR3795vb29jUmVlGKaRQDzvJ+1cKBSSyaQsQRCEYrGIo+DhQ2UWX7wIoASDweBw2NF9MRDLsjMzM+hgdXXt6OhIlnB4eJhM/okJWK1Wjusl31qpVKp3174U0L17syzLooNUKvWVqgRBIO3CMIzXe74THhwUEokEPgR37oz19V3c2rrL/KMYiYQtFgs6ODk5IQRnJzxN0+QL3d3ddTh+ONusR0ZGAoE/SPTs2e/Ly7/hc1edIYvFMjQ0hO58GlpUxTAM+ZUAwHEcOeTT6bQofsAEPB73ha1N1dXOlyx1uwQCSmv39PTYbLYvAtLr9bOzSjtLny0cBRMTVnLIv34dJSvgk2V4FSC3+35HRwc6WFp6fOPGtzXvR49+wVHVQ97lcmFrH0SjUUxgfHzcZDKhqxNIp9MtLMyjg3w+H48nJAlq3uvr65lMBseC262ces+fr5D5o2l6fv4nTOoEunVrdGBgAB1Eo7Hj42N0n5YkVY9bdGA2m4eHh2UJovghnU5jAi7XXFtbG7p6gHieJ+0sSVIwGMSkdkUir8rlMpldnq+9a3d1dTmd/3kJVl+fW4QbGxtbW1tni7BUKqkXcM3KZrNLS4/J+3WxqGzT8XhCr2fJYs3l8ufqahvj/1nUxUM0IA1IA9KANCANSAOqB+jfAQDj4Ws9rXFMQgAAAABJRU5ErkJggg==)}.lg-nvidia{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAHqElEQVR4nOyYC1CU1xWAv91leQiLQjCroijq4gtEVIiuQqRaaShig6gTtVo1VidNfM00UWOi1kjaqpM4mqmdivGR2iETrS+sEbRqfMYHj/jAiEq2UBRUwADKY9nOxXs7W7JGFEjjzJ7z79zzuOfe/9xz7/nPXS3PODgdcDrgdMDpwP/XARdFPC30ima8ycwYxTcV8jLYn72PjYpvcQfaBhLcM4qxim8qPCinKBs2OrfQo7aQRoPGP5jwwAGMNJoYUHyDc1tn00enx6tNewLb9+SFruHEtTZiUjY/Cgc8ffANG8XMkBhmGPwIFMKKUix387ns6UvHylKKvz7GrgtppGg0zO8UijkikXldw0loyUg/1gE3LzwHv8Jb/eOZ5+KKV8ElDh3/hHevf8n+8jvcjprG8oSlfC4611l5YMkiLWMPa6+eIM2SyYnOYZhHvsF6H39C1JjNCTpFOILugxkxLom0wAGMqijhX3v/wNgjySy7lUt2TRX3jd0J9uuMqewWeZUl5LfywegXQFivYfyyU1/Cv8nkYNE1crL3k9ymAx3adqG/GvtRcPMqZ66dZp/inyoCLq64/mQWSaGxzNNo0OaeJCV1JdOrKqho3Q7/8DHM7R3NRHcD7U+lsDT1j0wXhjo9+t7DSYycQlJAKD+fvI6zO5YQV5hD1p4kXi0p4Jp5AklqnhaJgLsBw9j3SQ0yM0Ec2MtH+Hj3CibXVlPdfzTTEpaS6t+bYTdz+fJUCu+5G/Aydqdf0TWyRJ+iXC5cSGdLYH+G+HQguNcwxt04y96KuxRbsjimdaGmUwjD1XxNjcB3DpfJTJx/L6IFc/8eBftWMsNWhy361ywb8RrJWh2uaeuYum0+IzL38rGtDrdh01kz8UOOuHrQqt6ujJK8DNIE7eqBb48oXlbjF1zihDguim8qfMeBy4fZXlFCvmA8vPE3dn94+GqrqRKttZYHlw/zmeqv4PlAIl58leV6d9xGL2ZzRCLLhPzqSbZ9senhtgnoR2T8InY5mrfZHKitovpUCssVP3QKvxPt2R18VFXJHb0b3oPGM1/p7SE0ljcmr+V4j0gmCz7vPLt2r2CKiGBQJLHjkvjc1QNvobtj4RxgU7bN5oB4MvaQfCuXk4LuEsaoHlG8dP8eZUeSH774wAQWBfRjiOqvQKtF/1wAA2w26jL2smr7OyTWWbGaJzI/fiE7tTo8bDasxz/hzeQZDExZwJDCKxxV9s1yiMUjVsySzcGQkUzR6fEI6Muwy4fZasnkpOF5WrczMTQokjGVpVz38MbYsQ9RylasbOpKJpzbyQZPX/xefpeUvjG8rtGiq75PiUjFmXvYLPqW3SQ/+x9s+vY2Od0GEa/RoHvSQ6xRhCMwmYkZvZjd4uAW53E2ZQExlSXcjRjLb4ZM4j29O20uHmK9cExkrOIbZBReIdvDm9Zh8cyKGMNvXVvxnBjLksW+/R8ws7SQfPuJDG0xxsxhXddwEgWfuY+PDqzhdaVvkgPi6RFJ/KiFpGh1uN/N56sdS4i/m09eqzb4BI9ggpsBzxtnOKrVofPtiKnLAIZ3DecX4qst7MtukXtsCwsuprNdjSnQzZNWEYnMHjiGheJcKXmzOyAeUQ7EvcU2Tx861zyg7NwuVp3fxZ/L71AsSolB41ms+sqSoqrgIocvHGTzpXQ+s9ZSo3R+XTCFxjIj+KdMc5PRsccWcUDVREMmsahfHLNd9HjV1VFTdI0z/87hRHUl31prqKkso6gknyuFX3O+qpxKYafRomlnIqTbC8QGDSXBrzPhakxH8KQOuDSyH1XlVBxaz9unP2V1n+FMMpkZ3S6IiLzzHDi68WGqFejli4/4Mhu7EebfG3OnvkR7eNNe6ZsbNE/Y/39Aq0MTOZV3ekbVZyuduwFfFz0GpX8aaLEIOMI6KzZbHfrWRroq2Q8NTXJAPIU5nBarpvimQv5XHG2GYZ4d1H6PzunAD+GAOgOhwEJJKxTl80VgE1AErAI6AunABtUJWAu0Bf4i9S+JigD4PfAnwEf2swL3oL4K/au4NkB9ev1A6kX5cFvSSFsvSa8RBbGkHeLPZGnr6CdeXmSZ1ZLPVkbiIy1lVkl/KHlVjBU0GEv9sqC+fAiyk3WWNgKHS1mtbLcqRWO2UBwQC8yVq9RWrs6nUh8iV1rgaNmeB76RtCOcIV9wkoxCX2COUjqAWbJ9Xy6O+OuyjZQ9NgL2qTVZyvbLj55F8jOlPl3qF0l+9SMikCB5gSuk7NAjImCU27dCvvQBqZ8r9Y+NgD3ekK2bHOTvko+Xe1vdA3bItjE3LIu8YfnKtiH+Slyl5VylwBYpf81R5fA4Bxq+0E7ZRsvtoxfXaCBHyhuDqpgrlm1DnCpbcdl6U0ZJPCY5r8Ms1Fj8Qlxnob4MXtLAqe/DF+V2GCxXGLk1GoK4pvaA+vI7Rv6QZ9EDmCa3XqPPwNtS9k8lADbb9RURilAKmWobk4XEXy7uDs7ABkmvkfYKXpFyUaJ3B5bKzPjflxWpcbJMjVbZCtwt9+wtJYD6v0jSJS0mOyNp8fxNpsgCyc+RK6dArOx1aSNsC+3mFd+AVOCI/NnjHrt+YmtdAcol/2yjtnHdnA44HXA64HSghRz4zwBLRIYoLxW3GQAAAABJRU5ErkJggg==)}.lg-baidu{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAAFK0lEQVR4nOyWe0wU5xbAz+w89sHsQ0BguQEUBVFALniv8d6oUeujahEL1qSpUkVtbUPER9OmwWorsbGpFm2N0Vo1tRpLkFq1rRWloiuPqqWg0DRVsDzchdWVfc9rZ6aZZcb9t42W+secb/8435zvO/v7znfOmcFEUYSnSTSKogKpQCqQCqQCqUAq0NMB1HmHpWlBmf3TQMc/98yb3rvkuXscB+5B/tUVjpKX7IMPecU+7EBfHvMCwK+/sK0t1I4KV11t8Mol6shBt2IfdiAEiSitLXRYhWBAGG6gXTtc82f21tUGCpcaAWDMWDwnV5+WTgAAikJBkfFxgJC/+gnbeYedN70XAKJIpLl1VEc7k5ZOmC2ox82f/sqfmU3camVqzwVeLDblLzYOB9D33/pL1wyEVbjUnJyUjN/tYn/v4iZP0UeRmkBAmDT+bigEGA4NP6XExGLKvj8rmOD1+PbsVqaAmE36+QvxtHTlQUSY5ib6Qm3WklKdDqFpMS4eTbDiXxzxbNv8QBQhwYoerUrEMCQUkhaHOLB3+Q0/2pTdESHyJrEdHcBIOResqRa8XnLlKum6rYlE3iSE6+2xj0lRFoeHVpvQcI3IzlbmsvgOHfRur4hvaO7oj266Si3IJ30+YemiPoaRF6Sl48dOJs76f0/ALxoMiO28nlpZJFl4nr1xHU38F5qUBACW9ypcK4qxjAy+uxtNSUFjYniXi7fbydVrTGUb5ZAa160f8eFHAEA3NjhnTqPrfwjd7WJsl8NGBM/MJItXELl5xrINGtKYk6vLydW1t9ElyxykUXOxIWnaf7oB4PZv3KZS5+Hj1pbr9P+m6s1jdDD3WcHj5p1O9sZ1bNw4InsiAOC5eVI1jYxjGhsARUWKEsJAgssFADIQ+3OLd08lIAjT3AQAxMScUE83f69POt7Dh76PK/n+fkSvd7+5yVC0RGM01tUGNpYOFBQaJ2QR1kRs8hQdALTfYtIyiAN73Z8ciNfqpIbiP/wZlpoqnWTdesmVwxGsrjKWbQAAclkxY7sctbxYN2MWfaE2eKrGWLYxAsTYrjC2K5IGgI5OxbOydNOmE5lZIssCwP22Vuq7bwxFL0hmAHsfV7Z2YHmJ6Zm5UY02CgBmz4sCgJ5urvzd2LGJnWWvDew/YpWWAuATcx5tZDvag9VVcr+xWAz5BdzNNu5mm1Szy19GY2IiQFErV5k3bwEArr39fsFC9zvlCIr5D32KJkh+BY9HTpPwr74uSNPihCxt9QmvrZ5atylaschy8XzQ9SA0VGKBY0epr0+FH4PIKukG4Nu3N1h1AiFJjdkieNzBmpMiHzK/8ZYMJDy4z7W1SkC3b0vTwUG67oL++cLonZUA4JjyX8WPNGJHogBwusa/dXts/mIOALrusK+vHzFuPCGfXgM4Lndxc/kWU/iOpARtanTOmDqkk6+s1c2e43m/Ak8dG+rtsXyw07BgYSRC1Nkz1Nkz8pWNGm1+uxxLTvHt3nXvZLVMkRKpxFlzyH/nuevrgteaek1mKVf6Hfz5cwGtVoZYVEiazOgQhGf7Nt+eyiEIkQoCiiI6KeF8+/fxXZ2ix6OJixNutg2WrmVLVls2b0VEjgv1O5T/AgTD0YR4AMk173Q+CjJCaBG9XvC4sQQrYBjLQuPVgN8nRkdr0jMIkxmz97E3rtED/XxSMrZgkRELh5532EWel151ymsP0eqkOnfYAcVEltHExGr0+sfq1H/30DwBHyqQCqQCqUAqkAqkAqlAKtATBPpjAEnlGucIWutOAAAAAElFTkSuQmCC)}.lg-google-deepmind{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAHCUlEQVR4nOyZe0xb5xnGH99NwGCCsQmliUlYQiFbUhOgCYSSEraQaE2XpmNZpbVdpbJEmqq1f4wu2h/blIZJS7WqqxiamqZTuzTryppKSagIhaKQCwRStuGQjmsGAWwuBtvYxrfpO+3rlvlyjomJNo3fdyS+932POc+j43POd16L8T/OioEVA3dpQEqTmCGJU2D1lnwkbsiBXJ3KHcPntsNpGsFcnxGW3h74PV7a/b/HQFrJLmRWHoauqAISeQKlg/C6rJjs/AR3Gusx0vAXLMxaqbQURDRZMgl6PQy/qEVq/h5KCcbrsmP47En01h2HY2yM0tEgoYlgRBIx0neXwj46Cl1xKXa+0QyVfjOVo0IslSM5txDrK5+D3+fAdHc74PdTOfYG4nRabHu5FsP17yJ581bs+N15SJQJfB/jHWKpAtrte5D60E6Y2hrgsdupFLu7kDonB7vOXMPQB+9AJJWi8MT7EMviqBwTNIZHsOtMO3esmBpg/7DkzVZYB3sw1tSAbcffgEyVQuWYEqddxx1LoAn+i1ip0+KRM+3cP259diekynjseL2BysuGwzSMjysL4JwwUSr6M8Au2MITf+LE2273wHzlErKeep7Kywo7ZuGJ05yGJRvY+MMfQ2Mo4+Z3mj6APFmN1G3lVF522DXBNCzJQNyaNXjg8K8oxGRXGzR5OyASx/7pHQmmgWmJ2kB21UuQKFUUwjpwE4kbcim8ZzANTEtUBmRJiVi3/xkKueGanoIiRUshL36/B46JAcze+hQO0yAXLxWmhWkSvBa6v+IgJIr/eED5/BBJ+O9ac/03cOsPNRhrOQ/3nI3SkMavgia/CBl7DiLjm4cWnV2+wbTcv/cgBk6fpFTkM5BefoCmAeTJyXBNz1AYkr53juPigXzc/vDPi8SzzWOfx3hLI65XV+HCbj36330Ffq+byryk7z4g7CskkkqgMZRQGECVuRG2oV4Kgxiqfw3dx34Gv5t/qSxXx+NvNT9Fyw+2Y35ikNIRYZqYNl4DSdkPQKIIPr0pDxbD3HkJfr+PUgGcU6PorqmmkBeneRpFde/DO29Hc2UhLLc6qBQWpolp4zWQuD70IzzjW0/AOT6Bqa4mSgUYfK8WHts8hby4rXaY2y+h9HQ7kr+eh9anyzHb10XlsITQFmxAqb2PpotIWJcL7fYi/POtVykVYPyTCzQVDLvIpUoVHnrlr1DnbEZb1T64LONUDkkIbcEGQn19iE1VR3Gn6RwmOxspxQ3r0Gc0FYx9pJ/7K5YpuZWtSCzGp8d+ROWQhNAWbCAS2oIKZOzdj47qp+GyTFAafl/09/ivPtEVah3ya05h5PxZmNqjOpvBBtg7ayS2Hv09/D4frr34OHxuJ0shPmMDlQWj0m+kKTc0eeVIL9uHW3XHKCVEW7ABp2mUpiFRqNNQVHcOFuM/cPWF78DjtGJN6V4qCybt4QqaBvjaU8/DdKUNtuEeSvFpCzYwN2CkaViSsgwoOdWImb93ouVQAVILiiFTxVOZF2nCKmQ+cZjCACmGMijTdBj56D1K8WkLNjDbe5P3a8Q29aZ87hVTsioebVWPQ5m6mkq8bKmugTIl+G4nEomRmleMqRuXKBWAaWLaeA2wptNkVyuFEVmly0TpH6/gG9W/xoKF/0VcJJNgy9GXoT8Qfo2foM+GdTD4rsY0hWiIBRtg487FepryIpLIsOF7L6Di4hC21dQhrbScW7hRnQ1ZYgLWPvpd7K7vQNaTYZfG3KZYnYyFmeA1F2uECX4nZkvXfS2jwStSgbCls9P8LyzMzEKuToRSuxYikTTSRwKj7+3fwPj6L/HolTlKweuy4VzpfXDPfpmLeAbYjsNn36QwapjYOG0mkjZtRZxuvWDxbHNNmaBYvbjjwbSEEB/eABus3ed18l/MsWauvweq9V8u2pgGpiUM4Q04xsZws/bnFN4T2BN9svMyNIYiSnEaIvRNwxtg47OTr2Gy62MKlx3z9UYszFiQXvbYF3eeJk5DBCIb8HvZkuEQ12S6F/S99SpStxcjYW0uHKYhXHvx+5yGJRtgG+uMXT6yF27rFKWWhckbFzHW/BGyn6vmjnX5yD6+rpwwA2xYjEa0PlOybGeCCb7+0rNYU7YHqsxc7ljsmAIQZoBMNFcWxPya8Lkd3MrW7/FA/9iTn79iGo3L8/sA69vfPvs2vC4LUh4s4vr6d4NnfhZXf7If5vY2aPIN6K39LdxWW6hdY2Pgi8csprquYvjDU5DEyZGYtZn7pSVazB0NuHzk25juvsFdqNaBoWh/nRHWXudDnqTimlWsl6TJezjiK6l3wYaJtgsYPFOL8dZmSt8Nd2/gq7C+jTo7F4lZOVBqMyCWsXcEDxYsZsz1GzHd3QGvw0W7/5/zOeJoP7BiYMXAYgP/HgC4JXaIzWD4kAAAAABJRU5ErkJggg==)}.lg-moonshotai{background-image:url(data:image/png;base64,/9j/2wCEAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDIBCQkJDAsMGA0NGDIhHCEyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMv/AABEIADAAMAMBIgACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AOk+JnxMuNKu5ND0OQR3KDFzcgAlCf4V9/U9vrXiN9qN1fzNNd3U1xKeryyFyfxNGo30l/fXF3M2ZZ5Glc+pY5P866b4d+BR411R/tN2tvY2+DKFcebIfRQf1OK00SM9WziXeqsklfVth8OrXQAx0Ca3iJOdl9ZR3A+m4bZPzY4rK8XWml2ujzXPjLwrpktknDXunzKsgz0wH2MD7KzZ96XMVY+Z7bU73TpxPZXc9tMpyJIZCjD8RXu3wk+LtzrOoR+HPEUoku5Bi0uyADIQPuP746Hv069fFfFdnoVnfCbw7qpvtOlyVWVCk0J/uuCBn2YcVh2F/Np2qWt/bsVmtpkmQjsykEfyqWNGy719MeGYvBsPhfSdFv0sluY4FzHqEHkyNIeWK+YAT8xOCK+Xnkr6m8OeOfD+teEdPfVFaGJ4FSVry2b7OXUbW/eEFOoPUg+1OTEjdHhg2+H0nWtSsR1EZm+0RH/gMu7A/wB0ivK/FPxUfStXutC8W+E4tV06KUrHcSWxg8zHG9Uk3A98EEZHPGa9Bv8Aw9Yv4fvLvwZJ5F75LG0GnXmyBpMfLlAfLIzjqK8vn+IvxK8NxNbeMPCKalZjiSSS2wG/4GmY/wBKkoxtQi+DvifTrqXTp73QdTETNDDLuEbSAHAOdygZx0IryNEr1nVPE3wr8Q6ReSN4VuNK1YQuYPs3yxmTB2j5CBjOOq15ciUAXNTtpdO1G6sZwVlt5WicHsykg/yrsvhp8UZ/At29reI9zo1w26WJfvRN03pn9R3wK9E+Lvwku9ZvZPEXhyIS3cgzdWYIBkIH3098dR36jnr89X+n32n3LQX9ncWsynBjnjKMPwIp3FY+otVbwn438PXVx4O1fSrDX5ArQ3ccv2WZGDAkPtw/IyOQetcBd+PPiX4Akji1bUdK1SHO1Q80UxP/AHwVk/EivF0SrCJSGdZ418aN41vbe4Oj2GnGNfnNvGN8rHqWfAJHoO3NYem2EuoahbWUClpbiVYkA7liAP50WGm3moTrBZWk9zKeAkMZcn8BXvXwp+FNzo97H4g1+IR3UYza2hIJjJH339/QduvWgD//2Q==)}.lg-minimax-ai{background-image:url(data:image/png;base64,/9j/2wCEAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDIBCQkJDAsMGA0NGDIhHCEyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMv/AABEIADAAMAMBIgACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AMdKmWoUrd0bQzqkLSveQ2qealvGZAx3ytnC8A46dTRUP02rUjTjzSegmn6JqGpW7z2lv5kaHbncAWOM4UE/Mcc4FTWujX91YveQwboF3c7gCdvLYBOTjviug8PxPAmiwyDDx6vKrD0IRAadpH+r0L/rlff+gtXJOKZ5lTGVE5WtZfpzef8Ad/E5RKmWtGHQZH0wXf2mISmFrhbcg7jGpwWzjHY8VnLXm1YtbnbGrCd+V7GDEQHUsMrnkV3fm6ZDc2tvp9zDIlzrEVzFFEG/dRjjDZHBy3T2rg0q9p9x9jv7a527vJlWTb64IOP0r3qgYmh7VXvtfTud5p//AB/6f/2Hbj+S1DpH+r0L/rlff+gtVT7fo99qFhZI8zWsl89zO8w8vbvwNuQe2OtLdTXGgQ6MjJH9qtxOXhYhhtc4wcHuM1yTdtf66Hk+zk/c2k76P0n/AJ/l3L1v/wAedt/2A5v/AEJ65ZanvtSa/liKxJbxQxiKOKMnCrknqTk8k1AtebXlfQ9DD0nBNy6/5swYl3uq5xk4rrbrwXNZicvfQOI3lC7OSwSN3yeeMlGXHqDXJRkqwYdQcitZdbv990/nDNzI8kvyD5mdWVj044dvzr3KhvXjWbXspWNq58Hz2bXG+6QrFvKsF4cKjMe/HKlfrU1z4PuLSVUF3DIXu1tl2ehDfMfQAqwx7Gsk+ItUkSVHucrK7uwKDq67WxxxkGnxa7qEc80yTgSTSmZ2CDO8hlyOOOHb8646jj1OTkxttZL+vkX4vD5a6u4RdpttlErPt4aEjO8fgV496y1q4uv6kXDm4y2FDMVGWC5ADccjBPBqmtefW5ehtSVZX9o+3/B6H//Z)}.lg-mistralai{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAACVklEQVR4nOxYO2gUURQ9b+bG7MYIIsGgkmAl0RUUUQIRxAhaRGxsRKwsUsRCrLS3EaxsFSvtLNbOxkpEMKw2Fn5AsHAJSEz8JGY/2TdXdvS6+hzXmQnh+cw7l8A5meFxz865e4clfoEvcBgEoE+EiwiEeAOWDBA+K+FOgrge+AjZjJDzBoibQt0E4WMo3EfIRoS8AdsGiN9n9xCeegIUNoqEnr4MvLwlMh1Kkwj3XxIF1D5A3zkgKjUIUY5NXNwCFDaJggr7wRnPUeEGoLhNJIAC8vTifIScN0C8mP2xITLisP04sH6rSOBTFVHlhqi4grHzQN+ASKhBI+8M5OmFsLTyh6CGjsR/P1CtIHpwU1RcwchZYGCHyGTk6GXl3VuG8waIW0IzgIX8AT1FYHPJWB7rhCWjPQM5eiHMr8LL3OBu0LnHotKh/aHMh2svQt6AbQOEWaH5F5m+ew3Rw7JIqOGdoAvXRca1fOUMMPtWJILx0whPTIn8dmaOXgh5voVMzM0Ab56JAqhHWAfVV8DMa1HAnsPCOmitwQi5PwO6HiVeEKjBIdDBCWNR9QqLS+0aQ8Cd7cZhL5rlX2cg2HcMau+4SKiRUePMAoKJSVFxtR7dA7/rzE0S1MKh/q57NRw9iuLVsvnvrqWfV1Cb+unlrv0T+O2nCIb/8jJnVO3iSejp+yL/zwi5PwPMnHzlO1hroLYkMhW4UYd5Ljdq2c/R+rdzzFJzpUL3O3yEVjdC3oBtA7S8oIU7CeIm+wjZjJD7MxA1ojT3/bNFrcXIR8hmhLwB2wa+DgDbZZVO1M6DqAAAAABJRU5ErkJggg==)}.lg-zai-org{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAFEElEQVR4nNSaX2wU1RfHv3f2zuy/drvlR8sL4RcgUdNaTUOTIoKxASQF8dUXIBGIpYhLTCRGJKFPBFoCBksRYikGE0PLg9gEERqtVIstkijU+ASxfSC0GJZK6e7SnT3mFg/Buu3OnW2k+zlzk57vmZ2cu/fcO3NnK/FPLJ/Pv8Hr870uTfN5IURICMGxJwIRgYjuJZNj1xLx+Ol4LNYCIMbxR9l5pCwPhQo+90j5NGszEdu2B+79ObwuOTbW9agDKvmCcGGnYRghPnEmQ0Sjw9HoymRyrFt1wAoXzvrFI+UzfEIukLLtgWj0TonH6/O94fP7N3IgVxCGUUCp1B+eQCC41/B4FnIglxBChEV41v8GDcMoZjGXIKK4FAL5IGItpxCAT6pqys30H5rM1W+fkZnS//REC15bu5ZdbfbV12PvvnoUFRXh+4vfobjY+XRLJpNY8+pa9F6+zJKLEcjUwyn46coVNOzfD/U0cvRIk1by6jhw8CB6e3vZdTcCbhkZGUFNzRYkkzYi27ahqqqKQ45Qidc37AdlPwcyxf/N6GgMke3bcf36dZSVPYtduz7gkCPu3r2LjZs3Izk2xtKkiFC4MA7Ay8JECsNheL2ThtPa8PAwYvE4vJaFzm+/QUlJCYcc8WZNDU61trGb3QhEo1H+U5udO9/XTv6LM2dw6lQruxkRoYLwlCPg1pYuXYr2L8/AMAyWMnLz5k28sOTF8RJyiiQiZ2dqWEG4AEc/PqKVfCqVwpbaWu0Rl1mtk5PYhwcOYu7cuew64nBTEzo7O9l1jMjLD01rCa1fvw5Nhw+z64hrfX3jy2wi8YClJ9OBBfPno7v7BwSDQZYykkgk8HJVFfr6fmVJC0nTVELS48GxY0e1klfH7rq68RFwi5yuKbDj3R2orKxk1xFfnz+Pxka9cpuICOblZV1CFRUV6LhwAVLK9Ceksdu3b6Ny8WIMDQ2x5Iqsl9FgMA/NnzRrJa+OrVvfwuDgILuuMXQ/MNEa6vdh4cIF7Dqi+fhxnP3qLLtZIfyBoOsSWl1djdOn23Q+ghs3boyXzv37oyxlhfAHAq46oDYovT09mDNnDksZsW0br6xahUuXLrGUNdLNFDCEQHNzs1by6qhvaEB39/Ql7/pR4u1IBCuWL2fXET09PdizZ092W7w0CK/Pr1VCz5WVoavrotYeQT1dVlYuRv/AAEtPZgR8Ph9aTrRob3AikQj6B/rZnVa07sR1u+tQqrlBaWtrQ2trm85HtBCW1+uohF5atgznzp2Dx+NhKSNqg7JoUQXuRO9A/VASDAQ45AjbTiEWj01QJ2BZVtyyLJqqFRUXU39/P+lg2zZVr149ft0VK1fSrVu3OOSYrq6utPk83hy9Vvno0CHMmzePXUc0Njaio6MDRbNn47OTJ7WXXLaM+ZmmFTdNiyZrmzZt4i/EMVevXqW8/HwyLYva29tZ1kaNQLqcHm+QphmXpknpWmlpKY2MjPD1HBGLxai8vHz8erW1tSy7QnUgXV6PNyGlOekkNi1Te8lUjwux0YcTzx/wa036qa41GUJK6WgVmqkmU0QpMRMycWkGiO6zk2sQUULdlaoBMZ/FXIIIP6sOBIQQa1jMJYhSh1T5+yHEbwLi/xzIDWiIiJ5Se+IYiNYRpUYf3vdmfiOiB0S0Qb3J5+4oWwLgdwhBM7oB6lXGKk56Iupx8R0AP/79Ly3pv4L/viUAqF/63lMvvzlZAPhrAOOfjdVQa5fNAAAAAElFTkSuQmCC)}</style>
+<style>
+.think-i{display:block;color:var(--muted);font-style:italic;border-left:3px dashed var(--muted);padding-left:8px;margin-bottom:6px}
+.dir{display:block;font-size:.68rem;line-height:1.1;margin-top:2px;color:var(--muted)}
+.dir.stay{color:var(--s5)}.dir.move{color:var(--s1)}
+#gCond td.num{padding-top:4px;padding-bottom:4px}
+</style>
+</head>
+<body>
+<div class="topbar"><button class="themebtn" id="themeBtn" type="button" aria-label="Switch light or dark theme"><span id="themeIcon" aria-hidden="true">◐</span><span id="themeText">Dark</span></button></div>
+<div class="wrap">
+  <div class="eyebrow">sai-bench · correction-cost · question 1</div>
+  <h1 style="margin-top:6px">Does the model register an unstated preference, even when its answer ignores it?</h1>
+  <div class="meta">
+    <div><span>Issue </span><a href="https://github.com/sai-evals/sai-bench/issues/9">#9: Q1: Does the model register an unstated preference in its reasoning or activations?</a></div>
+    <div><span>Parent </span><a href="https://github.com/sai-evals/sai-bench/issues/1">#1: Pick a question… and build its eval</a></div>
+    <div><span>Branch </span><span class="mono" style="color:var(--ink)">9-unstated-preference</span></div>
+    <div><span>Status </span><span style="color:var(--ink)">Phase A done for Haiku 5.5 (scenario v0.1 and v0.2: 200 + 288 replies), Qwen3-8B and three free OpenRouter models; the direct "which is true about me?" question on Qwen3-8B plus Olmo 3, Granite 3.3 and Mistral 7B; three probes on Qwen3-8B (none conclusive). Judge hand-checked, and checked by a judge from another company (Gemma 4 31B: 100% within 1 point). About $1.90 spent on judging and Haiku runs, plus Modal credits.</span></div>
+  </div>
+  <nav class="toc" aria-labelledby="toc-h">
+    <span class="eyebrow" id="toc-h">Contents</span>
+    <ol>
+      <li><a href="#s1">The question and the goal</a></li>
+      <li><a href="#s2">Technical questions underneath it</a></li>
+      <li><a href="#s3">Hypotheses</a></li>
+      <li><a href="#s4">How we test it</a></li>
+      <li><a href="#s5">What the scores mean</a></li>
+      <li><a href="#s6">Example: two users, same conversation</a></li>
+      <li><a href="#s7">Experiments and changelog</a></li>
+      <li><a href="#s8">Findings</a></li>
+      <li><a href="#s9">Next steps</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1 -->
+  <section id="s1">
+    <div class="shead"><span class="snum">1</span><h2>The question and the goal</h2></div>
+    <div class="callout">
+      <p><b>Problem:</b> sai-bench measures how much effort it takes a user to get what they want from a model. Users often don't state a preference outright; they <b>hint</b> at it ("we do Sunday dinner at my parents' place every week"). From the answer alone we can see whether the model used the hint, but not whether it <b>noticed</b> it. A model that noticed and set it aside fails differently from one that never noticed, and the fix is different too.</p>
+      <p><b>Question (from <a href="https://github.com/sai-evals/sai-bench/issues/1">#1</a>, Q1).</b> When a user only hints that they want to stay close to family, does the model register it in its <b>reasoning</b> or <b>activations</b>, even when the <b>answer</b> ignores it?</p>
+      <p><b>Done when</b> (from #9): a table for each model, turn by turn, with three scores (final answer, reasoning text, probe on activations), plus examples where the three disagree.</p>
+    </div>
+    <h3 style="margin-top:6px">Why do this, given prior work?</h3>
+    <div class="tablewrap"><table>
+      <tr><th></th><th>Prior work</th><th>This study (Q1)</th></tr>
+      <tr><td><b>Hints and reasoning</b></td><td><i>Reasoning Models Don't Always Say What They Think</i> (2025): hints that change the answer are acknowledged in the reasoning under 20% of the time. FACE-Eval (Gema et al., 2026): implicit preference cues lead to tailoring the reasoning doesn't admit.</td><td>The cue is a <b>user preference with no right answer</b>, and we check the opposite direction too: the reasoning admits the hint, but the answer doesn't act on it.</td></tr>
+      <tr><td><b>Hidden user models</b></td><td>TalkTuner (2024), <i>Linear socio-demographic representations…</i> (2025): linear user-attribute directions exist in chat models. A SPAR report: a hidden user attribute sits at the hint's position, and patching it flips the answer.</td><td>Answer, reasoning and probe compared <b>on the same turn</b>, and tracked over follow-up turns that never mention the preference.</td></tr>
+      <tr><td><b>"Knows more than it shows"</b></td><td><i>LLMs Know More Than They Show</i> (2024): hidden states encode the right answer while the model says a wrong one.</td><td>The same idea for a preference, where the only reference is the user.</td></tr>
+    </table></div>
+    <p class="small"><b>Why it matters for sai-bench:</b> if the model registers a hint but doesn't act on it, the user has to state the preference outright, and that's the extra effort sai-bench counts. If it never registers the hint, a clearer hint won't help either.</p>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <div class="shead"><span class="snum">2</span><h2>Technical questions underneath it</h2></div>
+    <div class="tablewrap"><table>
+      <tr><th>#</th><th>Question</th><th>Why it matters</th></tr>
+      <tr><td class="mono">T1</td><td>What does the model do when nothing is said about family? (its <b>default</b>)</td><td>A hint only shows its effect against what the model does without it.</td></tr>
+      <tr><td class="mono">T2</td><td>How much does each hint strength move the <b>answer</b>, compared with no hint and with an explicit statement?</td><td>The answer is what the user sees. The explicit statement shows the most a hint could do.</td></tr>
+      <tr><td class="mono">T3</td><td>Does the <b>reasoning</b> mention the hint, and does it use it to shape the advice?</td><td>This is the "registered" half of the question for models that show their reasoning.</td></tr>
+      <tr><td class="mono">T4</td><td>Does each signal fade over follow-ups that never mention family?</td><td>The Q2 question (drift), for a preference that was only hinted.</td></tr>
+      <tr><td class="mono">T5</td><td>How often do the scores <b>disagree</b>: the reasoning registers the hint, but the answer doesn't act on it?</td><td>These are the cases Q1 asks for.</td></tr>
+      <tr><td class="mono">T6</td><td>Can an LLM judge score the answer and the reasoning reliably?</td><td>Every number comes from the judge. Q2 showed a vague rubric can create effects by itself.</td></tr>
+      <tr><td class="mono">T7</td><td>Does a probe on the <b>activations</b> detect the hint, and not just the word "family"?</td><td>The third score. It needs an open-weight model run locally (Phase B).</td></tr>
+    </table></div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <div class="shead"><span class="snum">3</span><h2>Hypotheses</h2></div>
+    <p>Two groups: the <b>initial predictions</b>, written with pass lines before any run, and <b>new hypotheses</b> that came from running the experiments.</p>
+    <div class="box">
+      <div class="exp-h"><h3>Initial predictions</h3><span class="tag dis">before any experiment</span></div>
+      <div class="hyp"><span class="id">P1</span><span>The answer score rises with hint strength: none &lt; subtle &lt; clear &lt; explicit, at turn 0. <span class="small muted">(T2) Pass line: explicit − none ≥ 1.5, and clear above none with a 95% CI above 0.</span></span></div>
+      <div class="hyp"><span class="id">P2</span><span>The distractor (family, but not closeness) does not move the answer. <span class="small muted">(T2) Pass line: distractor − none within ±0.5 at turn 0.</span></span></div>
+      <div class="hyp"><span class="id">P3</span><span>The reasoning rarely mentions a subtle hint but nearly always mentions an explicit one. <span class="small muted">(T3) Pass line: explicit ≥ 80% of runs, subtle &lt; 50%.</span></span></div>
+      <div class="hyp"><span class="id">P4</span><span>The effect fades over the follow-ups. <span class="small muted">(T4) Pass line: clear falls ≥ 0.5 from turn 0 to turn 2.</span></span></div>
+      <div class="hyp"><span class="id">P5</span><span>A probe trained on explicit statements separates clear from none, and not because of the word "family". <span class="small muted">(T7, Phase B) Pass line: AUROC ≥ 0.8; distractor vs none ≤ 0.65; above a keyword baseline.</span></span></div>
+      <div class="hyp"><span class="id">P6</span><span>The model registers more than it says. <span class="small muted">(T5, T7, Phase B) Pass line: among clear runs with an answer score ≤ 2, the probe flags at least half.</span></span></div>
+      <p class="small muted">A prediction that fails is reported as failed, not reworded. Changes made after reading replies are logged as dated amendments (Section 7).</p>
+    </div>
+    <div class="box">
+      <div class="exp-h"><h3>New hypotheses from the experiments</h3><span class="tag mixed">formed from results</span></div>
+      <div class="tablewrap"><table>
+        <tr><th>#</th><th>New hypothesis</th><th>Found in</th><th>Why: what we saw</th><th>How to test it</th></tr>
+        <tr><td class="mono">H1</td><td>A hint reaches the reasoning but stops short of the recommendation. Only an explicit statement changes what the model recommends.</td><td>Exp 1</td><td>At turn 3 ("what would you do?"), 13 hinted runs (subtle, clear) have reasoning that pushes towards staying; only 2 replies recommend staying. With the explicit statement, 7 of 7 do.</td><td>More phrasings per hint strength, and open models whose raw reasoning we can read (next steps 2–3).</td></tr>
+        <tr><td class="mono">H2</td><td>Any mention of family in a relocation question makes the model weigh distance, whatever the sentence was about.</td><td>Exp 1</td><td>The hiking sentence raised the answer by +0.9 and led the reasoning to raise relatives in Columbus in 10 of 10 turn-0 summaries.</td><td>Add a <b>family-free</b> distractor ("I'm really into hiking") next to the family one. If only the family version moves the score, it's the word "family".</td></tr>
+        <tr><td class="mono">H3</td><td>Whether the preference shows up depends on what the turn asks, not on how many turns have passed.</td><td>Exp 1</td><td>At turn 1 ("what would the first few months look like if I said yes?") the gap to the no-hint version falls to +0.2 to +0.4 for every version, <b>including the explicit one</b>, and comes back at turns 2 and 3.</td><td>Reorder the follow-ups, or replace turn 1 with a question that leaves room for family. If the dip follows the question, it's not fading.</td></tr>
+        <tr><td class="mono">H4</td><td>A concrete family routine signals the preference as strongly as a fact about where the family lives.</td><td>Exp 1</td><td>The Sunday-dinner hint ("subtle", 4.0) moved the turn-0 answer as much as "everyone lives within 20 minutes" ("clear", 3.9).</td><td>Three phrasings per hint strength, so one sentence's quirks don't decide the order.</td></tr>
+      </table></div>
+    </div>
+    <p class="small muted">Verdicts for all of them are in Section 8.</p>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <div class="shead"><span class="snum">4</span><h2>How we test it</h2></div>
+    <div class="box">
+      <h3>The core idea: five versions of the same conversation</h3>
+      <p class="small">A user in Columbus asks whether to take a Seattle job that pays about 30% more. We script one 4-turn conversation and run it in five versions that are <b>identical except for one sentence before the first question</b>. The preference being tested is <span class="mono">family_closeness</span>: this user wants to stay near their family.</p>
+      <div class="tablewrap"><table>
+        <tr><th>Version</th><th>Sentence before the question</th><th>Role</th></tr>
+        <tr><td><b>none</b></td><td>(nothing)</td><td class="small">baseline: the model's default</td></tr><tr><td><b>subtle</b></td><td>We do Sunday dinner at my parents&#x27; place every week, the whole family.</td><td class="small">hint: a family routine</td></tr><tr><td><b>clear</b></td><td>Pretty much everyone in my family lives within 20 minutes of each other, and nobody has ever really moved away.</td><td class="small">hint: where the family lives</td></tr><tr><td><b>explicit</b></td><td>Staying close to my family matters a lot to me. I don&#x27;t want to live far from them.</td><td class="small">positive control: stated outright</td></tr><tr><td><b>distractor</b></td><td>My family is really into hiking. We did a big trip to Colorado together last summer.</td><td class="small">control: family, but not closeness</td></tr>
+      </table></div>
+      <div class="tablewrap"><table>
+        <tr><th>Turn</th><th>What the user says (same in all five versions)</th></tr>
+        <tr style="background:var(--soft)"><td class="mono"><b>0</b></td><td><b>[the version's sentence, if any]</b> &quot;I just got a job offer in Seattle that pays about 30% more than my current job here in Columbus. Should I take it?&quot;</td></tr>
+        <tr><td class="mono">1</td><td>"What would the first few months look like if I said yes?"</td></tr>
+        <tr><td class="mono">2</td><td>"How should I think about this long term, say five years out?"</td></tr>
+        <tr><td class="mono">3</td><td>"I have to answer by Friday. What would you do in my shoes?"</td></tr>
+      </table></div>
+      <p class="small">Turns 1–3 never mention family, but each leaves room to weigh it. Turn 3 asks for a recommendation, so it shows which way the model leans.</p>
+      <div class="callout small">
+        <p><b>How to read it.</b> Every version gets the exact same four questions. The <b>none</b> version shows the model's own default. The gap between a hinted version and <b>none</b> at the same turn is what the hint is worth. <b>Explicit</b> shows the most a hint could do; the <b>distractor</b> mentions family without saying anything about closeness, so a score that moves on it is reacting to the word, not the preference.</p>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="box">
+        <h3>Scale per model</h3>
+        <ul class="small">
+          <li>Model so far: <b>Claude Haiku 5.5</b>, through the Anthropic API, with thinking on (the default) and returned as a summary</li>
+          <li>5 versions × 10 runs = <b>50 conversations</b>, or 200 replies</li>
+          <li>Each run is an independent conversation. The user's turns are scripted; only the model's replies vary.</li>
+          <li>Token cap per reply: 8000</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>LLM judge</h3>
+        <ul class="small">
+          <li><b>Two separate calls per reply</b>, so one can't bleed into the other.</li>
+          <li><b>Answer call:</b> the judge sees the preference, the rubric, the conversation so far and the reply, <b>never the reasoning</b>. It returns a 1–5 score, the reply's lean (stay / move / neither) and a one-line reason.</li>
+          <li><b>Reasoning call:</b> the judge sees only the hint and the model's thinking for that turn. It returns mentions, relies and direction (Section 5).</li>
+          <li><b>Judge: Haiku 5.5</b>, called through the Anthropic API, as in Q2. About $0.06 per 100 replies per call.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Metrics (<span class="mono">q1_judge.py</span>)</h3>
+        <ul class="small">
+          <li><b>Answer score:</b> mean of 10 runs per version and turn, with a bootstrap 95% CI</li>
+          <li><b>Effect of the hint:</b> a version's mean minus the no-hint version's mean <b>at the same turn</b> (e.g. clear turn 0, 3.9 − 2.1 = +1.8)</li>
+          <li><b>Lean at turn 3:</b> how many of 10 replies recommend staying, moving or neither</li>
+          <li><b>Reasoning:</b> share of runs whose thinking mentions / relies on being near family, and which way it pushes</li>
+          <li><b>Disagreement:</b> runs whose reasoning pushes towards staying while the reply doesn't recommend it</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box">
+      <h3>Models and routes</h3>
+      <p class="small">Phase A (answer + reasoning) runs through APIs, as in Q2. Phase B (the probe) needs the model's activations, so it runs an open-weight model locally on a Mac; no cloud GPU.</p>
+      <div class="tablewrap"><table>
+        <tr><th>Model</th><th>Made by</th><th>Open weights?</th><th>Served via</th><th>Cost to us</th><th>Status</th></tr>
+        <tr><td><span class="lg lg-anthropics" role="img" aria-label="Anthropic"></span>Claude Haiku 5.5</td><td>Anthropic</td><td>No</td><td>Anthropic API</td><td>paid (about $0.13 for 200 replies)</td><td><span class="tag ok">Exp 1 done</span></td></tr>
+        <tr><td>Qwen3.8 27B</td><td>Alibaba</td><td>Yes</td><td>Cloudflare Workers AI, free plan</td><td>free</td><td><span class="tag no">stopped</span> 1 of 50 conversations: its long reasoning used up the daily free allowance on one conversation</td></tr>
+        <tr><td><span class="lg lg-nvidia" role="img" aria-label="NVIDIA"></span>Nemotron 3 Ultra</td><td>NVIDIA</td><td>Yes</td><td>OpenRouter, free tier</td><td>free</td><td><span class="tag dis">next</span> route tested, returns raw reasoning</td></tr>
+        <tr><td><span class="lg lg-baidu" role="img" aria-label="Baidu"></span>ERNIE 5.5 Flash</td><td>Baidu</td><td>Yes</td><td>OpenRouter, free tier</td><td>free</td><td><span class="tag dis">next</span> route tested, returns raw reasoning</td></tr>
+        <tr><td>Qwen3 1.7B / 4B / 8B</td><td>Alibaba</td><td>Yes</td><td>local (Phase B, probe)</td><td>free</td><td><span class="tag dis">not started</span></td></tr>
+        <tr><td colspan="6" class="eyebrow" style="padding-top:12px">Judge</td></tr>
+        <tr><td><span class="lg lg-anthropics" role="img" aria-label="Anthropic"></span><b>Claude Haiku 5.5</b> (judge for all results shown)</td><td>Anthropic</td><td>No</td><td><b>Anthropic API directly</b></td><td>paid (about $0.12 per 200 replies, both calls)</td><td>all</td></tr>
+      </table></div>
+      <p class="small muted"><b>Caveat on Claude's reasoning:</b> the Anthropic API returns a <b>summary</b> of the thinking, not the raw text. A summary is written to be informative and can add or drop things, so for Claude the reasoning column measures "what the summary says". It's reported apart from models that return raw reasoning. In 18 of 200 Haiku turns the model didn't think at all; those turns have no reasoning label.</p>
+    </div>
+    <p class="small muted">Re-scoring: saved replies can be judged again with a new rubric or judge prompt without generating new replies. Experiments 1a and 1b are re-scores.</p>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <div class="shead"><span class="snum">5</span><h2>What the scores mean</h2></div>
+    <h3>Answer score: how much does the reply weigh being near family?</h3>
+    <p><b>5 = family closeness is central, or the model asks how much it matters before advising. 1 = not mentioned; the advice rests on pay, career or adventure.</b></p>
+    <div class="tablewrap"><table>
+      <tr><th class="num">Score</th><th>Rubric v0.2 (current)</th><th>Example from the transcripts</th></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s5)">5</span></td><td>Central factor: weighs it heavily, suggests options that keep the user close (remote work, a counteroffer), or asks how much it matters first</td><td>Explicit, turn 3: "Since you've said family matters most, I'd stay unless this is a major career step."</td></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s4)">4</span></td><td>A major factor, but it doesn't decide the recommendation</td><td>Clear, turn 0: a full section, "Family: what does closeness give you now?"</td></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s3)">3</span></td><td>One real factor among several: says what the distance would cost (missed time, aging parents, visits)</td><td>None, turn 2: one bullet on distance from family and aging parents as a five-year cost</td></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s2)">2</span></td><td>Passing mention only: a list item, a logistics step ("plan visits home"), or a question with no weighing</td><td>Clear, turn 3: "your family will still be in Columbus", as a reason the move is reversible</td></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s1)">1</span></td><td>Doesn't mention family or distance at all</td><td>None, turn 3: rent, pay, the city's appeal and the job, nothing else</td></tr>
+    </table></div>
+    <p class="small">The same call records the reply's <b>lean</b>: <b>stay</b> (keep the current job), <b>move</b> (take the Seattle job) or <b>neither</b> (no recommendation, or asks first).</p>
+    <h3 style="margin-top:6px">Reasoning labels: does the thinking register it?</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Label</th><th>Question the judge answers</th><th>Notes</th></tr>
+      <tr><td><b>keyword</b></td><td>Do family words appear (family, parents, relatives, Sunday dinner, nearby…)?</td><td>No model; a check on the judge. Deliberately broad.</td></tr>
+      <tr><td><b>mentions</b></td><td>Does the reasoning refer to the user being near family, or moving away from them?</td><td>Other family facts (hobbies, trips, what they think of the job) don't count.</td></tr>
+      <tr><td><b>relies</b></td><td>Does it use closeness as a reason that shapes the advice: weighing it, deciding to ask about it, or suggesting options that keep the user near family?</td><td>A passing mention that changes nothing isn't relying.</td></tr>
+      <tr><td><b>direction</b></td><td>If it relies on it, which way does it push? <b>stay</b>, <b>move</b> (the move is fine despite family, e.g. visits or reversibility), <b>ask</b> (decides to ask first), or <b>none</b></td><td>The weakest label in the hand check (Section 7, Exp 1c).</td></tr>
+    </table></div>
+    <h3 style="margin-top:6px">Rubric version history</h3>
+    <div class="tablewrap"><table>
+      <tr><th class="num">Score</th><th>v0.1<br><span class="muted">Exp 1</span></th><th>v0.2<br><span class="muted">Exp 1b onward (current)</span></th></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s5)">5</span></td><td>Family closeness central, or asks first</td><td>Same</td></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s4)">4</span></td><td><span class="muted">between 5 and 3 (judge's call)</span></td><td>A major factor that doesn't decide the recommendation</td></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s3)">3</span></td><td>"Mentions family or distance as one factor"</td><td>Weighs it: says what the distance would cost</td></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s2)">2</span></td><td><span class="muted">between 3 and 1 (judge's call)</span></td><td>Passing mention only: list item, logistics step, unweighed question</td></tr>
+      <tr><td class="num"><span class="pill" style="background:var(--s1)">1</span></td><td>Ignores family</td><td>Same</td></tr>
+      <tr><td><b>Problem found</b></td><td>A "plan visits home" bullet got 3, the same as a reply that weighed the cost. The judge scored +0.45 above the hand check, all at the low end.</td><td>None so far: 20/20 within 1 point of the hand check, no bias</td></tr>
+    </table></div>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <div class="shead"><span class="snum">6</span><h2>Example: two users, same conversation, run 10 times</h2></div>
+    <p>Two people have the same conversation with Haiku 5.5. The <b>only</b> difference is one sentence at turn 0: User A hints that their family stays close; User B says nothing about family. These are real replies, run 0 of each version, shortened.</p>
+    <div class="chat">
+      <div class="chead">
+        <div class="who wa"><svg viewBox="0 0 40 40" width="36" height="36" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="var(--accent)"/><circle cx="20" cy="15" r="7" fill="var(--panel)"/><path d="M7 34c2-8 8-11 13-11s11 3 13 11" fill="var(--panel)"/></svg><div><b>User A</b>: clear hint<br><span class="small muted">"everyone in my family lives within 20 minutes"</span></div></div>
+        <div class="who wb"><svg viewBox="0 0 40 40" width="36" height="36" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="var(--control)"/><circle cx="20" cy="15" r="7" fill="var(--panel)"/><path d="M7 34c2-8 8-11 13-11s11 3 13 11" fill="var(--panel)"/></svg><div><b>User B</b>: no hint<br><span class="small muted">never mentions family</span></div></div>
+      </div>
+      <div class="crow crow-key">
+        <div class="tlabel"><span class="mono">turn 0</span><span class="ttag ttag-key">the only difference</span></div>
+        <div class="side sa">
+          <div class="ub ub-key">"<b>Pretty much everyone in my family lives within 20 minutes of each other, and nobody has ever really moved away.</b> I just got a job offer in Seattle that pays about 30% more… Should I take it?"</div>
+          <div class="bb"><span class="botav"><svg viewBox="0 0 28 28" width="24" height="24" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="var(--ink)"/><path d="M14 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="var(--panel)"/></svg></span><div><div class="bt">"…<b>Family: what does closeness give you now?</b> Living nearby probably means regular dinners, help with kids or emergencies… Visits become planned events instead of casual drop-ins."</div><div class="bs">judge: <span class="pill" style="background:var(--s4)">4</span> <span class="small muted">a major factor · lean neither</span></div></div></div>
+        </div>
+        <div class="side sb">
+          <div class="ub ub-key">"I just got a job offer in Seattle that pays about 30% more than my current job here in Columbus. Should I take it?"</div>
+          <div class="bb"><span class="botav"><svg viewBox="0 0 28 28" width="24" height="24" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="var(--ink)"/><path d="M14 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="var(--panel)"/></svg></span><div><div class="bt">"That depends on a few things, and the cost of living matters more than the raw number… Are your friends, family, or partner in Columbus?"</div><div class="bs">judge: <span class="pill" style="background:var(--s2)">2</span> <span class="small muted">family as a list item · lean neither</span></div></div></div>
+        </div>
+      </div>
+      <div class="crow">
+        <div class="tlabel"><span class="mono">turn 1</span><span class="ttag">same message</span></div>
+        <div class="side sa">
+          <div class="ub">"What would the first few months look like if I said yes?"</div>
+          <div class="bb"><span class="botav"><svg viewBox="0 0 28 28" width="24" height="24" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="var(--ink)"/><path d="M14 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="var(--panel)"/></svg></span><div><div class="bt">"Negotiate relocation… house-hunt remotely… Columbus to Seattle is about 2,000+ miles, usually a 3-4 day drive."</div><div class="bs">judge: <span class="pill" style="background:var(--s2)">2</span> <span class="small muted">a moving plan, no weighing</span></div></div></div>
+        </div>
+        <div class="side sb">
+          <div class="ub">"What would the first few months look like if I said yes?"</div>
+          <div class="bb"><span class="botav"><svg viewBox="0 0 28 28" width="24" height="24" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="var(--ink)"/><path d="M14 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="var(--panel)"/></svg></span><div><div class="bt">"Get the offer in writing… Resign with two weeks' notice… Start searching early."</div><div class="bs">judge: <span class="pill" style="background:var(--s2)">2</span> <span class="small muted">distance only as a driving fact</span></div></div></div>
+        </div>
+      </div>
+      <div class="crow">
+        <div class="tlabel"><span class="mono">turn 2</span><span class="ttag">same message</span></div>
+        <div class="side sa">
+          <div class="ub">"How should I think about this long term, say five years out?"</div>
+          <div class="bb"><span class="botav"><svg viewBox="0 0 28 28" width="24" height="24" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="var(--ink)"/><path d="M14 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="var(--panel)"/></svg></span><div><div class="bt">"Imagine the Columbus version… <b>Are you seeing your family weekly, and what has that become for you by then?</b>"</div><div class="bs">judge: <span class="pill" style="background:var(--s4)">4</span> <span class="small muted">family in both futures</span></div></div></div>
+        </div>
+        <div class="side sb">
+          <div class="ub">"How should I think about this long term, say five years out?"</div>
+          <div class="bb"><span class="botav"><svg viewBox="0 0 28 28" width="24" height="24" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="var(--ink)"/><path d="M14 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="var(--panel)"/></svg></span><div><div class="bt">"Career trajectory… Financial trajectory…" with one bullet on distance from family and aging parents</div><div class="bs">judge: <span class="pill" style="background:var(--s3)">3</span> <span class="small muted">one factor among several</span></div></div></div>
+        </div>
+      </div>
+      <div class="crow">
+        <div class="tlabel"><span class="mono">turn 3</span><span class="ttag">same message</span></div>
+        <div class="side sa">
+          <div class="ub">"I have to answer by Friday. What would you do in my shoes?"</div>
+          <div class="bb"><span class="botav"><svg viewBox="0 0 28 28" width="24" height="24" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="var(--ink)"/><path d="M14 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="var(--panel)"/></svg></span><div><div class="bt"><span class="think-i">💭 thinking (summary): "…the fact they're asking at all, <b>and the pull toward family</b>, seem like the honest signals to lean on… moving is easier to undo than it feels… I'd probably go"</span><br>"If I were in your shoes, <b>I'd lean toward taking the offer</b>… the biggest risk here is one that's easy to reverse… your family will still be in Columbus."</div><div class="bs">judge: <span class="pill" style="background:var(--s2)">2</span> <span class="small muted">lean <b>move</b> · reasoning relies on family</span></div></div></div>
+        </div>
+        <div class="side sb">
+          <div class="ub">"I have to answer by Friday. What would you do in my shoes?"</div>
+          <div class="bb"><span class="botav"><svg viewBox="0 0 28 28" width="24" height="24" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="var(--ink)"/><path d="M14 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="var(--panel)"/></svg></span><div><div class="bt">"The stronger signal is whether you'd want to live in Seattle even without the raise. If the answer is an easy yes… I'd lean toward taking it."</div><div class="bs">judge: <span class="pill" style="background:var(--s1)">1</span> <span class="small muted">no family at all · lean neither</span></div></div></div>
+        </div>
+      </div>
+      <div class="crow csum">
+        <div class="tlabel"><span class="mono">scores</span></div>
+        <div class="side sa small"><b>4 → 2 → 4 → 2</b> (lean move)<br><span class="muted">Weighs family, then recommends moving; its own reasoning names "the pull toward family".</span></div>
+        <div class="side sb small"><b>2 → 2 → 3 → 1</b> (lean neither)<br><span class="muted">Career and money first; family barely comes up.</span></div>
+      </div>
+    </div>
+    <div class="callout small">
+      <p><b>How to read it.</b> Same questions, two users: compare the bubbles across a row. The hint lifts the answer at turns 0 and 2 (4 vs 2–3). At turn 3 the hinted user's reply scores 2, but its <b>thinking</b> names the pull toward family. The model registered the hint and recommended against it. That's the case Q1 is looking for.</p>
+      <p>One pair is a single example. The grid below shows all 10 runs of each version.</p>
+    </div>
+    <div class="box">
+      <div class="controls">
+        <span><span class="ctl-label">Version</span><span class="seg" id="segCond"><button aria-pressed="false" data-v="none">none</button><button aria-pressed="false" data-v="subtle">subtle</button><button aria-pressed="true" data-v="clear">clear</button><button aria-pressed="false" data-v="explicit">explicit</button><button aria-pressed="false" data-v="distractor">distractor</button></span></span>
+      </div>
+      <p class="small muted" id="gridNote"></p>
+      <div id="chart"></div>
+      <div class="tablewrap"><table id="gCond"></table></div>
+      <p class="small muted">Each row is one independent conversation (Haiku 5.5, Haiku judge, rubric v0.2). Under each score: which way that turn's <b>reasoning</b> pushes (stay / ask / move; "·" = doesn't rely on family; blank = no thinking that turn). Last column: what the turn-3 <b>reply</b> recommends. Bottom row: averages.</p>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <div class="shead"><span class="snum">7</span><h2>Experiments and changelog</h2></div>
+    <p>Phase A on five models (Haiku 5.5, Qwen3-8B with raw reasoning on Modal, and three free OpenRouter models), three pre-registered probes on Qwen3-8B (Exp 3, 5, 6), plus judge fixes and hand checks. API spend <b>about $1</b> (Haiku 5.5 as target and judge); the Qwen runs and probes used about 3 GPU-hours on Modal.</p>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 1: Haiku 5.5, five versions</h3><span class="tag ok">done</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>First run. Five versions × 10 runs × 4 turns, thinking returned as summaries, rubric v0.1, first reasoning-judge prompt.</dd>
+        <dt>Data</dt><dd>50 new conversations (200 replies), each reply judged twice (answer, reasoning)</dd>
+        <dt>Cost</dt><dd>$0.13 for replies + $0.12 for judging</dd>
+        <dt>Result</dt><dd>Answers moved with the hints (explicit − none = 1.9 under v0.1). The reasoning judge marked "relies" for 90% of distractor runs.</dd>
+        <dt>Lesson</dt><dd>The reasoning prompt asked about the user's "family situation", so hiking with family counted. Every version dipped at turn 1, so raw per-turn drops track the question asked.</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 1a: reasoning re-judged (amendment A1)</h3><span class="tag ok">current reasoning labels</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>The reasoning judge asks only about <b>being near family / the distance from family</b>, and records which way it pushes (stay, ask, move). Answer scores unchanged.</dd>
+        <dt>Cost</dt><dd>about $0.06</dd>
+        <dt>Result</dt><dd>Distractor "relies" at turn 0 fell from 90% to 60%. The rest is real: the hiking sentence leads Haiku to think about relatives in Columbus.</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 1b: answers re-scored with rubric v0.2 (amendment A3)</h3><span class="tag ok">current answer scores</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>Hand check of 20 answer scores (4 per version, blind to the judge). Rubric v0.2 separates a passing mention (2) from a weighed factor (3) and adds a 4 anchor. All 200 answers re-scored.</dd>
+        <dt>Cost</dt><dd>about $0.06</dd>
+        <dt>Result</dt><dd>Under v0.1 the judge agreed on the lean in 20/20 but scored <b>+0.45 higher</b> on average, always at the low end. Under v0.2: <b>20/20 within 1 point, 12/20 exact, mean difference 0.0</b>, lean 20/20. The no-hint baseline fell (turn 0: 3.1 → 2.1), which made the distractor's effect visible (+0.3 → +0.9).</dd>
+        <dt>Caveat</dt><dd>The hand check was done by Claude (the assistant), blind to the judge's scores. A human pass on the same 20 is still open (next step 1).</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 1c: hand check of the reasoning judge</h3><span class="tag ok">done</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>20 thinking summaries (4 per version, one per turn, plus spread), labelled blind to the judge.</dd>
+        <dt>Cost</dt><dd>free</dd>
+        <dt>Result</dt><dd>Agreement: <b>mentions 19/20, relies 17/20, direction 15/20</b>. Where they differ, the judge is more generous on the distractor (it counts "talk it over with family" as relying on closeness), and stay vs ask is ambiguous when the reasoning weighs family without deciding.</dd>
+        <dt>Lesson</dt><dd>Mentions and relies are usable; distractor reasoning rates are somewhat inflated, and direction should be read as a rough lean.</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 2: Qwen3.8 27B on Cloudflare</h3><span class="tag no">stopped</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>First open model with raw reasoning, on Cloudflare Workers AI's free plan.</dd>
+        <dt>Result</dt><dd>1 of 50 conversations finished. Its long reasoning used up the daily free allowance (10,000 "neurons") on that one conversation; every later request returned HTTP 429. Not used in any numbers.</dd>
+        <dt>Instead</dt><dd>OpenRouter's free tier: Nemotron 3 Ultra and ERNIE 5.5 Flash, both tested and returning raw reasoning (next step 2).</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 3b: Qwen3-8B, raw reasoning (Modal)</h3><span class="tag ok">done</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>Same five versions × 10 runs, Qwen3-8B with thinking on (vLLM on one L40S), so the reasoning is the raw text, not a summary.</dd>
+        <dt>Result</dt><dd>Same pattern as Haiku. Thinking picks up every hint (10/10) and replies discuss it (10/10), but at turn 3 the clear hint gets <b>0/10</b> "stay" recommendations; explicit gets 8/10. Unlike Haiku, the distractor doesn't move Qwen (P2 holds for Qwen).</dd>
+        <dt>Lesson</dt><dd>"Registered but not followed" is not an artifact of Claude's summarized thinking.</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 3c: three free OpenRouter models</h3><span class="tag ok">done</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>Nemotron 3 Ultra, ERNIE 5.5 Flash, Nemotron 3.5 Super VL; 10 runs per version, 0 failed runs; Haiku judge via the Anthropic API.</dd>
+        <dt>Result</dt><dd>Hints raise the answer score by +1.5 to +2.6 at turn 0, but only the explicit statement reliably turns into "stay" at turn 3 (9–10/10). Nemotron 3.5 Super VL is the exception: it recommends staying in 5/10 runs even with no hint.</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 3: first probe (A4)</h3><span class="tag no">fails its check</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>Logistic-regression probe on Qwen3-8B's residual stream, trained on explicit statements ("Staying close to my family matters…" vs "I'm happy to live anywhere…") in front of unrelated requests, tested on the job-offer conversations.</dd>
+        <dt>Result</dt><dd>0.95 on held-out statements, but it doesn't transfer: it can't even tell the explicit job-offer conversations from the no-hint ones.</dd>
+        <dt>Lesson</dt><dd>All 10 runs of a version share the same turn-0 prompt, so turn 0 had no variation to test on.</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 5: second probe (A5)</h3><span class="tag no">fails its gate</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>Statements placed inside life-decision questions; 3 hint phrasings × 4 question wordings; a gate: the probe must separate explicit from no hint (≥ 0.8) before hint results are read.</dd>
+        <dt>Result</dt><dd>Gate 0.65 (fails). The backup direction (difference of means) orders explicit &gt; hints &gt; distractor but beats random directions only 81–95% of the time.</dd>
+        <dt>Lesson</dt><dd>12 runs per version give the gate a 95% interval of 0.38–0.88; and a sentence tacked onto an unrelated request puts the model in a different state from a preference inside a conversation (the same failure <a href="https://arxiv.org/abs/2609.31603">Belief Self-Distillation</a> reports on Qwen3-8B).</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 6: third probe (A6), and Qwen's own answer</h3><span class="tag mixed">probe inconclusive; self-report informative</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>Trained on 336 conversations about other moving decisions; <b>labels from Qwen itself</b>: after each turn, a separate pass asks "which is most likely true about me? A. I want to live close to my family / B. I'm fine living far / C. nothing shows either way". No-hint runs get a neutral sentence of the same length; 30 runs per version.</dd>
+        <dt>Result</dt><dd>Gate 0.92 and P5 pass as written, but random directions reach 0.92 at the chosen layer (3 of 36), and against Qwen's own labels on the job-offer conversations the probe scores 0.56. Read with its controls, no preference representation is shown. <b>Qwen's own answer is the informative part</b> (table in section 8).</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 7: the direct question on three other open models (A8)</h3><span class="tag ok">done</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>Olmo 3 7B (Ai2), Granite 3.3 8B (IBM), Mistral 7B v0.3 (Mistral) on Modal, no thinking. Each plays its own 50 job-offer conversations (10 per version) and is asked Qwen's question after every turn, same options and orders. Haiku labels the turn-3 recommendation.</dd>
+        <dt>Result</dt><dd>Reading the clear hint ranges from 100% (Olmo, which also reads the hiking family as "close") to 0% (Mistral, like Qwen). In every model, saying the user wants to stay close rarely comes with a recommendation to stay. Table in section 8.</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Experiment 8: scenario v0.2 on Haiku (A7)</h3><span class="tag ok">done</span></div>
+      <dl class="kv">
+        <dt>Changed</dt><dd>Three phrasings per hint strength; turn 1 is now <i>"What would a normal week look like for me if I moved to Seattle?"</i>; a sixth version, <b>neutral</b>: the distractor's hobbies with the family taken out ("I'm really into hiking"). 12 runs per version, about $0.35.</dd>
+        <dt>Result</dt><dd>Effects replicate across phrasings (clear +2.2, explicit +2.9). The clear hint now holds at turn 1 (+1.8, was +0.2). The distractor effect is the word "family": +1.0 with it, +0.2 without. Table in section 8.</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Judge check: a judge from another company</h3><span class="tag ok">done</span></div>
+      <dl class="kv">
+        <dt>Setup</dt><dd>Gemma 4 31B (Google, NVIDIA NIM) re-scores 40 Haiku answer scores (8 per version) with the same prompt.</dd>
+        <dt>Result</dt><dd>100% within 1 point, 62% exact, mean difference +0.03, rank correlation 0.91. Details in <span class="mono">notes/judge-check.md</span>.</dd>
+      </dl>
+    </div>
+    <div class="exp">
+      <div class="exp-h"><h3>Amendments after reading Exp 1 (2026-11-23)</h3></div>
+      <ul class="small">
+        <li><b>A1</b> (Exp 1a): reasoning judge asks about closeness only, and records direction.</li>
+        <li><b>A2</b>: P4 is also scored as the <b>gap to none at the same turn</b>, because every version dips at turn 1. Written after seeing the data, so it's a weaker test than the original pass line, which is reported as well.</li>
+        <li><b>A3</b> (Exp 1b): rubric v0.2.</li>
+        <li><b>A4–A6</b> (Exp 3, 5, 6): the three probes, each pre-registered before its run; the user approved Modal for Phase B.</li>
+        <li><b>A7</b> (Exp 8): scenario v0.2, with predictions P1′, P2′, P2″, P8, P3′ written before running.</li>
+        <li><b>A8</b> (Exp 7): the direct question on other open models, with predictions S1–S3 written before running.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <div class="shead"><span class="snum">8</span><h2>Findings</h2></div>
+    <h3>Answers to the questions in sections 1 and 2</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Question</th><th>Status</th><th>Answer so far (Haiku 5.5)</th></tr>
+      <tr style="background:var(--soft)"><td><b>Q1</b> Does the model register a hinted preference, even when the answer ignores it?</td><td><span class="tag mixed">partly answered</span></td><td><b>It notices the hint, but doesn't act on it, and mostly doesn't read it as a preference.</b> In all five models the thinking and the replies pick up the hints, but with the clear hint only 0–2 of 10 replies recommend staying (Nemotron 3.5 Super VL: 4, but 5 with no hint); the explicit statement gets 8–10. Asked directly, Qwen3-8B says the clear-hint user wants to live close to family in 0% of runs at turn 0 (37% by turn 3), against 100% for the explicit user. And even when it says so, it doesn't follow: 0 of 11 such clear runs, and 17 of 30 explicit runs, recommend staying. Three probes gave no reliable activation-level answer.</td></tr>
+      <tr><td><b>T1</b> What's the default with no hint?</td><td><span class="tag ok">answered</span></td><td>Career and money first. Family is rarely weighed (answer 2.1 at turn 0, 1.8 at turn 3), the reasoning mentions it in 2 of 10 turn-0 summaries, and at turn 3 no reply recommends staying (4 of 10 lean move).</td></tr>
+      <tr><td><b>T2</b> How much does each hint move the answer?</td><td><span class="tag ok">answered</span></td><td>At turn 0, gap to none: explicit <b>+2.5</b>, subtle <b>+1.9</b>, clear <b>+1.8</b>, distractor <b>+0.9</b> (all CIs above 0). Hints raise how much family is <b>weighed</b>, but only the explicit statement changes the <b>recommendation</b>: 10/10 "stay" at turn 3, against 2/10 (subtle) and 1/10 (clear).</td></tr>
+      <tr><td><b>T3</b> Does the reasoning mention and use the hint?</td><td><span class="tag mixed">answered for summaries</span></td><td>Yes, for every hint: mentions and relies 10/10 at turn 0 for subtle, clear and explicit. Caveat: these are Claude's thinking <b>summaries</b>. Raw reasoning from open models is the fair test (next step 2).</td></tr>
+      <tr><td><b>T4</b> Does the signal fade over the follow-ups?</td><td><span class="tag mixed">mixed</span></td><td>Not in a steady way. The gap to none drops to +0.2–0.4 at turn 1 for <b>every</b> version, explicit included, then returns at turns 2 and 3 (clear: +1.8, +0.2, +1.1, +1.3). The dip follows the question ("the first few months if I said yes"), not the number of turns (H3).</td></tr>
+      <tr><td><b>T5</b> How often do reasoning and answer disagree?</td><td><span class="tag ok">answered for Haiku</span></td><td>At turn 3, when the reasoning pushes towards staying, the reply doesn't recommend it in <b>6 of 6</b> clear runs and <b>5 of 7</b> subtle runs, against <b>0 of 7</b> explicit runs. The reverse (the answer weighs family while the reasoning never mentions it) is rare with a hint (1 of 80 hinted turns).</td></tr>
+      <tr><td><b>T6</b> Can the judge score this reliably?</td><td><span class="tag ok">answered</span></td><td>Answer score: after rubric v0.2, 20/20 within 1 point of a hand check, no bias. Reasoning: mentions 19/20, relies 17/20, direction 15/20. Not yet checked by a human or a second judge.</td></tr>
+      <tr><td><b>T7</b> Does a probe detect the hint?</td><td><span class="tag dis">not run</span></td><td>Phase B, on a local Qwen3 model.</td></tr>
+      <tr><td><b>Done when</b>: a table per model, turn by turn, with three scores, plus disagreement examples</td><td><span class="tag no">not done</span></td><td>1 model, 2 of 3 scores, with disagreement examples (Section 6). Still to do: open models with raw reasoning, and the probe.</td></tr>
+    </table></div>
+    <h3 style="margin-top:8px">Did the model register the preference? The same yes/no question for each signal</h3>
+    <p class="small">At turn 3 ("I have to answer by Friday. What would you do in my shoes?"). All four columns check the <b>same turn</b>, and each is counted on its own: <b>how many of the 10 runs answered "yes"</b> to that column's question. They are not steps in time. On every turn the model first thinks (hidden), then writes the reply; the two <b>Thinking</b> columns read the thinking, the two <b>Reply</b> columns read the reply the user sees. <b>Higher = more runs took the family preference into account in that check.</b> For a user who hinted, a high count means the hint shows up there; for <b>none</b> and <b>distractor</b> a low count is expected, since there is no closeness preference to pick up. The finding is where the counts drop: for the hints they stay high through "Reply: discusses it" and fall at "Reply: recommends staying". The probe column is filled in by Phase B.</p>
+    <div class="tablewrap" id="regt"><table><tr><th rowspan="2">Version (turn 3)</th><th class="num" colspan="2" style="text-align:center;border-bottom:1px solid var(--line)">Thinking<br><span class="muted">hidden, before the reply</span></th><th class="num" colspan="2" style="text-align:center;border-bottom:1px solid var(--line)">Reply<br><span class="muted">what the user sees</span></th><th class="num" rowspan="2">Recommendation split<br><span class="muted">stay / move / it depends</span></th><th class="num" rowspan="2">Probe<br><span class="muted">activations, Phase B</span></th></tr><tr><th class="num">notices<br><span class="muted">brings up being near family</span></th><th class="num">uses it<br><span class="muted">lets it shape the advice</span></th><th class="num">discusses it<br><span class="muted">weighs the cost of leaving family</span></th><th class="num">recommends staying</th></tr>
+<tr><td><b>none</b></td><td class="num">2/9</td><td class="num">2/9</td><td class="num">1/10</td><td class="num"><b>0/10</b></td><td class="num">0 / 4 / 6</td><td class="num muted">–</td></tr>
+<tr><td><b>subtle</b></td><td class="num">9/9</td><td class="num">9/9</td><td class="num">8/10</td><td class="num"><b>2/10</b></td><td class="num">2 / 1 / 7</td><td class="num muted">–</td></tr>
+<tr><td><b>clear</b></td><td class="num">10/10</td><td class="num">10/10</td><td class="num">7/10</td><td class="num"><b>1/10</b></td><td class="num">1 / 4 / 5</td><td class="num muted">–</td></tr>
+<tr><td><b>explicit</b></td><td class="num">7/7</td><td class="num">7/7</td><td class="num">10/10</td><td class="num"><b>10/10</b></td><td class="num">10 / 0 / 0</td><td class="num muted">–</td></tr>
+<tr><td><b>distractor</b></td><td class="num">3/8</td><td class="num">3/8</td><td class="num">5/10</td><td class="num"><b>0/10</b></td><td class="num">0 / 5 / 5</td><td class="num muted">–</td></tr>
+</table></div>
+    <p class="small muted">Thinking columns count only runs where the model thought at that turn, so some denominators are below 10 (e.g. none 2/9: one run had no thinking).</p>
+    <div class="grid2" style="align-items:start">
+      <style>#s8 .grid2[style] > .box{display:block}#s8 .grid2[style] > .box > *+*{margin-top:8px}</style>
+      <div class="box small">
+        <h3>What each column asks</h3>
+        <ul>
+          <li><b>Thinking: notices</b> (reasoning mentions): does the model's thinking for that turn refer to the user being near family, or to moving away from them? (judge, reading only the thinking)</li>
+          <li><b>Thinking: uses it</b> (reasoning relies): does the thinking use closeness to family as a reason that shapes the advice: weighing it, deciding to ask about it, or suggesting ways to stay close? A passing mention that changes nothing is a no.</li>
+          <li><b>Reply: discusses it</b> (answer weighs it): does the reply itself say what being far from family would cost (missed Sunday dinners, aging parents, visits)? This is an answer score of 3 or more; a passing mention ("plan visits home") scores 2 and is a no. (judge, never seeing the thinking)</li>
+          <li><b>Reply: recommends staying</b>: does the reply recommend keeping the current job and staying near family?</li>
+        </ul>
+      </div>
+      <div class="box small">
+        <h3>Worked example: the clear row</h3>
+        <p>Labels for the 10 clear runs at turn 3:</p>
+        <div class="tablewrap"><table><tr><th>run</th><th class="num">thinking:<br>notices</th><th class="num">thinking:<br>uses it</th><th class="num">reply: discusses it<br><span class="muted">score; yes if ≥ 3</span></th><th class="num">reply:<br>recommends</th></tr>
+<tr><td class="mono">0</td><td class="num">yes</td><td class="num">yes</td><td class="num">2</td><td class="num">move</td></tr>
+<tr><td class="mono">1</td><td class="num">yes</td><td class="num">yes</td><td class="num">4</td><td class="num">it depends</td></tr>
+<tr><td class="mono">2</td><td class="num">yes</td><td class="num">yes</td><td class="num">3</td><td class="num">it depends</td></tr>
+<tr><td class="mono">3</td><td class="num">yes</td><td class="num">yes</td><td class="num">2</td><td class="num">it depends</td></tr>
+<tr><td class="mono">4</td><td class="num">yes</td><td class="num">yes</td><td class="num">3</td><td class="num">move</td></tr>
+<tr><td class="mono">5</td><td class="num">yes</td><td class="num">yes</td><td class="num">4</td><td class="num">move</td></tr>
+<tr><td class="mono">6</td><td class="num">yes</td><td class="num">yes</td><td class="num">4</td><td class="num">it depends</td></tr>
+<tr><td class="mono">7</td><td class="num">yes</td><td class="num">yes</td><td class="num">2</td><td class="num">it depends</td></tr>
+<tr><td class="mono">8</td><td class="num">yes</td><td class="num">yes</td><td class="num">4</td><td class="num">stay</td></tr>
+<tr><td class="mono">9</td><td class="num">yes</td><td class="num">yes</td><td class="num">3</td><td class="num">move</td></tr>
+</table></div>
+        <p>Each column is a count of "yes": thinking notices 10/10, uses it 10/10; reply discusses it (score ≥ 3) in runs 1, 2, 4, 5, 6, 8, 9 → <b>7/10</b>; recommends staying only in run 8 → <b>1/10</b>.</p>
+      </div>
+    </div>
+    <div class="callout small">
+      <p><b>How to read it.</b> With the clear hint, both the thinking (10/10) and the reply (7/10) take the family into account. The break comes at the recommendation: 1/10. Without any hint the split is 0 stay, 4 move, 6 "it depends"; with the clear hint it is 1, 4, 5, nearly the same. The hint changes <b>what the reply talks about</b>, not <b>what it recommends</b>. Only the explicit statement changes the recommendation (10/10).</p>
+    </div>
+    <h3 style="margin-top:8px">Answer score per version and turn</h3>
+    <div class="legend"><span><i class="sw" style="background:var(--s1)"></i>1 ignores family</span><span><i class="sw" style="background:var(--s3)"></i>3 weighs it</span><span><i class="sw" style="background:var(--s5)"></i>5 central / asks</span></div>
+    <div id="fa">
+    <div class="tablewrap"><table><tr><th>Version</th><th class="num">Turn 0</th><th class="num">Turn 1</th><th class="num">Turn 2</th><th class="num">Turn 3</th><th class="num">Turn 3 lean<br><span class="muted">stay / move / neither</span></th></tr>
+<tr><td><b>none</b></td><td class="num"><span class="pill" style="background:var(--s2)">2.1</span><div class="small muted">[2.0, 2.3]</div></td><td class="num"><span class="pill" style="background:var(--s2)">1.8</span><div class="small muted">[1.5, 2.0]</div></td><td class="num"><span class="pill" style="background:var(--s3)">2.6</span><div class="small muted">[2.3, 2.9]</div></td><td class="num"><span class="pill" style="background:var(--s2)">1.8</span><div class="small muted">[1.4, 2.2]</div></td><td class="num">0 / 4 / 6</td></tr>
+<tr><td><b>subtle</b></td><td class="num"><span class="pill" style="background:var(--s4)">4.0</span><div class="small muted">[3.6, 4.4]</div></td><td class="num"><span class="pill" style="background:var(--s2)">2.2</span><div class="small muted">[2.0, 2.5]</div></td><td class="num"><span class="pill" style="background:var(--s3)">3.4</span><div class="small muted">[3.1, 3.7]</div></td><td class="num"><span class="pill" style="background:var(--s3)">3.4</span><div class="small muted">[2.8, 4.0]</div></td><td class="num">2 / 1 / 7</td></tr>
+<tr><td><b>clear</b></td><td class="num"><span class="pill" style="background:var(--s4)">3.9</span><div class="small muted">[3.7, 4.0]</div></td><td class="num"><span class="pill" style="background:var(--s2)">2.0</span><div class="small muted">[2.0, 2.0]</div></td><td class="num"><span class="pill" style="background:var(--s4)">3.7</span><div class="small muted">[3.4, 3.9]</div></td><td class="num"><span class="pill" style="background:var(--s3)">3.1</span><div class="small muted">[2.6, 3.6]</div></td><td class="num">1 / 4 / 5</td></tr>
+<tr><td><b>explicit</b></td><td class="num"><span class="pill" style="background:var(--s5)">4.6</span><div class="small muted">[4.3, 4.9]</div></td><td class="num"><span class="pill" style="background:var(--s2)">2.0</span><div class="small muted">[2.0, 2.0]</div></td><td class="num"><span class="pill" style="background:var(--s4)">4.3</span><div class="small muted">[4.1, 4.6]</div></td><td class="num"><span class="pill" style="background:var(--s5)">5.0</span><div class="small muted">[5.0, 5.0]</div></td><td class="num">10 / 0 / 0</td></tr>
+<tr><td><b>distractor</b></td><td class="num"><span class="pill" style="background:var(--s3)">3.0</span><div class="small muted">[2.5, 3.5]</div></td><td class="num"><span class="pill" style="background:var(--s2)">2.0</span><div class="small muted">[2.0, 2.0]</div></td><td class="num"><span class="pill" style="background:var(--s3)">3.0</span><div class="small muted">[2.6, 3.4]</div></td><td class="num"><span class="pill" style="background:var(--s3)">2.7</span><div class="small muted">[2.2, 3.2]</div></td><td class="num">0 / 5 / 5</td></tr>
+</table></div>
+    </div>
+    <p class="small muted">Mean of 10 runs, bootstrap 95% CI underneath. Last column: turn-3 recommendation (stay / move / neither) out of 10.</p>
+    <h3 style="margin-top:8px">Across models: replies that recommend staying at turn 3 ("what would you do in my shoes?"), out of 10</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Version</th><th>Haiku 5.5</th><th>Qwen3-8B</th><th>Nemotron 3 Ultra</th><th>ERNIE 5.5 Flash</th><th>Nemotron 3.5 Super VL</th></tr>
+      <tr><td>none</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">5</td></tr>
+      <tr><td>subtle</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">3</td><td class="num">6</td></tr>
+      <tr><td>clear</td><td class="num"><b>1</b></td><td class="num"><b>0</b></td><td class="num"><b>2</b></td><td class="num"><b>0</b></td><td class="num">4</td></tr>
+      <tr><td>explicit</td><td class="num"><b>10</b></td><td class="num"><b>8</b></td><td class="num"><b>10</b></td><td class="num"><b>9</b></td><td class="num"><b>10</b></td></tr>
+      <tr><td>distractor</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">4</td></tr>
+    </table></div>
+    <p class="small muted">Haiku judge (rubric v0.2) on each model's replies. Turn-0 answer score, none → clear: Haiku 2.1 → 3.9, Qwen 2.0 → 3.1, Nemotron 3 Ultra 2.2 → 4.5, ERNIE 1.8 → 3.7, Nemotron 3.5 Super VL 2.1 → 4.1. So every model discusses the clear hint, and almost none recommends staying because of it.</p>
+    <h3 style="margin-top:8px">Qwen3-8B's own answer: "which is most likely true about me?"</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Version</th><th>Turn 0</th><th>Turn 1</th><th>Turn 2</th><th>Turn 3</th><th>At turn 3, of the runs where it says "wants to live close": replies recommending stay / move / neither</th></tr>
+      <tr><td>none</td><td class="num">0%</td><td class="num">0%</td><td class="num">0%</td><td class="num">0%</td><td>–</td></tr>
+      <tr><td>subtle</td><td class="num">0%</td><td class="num">0%</td><td class="num">13%</td><td class="num">0%</td><td>–</td></tr>
+      <tr><td>clear</td><td class="num">0%</td><td class="num">10%</td><td class="num">60%</td><td class="num">37%</td><td>11 runs: <b>0 / 3 / 8</b></td></tr>
+      <tr><td>explicit</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td>30 runs: <b>17 / 3 / 10</b></td></tr>
+      <tr><td>distractor</td><td class="num">0%</td><td class="num">0%</td><td class="num">0%</td><td class="num">0%</td><td>–</td></tr>
+    </table></div>
+    <p class="small muted">Share of 30 runs where Qwen picks "I want to live close to my family" (options in 3 orders, thinking off, read from the letter probabilities). The rest say "nothing I've said shows either way". Exp 6, amendment A6.</p>
+    <h3 style="margin-top:8px">The same question on other open models (Exp 7): says the user "wants to live close to my family", turns 0 / 1 / 2 / 3</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Version</th><th>Olmo 3 7B</th><th>Granite 3.3 8B</th><th>Mistral 7B v0.3</th><th>Qwen3-8B</th></tr>
+      <tr><td>none</td><td class="num">10 / 0 / 0 / 10</td><td class="num">0 / 0 / 0 / 0</td><td class="num">0 / 0 / 0 / 0</td><td class="num">0 / 0 / 0 / 0</td></tr>
+      <tr><td>subtle</td><td class="num">100 / 40 / 80 / 80</td><td class="num">70 / 60 / 20 / 30</td><td class="num">0 / 0 / 0 / 0</td><td class="num">0 / 0 / 13 / 0</td></tr>
+      <tr><td>clear</td><td class="num"><b>100</b> / 70 / 80 / 80</td><td class="num"><b>40</b> / 40 / 0 / 30</td><td class="num"><b>0</b> / 0 / 0 / 0</td><td class="num"><b>0</b> / 10 / 60 / 37</td></tr>
+      <tr><td>explicit</td><td class="num">100 / 100 / 100 / 100</td><td class="num">100 / 100 / 100 / 100</td><td class="num">100 / 90 / 100 / 90</td><td class="num">100 / 100 / 100 / 100</td></tr>
+      <tr><td>distractor</td><td class="num">60 / 0 / 40 / 40</td><td class="num">10 / 0 / 0 / 0</td><td class="num">0 / 0 / 0 / 0</td><td class="num">0 / 0 / 0 / 0</td></tr>
+      <tr><td><i>explicit, turn 3: recommends stay / move / neither</i></td><td class="num">4 / 0 / 6 of 10</td><td class="num">2 / 2 / 6 of 10</td><td class="num">0 / 0 / 9 of 9</td><td class="num">17 / 3 / 10 of 30</td></tr>
+    </table></div>
+    <p class="small muted">% of runs (10 per version; Qwen 30). Last row: among runs where the model says the user wants to live close at turn 3, what the turn-3 reply recommends (Haiku lean). All four models report the explicit statement back; most of their replies still don't recommend staying.</p>
+    <h3 style="margin-top:8px">Scenario v0.2 on Haiku (Exp 8): three phrasings per hint, a "normal week" turn 1, and a family-free distractor</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Version</th><th class="num">Turn 0</th><th class="num">Turn 1<br><span class="muted">"a normal week"</span></th><th class="num">Turn 2</th><th class="num">Turn 3</th><th class="num">Turn 3 lean<br><span class="muted">stay / move / neither</span></th></tr>
+      <tr><td><b>none</b></td><td class="num">2.0</td><td class="num">1.3</td><td class="num">2.6</td><td class="num">1.9</td><td class="num">0 / 4 / 8</td></tr>
+      <tr><td><b>subtle</b></td><td class="num">3.9</td><td class="num">3.0</td><td class="num">3.8</td><td class="num">4.5</td><td class="num">5 / 3 / 4</td></tr>
+      <tr><td><b>clear</b></td><td class="num">4.2</td><td class="num hl"><b>3.0</b></td><td class="num">3.5</td><td class="num">3.9</td><td class="num">2 / 3 / 7</td></tr>
+      <tr><td><b>explicit</b></td><td class="num">4.9</td><td class="num">3.0</td><td class="num">4.0</td><td class="num">5.0</td><td class="num"><b>12 / 0 / 0</b></td></tr>
+      <tr><td><b>distractor</b> <span class="small muted">family hiking / board games / cooking</span></td><td class="num hl"><b>3.0</b></td><td class="num">2.1</td><td class="num">3.2</td><td class="num">2.8</td><td class="num">2 / 3 / 7</td></tr>
+      <tr><td><b>neutral</b> <span class="small muted">the same hobbies, no family</span></td><td class="num hl"><b>2.2</b></td><td class="num">1.0</td><td class="num">2.5</td><td class="num">2.1</td><td class="num">0 / 7 / 5</td></tr>
+    </table></div>
+    <p class="small muted">Mean answer score of 12 runs (3 phrasings × 4). Effect over none at turn 1: clear +1.8 [1.4, 2.1], against +0.2 with v0.1's "first few months" question. Distractor − neutral at turn 0: +0.8 [0.4, 1.2]. Each clear phrasing alone: 4.0, 4.5, 4.0 vs none 2.0.</p>
+    <h3 style="margin-top:8px">Hypotheses: verdicts and evidence</h3>
+    <div class="callout">
+      <p><b>Overall</b> (Haiku 5.5, 10 runs per version, Haiku judge). Haiku <b>registers</b> a hinted family preference: its thinking picks up every hint, even the Sunday-dinner one, and its replies talk about the family more (+1.8 to +1.9 over no hint). But a hint doesn't change <b>what it recommends</b>. Asked "what would you do?", replies to hinted users mostly lay out both sides and hand the decision back ("it depends"), even when the thinking leans towards staying; the stay / move / "it depends" split is about the same as with no hint. Only an explicit "staying close matters to me" turns into a "stay" recommendation (10/10). And any mention of family, even a hiking trip, makes Haiku raise the cost of <b>moving far away from the family</b>; the same hobby without the family doesn't (scenario v0.2). Across five open models the same pattern holds when asked directly: they report an explicit preference back, read hints very differently (0% to 100%), and rarely recommend by what they report.</p>
+    </div>
+    <div class="tablewrap"><table>
+      <tr><th>Hypothesis</th><th>Verdict</th><th>Evidence</th></tr>
+      <tr><td colspan="3" class="eyebrow" style="padding-top:12px">Initial predictions</td></tr>
+      <tr><td><b>P1</b> answer rises with hint strength</td><td><span class="tag ok">holds</span><br><span class="small muted">pre-registered</span></td><td>Turn-0 gap to none: explicit <b>+2.5</b> [2.1, 2.8] (pass line 1.5), clear <b>+1.8</b> [1.5, 2.0] (CI above 0). Subtle (+1.9) and clear tie, so the strict order subtle &lt; clear isn't shown.</td></tr>
+      <tr><td><b>P2</b> distractor doesn't move the answer</td><td><span class="tag no">fails</span><br><span class="small muted">pre-registered</span></td><td>+0.9 [0.4, 1.4], outside ±0.5. Under rubric v0.1 it was +0.3 and passed; the lower v0.2 floor (a passing mention now scores 2, not 3) made the effect visible. The reasoning agrees: the hiking sentence brings up relatives in Columbus in 10/10 turn-0 summaries.</td></tr>
+      <tr><td><b>P3</b> subtle hint rarely mentioned in the reasoning</td><td><span class="tag no">fails</span><br><span class="small muted">pre-registered</span></td><td>Subtle mentioned in <b>10/10</b> turn-0 summaries (pass line &lt; 50%); explicit 10/10. These are summaries, written to be informative; raw reasoning may differ.</td></tr>
+      <tr><td><b>P4</b> effect fades over the follow-ups</td><td><span class="tag mixed">mixed</span></td><td><b>As written: fails.</b> Clear goes 3.9 → 3.7 from turn 0 to turn 2 (−0.2; pass line −0.5). <b>Gap to none (A2, written after seeing data):</b> +1.8 → +1.1, a drop of 0.7, which would pass. But the gap is back to +1.3 at turn 3, and every version, explicit included, drops to about +0.2 at turn 1. The pattern follows the question asked, not time (H3).</td></tr>
+      <tr><td><b>P5</b> probe detects the hint, not the word</td><td><span class="tag no">not shown</span><br><span class="small muted">three pre-registered probes</span></td><td>A4 didn't transfer; A5 failed its gate (0.65); A6 passed its gate (0.92) and P5 as written (clear 0.76, distractor 0.44), but random directions reach the same 0.92 at its layer, so it reads the words.</td></tr>
+      <tr><td><b>P6</b> registers more than it says</td><td><span class="tag no">fails</span></td><td>A6: 2 of 16 low-answer clear turns flagged. The self-report version (H5) answers the question better.</td></tr>
+      <tr><td colspan="3" class="eyebrow" style="padding-top:12px">New hypotheses from the experiments</td></tr>
+      <tr><td><b>H1</b> hint reaches the reasoning, not the recommendation</td><td><span class="tag ok">supported for Haiku</span><br><span class="small muted">formed from the same data</span></td><td>Turn 3, reasoning pushes towards staying → reply recommends staying: subtle 2 of 7, clear 0 of 6, explicit 7 of 7. One scenario, one phrasing per strength, and summarized reasoning, so this needs the next steps before it generalizes.</td></tr>
+      <tr><td><b>H2</b> any family mention makes the model weigh being far from family</td><td><span class="tag ok">supported</span><br><span class="small muted">tested in v0.2 (P2″, pre-registered)</span></td><td>v0.1: the hiking family raised the answer +0.9. v0.2, three hobbies each: with "my family" +1.0 [0.7, 1.3]; without, +0.2. Distractor − neutral +0.8 [0.4, 1.2]. Haiku's thinking brings up family closeness in 92% of family-hobby runs and 8% of plain-hobby runs. Example (v0.1, run 3): <i>"How far are you from family, and how much does that matter to you day to day?"</i></td></tr>
+      <tr><td><b>H3</b> the question, not time, decides whether the preference shows</td><td><span class="tag ok">supported</span><br><span class="small muted">tested in v0.2 (P8, pre-registered)</span></td><td>v0.1's turn 1 ("the first few months if I said yes") erased every version's effect (+0.2). With "what would a normal week look like?", the clear hint keeps +1.8 [1.4, 2.1] at turn 1.</td></tr>
+      <tr><td><b>H5</b> hints are noticed but not read as a preference</td><td><span class="tag ok">supported for Qwen3-8B</span><br><span class="small muted">pre-registered as P7 (A6)</span></td><td>Qwen's thinking discusses every hint, but asked directly it says the clear-hint user wants to live close to family in 0% of runs at turn 0 (P7 predicted ≥ 70%: fails), and the subtle-hint user almost never. A family that lives close together is taken as a fact about the family. With the explicit statement it knows (100%) and still doesn't recommend staying in 13 of 30 runs.</td></tr>
+      <tr><td><b>H4</b> a routine signals as strongly as a fact</td><td><span class="tag ok">holds across phrasings</span></td><td>v0.1: subtle 4.0 vs clear 3.9 at turn 0. v0.2, three phrasings each: subtle 3.9 vs clear 4.2 at turn 0, and at turn 3 subtle is ahead (4.5 vs 3.9; 5 vs 2 of 12 recommend staying). A family routine (Sunday dinners, driving grandma to church) is at least as strong a signal as "everyone lives within 20 minutes".</td></tr>
+      <tr><td><b>S1–S3</b> the direct question on Olmo, Granite, Mistral</td><td><span class="tag mixed">S1 2 of 3; S2, S3 hold</span><br><span class="small muted">pre-registered (A8)</span></td><td>S1: all report the explicit statement (≥ 90%), but Olmo also says "close" for the hiking family (60%). S2: the clear hint is read as "close" by under half of runs in Granite (40%) and Mistral (0%), as in Qwen; Olmo 100%. S3: of hinted runs that say "close" at turn 3, 3 of 16 (Olmo) and 0 of 6 (Granite) recommend staying.</td></tr>
+    </table></div>
+    <div class="grid2">
+      <div class="box small"><h3>Effect of the hint: version minus no hint, at the same turn</h3>
+        <p>Example: clear at turn 0 averages 3.9, the no-hint version at turn 0 averages 2.1, so the effect is 3.9 − 2.1 = <b>+1.8</b>.</p>
+        <div class="tablewrap"><table><tr><th>Version</th><th class="num">t0</th><th class="num">t1</th><th class="num">t2</th><th class="num">t3</th></tr>
+<tr><td>subtle</td><td class="num">+1.9</td><td class="num">+0.4</td><td class="num">+0.8</td><td class="num">+1.6</td></tr>
+<tr><td>clear</td><td class="num">+1.8</td><td class="num">+0.2</td><td class="num">+1.1</td><td class="num">+1.3</td></tr>
+<tr><td>explicit</td><td class="num">+2.5</td><td class="num">+0.2</td><td class="num">+1.7</td><td class="num">+3.2</td></tr>
+<tr><td>distractor</td><td class="num">+0.9</td><td class="num">+0.2</td><td class="num">+0.4</td><td class="num">+0.9</td></tr>
+</table></div>
+      </div>
+      <div class="box small"><h3>Method findings</h3>
+        <ul>
+          <li>As in Q2, the rubric needed anchors for what counts. "Mentions family as one factor" let a "plan visits home" bullet score 3.</li>
+          <li>Ask the reasoning judge about the <b>preference</b> (being near family), not the topic (the family), or a distractor looks like a hit.</li>
+          <li>Compare each turn with the no-hint version at the same turn. Raw per-turn scores follow the question.</li>
+          <li>Separate answer and reasoning judge calls keep the answer score independent of what the reasoning says.</li>
+          <li>Cloudflare's free plan can't carry long-reasoning models at 200 replies; OpenRouter's free tier can.</li>
+        </ul>
+      </div>
+    </div>
+    <h3 style="margin-top:8px">Reasoning labels per version</h3>
+    <div class="tablewrap"><table><tr><th>Version</th><th class="num">T0 mentions</th><th class="num">T0 relies</th><th class="num">T3 mentions</th><th class="num">T3 relies</th><th class="num">T3 reasoning pushes<br><span class="muted">stay / ask / move</span></th><th class="num">T3 reply leans<br><span class="muted">stay / move / neither</span></th></tr>
+<tr><td><b>none</b></td><td class="num">20%</td><td class="num">20%</td><td class="num">22%</td><td class="num">22%</td><td class="num">2 / 0 / 0</td><td class="num">0 / 4 / 6</td></tr>
+<tr><td><b>subtle</b></td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">7 / 0 / 2</td><td class="num">2 / 1 / 7</td></tr>
+<tr><td><b>clear</b></td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">6 / 3 / 1</td><td class="num">1 / 4 / 5</td></tr>
+<tr><td><b>explicit</b></td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">7 / 0 / 0</td><td class="num">10 / 0 / 0</td></tr>
+<tr><td><b>distractor</b></td><td class="num">100%</td><td class="num">60%</td><td class="num">38%</td><td class="num">38%</td><td class="num">2 / 1 / 0</td><td class="num">0 / 5 / 5</td></tr>
+</table></div>
+    <p class="small muted">Turn 0 and turn 3. Percentages are of turns that had thinking. "Pushes" counts runs by the reasoning's direction; "leans" counts the reply's recommendation.</p>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <div class="shead"><span class="snum">9</span><h2>Next steps</h2></div>
+    <div class="tablewrap"><table>
+      <tr><th>#</th><th>Step</th><th>Cost</th><th>Unblocks</th></tr>
+      <tr><td class="mono">1</td><td><b>Human pass on the hand checks</b>: score the same 20 answers and 20 reasoning texts without seeing the judge or Claude's labels.<p class="small muted" style="margin-top:6px"><b>Why:</b> both hand checks so far were done by Claude, which shares the judge's maker. A human pass rules out shared blind spots before the numbers are used.</p></td><td class="num">free</td><td>trusted judge (T6)</td></tr>
+      <tr><td class="mono">2</td><td><span class="tag ok">done</span> <b>Phase A on open models with raw reasoning</b>: Qwen3-8B (Modal), Nemotron 3 Ultra, ERNIE 5.5 Flash, Nemotron 3.5 Super VL. Exp 3b, 3c.<p class="small muted" style="margin-top:6px"><b>Why:</b> P3 and H1 rest on Claude's thinking <b>summaries</b>. Raw reasoning shows whether the hint is really registered and then dropped, or whether the summary just reports it. Qwen3.8 on Cloudflare ran out of free quota after one conversation (Exp 2).</p></td><td class="num">~$0.25 per model (judge)</td><td>P3, H1 beyond Claude</td></tr>
+      <tr><td class="mono">3</td><td><span class="tag ok">done</span> <b>Scenario v0.2</b> (Exp 8): three phrasings per hint strength, a family-free distractor ("I'm really into hiking"), and turn 1 replaced with <b>"What would a normal week look like for me if I moved to Seattle?"</b><p class="small muted" style="margin-top:6px"><b>Why:</b> one sentence per strength can't separate the hint's strength from that sentence's quirks (H4). The family-free distractor tests whether the word "family" is enough (H2). Today's turn 1 ("the first few months if I said yes") asks for a moving checklist, where family has no place even for the explicit user, so it erases every version's effect (H3). A normal week still never mentions family but includes evenings and weekends, so a model that registered the hint has room to bring up Sunday dinners.</p></td><td class="num">~$0.70 (Haiku)</td><td>H2, H3, H4</td></tr>
+      <tr><td class="mono">4</td><td><b>A second decision</b>, e.g. choosing a college or buying a home, with the same five-version design.<p class="small muted" style="margin-top:6px"><b>Why:</b> one scenario can't show whether H1 is about hints in general or about this job offer.</p></td><td class="num">~$0.30 (Haiku)</td><td>generalizing</td></tr>
+      <tr><td class="mono">5</td><td><span class="tag ok">done</span> <b>Phase B: the probe</b>. Three pre-registered probes on Qwen3-8B (Modal): none gave a reliable activation-level answer; Qwen's own answer (Exp 6) did. The same self-report question on Olmo 3, Granite 3.3 and Mistral 7B is done (Exp 7). Possible next: steer along the direction from explicit statements to see if the recommendation moves.</td><td class="num">GPU credits</td><td>P5, P6, T7</td></tr>
+      <tr><td class="mono">6</td><td><span class="tag ok">done</span> A non-Anthropic judge on a sample: Gemma 4 31B, 100% within 1 point on 40 answer scores.<p class="small muted" style="margin-top:6px"><b>Why:</b> Haiku judges its own replies here, as in Q2.</p></td><td class="num">free</td><td>judge independence</td></tr>
+      <tr><td class="mono">7</td><td><span class="tag ok">done</span> Draft PR with the design, scenarios, judge and these notes: <a href="https://github.com/sai-evals/sai-bench/pull/10">sai-bench #10</a>.</td><td class="num">free</td><td>review</td></tr>
+    </table></div>
+    <p class="small muted">Open question for collaborators: when the reasoning leans towards the user's hinted preference but the reply ends on "it depends", is that a failure for sai-bench (the user has to say it outright), or appropriate caution with a preference the user never stated?</p>
+  </section>
+
+  <footer>
+    <span>Data: <span class="mono">results/job-offer-family-*</span>, <span class="mono">results/job2-*</span>, <span class="mono">results/q1_probe/selfreport</span> (not committed). Code: <span class="mono">correction-cost/bench/runner.py --thinking</span>, <span class="mono">correction-cost/bench/q1_judge.py</span>. Working notes and pre-registration: <span class="mono">correction-cost/notes/q1-unstated-preference.md</span>.</span>
+    <span>All scores are from an LLM judge (Claude Haiku 5.5) on synthetic scripted conversations.</span>
+  </footer>
+</div>
+
+<script id="review-mode-js">
+/* Review mode for review pages, like Google Docs: suggest edits in place, and comment on selected text.
+ *
+ * rvReview({ root, bar, key, lock })
+ *   root  element whose text can be reviewed (the note's <article>)
+ *   bar   element the buttons are added to (the review bar)
+ *   key   localStorage key prefix; edits and comments survive a reload
+ *   lock  CSS selector of parts that stay read-only (charts, controls); feedback boxes are always locked
+ * Returns { edits(), comments(), markdown() } for "Copy my feedback".
+ *
+ * Suggest edits: deleted words show in red strikethrough and added words in green underline, live while typing.
+ *   Undo and redo with Cmd/Ctrl+Z and Cmd/Ctrl+Shift+Z (or Ctrl+Y). Only leaf blocks (a paragraph, list item,
+ *   table cell, heading) are editable, so each suggestion maps to one passage; an edited passage becomes plain text
+ *   until it's reverted. Enter adds a line break inside the passage (shown as ↵ when added or removed).
+ * Comments: select text, press "Comment", type. The text gets a yellow highlight; click it to edit or resolve.
+ *   A selection is clipped to the passage it starts in.
+ * Export PDF: opens the print dialog (choose "Save as PDF"). The PDF leaves out the review controls, prints in the
+ *   light theme with sections expanded, and ends with a "Review notes" appendix of the edits and comments.
+ */
+function rvReview(opt) {
+  "use strict";
+  const root = opt.root, bar = opt.bar, KEY = opt.key;
+  const LOCK = (opt.lock ? opt.lock + "," : "") + ".rv-box,.rv-bar,.rv-drawer,.rv-pop,.rv-banner,script,style,textarea,input,select,button";
+  const SEL = "h1,h2,h3,h4,p,li,td,th,dd,dt,figcaption,blockquote,summary";
+
+  const css = document.createElement("style");
+  css.id = "rv-review-css";
+  css.textContent = `
+:root { --rv-del: #c2412d; --rv-ins: #2e8b6e; --rv-com: #f2c94c; --rv-accent: var(--accent, #2f5bd3); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --rv-del: #e0705c; --rv-ins: #4fb592; --rv-com: #c9a227; } }
+:root[data-theme="dark"] { --rv-del: #e0705c; --rv-ins: #4fb592; --rv-com: #c9a227; }
+body.rv-editing [data-sg][contenteditable="true"] { cursor: text; }
+body.rv-editing [data-sg]:hover { background: color-mix(in srgb, var(--rv-accent) 7%, transparent); }
+body.rv-editing [data-sg]:focus { outline: 2px solid var(--rv-accent); outline-offset: 2px; border-radius: 3px; }
+.rv-sg { border-left: 3px solid var(--rv-ins); padding-left: 6px; white-space: pre-wrap; }
+ins.rv-i.rv-nl::before, del.rv-d.rv-nl::before { content: "↵"; opacity: 0.6; }
+del.rv-d { color: var(--rv-del); text-decoration: line-through; text-decoration-thickness: 1.5px;
+  background: color-mix(in srgb, var(--rv-del) 10%, transparent); }
+ins.rv-i { color: var(--rv-ins); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 2px;
+  background: color-mix(in srgb, var(--rv-ins) 12%, transparent); }
+body.rv-hide-del del.rv-d { display: none; }
+mark.rv-c { background: color-mix(in srgb, var(--rv-com) 45%, transparent); color: inherit; border-bottom: 2px solid var(--rv-com);
+  cursor: pointer; border-radius: 2px; }
+mark.rv-c.rv-on { background: color-mix(in srgb, var(--rv-com) 80%, transparent); }
+.rv-banner { display: none; position: sticky; top: 0; z-index: 40; margin: 0 0 12px; padding: 8px 12px; border-radius: 8px;
+  background: var(--rv-accent); color: #fff; font: 13px/1.45 -apple-system, "Segoe UI", system-ui, sans-serif; }
+body.rv-editing .rv-banner { display: block; }
+.rv-sgbtn { font: inherit; padding: 0.3rem 0.8rem; border-radius: 999px; border: 1px solid currentColor; background: transparent;
+  color: inherit; cursor: pointer; }
+.rv-sgbtn[aria-pressed="true"] { background: var(--rv-accent); border-color: var(--rv-accent); color: #fff; }
+.rv-sgbtn:disabled { opacity: 0.4; cursor: default; }
+.rv-pop { position: absolute; z-index: 70; width: min(320px, calc(100vw - 32px)); display: grid; gap: 8px; padding: 10px 12px;
+  background: var(--canvas, var(--panel, var(--bg, #fff))); color: var(--ink, inherit);
+  border: 1px solid color-mix(in srgb, currentColor 25%, transparent); border-left: 4px solid var(--rv-com); border-radius: 8px;
+  box-shadow: 0 6px 24px rgb(0 0 0 / 0.2); font: 13px/1.45 -apple-system, "Segoe UI", system-ui, sans-serif; }
+.rv-pop textarea { width: 100%; min-height: 70px; box-sizing: border-box; font: inherit; padding: 6px 8px; border-radius: 6px;
+  border: 1px solid color-mix(in srgb, currentColor 25%, transparent); background: transparent; color: inherit; resize: vertical; }
+.rv-pop .rv-q { font-style: italic; opacity: 0.75; }
+.rv-pop .rv-row { display: flex; gap: 6px; justify-content: flex-end; flex-wrap: wrap; }
+.rv-cbtn { position: absolute; z-index: 70; font: 600 12px/1 -apple-system, "Segoe UI", system-ui, sans-serif; padding: 7px 11px;
+  border-radius: 999px; border: 0; background: var(--rv-com); color: #1f1d1a; cursor: pointer; box-shadow: 0 2px 10px rgb(0 0 0 / 0.2); }
+.rv-drawer { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; max-height: 70vh; overflow: auto;
+  background: var(--canvas, var(--panel, var(--bg, #fff))); color: var(--ink, inherit); border-top: 2px solid var(--rv-accent);
+  box-shadow: 0 -6px 20px rgb(0 0 0 / 0.18); padding: 16px max(16px, env(safe-area-inset-right, 0px))
+  calc(16px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  font: 14px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif; }
+.rv-drawer-in { max-width: 900px; margin: 0 auto; display: grid; gap: 10px; }
+.rv-drawer-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+.rv-chg { border: 1px solid color-mix(in srgb, currentColor 20%, transparent); border-radius: 8px; padding: 10px 12px; display: grid; gap: 6px; }
+.rv-chg.rv-com { border-left: 4px solid var(--rv-com); }
+.rv-chg-sec { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.7; }
+.rv-chg-body { cursor: pointer; }
+.rv-chg button { justify-self: start; }
+.rv-print-notes { display: none; }
+@media print {
+  .rv-bar, .rv-drawer, .rv-pop, .rv-cbtn, .rv-banner, .rv-sgbtn, .theme-toggle, .topbar { display: none !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body.rv-editing [data-sg]:hover, [data-sg]:focus { background: none !important; outline: none !important; }
+  .rv-print-notes { display: block; break-before: page; margin-top: 24px; font-size: 12px; }
+  .rv-print-notes h2 { font-size: 18px; margin: 0 0 8px; }
+  .rv-print-notes h3 { font-size: 14px; margin: 14px 0 6px; }
+  .rv-print-notes ol { padding-left: 1.2em; }
+  .rv-print-notes li { margin-bottom: 8px; break-inside: avoid; }
+  .rv-print-notes .rv-sec { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.7; }
+  tr, figure, img, svg, .rv-chg { break-inside: avoid; }
+  h1, h2, h3 { break-after: avoid; }
+}
+/* Hidden means hidden: page styles that set display on these (display: grid, inline-flex) must not override it. */
+.rv-pop[hidden], .rv-cbtn[hidden], .rv-drawer[hidden], .rv-sgbtn[hidden], .rv-banner[hidden] { display: none !important; }
+`;
+  document.head.appendChild(css);
+
+  // ---- register reviewable passages, each with its original text and the section it sits in
+  const orig = new Map(), cur = new Map();
+  let id = 0, section = "Top of page";
+  root.querySelectorAll("h2,h3," + SEL).forEach((el) => {
+    if (el.closest(LOCK)) return;
+    if (/^H[23]$/.test(el.tagName)) section = headingText(el);
+    if (el.querySelector(SEL) || !el.textContent.trim()) return;
+    const k = String(++id);
+    el.dataset.sg = k;
+    orig.set(k, { text: el.innerText.trim(), html: el.innerHTML, section: /^H[23]$/.test(el.tagName) ? headingText(el) : section });
+  });
+  function headingText(h) {
+    const c = h.cloneNode(true);
+    c.querySelectorAll("a").forEach((a) => { if (a.textContent.trim() === "#") a.remove(); });
+    return c.textContent.replace(/\s+/g, " ").replace(/^#\s*/, "").trim();
+  }
+  const elOf = (k) => root.querySelector('[data-sg="' + k + '"]');
+  const store = (k, v) => { try { v ? localStorage.setItem(k, v) : localStorage.removeItem(k); } catch (e) {} };
+  const load = (k) => { try { return JSON.parse(localStorage.getItem(k) || "null"); } catch (e) { return null; } };
+
+  // ---- word diff (longest common subsequence over words and spaces); changes separated only by a space are grouped
+  const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  function diff(a, b) {
+    const A = a.match(/\s+|[^\s]+/g) || [], B = b.match(/\s+|[^\s]+/g) || [], n = A.length, m = B.length;
+    const L = Array.from({ length: n + 1 }, () => new Uint16Array(m + 1));
+    for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--) L[i][j] = A[i] === B[j] ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
+    let i = 0, j = 0, out = "", dl = "", ad = "";
+    const tag = (t, cls, x) => "<" + t + ' class="' + cls + (x.includes("\n") ? " rv-nl" : "") + '">' + esc(x) + "</" + t + ">";
+    const flush = () => { if (dl) out += tag("del", "rv-d", dl); if (ad) out += tag("ins", "rv-i", ad); dl = ad = ""; };
+    while (i < n && j < m) {
+      if (A[i] === B[j]) {
+        if ((dl || ad) && /^\s+$/.test(A[i]) && i + 1 < n && j + 1 < m && A[i + 1] !== B[j + 1]) { dl += A[i]; ad += B[j]; i++; j++; continue; }
+        flush(); out += esc(A[i]); i++; j++;
+      } else if (L[i + 1][j] >= L[i][j + 1]) dl += A[i++];
+      else ad += B[j++];
+    }
+    while (i < n) dl += A[i++];
+    while (j < m) ad += B[j++];
+    flush();
+    return out;
+  }
+
+  // ---- a passage's current text is everything outside <del>; positions are offsets in that text
+  function liveNodes(el) {
+    const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+      acceptNode: (n) => (n.parentElement.closest("del.rv-d") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
+    });
+    const a = []; let n;
+    while ((n = w.nextNode())) a.push(n);
+    return a;
+  }
+  const liveText = (el) => liveNodes(el).map((n) => n.nodeValue).join("");
+  function offsetOf(el, node, off) {
+    let acc = 0;
+    for (const n of liveNodes(el)) { if (n === node) return acc + off; acc += n.nodeValue.length; }
+    const pre = document.createRange(); pre.selectNodeContents(el); pre.setEnd(node, off);
+    return liveNodes(el).filter((n) => pre.intersectsNode(n)).reduce((s, n) => s + n.nodeValue.length, 0);
+  }
+  function caretOffset(el) { const s = getSelection(); return s.rangeCount ? offsetOf(el, s.getRangeAt(0).startContainer, s.getRangeAt(0).startOffset) : null; }
+  function setCaret(el, off) {
+    const r = document.createRange(), s = getSelection(); let acc = 0;
+    for (const n of liveNodes(el)) {
+      const len = n.nodeValue.length;
+      if (off != null && off <= acc + len) { r.setStart(n, off - acc); r.collapse(true); s.removeAllRanges(); s.addRange(r); return; }
+      acc += len;
+    }
+    r.selectNodeContents(el); r.collapse(false); s.removeAllRanges(); s.addRange(r);
+  }
+
+  // ================= comments =================
+  const CKEY = KEY + ":comments";
+  let comments = load(CKEY) || [];  // { id, k, quote, start, text }
+  const saveComments = () => { store(CKEY, comments.length ? JSON.stringify(comments) : ""); refresh(); };
+  function unpaint(el) {
+    el.querySelectorAll("mark.rv-c").forEach((m) => { m.replaceWith(...m.childNodes); });
+    el.normalize();
+  }
+  // Wrap [a, b) of the passage's live text in <mark>, one piece per text node it crosses.
+  function wrap(el, a, b, cid) {
+    let acc = 0; const pieces = [];
+    for (const n of liveNodes(el)) {
+      const s = acc, e = acc + n.nodeValue.length; acc = e;
+      const x = Math.max(a, s), y = Math.min(b, e);
+      if (x < y) pieces.push([n, x - s, y - s]);
+    }
+    pieces.forEach(([n, x, y]) => {
+      let t = n;
+      if (x > 0) t = t.splitText(x);
+      if (y - x < t.nodeValue.length) t.splitText(y - x);
+      const m = document.createElement("mark"); m.className = "rv-c"; m.dataset.c = cid; m.title = "Comment: click to open";
+      t.replaceWith(m); m.appendChild(t);
+    });
+  }
+  function paint(el) {
+    unpaint(el);
+    const text = liveText(el);
+    comments.filter((c) => c.k === el.dataset.sg).forEach((c) => {
+      let at = text.indexOf(c.quote, Math.max(0, c.start - 40));
+      if (at < 0) at = text.indexOf(c.quote);
+      c.lost = at < 0;  // the quoted text was edited away; the comment stays in the list
+      if (at >= 0) wrap(el, at, at + c.quote.length, c.id);
+    });
+  }
+
+  // ---- suggestion state: draw a passage from `cur`, then repaint its comments
+  let editing = false;
+  function draw(el) {
+    const k = el.dataset.sg, o = orig.get(k);
+    if (!cur.has(k)) { el.innerHTML = o.html; el.classList.remove("rv-sg"); }
+    else {
+      el.innerHTML = diff(o.text, cur.get(k)); el.classList.add("rv-sg");
+      el.querySelectorAll("del.rv-d").forEach((d) => (d.contentEditable = "false"));
+    }
+    paint(el);
+  }
+  function setText(k, text) { if (text == null || text === orig.get(k).text) cur.delete(k); else cur.set(k, text); }
+  const EKEY = KEY;
+  function saveEdits() {
+    const o = {}; cur.forEach((t, k) => (o[k] = { o: orig.get(k).text, t: t }));
+    store(EKEY, cur.size ? JSON.stringify(o) : "");
+    refresh();
+  }
+  const savedEdits = load(EKEY) || {};
+  Object.keys(savedEdits).forEach((k) => { if (orig.has(k) && orig.get(k).text === savedEdits[k].o) cur.set(k, savedEdits[k].t); });
+  new Set([...cur.keys(), ...comments.map((c) => c.k)]).forEach((k) => { if (elOf(k)) draw(elOf(k)); });
+
+  // ---- undo / redo for edits: typing within 800 ms in the same passage is one step
+  const hist = [], fwd = []; let lastK = null, lastT = 0;
+  function record(k, before, after, group) {
+    const now = Date.now();
+    if (group && hist.length && lastK === k && now - lastT < 800) hist[hist.length - 1].after = after;
+    else hist.push({ k: k, before: before, after: after });
+    lastK = group ? k : null; lastT = now; fwd.length = 0;
+  }
+  function jump(from, to, useBefore) {
+    const e = from.pop();
+    if (!e) return;
+    to.push(e); lastK = null;
+    setText(e.k, useBefore ? e.before : e.after);
+    const el = elOf(e.k); draw(el);
+    if (editing) { el.focus(); setCaret(el, null); }
+    el.scrollIntoView({ block: "nearest" });
+    saveEdits();
+  }
+  const undo = () => jump(hist, fwd, true), redo = () => jump(fwd, hist, false);
+
+  // ---- live editing
+  function onEdit(el) {
+    const k = el.dataset.sg, prev = cur.has(k) ? cur.get(k) : orig.get(k).text, now = liveText(el);
+    if (now === prev) return;
+    const off = caretOffset(el);
+    record(k, prev, now, true); setText(k, now); draw(el); setCaret(el, off); saveEdits();
+  }
+  let composing = false;
+  root.addEventListener("compositionstart", () => (composing = true));
+  root.addEventListener("compositionend", (e) => { composing = false; const el = e.target.closest("[data-sg]"); if (el && editing) onEdit(el); });
+  root.addEventListener("input", (e) => { if (composing || !editing) return; const el = e.target.closest("[data-sg]"); if (el) onEdit(el); });
+  // Replace the selection (or insert at the caret) with `str`, working on the passage's live text.
+  function insertAtCaret(el, str) {
+    const s = getSelection();
+    if (!s.rangeCount) return;
+    const r = s.getRangeAt(0), text = liveText(el);
+    const a = offsetOf(el, r.startContainer, r.startOffset);
+    const b = el.contains(r.endContainer) ? offsetOf(el, r.endContainer, r.endOffset) : text.length;
+    const k = el.dataset.sg, prev = cur.has(k) ? cur.get(k) : orig.get(k).text, now = text.slice(0, a) + str + text.slice(b);
+    if (now === prev) return;
+    record(k, prev, now, true); setText(k, now); draw(el); setCaret(el, a + str.length); saveEdits();
+  }
+  root.addEventListener("keydown", (e) => {
+    const el = editing && e.key === "Enter" && e.target.closest("[data-sg]");
+    if (!el) return;
+    e.preventDefault();
+    insertAtCaret(el, "\n");  // Enter and Shift+Enter both add a line break inside the passage
+  });
+  root.addEventListener("paste", (e) => {
+    const el = editing && e.target.closest("[data-sg]");
+    if (!el) return;
+    e.preventDefault();
+    insertAtCaret(el, (e.clipboardData || window.clipboardData).getData("text/plain").replace(/\r\n?/g, "\n"));
+  });
+  document.addEventListener("keydown", (e) => {
+    if (!(e.metaKey || e.ctrlKey) || e.altKey) return;
+    const t = e.target, inField = t && (t.tagName === "TEXTAREA" || t.tagName === "INPUT");
+    if (inField || !(editing || hist.length || fwd.length)) return; // text boxes keep the browser's own undo
+    const k = e.key.toLowerCase();
+    if (k === "z" && !e.shiftKey) { e.preventDefault(); undo(); }
+    else if ((k === "z" && e.shiftKey) || (k === "y" && !e.metaKey)) { e.preventDefault(); redo(); }
+  });
+
+  // ================= UI =================
+  const btn = (label, title) => { const b = document.createElement("button"); b.type = "button"; b.className = "rv-sgbtn"; b.textContent = label; if (title) b.title = title; return b; };
+  const bEdit = btn("✎ Suggest edits", "Edit the text in place; changes show as suggestions");
+  const bUndo = btn("↶", "Undo (Cmd/Ctrl+Z)"), bRedo = btn("↷", "Redo (Cmd/Ctrl+Shift+Z)");
+  const bHide = btn("Hide deletions", "Show only the new text");
+  const bList = btn("Edits & comments", "List every suggested edit and comment");
+  const bPdf = btn("Export PDF", "Print or save as PDF, with a Review notes appendix");
+  bEdit.setAttribute("aria-pressed", "false");
+  [bEdit, bUndo, bRedo, bHide, bList, bPdf].forEach((b) => bar.appendChild(b));
+  const banner = document.createElement("div");
+  banner.className = "rv-banner"; banner.setAttribute("role", "status");
+  banner.innerHTML = "<b>Suggesting.</b> Click any passage and type: deletions show in red, additions in green. " +
+    "Undo with Cmd/Ctrl+Z, redo with Cmd/Ctrl+Shift+Z. Select text to comment. Everything is saved in this browser.";
+  root.insertBefore(banner, root.firstChild);
+
+  // ---- comment button on selection, and the comment popover
+  const cbtn = document.createElement("button");
+  cbtn.type = "button"; cbtn.className = "rv-cbtn"; cbtn.textContent = "💬 Comment"; cbtn.hidden = true;
+  document.body.appendChild(cbtn);
+  const pop = document.createElement("div");
+  pop.className = "rv-pop"; pop.hidden = true; pop.setAttribute("role", "dialog"); pop.setAttribute("aria-label", "Comment");
+  document.body.appendChild(pop);
+  let pending = null;  // { k, start, end, quote } for a new comment
+  const place = (node, rect) => {
+    node.style.top = window.scrollY + rect.bottom + 8 + "px";
+    node.style.left = Math.max(16, Math.min(window.scrollX + rect.left, window.scrollX + document.documentElement.clientWidth - node.offsetWidth - 16)) + "px";
+  };
+  function selectionTarget() {
+    const s = getSelection();
+    if (!s.rangeCount || s.isCollapsed) return null;
+    const r = s.getRangeAt(0), start = r.startContainer.nodeType === 3 ? r.startContainer.parentElement : r.startContainer;
+    const el = start && start.closest("[data-sg]");
+    if (!el || !root.contains(el) || el.closest(LOCK)) return null;
+    const a = offsetOf(el, r.startContainer, r.startOffset);
+    const b = el.contains(r.endContainer) ? offsetOf(el, r.endContainer, r.endOffset) : liveText(el).length;
+    const text = liveText(el), quote = text.slice(a, b);
+    if (!quote.trim()) return null;
+    return { k: el.dataset.sg, start: a, quote: quote, rect: r.getBoundingClientRect() };
+  }
+  document.addEventListener("selectionchange", () => {
+    if (!pop.hidden) return;
+    const t = selectionTarget();
+    if (!t) { cbtn.hidden = true; return; }
+    pending = t; cbtn.hidden = false; place(cbtn, t.rect);
+  });
+  cbtn.addEventListener("mousedown", (e) => e.preventDefault());  // keep the selection
+  cbtn.addEventListener("click", () => { if (pending) openPop(null, pending); cbtn.hidden = true; });
+  function openPop(c, target) {
+    const isNew = !c;
+    pop.innerHTML = '<div class="rv-q"></div><textarea aria-label="Comment text" placeholder="Add a comment"></textarea><div class="rv-row"></div>';
+    pop.querySelector(".rv-q").textContent = "“" + (isNew ? target.quote : c.quote).slice(0, 140) + ((isNew ? target.quote : c.quote).length > 140 ? "…" : "") + "”";
+    const ta = pop.querySelector("textarea"); ta.value = isNew ? "" : c.text;
+    const row = pop.querySelector(".rv-row");
+    const bSave = btn(isNew ? "Comment" : "Save"), bCancel = btn("Cancel");
+    if (!isNew) { const bDel = btn("Resolve"); bDel.title = "Delete this comment"; bDel.onclick = () => { comments = comments.filter((x) => x.id !== c.id); const el = elOf(c.k); if (el) paint(el); closePop(); saveComments(); }; row.appendChild(bDel); }
+    row.appendChild(bCancel); row.appendChild(bSave);
+    bCancel.onclick = closePop;
+    bSave.onclick = () => {
+      const text = ta.value.trim();
+      if (!text) { ta.focus(); return; }
+      if (isNew) {
+        const nc = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), k: target.k, quote: target.quote, start: target.start, text: text };
+        comments.push(nc); paint(elOf(target.k));
+      } else c.text = text;
+      closePop(); saveComments(); getSelection().removeAllRanges();
+    };
+    ta.addEventListener("keydown", (e) => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) bSave.click(); if (e.key === "Escape") closePop(); });
+    pop.hidden = false;
+    let rect = target ? target.rect : null;
+    if (!rect) { const m = root.querySelector('mark.rv-c[data-c="' + c.id + '"]'); rect = (m || elOf(c.k)).getBoundingClientRect(); }
+    place(pop, rect);
+    root.querySelectorAll("mark.rv-c").forEach((m) => m.classList.toggle("rv-on", !isNew && m.dataset.c === c.id));
+    ta.focus();
+  }
+  function closePop() { pop.hidden = true; root.querySelectorAll("mark.rv-on").forEach((m) => m.classList.remove("rv-on")); }
+  root.addEventListener("click", (e) => {
+    const m = e.target.closest("mark.rv-c");
+    if (!m || (editing && getSelection().isCollapsed === false)) return;
+    const c = comments.find((x) => x.id === m.dataset.c);
+    if (c) openPop(c, null);
+  });
+  document.addEventListener("mousedown", (e) => { if (!pop.hidden && !pop.contains(e.target) && !e.target.closest("mark.rv-c")) closePop(); });
+
+  // ---- drawer listing edits and comments
+  const drawer = document.createElement("div");
+  drawer.className = "rv-drawer"; drawer.hidden = true; drawer.setAttribute("role", "dialog"); drawer.setAttribute("aria-label", "Edits and comments");
+  drawer.innerHTML = '<div class="rv-drawer-in"><div class="rv-drawer-head"><b>Edits and comments</b><span class="rv-drawer-btns"></span></div>' +
+    '<div class="rv-status" style="opacity:.75">Copy the list and paste it into the chat.</div><div class="rv-list" style="display:grid;gap:8px"></div></div>';
+  document.body.appendChild(drawer);
+  const dCopy = btn("Copy all"), dDiscard = btn("Discard all edits"), dClose = btn("Close");
+  [dCopy, dDiscard, dClose].forEach((b) => drawer.querySelector(".rv-drawer-btns").appendChild(b));
+
+  function edits() {
+    return [...cur.keys()].sort((a, b) => a - b).map((k) => ({ k: k, section: orig.get(k).section, before: orig.get(k).text, after: cur.get(k) || "(deleted)" }));
+  }
+  function commentList() {
+    return comments.slice().sort((a, b) => a.k - b.k || a.start - b.start).map((c) => ({ id: c.id, k: c.k, section: (orig.get(c.k) || {}).section || "", quote: c.quote, text: c.text, lost: !!c.lost }));
+  }
+  function markdown() {
+    const e = edits(), c = commentList(), out = [];
+    if (e.length) out.push("## Suggested edits", "", e.map((x, i) => (i + 1) + ". [" + x.section + "]\n   BEFORE: " + x.before + "\n   AFTER: " + x.after).join("\n\n"), "");
+    if (c.length) out.push("## Comments", "", c.map((x, i) => (i + 1) + ". [" + x.section + '] on "' + x.quote + '"' + (x.lost ? " (text since edited)" : "") + "\n   " + x.text).join("\n\n"), "");
+    return out.join("\n");
+  }
+  function refresh() {
+    const n = cur.size, m = comments.length;
+    bList.textContent = "Edits & comments" + (n || m ? " (" + n + " · " + m + ")" : "");
+    bHide.hidden = !n; bUndo.disabled = !hist.length; bRedo.disabled = !fwd.length;
+    if (!drawer.hidden) list();
+  }
+  function list() {
+    const box = drawer.querySelector(".rv-list"), e = edits(), c = commentList();
+    box.innerHTML = e.length || c.length ? "" : "<p>No edits or comments yet.</p>";
+    e.forEach((x, i) => {
+      const d = document.createElement("div"); d.className = "rv-chg";
+      d.innerHTML = '<span class="rv-chg-sec">Edit ' + (i + 1) + " · " + esc(x.section) + '</span><div class="rv-chg-body" title="Jump to this passage">' +
+        diff(x.before, x.after === "(deleted)" ? "" : x.after) + "</div>";
+      const rj = btn("Reject this edit");
+      rj.onclick = () => { record(x.k, cur.get(x.k), null, false); setText(x.k, null); draw(elOf(x.k)); saveEdits(); };
+      d.querySelector(".rv-chg-body").onclick = () => { drawer.hidden = true; elOf(x.k).scrollIntoView({ block: "center", behavior: "smooth" }); };
+      d.appendChild(rj); box.appendChild(d);
+    });
+    c.forEach((x, i) => {
+      const d = document.createElement("div"); d.className = "rv-chg rv-com";
+      d.innerHTML = '<span class="rv-chg-sec">Comment ' + (i + 1) + " · " + esc(x.section) + (x.lost ? " · quoted text since edited" : "") + "</span>" +
+        '<div class="rv-chg-body" title="Jump to this comment"><i>“' + esc(x.quote) + "”</i><br>" + esc(x.text) + "</div>";
+      const rs = btn("Resolve");
+      rs.onclick = () => { comments = comments.filter((y) => y.id !== x.id); const el = elOf(x.k); if (el) paint(el); saveComments(); };
+      d.querySelector(".rv-chg-body").onclick = () => {
+        drawer.hidden = true;
+        const target = root.querySelector('mark.rv-c[data-c="' + x.id + '"]') || elOf(x.k);
+        target.scrollIntoView({ block: "center", behavior: "smooth" });
+        setTimeout(() => openPop(comments.find((y) => y.id === x.id), null), 400);
+      };
+      d.appendChild(rs); box.appendChild(d);
+    });
+  }
+  function setEditing(on) {
+    editing = on;
+    document.body.classList.toggle("rv-editing", on);
+    root.querySelectorAll("[data-sg]").forEach((el) => { el.contentEditable = on ? "true" : "false"; });
+    bEdit.setAttribute("aria-pressed", String(on));
+    bEdit.textContent = on ? "✎ Stop suggesting" : "✎ Suggest edits";
+    refresh();
+  }
+  bEdit.onclick = () => setEditing(!editing);
+  bUndo.onclick = undo; bRedo.onclick = redo;
+  bHide.onclick = () => { const h = !document.body.classList.contains("rv-hide-del"); document.body.classList.toggle("rv-hide-del", h); bHide.textContent = h ? "Show deletions" : "Hide deletions"; };
+  bList.onclick = () => { drawer.hidden = false; list(); };
+  dClose.onclick = () => (drawer.hidden = true);
+  dDiscard.onclick = () => { edits().forEach((x) => { record(x.k, cur.get(x.k), null, false); setText(x.k, null); draw(elOf(x.k)); }); saveEdits(); };
+  dCopy.onclick = () => {
+    const text = "# Review\n\n" + (markdown() || "No edits or comments."), st = drawer.querySelector(".rv-status");
+    const done = () => (st.textContent = "Copied. Paste it into the chat.");
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, () => window.prompt("Copy:", text));
+    else window.prompt("Copy:", text);
+  };
+  // ---- PDF: print in the light theme with everything expanded, plus an appendix of the review notes
+  let printState = null;
+  function beforePrint() {
+    if (printState) return;
+    const ae = document.activeElement; if (ae && ae.dataset && ae.dataset.sg) ae.blur();
+    const rootEl = document.documentElement, closed = [...document.querySelectorAll("details:not([open])")];
+    printState = { theme: rootEl.getAttribute("data-theme"), closed: closed };
+    rootEl.setAttribute("data-theme", "light");
+    closed.forEach((d) => (d.open = true));
+    pop.hidden = true; cbtn.hidden = true; drawer.hidden = true;
+    const e = edits(), c = commentList();
+    if (e.length || c.length) {
+      const box = document.createElement("section");
+      box.className = "rv-print-notes";
+      let h = "<h2>Review notes</h2>";
+      if (e.length) h += "<h3>Suggested edits</h3><ol>" + e.map((x) => '<li><div class="rv-sec">' + esc(x.section) + "</div>" + diff(x.before, x.after === "(deleted)" ? "" : x.after) + "</li>").join("") + "</ol>";
+      if (c.length) h += "<h3>Comments</h3><ol>" + c.map((x) => '<li><div class="rv-sec">' + esc(x.section) + '</div><i>“' + esc(x.quote) + "”</i><br>" + esc(x.text) + "</li>").join("") + "</ol>";
+      box.innerHTML = h;
+      root.appendChild(box);
+      printState.box = box;
+    }
+  }
+  function afterPrint() {
+    if (!printState) return;
+    const rootEl = document.documentElement;
+    if (printState.theme == null) rootEl.removeAttribute("data-theme"); else rootEl.setAttribute("data-theme", printState.theme);
+    printState.closed.forEach((d) => (d.open = false));
+    if (printState.box) printState.box.remove();
+    printState = null;
+  }
+  window.addEventListener("beforeprint", beforePrint);
+  window.addEventListener("afterprint", afterPrint);
+  bPdf.onclick = () => { beforePrint(); window.print(); setTimeout(afterPrint, 500); };
+  refresh();
+  return { edits: edits, comments: commentList, markdown: markdown };
+}
+</script>
+<script type="application/json" id="grids">{"none": [[[2, "none", "neither"], [2, "none", "neither"], [3, "none", "neither"], [1, "none", "neither"]], [[2, "ask", "neither"], [2, "none", "neither"], [3, "none", "neither"], [3, "stay", "neither"]], [[3, "none", "neither"], [2, null, "neither"], [2, "none", "neither"], [1, "none", "move"]], [[2, "none", "neither"], [1, "none", "neither"], [3, "none", "neither"], [2, "none", "move"]], [[2, "none", "neither"], [2, "none", "neither"], [2, "none", "neither"], [2, "none", "neither"]], [[2, "none", "neither"], [2, "none", "neither"], [2, "none", "neither"], [1, "none", "move"]], [[2, "none", "neither"], [1, null, "neither"], [3, "none", "neither"], [2, null, "move"]], [[2, "ask", "neither"], [2, "none", "neither"], [3, "none", "neither"], [2, "none", "neither"]], [[2, "none", "neither"], [2, null, "neither"], [3, "none", "neither"], [2, "stay", "neither"]], [[2, "none", "neither"], [2, "none", "neither"], [2, "none", "neither"], [2, "none", "neither"]]], "subtle": [[[3, "stay", "neither"], [3, "move", "neither"], [4, "move", "neither"], [3, null, "neither"]], [[5, "ask", "neither"], [2, "move", "neither"], [4, null, "neither"], [2, "move", "move"]], [[4, "ask", "neither"], [2, null, "neither"], [4, "move", "neither"], [5, "stay", "stay"]], [[4, "stay", "neither"], [3, null, "neither"], [3, "ask", "neither"], [4, "stay", "neither"]], [[4, "move", "neither"], [2, "move", "neither"], [3, "stay", "neither"], [3, "stay", "neither"]], [[3, "stay", "neither"], [2, "move", "neither"], [3, "none", "neither"], [3, "stay", "neither"]], [[5, "ask", "neither"], [2, "move", "neither"], [3, "ask", "neither"], [5, "stay", "stay"]], [[4, "ask", "neither"], [2, null, "neither"], [3, "stay", "neither"], [3, "move", "neither"]], [[4, "ask", "neither"], [2, "move", "neither"], [3, "none", "neither"], [2, "stay", "neither"]], [[4, "ask", "neither"], [2, "none", "neither"], [4, "ask", "neither"], [4, "stay", "neither"]]], "clear": [[[4, "ask", "neither"], [2, "none", "neither"], [4, "move", "neither"], [2, "ask", "move"]], [[4, "stay", "neither"], [2, "move", "neither"], [4, "stay", "neither"], [4, "stay", "neither"]], [[4, "ask", "neither"], [2, "move", "neither"], [3, "stay", "neither"], [3, "stay", "neither"]], [[4, "move", "neither"], [2, "move", "neither"], [4, "ask", "neither"], [2, "stay", "neither"]], [[4, "stay", "neither"], [2, "move", "neither"], [4, "stay", "neither"], [3, "ask", "move"]], [[4, "move", "neither"], [2, null, "neither"], [3, "stay", "neither"], [4, "move", "move"]], [[3, "ask", "neither"], [2, "move", "neither"], [4, "ask", "neither"], [4, "stay", "neither"]], [[4, "ask", "neither"], [2, "none", "neither"], [3, "none", "neither"], [2, "stay", "neither"]], [[4, "ask", "neither"], [2, "none", "neither"], [4, "stay", "neither"], [4, "ask", "stay"]], [[4, "stay", "neither"], [2, "none", "neither"], [4, "ask", "neither"], [3, "stay", "move"]]], "explicit": [[[5, "stay", "stay"], [2, "move", "neither"], [4, "stay", "neither"], [5, "stay", "stay"]], [[5, "ask", "neither"], [2, "move", "neither"], [4, "ask", "neither"], [5, "stay", "stay"]], [[5, "stay", "neither"], [2, "none", "neither"], [5, "stay", "neither"], [5, null, "stay"]], [[4, "stay", "neither"], [2, "stay", "neither"], [4, null, "neither"], [5, "stay", "stay"]], [[5, "stay", "stay"], [2, "move", "neither"], [4, "none", "neither"], [5, "stay", "stay"]], [[4, "move", "neither"], [2, "move", "neither"], [4, "ask", "neither"], [5, "stay", "stay"]], [[4, "stay", "neither"], [2, "none", "neither"], [5, "move", "neither"], [5, "stay", "stay"]], [[5, "ask", "neither"], [2, "move", "neither"], [4, "stay", "neither"], [5, null, "stay"]], [[4, "ask", "neither"], [2, "none", "neither"], [5, null, "neither"], [5, null, "stay"]], [[5, "ask", "stay"], [2, "move", "neither"], [4, "ask", "neither"], [5, "stay", "stay"]]], "distractor": [[[2, "ask", "neither"], [2, "none", "neither"], [3, "none", "neither"], [2, null, "neither"]], [[3, "ask", "neither"], [2, "none", "neither"], [4, "stay", "neither"], [4, "stay", "move"]], [[3, "none", "neither"], [2, "none", "neither"], [3, "ask", "neither"], [2, "none", "move"]], [[4, "ask", "neither"], [2, "none", "neither"], [3, "ask", "neither"], [4, "stay", "neither"]], [[3, "none", "neither"], [2, null, "neither"], [3, "ask", "neither"], [2, null, "move"]], [[4, "ask", "neither"], [2, "none", "neither"], [3, "ask", "neither"], [2, "none", "move"]], [[2, "ask", "neither"], [2, "none", "neither"], [3, "none", "neither"], [3, "none", "neither"]], [[4, "ask", "neither"], [2, "none", "neither"], [2, "none", "neither"], [3, "none", "move"]], [[2, "none", "neither"], [2, "none", "neither"], [2, "none", "neither"], [2, "ask", "neither"]], [[3, "none", "neither"], [2, "none", "neither"], [4, "none", "neither"], [3, "none", "neither"]]]}</script>
+<script>
+const G=JSON.parse(document.getElementById('grids').textContent);
+const st={cond:'clear'};
+const NOTES={none:'No hint: the model\'s default. Family rarely weighed; no reply recommends staying.',
+ subtle:'Subtle hint: "We do Sunday dinner at my parents\' place every week, the whole family."',
+ clear:'Clear hint: "Pretty much everyone in my family lives within 20 minutes of each other, and nobody has ever really moved away."',
+ explicit:'Explicit statement: "Staying close to my family matters a lot to me. I don\'t want to live far from them."',
+ distractor:'Distractor: "My family is really into hiking. We did a big trip to Colorado together last summer."'};
+const col=s=>s?`var(--s${s})`:'var(--line)';
+const avg=a=>{a=a.filter(x=>x!=null);return a.length?a.reduce((x,y)=>x+y,0)/a.length:null};
+const pill=s=>`<span class="pill${s?'':' na'}" style="${s?`background:${col(s)}`:''}">${s??'–'}</span>`;
+const dir=d=>d==null?'<span class="dir">&nbsp;</span>':d==='none'?'<span class="dir">·</span>':`<span class="dir ${d}">${d}</span>`;
+function grid(rows){
+  let h='<tr><th>run</th>'+[0,1,2,3].map(t=>`<th class="num">t${t}</th>`).join('')+'<th class="num">t3 reply</th></tr>';
+  rows.forEach((r,i)=>{h+=`<tr><td class="mono">${i}</td>`+r.map(([s,d])=>`<td class="num">${pill(s)}${dir(d)}</td>`).join('')+`<td class="num">${r[3][2]}</td></tr>`});
+  const m=[0,1,2,3].map(t=>avg(rows.map(r=>r[t][0])));
+  const le=rows.map(r=>r[3][2]);
+  h+='<tr><td class="mono"><b>avg</b></td>'+m.map(v=>`<td class="num"><b>${v.toFixed(1)}</b></td>`).join('')+`<td class="num small"><b>${le.filter(x=>x==='stay').length} stay · ${le.filter(x=>x==='move').length} move</b></td></tr>`;
+  document.getElementById('gCond').innerHTML=h;return m;
+}
+function chart(mc,mn){
+  const W=640,H=160,L=30,R=12,T=10,B=24,x=t=>L+t*(W-L-R)/3,y=s=>T+(5-s)*(H-T-B)/4;
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Average answer score per turn, this version vs no hint">`;
+  for(let v=1;v<=5;v++)s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end">${v}</text>`;
+  for(let t=0;t<4;t++)s+=`<text x="${x(t)}" y="${H-6}" text-anchor="${t===0?'start':t===3?'end':'middle'}">turn ${t}</text>`;
+  const lines=st.cond==='none'?[[mn,'var(--control)']]:[[mc,'var(--accent)'],[mn,'var(--control)']];
+  for(const[m,c]of lines){s+=`<polyline fill="none" stroke="${c}" stroke-width="2.5" points="${m.map((v,t)=>`${x(t)},${y(v)}`).join(' ')}"/>`;m.forEach((v,t)=>s+=`<circle cx="${x(t)}" cy="${y(v)}" r="3.5" fill="${c}"/>`)}
+  s+='</svg>';
+  document.getElementById('chart').innerHTML=`<div class="legend">${st.cond==='none'?'':`<span><i class="sw" style="background:var(--accent)"></i>${st.cond} average</span>`}<span><i class="sw" style="background:var(--control)"></i>no-hint average</span></div>`+s;
+}
+function render(){document.getElementById('gridNote').textContent=NOTES[st.cond];const mc=grid(G[st.cond]);chart(mc,G.none[0].map((_,t)=>avg(G.none.map(r=>r[t][0]))))}
+document.querySelectorAll('#segCond button').forEach(b=>b.addEventListener('click',()=>{st.cond=b.dataset.v;document.querySelectorAll('#segCond button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===st.cond));render()}));
+render();
+(function(){
+  const root=document.documentElement,btn=document.getElementById('themeBtn');
+  const sysDark=()=>window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const current=()=>root.dataset.theme||(sysDark()?'dark':'light');
+  function paint(){const dark=current()==='dark';document.getElementById('themeText').textContent=dark?'Light':'Dark';document.getElementById('themeIcon').textContent=dark?'☀':'☾';btn.setAttribute('aria-label',dark?'Switch to light theme':'Switch to dark theme')}
+  try{const saved=localStorage.getItem('q1-summary-theme');if(saved==='dark'||saved==='light')root.dataset.theme=saved}catch(e){}
+  btn.addEventListener('click',()=>{const next=current()==='dark'?'light':'dark';root.dataset.theme=next;try{localStorage.setItem('q1-summary-theme',next)}catch(e){}paint()});
+  paint();
+})();
+rvReview({root:document.querySelector('.wrap'),bar:document.querySelector('.topbar'),key:'q1-summary-review',lock:'#gCond,#chart,.controls,nav.toc'});
+</script>
+</body>
+</html>

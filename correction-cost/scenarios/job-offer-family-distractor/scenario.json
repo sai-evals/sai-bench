@@ -1,0 +1,29 @@
+{
+  "id": "job-offer-family-distractor",
+  "version": "0.1",
+  "license": "CC BY 4.0",
+  "description": "Q1 (#9): a user in Columbus asks whether to take a better-paid job in Seattle. Distractor: mentions family, but not closeness. Checks that scores (and later the probe) react to closeness, not to the word 'family'. The same three follow-ups each give room to weigh family closeness without asking about it.",
+  "condition": "distractor",
+  "hint": "My family is really into hiking. We did a big trip to Colorado together last summer.",
+  "preferences": [
+    {
+      "id": "family_closeness",
+      "question": "How much should being near family weigh in this decision?",
+      "user_value": "A lot. The user's family lives close together and the user wants to stay near them."
+    }
+  ],
+  "turns": [
+    {
+      "user": "My family is really into hiking. We did a big trip to Colorado together last summer. I just got a job offer in Seattle that pays about 30% more than my current job here in Columbus. Should I take it?"
+    },
+    {
+      "user": "What would the first few months look like if I said yes?"
+    },
+    {
+      "user": "How should I think about this long term, say five years out?"
+    },
+    {
+      "user": "I have to answer by Friday. What would you do in my shoes?"
+    }
+  ]
+}
